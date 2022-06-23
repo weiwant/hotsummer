@@ -29,7 +29,6 @@ public class GeneratorConfig {
                 //全局配置
                 .globalConfig(builder -> {
                     builder.author(System.getProperty("user.name"))//作者
-                            .fileOverride()//覆盖文件
                             .disableOpenDir()//关闭输出目录
                             .outputDir(path + codePath);//输出目录
                 })
@@ -52,17 +51,21 @@ public class GeneratorConfig {
                             .naming(NamingStrategy.underline_to_camel)//Entity类命名配置
                             .enableLombok()//开启Lombok
                             .enableTableFieldAnnotation()//生成注解
+                            .fileOverride()//覆盖生成文件
                             //Controller配置
                             .controllerBuilder()
                             .formatFileName("")//Controller命名配置
+                            .fileOverride()//覆盖生成文件
                             //Service配置
                             .serviceBuilder()
                             .formatServiceFileName("")//Service命名配置
                             .formatServiceImplFileName("")//ServiceImpl命名配置
+                            .fileOverride()//覆盖生成文件
                             //Mapper配置
                             .mapperBuilder()
                             .superClass(BaseMapper.class)//设置父类
                             .enableMapperAnnotation()//开启@Mapper
+                            .fileOverride()//覆盖生成文件
                             .formatMapperFileName("%sMapper")//格式Mapper化文件名
                             .formatXmlFileName("%sMapper");//格式化Xml文件名
                 })
