@@ -1,9 +1,9 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import Teacherhome from '../components/HSH/Teacherhome.vue'
-import SpecialWorkload from '../components/HSH/SpecialWorkload.vue'
-import TeacherWorkloadTable from '../components/HSH/TeacherWorkloadTable.vue'
-import PersonalInfo from '../components/HSH/PersonalInfo.vue'
+import Teacherhome from '../components/HSH/teacher/Teacherhome.vue'
+import SpecialWorkload from '../components/HSH/teacher/SpecialWorkload.vue'
+import TeacherWorkloadTable from '../components/HSH/teacher/TeacherWorkloadTable.vue'
+import PersonalInfo from '../components/HSH/teacher/PersonalInfo.vue'
 import Managerhome from '../components/LJY/Managerhome.vue'
 import CheckTable from '../components/LJY/CheckTable.vue'
 import Login from '../components/LJY/Login.vue'
@@ -14,7 +14,8 @@ const routes = [
   {
     path: '/',
     name: 'Login',
-    component: Login
+    // component: Login
+    redirect: '/teacherhome'
   },
   {
     path: '/teacherhome',

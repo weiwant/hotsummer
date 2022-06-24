@@ -1,15 +1,15 @@
 <template>
   <div id="teacherHome">
-    <sidebar></sidebar>
+    <TeacherSidebar></TeacherSidebar>
     <router-view></router-view>
   </div>
 </template>
 
 <script>
-import Sidebar from "./Sidebar.vue";
+import TeacherSidebar from "./TeacherSidebar.vue";
 // import TeacherWorkloadTable from "./TeacherWorkloadTable.vue";
 export default {
-  components: { Sidebar },
+  components: { TeacherSidebar },
   name: "Teacherhome",
   data() {},
 };
