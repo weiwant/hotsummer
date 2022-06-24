@@ -1,4 +1,4 @@
-package com.example.summer.utils;
+package com.example.summer.models.pojo;
 
 import com.alibaba.fastjson.annotation.JSONField;
 import com.alibaba.fastjson.annotation.JSONType;
