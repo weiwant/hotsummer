@@ -5,6 +5,7 @@ import com.alibaba.fastjson.annotation.JSONField;
 import com.alibaba.fastjson.serializer.PropertyFilter;
 import com.alibaba.fastjson.serializer.SerializeConfig;
 import com.alibaba.fastjson.serializer.SerializerFeature;
+import com.example.summer.models.pojo.ResponseCode;
 import lombok.Getter;
 
 /**
