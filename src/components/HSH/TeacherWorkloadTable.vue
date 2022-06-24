@@ -436,6 +436,15 @@ export default {
       return this.workloadTableData.length; //总课程数
     },
   },
+  methods: {
+    //根据学年和学期获取对应工作量的数据
+    getTableData(year, semester) {},
+  },
+  created() {
+    //向后台获取学年列表
+    //设置currentYear为列表最新学年值   currentSemester为1
+    //调用getTableData()方法获取数据
+  },
 };
 </script>
 
