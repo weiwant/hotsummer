@@ -13,7 +13,8 @@ import lombok.Getter;
 @JSONType(serializeEnumAsJavaBean = true)
 public enum ResponseCode {
     SUCCESS(200, "成功"),
-    LoginFailure(605, "用户名或密码错误");
+    LoginFailure(605, "用户名或密码错误"),
+    NoContent(204,"无内容");
     @JSONField(name = "code")
     private final Integer responseCode;
     @JSONField

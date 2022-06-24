@@ -1,13 +1,13 @@
 package com.example.summer.service.mybatis;
 
-import com.example.summer.entity.TeachingWorkloadStatistics;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.example.summer.entity.TeachingWorkloadStatistics;
 
 import java.util.List;
 
 /**
  * <p>
- *  服务类
+ * 服务类
  * </p>
  *
  * @author 24047
@@ -17,4 +17,6 @@ public interface TeachingWorkloadStatisticsService extends IService<TeachingWork
     List<TeachingWorkloadStatistics> searchTeachingWorkloadByName(String teacherName);
 
     List<TeachingWorkloadStatistics> searchTeachingWorkloadByNameLike(String teacherName);
+
+    List<TeachingWorkloadStatistics> searchTeachingWorkloadInScope(String startYear,  String endYear, String teacherName);
 }
