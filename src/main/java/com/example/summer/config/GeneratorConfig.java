@@ -38,8 +38,8 @@ public class GeneratorConfig {
                             .entity("entity")//Entity包名
                             .mapper("mapper")//Mapper包名
                             .xml("mapper")//MapperXml包名
-                            .service("service.mybatis")//Service包名
-                            .serviceImpl("service.mybatis.impl")//ServiceImpl包名
+                            .service("mybatis")//Service包名
+                            .serviceImpl("mybatis.impl")//ServiceImpl包名
                             .controller("")//Controller包名
                             .pathInfo(Collections.singletonMap(OutputFile.xml, path + resourcePath + "/mapper"));//MapperXml生成路径
                 })
