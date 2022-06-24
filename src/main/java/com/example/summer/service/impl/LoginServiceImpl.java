@@ -13,7 +13,7 @@ import org.springframework.stereotype.Service;
  */
 
 @Service
-public class loginService implements userservice {
+public class LoginServiceImpl implements UserService {
     @Autowired
     UserDao userdao;
     @Override

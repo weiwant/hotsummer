@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
  * @Date 2022/6/23
  */
 @Service
-public interface userservice {
+public interface UserService {
 
     public boolean checkUserExist(LoginVo loginVo);
 
