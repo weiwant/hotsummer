@@ -1,5 +1,7 @@
 <template>
-	<div>这是上传页面</div>
+<div>查看报表
+    查看
+</div>
 </template>
 
 <script>
