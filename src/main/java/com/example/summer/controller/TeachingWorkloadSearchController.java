@@ -2,7 +2,7 @@ package com.example.summer.controller;
 
 import com.example.summer.entity.TeachingWorkloadStatistics;
 import com.example.summer.service.mybatis.impl.TeachingWorkloadStatisticsServiceImpl;
-import com.example.summer.utils.ResponseCode;
+import com.example.summer.models.pojo.ResponseCode;
 import com.example.summer.utils.Result;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
