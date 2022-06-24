@@ -6,7 +6,7 @@
     <div class="tableFilter">
       <div class="segment">
         <label for="year">学年</label>
-        <select v-model="currentAcademicYear" id="year">
+        <select v-model="currentAcademicYear" id="year" @change="refreshData()">
           <option v-for="item in academicYears" :key="item.id" :value="item">
             {{ item }}
           </option>
@@ -439,6 +439,9 @@ export default {
   methods: {
     //根据学年和学期获取对应工作量的数据
     getTableData(year, semester) {},
+    refreshData() {
+      this.getTableData(this.currentAcademicYear, this.currentSemester);
+    },
   },
   created() {
     //向后台获取学年列表
