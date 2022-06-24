@@ -1,46 +1,40 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Teacherhome from '../components/HSH/Teacherhome.vue'
-import SpecialWorkload from '../components/HSH/SpecialWorkload.vue'
-import TeacherWorkloadTable from '../components/HSH/TeacherWorkloadTable.vue'
-import PersonalInfo from '../components/HSH/PersonalInfo.vue'
-import Managerhome from '../components/LJL/Managerhome.vue'
-import ManagerUpload from '../components/LJY/ManagerUpload.vue'
-
+import Managerhome from '../components/LJY/Managerhome.vue'
+import CheckTable from '../components/LJY/CheckTable.vue'
+import Login from '../components/LJY/Login.vue'
 
 Vue.use(VueRouter)
 
 const routes = [
   {
-    path: "/",
-    redirect: "/Teacherhome"
+    path: 'login',
+    name: 'Login',
+    component: Login
   },
   {
-    path: '/Teacherhome',
+    path: '/teacherhome',
     name: 'Teacherhome',
-    component: Teacherhome,
-    children: [
-      { path: '', redirect: "PersonalInfo" },
-      { path: 'PersonalInfo', component: PersonalInfo },
-      { path: "SpecialWorkload", component: SpecialWorkload },
-      { path: "TeacherWorkloadTable", component: TeacherWorkloadTable },
-    ]
+    component: Teacherhome
   },
   {
-    path: '/managerhome',
-    name: 'Managerhome',
-    component: Managerhome
+	path: '/managerhome',
+	name: 'Managerhome',
+	component: Managerhome,
+  children: [
+    {
+      path: '/checktable',
+      name: 'CheckTable',
+      component: CheckTable
+    }
+  ]
   },
-  {
-    path: '/managerupload',
-    name: 'ManagerUpload',
-    component: ManagerUpload
-  }
 ]
 
 const router = new VueRouter({
-  mode: 'history',
-  routes
+	mode: 'history',
+	routes
 })
 
 export default router

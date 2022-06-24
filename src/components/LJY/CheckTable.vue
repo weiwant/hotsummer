@@ -1,5 +1,5 @@
 <template>
-	<div>这是老师页面</div>
+<div>查看报表</div>
 </template>
 
 <script>
