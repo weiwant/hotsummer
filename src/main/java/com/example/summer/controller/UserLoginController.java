@@ -3,7 +3,7 @@ package com.example.summer.controller;
 import com.example.summer.entity.UserLogin;
 import com.example.summer.models.vo.LoginVo;
 import com.example.summer.service.impl.loginService;
-import com.example.summer.utils.ResponseCode;
+import com.example.summer.models.pojo.ResponseCode;
 import com.example.summer.utils.Result;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
