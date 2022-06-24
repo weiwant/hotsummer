@@ -16,7 +16,7 @@
     :on-success="uploadExcel"
     :on-error="uploadError"
     :show-file-list="false"
-    accept=".xsl,.xslx"
+    accept=".xls,.xlsx"
     name="file">上传报表</el-upload>
 
     </el-menu-item>
@@ -44,9 +44,11 @@ export default{
     },
 
     beforeUpload(file){
-      const isExcel = file.type;
-      if(isExcel != ".xsl" && isExcel != ".xslx"){
-        this.$message.error('只能上传.xsl或.xslx格式的表格文件！');
+      const isExcel = file.name.substring(file.name.lastIndexOf('.') + 1);
+      if(isExcel != "xls" && isExcel != "xlsx"){
+        this.$message.error('只能上传.xls或.xlsx格式的表格文件！');
+      }else{
+        alert("格式对了！");
       }
     },
 

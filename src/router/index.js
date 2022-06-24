@@ -3,12 +3,18 @@ import VueRouter from 'vue-router'
 import Teacherhome from '../components/HSH/Teacherhome.vue'
 import Managerhome from '../components/LJY/Managerhome.vue'
 import CheckTable from '../components/LJY/CheckTable.vue'
+import Login from '../components/LJY/Login.vue'
 
 Vue.use(VueRouter)
 
 const routes = [
   {
-    path: '/',
+    path: 'login',
+    name: 'Login',
+    component: Login
+  },
+  {
+    path: '/teacherhome',
     name: 'Teacherhome',
     component: Teacherhome
   },
