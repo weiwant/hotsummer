@@ -19,9 +19,13 @@ public class LoginVo {
         return username;
     }
 
-    public int getIdentify(){return indentify;}
+    public int getIdentify() {
+        return indentify;
+    }
 
-    public void setIdentify(int indentify){this.indentify= indentify;}
+    public void setIdentify(int indentify) {
+        this.indentify = indentify;
+    }
 
     public void setPassword(String password) {
         this.password = password;

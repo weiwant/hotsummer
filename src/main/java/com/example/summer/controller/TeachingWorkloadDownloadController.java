@@ -1,23 +1,20 @@
 package com.example.summer.controller;
 
 
-import com.example.summer.entity.TeachingWorkloadStatistics;
 import com.example.summer.models.pojo.ExcelFormat;
 import com.example.summer.service.impl.ExportExcelImpl;
 import com.example.summer.service.impl.TeachingWorkloadServiceImpl;
 import org.apache.poi.hssf.usermodel.*;
 import org.apache.poi.ss.usermodel.HorizontalAlignment;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.OutputStream;
-import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.List;
 
 @RestController
 public class TeachingWorkloadDownloadController {
@@ -75,17 +72,16 @@ public class TeachingWorkloadDownloadController {
      * @Param name 教师姓名
      */
     @RequestMapping("/excelDownload")
-    public void test(@RequestParam String startYear,@RequestParam String endYear,@RequestParam(value = "name") String teacherName, HttpServletResponse response){
-        ExcelFormat myExcel= exportExcel.getContentInScope(startYear, endYear, teacherName);
+    public void test(@RequestParam String startYear, @RequestParam String endYear, @RequestParam(value = "name") String teacherName, HttpServletResponse response) {
+        ExcelFormat myExcel = exportExcel.getContentInScope(startYear, endYear, teacherName);
         try {
             HSSFWorkbook hssfWorkbook = getHSSFWorkbook(myExcel.sheetName, myExcel.title, myExcel.content, null);
-            this.setResponseHeader(response,myExcel.fileName);
-            OutputStream os=response.getOutputStream();
+            this.setResponseHeader(response, myExcel.fileName);
+            OutputStream os = response.getOutputStream();
             hssfWorkbook.write(os);
             os.flush();
             os.close();
-        }
-        catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
@@ -123,17 +119,15 @@ public class TeachingWorkloadDownloadController {
     }
 
     public void setResponseHeader(HttpServletResponse response, String fileName) {
-        try{
-            fileName=new String (fileName.getBytes(), StandardCharsets.UTF_8);
+        try {
+            fileName = new String(fileName.getBytes(), StandardCharsets.UTF_8);
             response.setContentType("application/vnd.ms-excel");
-            response.setHeader("Content-disposition","attachment;filename="+ URLEncoder.encode(fileName,"UTF-8"));
-        }
-        catch (Exception ex){
+            response.setHeader("Content-disposition", "attachment;filename=" + URLEncoder.encode(fileName, "UTF-8"));
+        } catch (Exception ex) {
             ex.printStackTrace();
         }
 
     }
-
 
 
 }

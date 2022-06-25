@@ -14,7 +14,7 @@ import lombok.Getter;
 public enum ResponseCode {
     SUCCESS(200, "成功"),
     LoginFailure(605, "用户名或密码错误"),
-    NoContentFailure(204,"无内容"),
+    NoContentFailure(204, "无内容"),
     UnknownFailure(900, "未知错误");
 
     @JSONField(name = "code")

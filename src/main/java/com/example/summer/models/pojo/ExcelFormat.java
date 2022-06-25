@@ -11,7 +11,7 @@ import lombok.Setter;
 @Getter
 @Setter
 public class ExcelFormat {
-    public String[][]content;
+    public String[][] content;
     public String fileName;//文件名
     public String sheetName;//页名
     public String[] title;

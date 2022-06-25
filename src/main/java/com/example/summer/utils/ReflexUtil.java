@@ -29,14 +29,15 @@ public class ReflexUtil {
 
     /**
      * 得到所有属性的键值对
+     *
      * @param obj
      */
-    public static Map<String,Object>[] readAttributeValue(Object obj) {
+    public static Map<String, Object>[] readAttributeValue(Object obj) {
         //得到class
         Class cls = obj.getClass();
         //得到所有属性
         Field[] fields = cls.getDeclaredFields();
-        Map<String,Object> nameValues[] =new Map[fields.length];
+        Map<String, Object> nameValues[] = new Map[fields.length];
         for (int i = 0; i < fields.length; i++) {//遍历
             try {
                 //得到属性
@@ -48,8 +49,8 @@ public class ReflexUtil {
                 //获取属性值
                 Object value = field.get(obj);
                 //一个个赋值
-                nameValues[i]= new HashMap<>();
-                nameValues[i].put(name,value);
+                nameValues[i] = new HashMap<>();
+                nameValues[i].put(name, value);
             } catch (IllegalAccessException e) {
                 e.printStackTrace();
             }
@@ -61,6 +62,7 @@ public class ReflexUtil {
 
     /**
      * 得到所有属性的名称
+     *
      * @param obj
      */
     public static Object[] readAllAttribute(Object obj) {
@@ -68,7 +70,7 @@ public class ReflexUtil {
         Class cls = obj.getClass();
         //得到所有属性
         Field[] fields = cls.getDeclaredFields();
-        Object nameValues[] =new String[fields.length];
+        Object nameValues[] = new String[fields.length];
         for (int i = 0; i < fields.length; i++) {//遍历
             try {
                 //得到属性
@@ -78,7 +80,7 @@ public class ReflexUtil {
                 //获取属性
                 String name = field.getName();
                 //一个个赋值
-                nameValues[i]=name;
+                nameValues[i] = name;
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -86,8 +88,10 @@ public class ReflexUtil {
         System.out.println(nameValues.toString());
         return nameValues;
     }
+
     /**
      * 得到所有属性的值，并转为String
+     *
      * @param obj
      */
     public static String[] readAllValue(Object obj) {
@@ -107,16 +111,15 @@ public class ReflexUtil {
                 String name = field.getName();
                 //获取属性值
                 Object value = field.get(obj);
-                if(value==null){
+                if (value == null) {
                     nameValues[i] = "";
-                }
-                else{
+                } else {
                     nameValues[i] = value.toString();
                 }
             } catch (IllegalAccessException e) {
                 e.printStackTrace();
             }
         }
-            return nameValues;
+        return nameValues;
     }
 }

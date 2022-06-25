@@ -21,8 +21,8 @@ public class TableShowServiceImpl {
      * @Return：
      * @Description：获取数据库表所有内容
      */
-    public List<TeachingWorkloadStatistics> getAllTables(){
-        List<TeachingWorkloadStatistics> WorkList=tableShowDao.getAllTables();
+    public List<TeachingWorkloadStatistics> getAllTables() {
+        List<TeachingWorkloadStatistics> WorkList = tableShowDao.getAllTables();
         return WorkList;
     }
 
@@ -32,7 +32,7 @@ public class TableShowServiceImpl {
      * @Description： 根据年份返回对应数据表。数据库表的year字段
      */
     public List<TeachingWorkloadStatistics> getYearTable(String year) {
-        List<TeachingWorkloadStatistics> WorkInYear=tableShowDao.getYearTable(year);
+        List<TeachingWorkloadStatistics> WorkInYear = tableShowDao.getYearTable(year);
         return WorkInYear;
     }
 
@@ -42,7 +42,7 @@ public class TableShowServiceImpl {
      * @Description：根据年份和学期返回对应信息
      */
     public List<TeachingWorkloadStatistics> getSemesterTable(String year, int semester) {
-        List<TeachingWorkloadStatistics> workInSemester=tableShowDao.getSemesterTable(year,semester);
+        List<TeachingWorkloadStatistics> workInSemester = tableShowDao.getSemesterTable(year, semester);
         return workInSemester;
     }
 }

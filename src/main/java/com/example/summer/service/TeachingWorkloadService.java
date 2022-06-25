@@ -9,6 +9,6 @@ public interface TeachingWorkloadService {
 
     List<TeachingWorkloadStatistics> searchTeachingWorkloadByNameLike(String teacherName);
 
-    List<TeachingWorkloadStatistics> searchTeachingWorkloadInScope(String startYear,  String endYear, String teacherName);
+    List<TeachingWorkloadStatistics> searchTeachingWorkloadInScope(String startYear, String endYear, String teacherName);
 
 }

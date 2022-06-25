@@ -28,12 +28,12 @@ public class TeachingWorkloadStatisticsDao {
 
     }
 
-    public List<TeachingWorkloadStatistics> searchInScope(String startYear,String endYear, String teacherName){
+    public List<TeachingWorkloadStatistics> searchInScope(String startYear, String endYear, String teacherName) {
 
         QueryWrapper<TeachingWorkloadStatistics> teacherMap = new QueryWrapper<>();
 //        teacherMap.between("semester",startSemester,endSemester);
-        teacherMap.between("academic_year",startYear,endYear);//限定学年范围
-        teacherMap.like("main_teacher_name",teacherName);
+        teacherMap.between("academic_year", startYear, endYear);//限定学年范围
+        teacherMap.like("main_teacher_name", teacherName);
         return teachingWorkloadStatisticsMapper.selectList(teacherMap);
     }
 

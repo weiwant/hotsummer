@@ -14,9 +14,9 @@ import java.util.List;
 @RestController
 @RequestMapping(value = "/teachingWorkloadSearch")
 public class TeachingWorkloadSearchController {
-//    主要是按名查询的Controller
+    //    主要是按名查询的Controller
     @Autowired
-TeachingWorkloadServiceImpl teacherService;
+    TeachingWorkloadServiceImpl teacherService;
 
     /**
      * @Author：theLastNYF
@@ -29,7 +29,7 @@ TeachingWorkloadServiceImpl teacherService;
     public String searchPerson(@RequestParam(value = "name", required = false) String teacherName) {
         List<TeachingWorkloadStatistics> teacherList = teacherService.searchTeachingWorkloadByName(teacherName);
 //        System.out.println(new Result(ResponseCode.SUCCESS,teacherList));
-        if(teacherList==null||teacherList.isEmpty()){
+        if (teacherList == null || teacherList.isEmpty()) {
             return new Result(ResponseCode.NoContentFailure, null).toString();
         }
         return new Result(ResponseCode.SUCCESS, teacherList).toString();
@@ -47,7 +47,7 @@ TeachingWorkloadServiceImpl teacherService;
     public String searchPersonLike(@RequestParam(value = "name", required = false) String teacherName) {
         List<TeachingWorkloadStatistics> teacherList = teacherService.searchTeachingWorkloadByNameLike(teacherName);
 //        System.out.println(new Result(ResponseCode.SUCCESS,teacherList));
-        if(teacherList==null||teacherList.isEmpty()){
+        if (teacherList == null || teacherList.isEmpty()) {
             return new Result(ResponseCode.NoContentFailure, null).toString();
         }
         return new Result(ResponseCode.SUCCESS, teacherList).toString();
@@ -61,12 +61,11 @@ TeachingWorkloadServiceImpl teacherService;
      * @Description:按年度范围、学期范围和模糊姓名查询
      */
     @RequestMapping("/searchRecordInScope")
-    public String searchRecordInScope(@RequestParam(value="startYear",required = false) String startYear,
-                                        @RequestParam(value = "endYear",required = false) String endYear,
-                                        @RequestParam(value = "name",required = false) String teacherName)
-    {
-        List<TeachingWorkloadStatistics> teacherList = teacherService.searchTeachingWorkloadInScope(startYear,endYear,teacherName);
-        if(teacherList==null||teacherList.isEmpty()){
+    public String searchRecordInScope(@RequestParam(value = "startYear", required = false) String startYear,
+                                      @RequestParam(value = "endYear", required = false) String endYear,
+                                      @RequestParam(value = "name", required = false) String teacherName) {
+        List<TeachingWorkloadStatistics> teacherList = teacherService.searchTeachingWorkloadInScope(startYear, endYear, teacherName);
+        if (teacherList == null || teacherList.isEmpty()) {
             return new Result(ResponseCode.NoContentFailure, null).toString();
         }
         return new Result(ResponseCode.SUCCESS, teacherList).toString();

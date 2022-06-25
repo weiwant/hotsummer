@@ -24,7 +24,7 @@ public class TeachingWorkloadServiceImpl implements TeachingWorkloadService {
     }
 
     @Override
-    public List<TeachingWorkloadStatistics> searchTeachingWorkloadInScope(String startYear, String endYear, String teacherName){
-        return teachingWorkloadStatisticsDao.searchInScope(startYear,endYear,teacherName);
+    public List<TeachingWorkloadStatistics> searchTeachingWorkloadInScope(String startYear, String endYear, String teacherName) {
+        return teachingWorkloadStatisticsDao.searchInScope(startYear, endYear, teacherName);
     }
 }
