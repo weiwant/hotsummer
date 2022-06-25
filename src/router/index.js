@@ -41,6 +41,7 @@ const routes = [
       //   component: CheckTable
       // }
       { path: '', redirect: "personalInfo" },
+      { path: 'personalInfo', component: ManagerPersonalInfo },
       { path: 'managerPersonalInfo', component: ManagerPersonalInfo },
       { path: 'workloadTableForManager', component: WorkloadTableForManager }
     ]

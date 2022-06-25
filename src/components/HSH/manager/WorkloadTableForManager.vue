@@ -237,7 +237,6 @@ export default {
   background-color: #fff;
   border-radius: 5px;
   text-align: left;
-  height: 10vh;
 }
 .uploadSection .segment {
   display: inline-block;
