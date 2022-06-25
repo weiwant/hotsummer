@@ -1,7 +1,7 @@
 <template>
   <div id="workloadDisplay">
     <!--component标题-->
-    <div class="sectionTitle">课程工作量</div>
+    <div class="sectionTitle">教学工作量</div>
     <!--学年和学期筛选-->
     <div class="tableFilter">
       <div class="segment">
@@ -36,7 +36,7 @@
     </div>
     <!--工具栏-->
     <div class="toolBar">
-      <button class="export">导出Excel至本地</button>
+      <button class="export"> 导出Excel至本地</button>
     </div>
     <!--数据列表-->
     <div class="workloadTableWrapper">
@@ -105,7 +105,7 @@ export default {
       url: `http://localhost:3000/academicYearList`,
     }).then((res) => {
       this.academicYears = res.data;
-      console.log(res.data[0]);
+      // console.log(res.data[0]);
       //设置默认学年学期
       this.currentAcademicYear = res.data[0];
       this.currentSemester = 1;
@@ -117,18 +117,6 @@ export default {
 </script>
 
 <style scoped>
-@font-face {
-  font-family: "icomoon";
-  src: url("/src/assets/fonts/icomoon.eot?up8dh2");
-  src: url("/src/assets/fonts/icomoon.eot?up8dh2#iefix")
-      format("embedded-opentype"),
-    url("/src/assets/fonts/icomoon.ttf?up8dh2") format("truetype"),
-    url("/src/assets/fonts/icomoon.woff?up8dh2") format("woff"),
-    url("/src/assets/fonts/icomoon.svg?up8dh2#icomoon") format("svg");
-  font-weight: normal;
-  font-style: normal;
-  font-display: block;
-}
 * {
   list-style: none;
   text-decoration: none;
@@ -138,7 +126,7 @@ export default {
 #workloadDisplay {
   float: left;
   overflow: hidden;
-  width: 80vw;
+  width: 85vw;
   height: 100vh;
   padding: 10px 15px;
   background-color: rgb(239, 241, 247);
@@ -147,7 +135,7 @@ export default {
   text-align: left;
   font-size: 27px;
   font-weight: 600;
-  color: rgb(51, 114, 96);
+  color: rgb(29, 74, 51);
   height: 50px;
   line-height: 50px;
 }
@@ -202,10 +190,12 @@ export default {
 }
 .toolBar button {
   padding: 5px;
-  border: 1px solid gray;
+  border: 1px solid rgba(128, 128, 128, 0.603);
   border-radius: 5px;
   background-color: rgb(255, 254, 254);
   font-family: "icomoon";
+  color: rgb(51, 114, 96);
+  font-weight: 500;
 }
 .toolBar button:hover {
   background-color: rgb(209, 207, 207);
@@ -229,5 +219,15 @@ table.workloadDataTable {
 .workloadDataTable tbody {
   background-color: #fff;
   padding: 3px 5px;
+}
+@media screen and (max-width: 1000px) and (min-width: 600px) {
+  #workloadDisplay {
+    width: 77vw;
+  }
+}
+@media screen and (max-width: 600px) {
+  #workloadDisplay {
+    width: 100vw;
+  }
 }
 </style>
