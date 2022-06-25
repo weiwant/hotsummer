@@ -2,7 +2,6 @@ package com.example.summer.service.impl;
 
 import com.example.summer.dao.TableShowDao;
 import com.example.summer.entity.TeachingWorkloadStatistics;
-import com.example.summer.entity.Work;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -37,6 +36,11 @@ public class TableShowServiceImpl {
         return WorkInYear;
     }
 
+    /**
+     * @Author：wwq
+     * @Return：
+     * @Description：根据年份和学期返回对应信息
+     */
     public List<TeachingWorkloadStatistics> getSemesterTable(String year, int semester) {
         List<TeachingWorkloadStatistics> workInSemester=tableShowDao.getSemesterTable(year,semester);
         return workInSemester;
