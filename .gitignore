@@ -36,4 +36,4 @@ build/
 **/*.properties
 
 ### Tests ###
-!src/test/
+src/test/**
