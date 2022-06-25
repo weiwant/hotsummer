@@ -36,8 +36,9 @@
     </div>
     <!--工具栏-->
     <div class="toolBar">
-      <button class="export"> 导出Excel至本地</button>
+      <button class="export" @click="exportFile()"> 导出Excel至本地</button>
     </div>
+    <!-- <download-excel :data="workloadDataTable"> Download Data </download-excel> -->
     <!--数据列表-->
     <div class="workloadTableWrapper">
       <table class="workloadDataTable">
@@ -97,6 +98,18 @@ export default {
     refreshData() {
       this.getTableData(this.currentAcademicYear, this.currentSemester);
     },
+    // exportFile() {
+    //   import("@/vendor/Export2Excel").then((excel) => {
+    //     const data = this.formatJson(this.workloadTableData);
+    //     excel.export_json_to_excel({
+    //       header: this.workloadTableHeader, //Header Required
+    //       data, //Specific data Required
+    //       filename: "excel-list", //Optional
+    //       autoWidth: true, //Optional
+    //       bookType: "xlsx", //Optional
+    //     });
+    //   });
+    // },
   },
   created() {
     //向后台获取学年列表

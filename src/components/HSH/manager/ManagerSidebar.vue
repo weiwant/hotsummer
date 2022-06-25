@@ -1,7 +1,7 @@
 <template>
   <div id="sideBar">
     <div class="schoolLogo">
-      <img src="../../../assets/schoolLogo.png" alt="" />
+      <img src="../../../assets/schoolImg/schoolLogo.png" alt="" />
     </div>
     <div class="title">管理员界面</div>
     <ul class="mainFunctions">

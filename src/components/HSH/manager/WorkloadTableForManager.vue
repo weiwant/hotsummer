@@ -113,8 +113,8 @@ export default {
       uploadFileYearInfo1: "2021",
       uploadFileSemesterInfo: 1,
       academicYears: [],
-      currentAcademicYear: "", //学年
-      currentSemester: 1, //学期
+      currentAcademicYear: "2019-2020", //学年
+      currentSemester: 2, //学期
       searchFilterRequired: false,
       searchKeyword: "上课老师",
       searchValue: "",
@@ -177,18 +177,31 @@ export default {
   },
   created() {
     //向后台获取学年列表
-    axios({
-      method: "get",
-      url: `http://localhost:3000/academicYearList`,
-    }).then((res) => {
-      this.academicYears = res.data;
-      // console.log(res.data[0]);
-      //设置默认学年学期
-      this.currentAcademicYear = res.data[0];
-      this.currentSemester = 1;
-      //调用getTableData()方法获取数据
-      this.getTableData(this.currentAcademicYear, this.currentSemester);
-    });
+    axios
+      .get("http://abcs.vaiwan.com/resource/tableinsemester", {
+        params: {
+          year: this.currentAcademicYear,
+          semester: this.currentSemester,
+        },
+      })
+      .then(function (res) {
+        console.log(res);
+      })
+      .catch((resp) => {
+        console.log("请求失败：" + resp);
+      });
+    // axios({
+    //   method: "get",
+    //   url: `http://10.128.141.58:8080/academicYearList`,
+    // }).then((res) => {
+    //   this.academicYears = res.data;
+    //   // console.log(res.data[0]);
+    //   //设置默认学年学期
+    //   this.currentAcademicYear = res.data[0];
+    //   this.currentSemester = 1;
+    //   //调用getTableData()方法获取数据
+    //   this.getTableData(this.currentAcademicYear, this.currentSemester);
+    // });
   },
 };
 </script>
