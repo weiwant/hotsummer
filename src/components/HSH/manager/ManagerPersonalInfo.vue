@@ -1,19 +1,17 @@
-
-
 <template>
-  <div id="specialWorkload">
-    <div class="sectionTitle">特殊工作量上报</div>
+  <div id="managerPersonalInfo">
+    <div class="sectionTitle">个人信息</div>
   </div>
 </template>
 
 <script>
 export default {
-  name: "SpecialWorkload",
+  name: "ManagerPersonalInfo",
 };
 </script>
 
 <style scoped>
-#specialWorkload {
+#managerPersonalInfo {
   float: left;
   overflow-y: auto;
   width: 85vw;
@@ -21,20 +19,20 @@ export default {
   padding: 10px 15px;
   background-color: rgb(239, 241, 247);
 }
-#specialWorkload::-webkit-scrollbar {
+#managerPersonalInfo::-webkit-scrollbar {
   display: none;
 }
-#specialWorkload {
+#managerPersonalInfo {
   -ms-overflow-style: none;
   scrollbar-width: none;
 }
 @media screen and (max-width: 1000px) and (min-width: 600px) {
-  #specialWorkload {
+  #managerPersonalInfo {
     width: 77vw;
   }
 }
 @media screen and (max-width: 600px) {
-  #specialWorkload {
+  #managerPersonalInfo {
     width: 100vw;
   }
 }
@@ -57,5 +55,3 @@ export default {
   font-weight: 600;
 }
 </style>
-
-

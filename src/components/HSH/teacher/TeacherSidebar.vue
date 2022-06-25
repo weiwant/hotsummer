@@ -1,18 +1,21 @@
 <template>
   <div id="sideBar">
+    <div class="schoolLogo">
+      <img src="../../../assets/schoolLogo.png" alt="" />
+    </div>
     <div class="title">教师界面</div>
     <ul class="mainFunctions">
       <li>
-        <router-link to="/Teacherhome/PersonalInfo">个人信息</router-link>
+        <router-link to="PersonalInfo"><span></span> 个人信息</router-link>
       </li>
       <li>
-        <router-link to="/Teacherhome/TeacherWorkloadTable">
-          查看教学工作量
+        <router-link to="TeacherWorkloadTable"
+          ><span></span> 查看教学工作量
         </router-link>
       </li>
       <li>
-        <router-link to="/Teacherhome/SpecialWorkload">
-          上报特殊工作量
+        <router-link to="SpecialWorkload"
+          ><span></span> 上报特殊工作量
         </router-link>
       </li>
     </ul>
@@ -43,10 +46,16 @@ export default {
   padding-top: 10px;
   padding-left: 10px;
   padding-right: 10px;
-  width: 20vw;
+  width: 15vw;
   height: 100vh;
   background-color: rgb(71, 159, 134);
   text-align: left;
+}
+.schoolLogo {
+  width: 70%;
+}
+.schoolLogo img {
+  width: 100%;
 }
 .title {
   font-size: 22px;
@@ -59,6 +68,7 @@ export default {
   margin-bottom: 15px;
   height: 50px;
   font-size: 15px;
+  font-family: "icomoon";
   line-height: 50px;
   border-radius: 5px;
 }
@@ -68,5 +78,15 @@ export default {
 .router-link-exact-active,
 .router-link-active {
   background-color: rgb(143, 196, 181);
+}
+@media screen and (max-width: 1000px) and (min-width: 600px) {
+  #sideBar {
+    width: 23vw;
+  }
+}
+@media screen and (max-width: 600px) {
+  #sideBar {
+    display: none;
+  }
 }
 </style>

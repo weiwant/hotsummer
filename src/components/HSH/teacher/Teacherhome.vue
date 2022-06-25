@@ -7,7 +7,6 @@
 
 <script>
 import TeacherSidebar from "./TeacherSidebar.vue";
-// import TeacherWorkloadTable from "./TeacherWorkloadTable.vue";
 export default {
   components: { TeacherSidebar },
   name: "Teacherhome",
@@ -16,10 +15,6 @@ export default {
 </script>
 
 <style scoped>
-* {
-  margin: 0;
-  padding: 0;
-}
 #teacherHome {
   width: 100vw;
   height: 100vh;
