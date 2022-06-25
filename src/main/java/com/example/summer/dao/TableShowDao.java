@@ -2,9 +2,7 @@ package com.example.summer.dao;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.example.summer.entity.TeachingWorkloadStatistics;
-import com.example.summer.entity.Work;
 import com.example.summer.mapper.TeachingWorkloadStatisticsMapper;
-import com.example.summer.mapper.WorkMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
