@@ -38,9 +38,13 @@ export default{
             }else{
                 //向后端提交数据
                 //需要url
-                axios.post('https://4e22-2001-250-4001-5012-9d4f-8594-5e18-94ed.ap.ngrok.io/users/login',{
-                    username: this.$data.username,
-                    password: this.$data.password
+                this.$axios({
+                    method: 'post',
+                    url: 'http://abcds.vaiwan.com/users/login',
+                    data: {
+                        username: this.$data.username,
+                        password: this.$data.password
+                    }
                 })
                 .then(function(response){
                     //成功时返回名字和身份
@@ -60,6 +64,7 @@ export default{
                     }else{
                         alert("登录失败！");
                         console.log(response);
+                        console.log(error.response.status);
                     }
                 })
                 .catch(function(error){
