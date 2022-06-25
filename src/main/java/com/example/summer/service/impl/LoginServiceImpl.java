@@ -3,6 +3,7 @@ package com.example.summer.service.impl;
 import com.example.summer.dao.UserDao;
 import com.example.summer.entity.UserLogin;
 import com.example.summer.models.vo.LoginVo;
+import com.example.summer.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

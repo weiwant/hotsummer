@@ -3,7 +3,7 @@ package com.example.summer.service.impl;
 import com.example.summer.dao.ExportExcelDao;
 import com.example.summer.entity.TeachingWorkloadStatistics;
 import com.example.summer.models.pojo.ExcelFormat;
-import com.example.summer.service.ExportExcel;
+import com.example.summer.service.ExportExcelService;
 import com.example.summer.utils.ReflexUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -13,7 +13,7 @@ import java.util.Date;
 import java.util.List;
 
 @Service
-public class ExportExcelImpl implements ExportExcel {
+public class ExportExcelImpl implements ExportExcelService {
     @Autowired
     ExportExcelDao excelDao;
 
