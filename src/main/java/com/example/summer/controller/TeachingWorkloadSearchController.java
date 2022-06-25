@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 @RestController
-@RequestMapping(value = "teachingWorkloadSearch")
+@RequestMapping(value = "/teachingWorkloadSearch")
 public class TeachingWorkloadSearchController {
 //    主要是按名查询的Controller
     @Autowired

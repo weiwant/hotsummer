@@ -34,5 +34,3 @@ build/
 
 ### properties ###
 **/*.properties
-/src/main/java/com/example/summer/mapper/SecondTestMapper.java
-/src/main/java/com/example/summer/service/mybatis/SecondTestService.java
