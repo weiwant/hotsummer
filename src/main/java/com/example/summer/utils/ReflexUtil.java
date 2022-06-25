@@ -32,12 +32,12 @@ public class ReflexUtil {
      *
      * @param obj
      */
-    public static Map<String, Object>[] readAttributeValue(Object obj) {
+    public static Map<String, Object> readAttributeValue(Object obj) {
         //得到class
         Class cls = obj.getClass();
         //得到所有属性
         Field[] fields = cls.getDeclaredFields();
-        Map<String, Object> nameValues[] = new Map[fields.length];
+        Map<String, Object> nameValues = new HashMap<>();
         for (int i = 0; i < fields.length; i++) {//遍历
             try {
                 //得到属性
@@ -49,8 +49,7 @@ public class ReflexUtil {
                 //获取属性值
                 Object value = field.get(obj);
                 //一个个赋值
-                nameValues[i] = new HashMap<>();
-                nameValues[i].put(name, value);
+                nameValues.put(name, value);
             } catch (IllegalAccessException e) {
                 e.printStackTrace();
             }

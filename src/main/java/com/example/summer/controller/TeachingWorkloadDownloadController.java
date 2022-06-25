@@ -85,7 +85,11 @@ public class TeachingWorkloadDownloadController {
             e.printStackTrace();
         }
     }
-
+    /**
+     * @Author theLastNYF
+     * @Date 2022/6/25
+     * @Description 为文件导出方法提供建Excel表支持
+     */
     public HSSFWorkbook getHSSFWorkbook(String sheetName, String[] title, String[][] values, HSSFWorkbook workbook) {
         // 创建一个HSSFWorkbook，对应一个Excel文件
         if (workbook == null) {
@@ -118,6 +122,12 @@ public class TeachingWorkloadDownloadController {
 
     }
 
+
+    /**
+     * @Author theLastNYF
+     * @Date 2022/6/25
+     * @Description 为文件导出方法提供数据连接支持
+     */
     public void setResponseHeader(HttpServletResponse response, String fileName) {
         try {
             fileName = new String(fileName.getBytes(), StandardCharsets.UTF_8);

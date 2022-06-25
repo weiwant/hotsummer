@@ -1,6 +1,5 @@
 package com.example.summer.service;
 
-import com.example.summer.entity.TeachingWorkloadStatistics;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -11,5 +10,5 @@ import java.util.List;
  */
 @Service
 public interface ColumnShowService {
-   List<TeachingWorkloadStatistics> getColumn(List<String> names);
+   List<String> getColumn(List<String> names);
 }

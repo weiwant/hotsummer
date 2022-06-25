@@ -34,6 +34,7 @@ public class TeachingWorkloadStatisticsDao {
 //        teacherMap.between("semester",startSemester,endSemester);
         teacherMap.between("academic_year", startYear, endYear);//限定学年范围
         teacherMap.like("main_teacher_name", teacherName);
+
         return teachingWorkloadStatisticsMapper.selectList(teacherMap);
     }
 

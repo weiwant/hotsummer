@@ -31,9 +31,7 @@ public class ColumnShowController {
      */
     @RequestMapping(value = "/Column",method = RequestMethod.GET)
     public String getColumn(@RequestParam(value = "columnname") List<String> names){
-
-
-            List<TeachingWorkloadStatistics> teacherSee = columnShowService.getColumn(names);
+            List<String> teacherSee = columnShowService.getColumn(names);
             if (teacherSee.size()==0) {
                 return new Result(ResponseCode.NoContentFailure).toString();
             } else {
