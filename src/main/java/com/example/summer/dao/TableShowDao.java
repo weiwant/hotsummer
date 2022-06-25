@@ -19,8 +19,6 @@ import java.util.List;
 @Repository
 public class TableShowDao {
     @Autowired
-    WorkMapper workMapper;
-    @Autowired
     TeachingWorkloadStatisticsMapper teacherMapper;
 
     /**

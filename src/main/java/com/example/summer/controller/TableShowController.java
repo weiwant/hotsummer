@@ -1,7 +1,6 @@
 package com.example.summer.controller;
 
 import com.example.summer.entity.TeachingWorkloadStatistics;
-import com.example.summer.entity.Work;
 import com.example.summer.models.pojo.ResponseCode;
 import com.example.summer.service.impl.TableShowServiceImpl;
 import com.example.summer.models.pojo.ResponseCode;
@@ -44,11 +43,11 @@ public class TableShowController {
     @RequestMapping(value = "/tableinyear",method = RequestMethod.GET)
     public String showTableInYear(@RequestParam(value = "year") String year){
         List<TeachingWorkloadStatistics> worksInYear=tableShowService.getYearTable(year);
-        if(worksInYear!=null) {
+        if(worksInYear.equals(null)) {
             return new Result(ResponseCode.SUCCESS, worksInYear).toString();
         }else
         {
-            return "找不到该文件。";
+            return new Result(ResponseCode.NoContentFailure).toString();
         }
     }
 
