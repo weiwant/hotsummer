@@ -22,7 +22,17 @@
           <option>3</option>
         </select>
       </div>
-      <button class="upload">&nbsp;上传工作量excel文件</button>
+
+      <el-input class="upload"
+      type="file"
+      ref="file"
+      name="file"
+      v-model="file"
+      @click="e => {e.target.value = '';}"
+      @change="getFileData"
+      multiple="false"
+      accept=".xls,.xlsx">&nbsp;上传工作量excel文件</el-input>
+
     </div>
     <!--查看已上传信息-->
     <div class="subtitle">信息查询</div>
@@ -120,6 +130,7 @@ export default {
       searchValue: "",
       workloadTableHeader: [],
       workloadTableData: [],
+      file: ''
     };
   },
   computed: {
@@ -174,6 +185,54 @@ export default {
         this.searchFilterRequired = true;
       }
     },
+
+    //点击触发上传方法
+    uploadMaterial(){
+      this.$refs.file.dispatchEvent(new MouseEvent('click'));
+    },
+
+    //触发选择文件，判断文件类型
+    getFileData(file){
+      const inputFile = this.$refs.file;
+      let filename = this.$data.file;
+      const isExcel = filename.substring(filename.lastIndexOf('.')+ 1);
+      if(isExcel != "xls" && isExcel != "xlsx"){
+        alert("文件格式不对，请选择.xls或.xlsx文件！");
+      }else{
+        this.uploadFile(inputFile);
+      }
+    },
+
+    //上传文件，学年，学期
+    uploadFile(file){
+      const formData = new FormData();
+      var _this = this;
+      _this.year = this.$data.uploadFileYearInfo1;
+      _this.semester = this.$data.uploadFileSemesterInfo;
+      formData.append("year", _this.year);
+      formData.append("semester", _this.semester);
+      formData.append("file", file);
+      // console.log(formData.get("year"));
+      // console.log(formData.get("semester"));
+      // console.log(formData.get("file"));
+
+      输入后端url
+      axios.post('', {
+        formData
+      })
+      .then(function(response){
+        if(response.data.data){
+          alert("报表文件上传成功！");
+        }else{
+          alert("上传失败！");
+          console.log(response);
+        }
+      })
+      .catch(function(error){
+        console.log(error);
+      })
+    }
+
   },
   created() {
     //向后台获取学年列表
