@@ -37,6 +37,5 @@ public class ColumnShowController {
             } else {
                 return new Result(ResponseCode.SUCCESS, teacherSee).toString();
             }
-
     }
 }

@@ -28,6 +28,12 @@ public class ColumnShowServiceImpl implements ColumnShowService {
     ColumnShowDao columnShowDao;
 
     public List<String> getColumn(List<String> names){
+        /**
+         * @author 24047
+         * @date 2022/6/25
+         * @param [java.util.List<java.lang.String>]
+         * @return java.util.List<java.lang.String>
+         */
 
         List<TeachingWorkloadStatistics> someWork=columnShowDao.getWorkInColumn(names);//获取
         //实体类转为Map
@@ -36,8 +42,8 @@ public class ColumnShowServiceImpl implements ColumnShowService {
         List<String> workloadRecord=new ArrayList<>();
         for (TeachingWorkloadStatistics item:someWork) {
             Map<String, Object> myMap= entityToView.TeachingWorkloadToView(names,item);//每一条记录转为一个map
-            String mapString= JSON.toJSONString(myMap);//每个map转为一个JSON字符串
-            workloadRecord.add(mapString);
+//            String mapString= JSON.toJSONString(myMap);//每个map转为一个JSON字符串
+            workloadRecord.add(myMap.toString());
         }
         return workloadRecord;
     }

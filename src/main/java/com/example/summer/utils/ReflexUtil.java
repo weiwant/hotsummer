@@ -60,7 +60,7 @@ public class ReflexUtil {
 
 
     /**
-     * 得到所有属性的名称
+     * 得到所有属性的名称,但是这里是Object对象，也就是说保留了变量的类型
      *
      * @param obj
      */
