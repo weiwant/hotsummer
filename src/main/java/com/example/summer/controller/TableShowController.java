@@ -57,7 +57,7 @@ public class TableShowController {
      * @Description：根据年份和学期返回对应信息
      */
 
-    @RequestMapping(value = "tableinsemester",method = RequestMethod.GET)
+    @RequestMapping(value = "/tableinsemester",method = RequestMethod.GET)
     public String showTableInSemester(@RequestParam(value = "year") String year,@RequestParam(value = "semester") int semester){
         List<TeachingWorkloadStatistics> worksInSemester=tableShowService.getSemesterTable(year,semester);
         return new Result(ResponseCode.SUCCESS,worksInSemester).toString();
