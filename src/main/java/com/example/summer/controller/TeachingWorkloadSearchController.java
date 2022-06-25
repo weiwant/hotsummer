@@ -29,7 +29,7 @@ public class TeachingWorkloadSearchController {
         List<TeachingWorkloadStatistics> teacherList = teacherService.searchTeachingWorkloadByName(teacherName);
 //        System.out.println(new Result(ResponseCode.SUCCESS,teacherList));
         if(teacherList==null||teacherList.isEmpty()){
-            return new Result(ResponseCode.NoContent, null).toString();
+            return new Result(ResponseCode.NoContentFailure, null).toString();
         }
         return new Result(ResponseCode.SUCCESS, teacherList).toString();
 
@@ -47,7 +47,7 @@ public class TeachingWorkloadSearchController {
         List<TeachingWorkloadStatistics> teacherList = teacherService.searchTeachingWorkloadByNameLike(teacherName);
 //        System.out.println(new Result(ResponseCode.SUCCESS,teacherList));
         if(teacherList==null||teacherList.isEmpty()){
-            return new Result(ResponseCode.NoContent, null).toString();
+            return new Result(ResponseCode.NoContentFailure, null).toString();
         }
         return new Result(ResponseCode.SUCCESS, teacherList).toString();
     }
@@ -66,7 +66,7 @@ public class TeachingWorkloadSearchController {
     {
         List<TeachingWorkloadStatistics> teacherList = teacherService.searchTeachingWorkloadInScope(startYear,endYear,teacherName);
         if(teacherList==null||teacherList.isEmpty()){
-            return new Result(ResponseCode.NoContent, null).toString();
+            return new Result(ResponseCode.NoContentFailure, null).toString();
         }
         return new Result(ResponseCode.SUCCESS, teacherList).toString();
     }
