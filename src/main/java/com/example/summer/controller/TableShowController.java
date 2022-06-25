@@ -31,7 +31,11 @@ public class TableShowController {
     @RequestMapping(value = "/alltable", method = RequestMethod.GET)
     public String showAllTables() {
         List<TeachingWorkloadStatistics> works = tableShowService.getAllTables();
-        return new Result(ResponseCode.SUCCESS, works).toString();
+        if(works.size()==0){
+            return new Result(ResponseCode.NoContentFailure).toString();
+        }else {
+            return new Result(ResponseCode.SUCCESS, works).toString();
+        }
     }
 
     /**
@@ -42,10 +46,10 @@ public class TableShowController {
     @RequestMapping(value = "/tableinyear", method = RequestMethod.GET)
     public String showTableInYear(@RequestParam(value = "year") String year) {
         List<TeachingWorkloadStatistics> worksInYear = tableShowService.getYearTable(year);
-        if (worksInYear.equals(null)) {
-            return new Result(ResponseCode.SUCCESS, worksInYear).toString();
-        } else {
+        if (worksInYear.size()==0) {
             return new Result(ResponseCode.NoContentFailure).toString();
+        } else {
+            return new Result(ResponseCode.SUCCESS,worksInYear).toString();
         }
     }
 
@@ -58,6 +62,10 @@ public class TableShowController {
     @RequestMapping(value = "/tableinsemester", method = RequestMethod.GET)
     public String showTableInSemester(@RequestParam(value = "year") String year, @RequestParam(value = "semester") int semester) {
         List<TeachingWorkloadStatistics> worksInSemester = tableShowService.getSemesterTable(year, semester);
-        return new Result(ResponseCode.SUCCESS, worksInSemester).toString();
+        if(worksInSemester.size()==0){
+            return  new Result(ResponseCode.NoContentFailure).toString();
+        }else {
+            return new Result(ResponseCode.SUCCESS, worksInSemester).toString();
+        }
     }
 }
