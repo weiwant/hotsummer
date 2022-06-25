@@ -61,19 +61,38 @@ export default{
       if(isExcel != "xls" && isExcel != "xlsx"){
         alert("文件格式不对，请选择.xls或.xlsx文件！");
       }else{
-        console.log(inputFile);
         this.uploadFile(inputFile);
       }
     },
 
     //上传文件，学年，学期
     uploadFile(file){
-      var formData = new FormData();
-      console.log(file);
-      formData.append("excelFile",file);
-      formData.append("year", this.$data.year);
-      formData.append("semester", this.$data.semester);
-      console.log(formData.get("file","year","semester"));
+      const formData = new FormData();
+      var _this = this;
+      _this.year = this.$data.year;
+      _this.semester = this.$data.semester;
+      formData.append("year", _this.year);
+      formData.append("semester", _this.semester);
+      formData.append("excelFile", file);
+      // console.log(formData.get("year"));
+      // console.log(formData.get("semester"));
+      // console.log(formData.get("excelFile"));
+
+      //输入后端url
+      axios.post('', {
+        formData
+      })
+      .then(function(response){
+        if(response.data.data){
+          alert("报表文件上传成功！");
+        }else{
+          alert("上传失败！");
+          console.log(response);
+        }
+      })
+      .catch(function(error){
+        console.log(error);
+      })
     }
   }
 }
