@@ -17,7 +17,7 @@ import java.util.List;
  */
 public class GeneratorConfig {
     public static void main(String[] args) {
-        new GeneratorConfig().generator("jdbc:mysql://localhost:3306/ice_project?serverTimezone=UTC", "root", "31415926", Arrays.asList("teaching_workload_statistics"));
+        new GeneratorConfig().generator("", "", "", Arrays.asList("", "..."));
     }
 
     private void generator(String url, String username, String password, List<String> tableName) {

@@ -1,4 +1,4 @@
-package com.example.summer.service.impl;
+package com.example.summer.service;
 
 import com.example.summer.models.vo.LoginVo;
 import org.springframework.stereotype.Service;

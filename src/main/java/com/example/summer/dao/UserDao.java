@@ -17,19 +17,16 @@ public class UserDao {
     @Autowired
     UserloginMapper userloginMapper;
 
-    public UserLogin selectById(String username){      //根据用户名查找
+    public UserLogin selectById(String username) {      //根据用户名查找
         UserLogin ul;
-        if (userloginMapper.selectById(username)!= null){
-            ul=userloginMapper.selectById(username);
+        if (userloginMapper.selectById(username) != null) {
+            ul = userloginMapper.selectById(username);
             return ul;
-        }
-        else {
-            return  null;
+        } else {
+            return null;
         }
 
     }
-
-
 
 
 }

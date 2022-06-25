@@ -13,8 +13,10 @@ import java.util.List;
 @Service
 public interface TableShowService {
     List<TeachingWorkloadStatistics> getAllTables();
+
     List<TeachingWorkloadStatistics> getYearTable(String year);
-    List<TeachingWorkloadStatistics> getSemesterTable(String year,int semester);
+
+    List<TeachingWorkloadStatistics> getSemesterTable(String year, int semester);
 }
 
 
