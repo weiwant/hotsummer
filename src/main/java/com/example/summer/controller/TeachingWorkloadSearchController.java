@@ -2,7 +2,7 @@ package com.example.summer.controller;
 
 import com.example.summer.entity.TeachingWorkloadStatistics;
 import com.example.summer.models.pojo.ResponseCode;
-import com.example.summer.service.mybatis.impl.TeachingWorkloadStatisticsServiceImpl;
+import com.example.summer.service.impl.TeachingWorkloadServiceImpl;
 import com.example.summer.utils.Result;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -14,8 +14,9 @@ import java.util.List;
 @RestController
 @RequestMapping(value = "teachingWorkloadSearch")
 public class TeachingWorkloadSearchController {
+//    主要是按名查询的Controller
     @Autowired
-    TeachingWorkloadStatisticsServiceImpl teacherService;
+TeachingWorkloadServiceImpl teacherService;
 
     /**
      * @Author：theLastNYF
@@ -29,7 +30,7 @@ public class TeachingWorkloadSearchController {
         List<TeachingWorkloadStatistics> teacherList = teacherService.searchTeachingWorkloadByName(teacherName);
 //        System.out.println(new Result(ResponseCode.SUCCESS,teacherList));
         if(teacherList==null||teacherList.isEmpty()){
-            return new Result(ResponseCode.NoContent, null).toString();
+            return new Result(ResponseCode.NoContentFailure, null).toString();
         }
         return new Result(ResponseCode.SUCCESS, teacherList).toString();
 
@@ -47,7 +48,7 @@ public class TeachingWorkloadSearchController {
         List<TeachingWorkloadStatistics> teacherList = teacherService.searchTeachingWorkloadByNameLike(teacherName);
 //        System.out.println(new Result(ResponseCode.SUCCESS,teacherList));
         if(teacherList==null||teacherList.isEmpty()){
-            return new Result(ResponseCode.NoContent, null).toString();
+            return new Result(ResponseCode.NoContentFailure, null).toString();
         }
         return new Result(ResponseCode.SUCCESS, teacherList).toString();
     }
@@ -66,7 +67,7 @@ public class TeachingWorkloadSearchController {
     {
         List<TeachingWorkloadStatistics> teacherList = teacherService.searchTeachingWorkloadInScope(startYear,endYear,teacherName);
         if(teacherList==null||teacherList.isEmpty()){
-            return new Result(ResponseCode.NoContent, null).toString();
+            return new Result(ResponseCode.NoContentFailure, null).toString();
         }
         return new Result(ResponseCode.SUCCESS, teacherList).toString();
     }

@@ -2,18 +2,17 @@ package com.example.summer.entity;
 
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableName;
+import java.io.Serializable;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.io.Serializable;
-
 /**
  * <p>
- *
+ * 
  * </p>
  *
  * @author 24047
- * @since 2022-06-24
+ * @since 2022-06-25
  */
 @Getter
 @Setter

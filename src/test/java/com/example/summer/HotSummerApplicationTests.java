@@ -8,6 +8,8 @@ class HotSummerApplicationTests {
 
     @Test
     void contextLoads() {
+
     }
+
 
 }
