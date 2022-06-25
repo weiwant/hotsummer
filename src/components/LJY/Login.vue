@@ -6,8 +6,8 @@
         <div class="background2"></div>
         <div class="login">
             <span>登&nbsp;&nbsp;录</span><br>
-            <label for="account">账号:</label>
-            <input type="text" id="account" v-model="account" required>
+            <label for="account">名字:</label>
+            <input type="text" id="account" v-model="username" required>
             <br>
             <label for="password">密码:</label>
             <input type="password" id='password' v-model="password" required>
@@ -24,7 +24,7 @@ import axios from 'axios'
 export default{
     data(){
         return{
-            account: '',
+            username: '',
             password: ''
         }
     },
@@ -33,18 +33,19 @@ export default{
 
         login(){
             var _this = this;
-            if(this.$data.account == '' || this.$data.password == ''){
+            if(this.$data.username == '' || this.$data.password == ''){
                 alert('账号或密码不能为空！')
             }else{
                 //向后端提交数据
                 //需要url
-                axios.post('',{
-                    account: this.$data.account,
+                axios.post('https://4e22-2001-250-4001-5012-9d4f-8594-5e18-94ed.ap.ngrok.io/users/login',{
+                    username: this.$data.username,
                     password: this.$data.password
                 })
                 .then(function(response){
                     //成功时返回名字和身份
                     if(response.data.success){
+                        console.log(response);
                         alert("登录成功！");
                         localStorage.clear();
                         if(response.data.data.identify == 1){
