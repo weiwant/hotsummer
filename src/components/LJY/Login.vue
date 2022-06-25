@@ -11,9 +11,7 @@
         alt=""
         class="schoolLogo"
       />
-      <div class="title">
-        工&nbsp;作&nbsp;量&nbsp;管&nbsp;理&nbsp;平&nbsp;台
-      </div>
+      <div class="title">工&nbsp;作量&nbsp;管&nbsp;理&nbsp;平&nbsp;台</div>
     </header>
     <div class="center">
       <div class="background1"></div>
