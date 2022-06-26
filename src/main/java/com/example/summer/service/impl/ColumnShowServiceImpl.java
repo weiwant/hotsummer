@@ -1,6 +1,5 @@
 package com.example.summer.service.impl;
 
-import com.alibaba.fastjson.JSON;
 import com.example.summer.dao.ColumnShowDao;
 import com.example.summer.entity.TeachingWorkloadStatistics;
 import com.example.summer.models.pojo.EntityToView;
@@ -27,7 +26,7 @@ public class ColumnShowServiceImpl implements ColumnShowService {
     @Autowired
     ColumnShowDao columnShowDao;
 
-    public List<String> getColumn(List<String> names){
+    public List<String> getColumn(List<String> names) {
         /**
          * @author 24047
          * @date 2022/6/25
@@ -35,13 +34,13 @@ public class ColumnShowServiceImpl implements ColumnShowService {
          * @return java.util.List<java.lang.String>
          */
 
-        List<TeachingWorkloadStatistics> someWork=columnShowDao.getWorkInColumn(names);//获取
+        List<TeachingWorkloadStatistics> someWork = columnShowDao.getWorkInColumn(names);//获取
         //实体类转为Map
-        EntityToView entityToView =new EntityToView();
+        EntityToView entityToView = new EntityToView();
         //存储了一些列Map的List<String>
-        List<String> workloadRecord=new ArrayList<>();
-        for (TeachingWorkloadStatistics item:someWork) {
-            Map<String, Object> myMap= entityToView.TeachingWorkloadToView(names,item);//每一条记录转为一个map
+        List<String> workloadRecord = new ArrayList<>();
+        for (TeachingWorkloadStatistics item : someWork) {
+            Map<String, Object> myMap = entityToView.TeachingWorkloadToView(names, item);//每一条记录转为一个map
 //            String mapString= JSON.toJSONString(myMap);//每个map转为一个JSON字符串
             workloadRecord.add(myMap.toString());
         }

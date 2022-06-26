@@ -22,20 +22,20 @@ public class ColumnShowDao {
      * @Return：
      * @Description：根据列名返回数据
      */
-    public List<TeachingWorkloadStatistics> getWorkInColumn(List<String> names){
+    public List<TeachingWorkloadStatistics> getWorkInColumn(List<String> names) {
         //把list转为String
         String st = "";
         for (int i = 0; i < names.size(); i++) {
-            if(i==0){
-                st+=names.get(i);
-            }else{
-                st= st+","+names.get(i);
+            if (i == 0) {
+                st += names.get(i);
+            } else {
+                st = st + "," + names.get(i);
             }
 
         }
-        QueryWrapper<TeachingWorkloadStatistics> queryWrapper=new QueryWrapper<>();
+        QueryWrapper<TeachingWorkloadStatistics> queryWrapper = new QueryWrapper<>();
         queryWrapper.select(st);
-        List<TeachingWorkloadStatistics> workInColumn=workloadStatisticsMapper.selectList(queryWrapper);
+        List<TeachingWorkloadStatistics> workInColumn = workloadStatisticsMapper.selectList(queryWrapper);
         return workInColumn;
 
     }

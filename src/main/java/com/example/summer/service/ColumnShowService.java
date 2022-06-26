@@ -10,5 +10,5 @@ import java.util.List;
  */
 @Service
 public interface ColumnShowService {
-   List<String> getColumn(List<String> names);
+    List<String> getColumn(List<String> names);
 }

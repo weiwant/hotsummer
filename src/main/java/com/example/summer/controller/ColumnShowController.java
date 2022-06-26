@@ -1,6 +1,5 @@
 package com.example.summer.controller;
 
-import com.example.summer.entity.TeachingWorkloadStatistics;
 import com.example.summer.models.pojo.ResponseCode;
 import com.example.summer.service.ColumnShowService;
 import com.example.summer.service.impl.ColumnShowServiceImpl;
@@ -11,7 +10,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -22,20 +20,20 @@ import java.util.List;
 @RequestMapping("/resource")
 public class ColumnShowController {
     @Autowired
-    ColumnShowService columnShowService=new ColumnShowServiceImpl();
+    ColumnShowService columnShowService = new ColumnShowServiceImpl();
 
     /**
      * @Author：wwq
      * @Return：
      * @Description：根据表头名称获取对应表内容
      */
-    @RequestMapping(value = "/Column",method = RequestMethod.GET)
-    public String getColumn(@RequestParam(value = "columnname") List<String> names){
-            List<String> teacherSee = columnShowService.getColumn(names);
-            if (teacherSee.size()==0) {
-                return new Result(ResponseCode.NoContentFailure).toString();
-            } else {
-                return new Result(ResponseCode.SUCCESS, teacherSee).toString();
-            }
+    @RequestMapping(value = "/Column", method = RequestMethod.GET)
+    public String getColumn(@RequestParam(value = "columnname") List<String> names) {
+        List<String> teacherSee = columnShowService.getColumn(names);
+        if (teacherSee.size() == 0) {
+            return new Result(ResponseCode.NoContentFailure).toString();
+        } else {
+            return new Result(ResponseCode.SUCCESS, teacherSee).toString();
+        }
     }
 }
