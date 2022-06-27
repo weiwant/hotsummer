@@ -3,6 +3,8 @@ package com.example.summer.dao;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.example.summer.entity.TeachingWorkloadStatistics;
 import com.example.summer.mapper.TeachingWorkloadStatisticsMapper;
+import com.example.summer.models.vo.TableShowVo;
+import com.example.summer.utils.ReflexUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -39,11 +41,23 @@ public class TableShowDao {
         return works;
     }
 
-    public List<TeachingWorkloadStatistics> getSemesterTable(String year, int semester) {
+    /**
+     * @Author：wwq
+     * @Return：
+     * @Url:
+     * @Description：根据年份和学期返回数据。包括表头。
+     */
+    public List<TeachingWorkloadStatistics> getSemesterTable(TableShowVo tableShowVo) {
         QueryWrapper<TeachingWorkloadStatistics> queryWrapper = new QueryWrapper<>();
-        queryWrapper.eq("academic_year", year);
-        queryWrapper.eq("semester", semester);
+        queryWrapper.eq("academic_year", tableShowVo.getYear());
+        queryWrapper.eq("semester", tableShowVo.getSemester());
         List<TeachingWorkloadStatistics> works = teacherMapper.selectList(queryWrapper);
         return works;
+    }
+
+    public Object[] getWorkTableHeader() {
+        TeachingWorkloadStatistics t=new TeachingWorkloadStatistics();
+        Object[] workTableHeader=ReflexUtil.readAllAttribute(t);
+        return  workTableHeader;
     }
 }

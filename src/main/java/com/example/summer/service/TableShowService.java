@@ -1,6 +1,7 @@
 package com.example.summer.service;
 
 import com.example.summer.entity.TeachingWorkloadStatistics;
+import com.example.summer.models.vo.TableShowVo;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -16,7 +17,9 @@ public interface TableShowService {
 
     List<TeachingWorkloadStatistics> getYearTable(String year);
 
-    List<TeachingWorkloadStatistics> getSemesterTable(String year, int semester);
+    List<TeachingWorkloadStatistics> getSemesterTable(TableShowVo tableShowVo);
+
+    Object[] getTableHeader();
 }
 
 
