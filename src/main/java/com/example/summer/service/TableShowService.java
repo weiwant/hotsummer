@@ -1,5 +1,6 @@
 package com.example.summer.service;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.example.summer.entity.TeachingWorkloadStatistics;
 import com.example.summer.models.vo.TableShowVo;
 import org.springframework.stereotype.Service;
@@ -17,7 +18,7 @@ public interface TableShowService {
 
     List<TeachingWorkloadStatistics> getYearTable(String year);
 
-    List<TeachingWorkloadStatistics> getSemesterTable(TableShowVo tableShowVo);
+    IPage<TeachingWorkloadStatistics> getSemesterTable(TableShowVo tableShowVo);
 
     Object[] getTableHeader();
 }

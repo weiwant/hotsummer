@@ -1,5 +1,6 @@
 package com.example.summer.service.impl;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.example.summer.dao.TableShowDao;
 import com.example.summer.entity.TeachingWorkloadStatistics;
 import com.example.summer.models.vo.TableShowVo;
@@ -42,8 +43,8 @@ public class TableShowServiceImpl {
      * @Return：
      * @Description：根据年份和学期返回对应信息
      */
-    public List<TeachingWorkloadStatistics> getSemesterTable(TableShowVo tableShowVo) {
-        List<TeachingWorkloadStatistics> workInSemester = tableShowDao.getSemesterTable(tableShowVo);
+    public IPage<TeachingWorkloadStatistics> getSemesterTable(TableShowVo tableShowVo) {
+        IPage<TeachingWorkloadStatistics> workInSemester = tableShowDao.getSemesterTable(tableShowVo);
         return workInSemester;
     }
 

@@ -1,6 +1,8 @@
 package com.example.summer.dao;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.example.summer.entity.TeachingWorkloadStatistics;
 import com.example.summer.mapper.TeachingWorkloadStatisticsMapper;
 import com.example.summer.models.vo.TableShowVo;
@@ -47,12 +49,15 @@ public class TableShowDao {
      * @Url:
      * @Description：根据年份和学期返回数据。包括表头。
      */
-    public List<TeachingWorkloadStatistics> getSemesterTable(TableShowVo tableShowVo) {
+    public IPage<TeachingWorkloadStatistics> getSemesterTable(TableShowVo tableShowVo) {
         QueryWrapper<TeachingWorkloadStatistics> queryWrapper = new QueryWrapper<>();
         queryWrapper.eq("academic_year", tableShowVo.getYear());
         queryWrapper.eq("semester", tableShowVo.getSemester());
-        List<TeachingWorkloadStatistics> works = teacherMapper.selectList(queryWrapper);
-        return works;
+        Page<TeachingWorkloadStatistics> teachPage=new Page<>(1,40);
+        IPage<TeachingWorkloadStatistics> teachIPage=teacherMapper.selectPage(teachPage,queryWrapper);
+        System.out.println("总页数"+teachIPage.getPages());
+        System.out.println("总记录数"+teachIPage.getTotal());
+        return teachIPage;
     }
 
     public Object[] getWorkTableHeader() {

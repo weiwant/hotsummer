@@ -1,5 +1,6 @@
 package com.example.summer.controller;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.example.summer.entity.TeachingWorkloadStatistics;
 import com.example.summer.models.pojo.ResponseCode;
 import com.example.summer.models.vo.TableShowVo;
@@ -62,22 +63,15 @@ public class TableShowController {
 
     @RequestMapping(value = "/tableinsemester", method = RequestMethod.POST)
     public String showTableInSemester(@RequestBody TableShowVo tableShowVo) {
-        //获取表头：workloadTableHeader
-        Object[] workLoadTableHeader=tableShowService.getTableHeader();
-        Arrays.sort(workLoadTableHeader);
-        /*//静态表头：staticTableHeader
-        String[] tableHeader={"assistant","calculatingClassHours","course_name","teaching_class","plan_school","credit","course_nature","student_grade","major",};
-        Arrays.sort(tableHeader);*/
+        //静态表头：staticTableHeader
+        String[] tableHeader={"学年","辅助","计算用学时","课程性质解释","计算机用时","课程名称","课程性质","课程号","学分","折扣","实验安排","实验课时","教分","合课单位","实验室核对结果","上课教师名字","教师职称","专业","折扣前BA1系数","原始教分","其他教师名","计划学院","实践课时","备注","学期","是否为特殊班级","是否全英教学","上课人数","年级","教学班","BA1系数","开课学院","理论课时"};
         //获取数据：workloadTableData
-        List<TeachingWorkloadStatistics> worksInSemester = tableShowService.getSemesterTable(tableShowVo);
-        Map<String,Object> workTable=new HashMap<>();
-        workTable.put("workloadTableHeader",workLoadTableHeader);
-        //workTable.put("staticTableHeader",tableHeader);
-        workTable.put("workloadTableData",worksInSemester);
-        if (worksInSemester.size() == 0) {
+        IPage<TeachingWorkloadStatistics> worksInSemester = tableShowService.getSemesterTable(tableShowVo);
+
+        if (worksInSemester.getTotal() == 0) {
             return new Result(ResponseCode.NoContentFailure).toString();
         } else {
-            return new Result(ResponseCode.SUCCESS, workTable).toString();
+            return new Result(ResponseCode.SUCCESS, worksInSemester).toString();
         }
     }
 }
