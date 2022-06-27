@@ -3,6 +3,7 @@ package com.example.summer.service.impl;
 import com.example.summer.dao.ColumnShowDao;
 import com.example.summer.entity.TeachingWorkloadStatistics;
 import com.example.summer.models.pojo.EntityToView;
+import com.example.summer.models.pojo.TeachingWorkloadMap;
 import com.example.summer.models.pojo.WorkloadData;
 import com.example.summer.models.vo.TableShowDetailVo;
 import com.example.summer.models.vo.TableShowVo;
@@ -80,6 +81,21 @@ public class ColumnShowServiceImpl implements ColumnShowService {
             //将一条记录转化为一个WorkloadData数组
             data= entityToView.TeachingWorkloadToViewChinese(names,ChineseNames,someWork.get(i));
             workloadList.add(data);
+        }
+        return workloadList;
+    }
+
+    @Override
+    public List<TeachingWorkloadMap> getColumnIndeed(List<String> names, List<String> ChineseNames,TableShowDetailVo tableShowVo){
+        //返回一整张表，每一行都是一条记录
+        List<TeachingWorkloadStatistics> someWork = columnShowDao.getWorkInColumnCustomByYear(tableShowVo,names);
+        //实体类转为Map的工具类
+        EntityToView entityToView = new EntityToView();
+        //一个写死了的TeachingWorkloadMap
+        List<TeachingWorkloadMap> workloadList=new ArrayList<>();
+        for (int i=0;i<someWork.size();i++) {
+            TeachingWorkloadMap teachingWorkloadMap=new TeachingWorkloadMap(someWork.get(i));
+            workloadList.add(teachingWorkloadMap);
         }
         return workloadList;
     }

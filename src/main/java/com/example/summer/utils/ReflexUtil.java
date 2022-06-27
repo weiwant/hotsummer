@@ -16,7 +16,6 @@ public class ReflexUtil {
         try {
             //获取对象的类的指定属性
             Field field = object.getClass().getDeclaredField(fieldName);
-
             //设置对象的访问权限，保证对private的属性的访问
             field.setAccessible(true);
             return field.get(object);
