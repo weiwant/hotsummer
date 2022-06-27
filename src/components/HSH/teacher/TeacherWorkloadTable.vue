@@ -6,20 +6,27 @@
     <div class="tableFilter">
       <div class="segment">
         <label for="year">学年</label>
-        <select v-model="currentAcademicYear" id="year" @change="refreshData()">
-          <option v-for="item in academicYears" :key="item.id" :value="item">
+        <select v-model="currentAcademicYear" id="year">
+          <option
+            v-for="item in academicYearRange"
+            :key="item.id"
+            :value="item"
+          >
             {{ item }}
           </option>
         </select>
       </div>
       <div class="segment">
         <label for="semester">学期</label>
-        <select v-model="currentSemester" id="semester" @change="refreshData()">
+        <select v-model="currentSemester" id="semester">
           <option value="1">1</option>
           <option value="2">2</option>
           <option value="3">3</option>
         </select>
       </div>
+      <button @click="getTableData()" class="confirmYearAndSemesterBtn">
+        确&nbsp;认
+      </button>
     </div>
     <!--统计数据栏-->
     <div class="statistics">
@@ -36,11 +43,27 @@
     </div>
     <!--工具栏-->
     <div class="toolBar">
-      <button class="export" @click="exportFile()"> 导出Excel至本地</button>
+      <label class="customFileName" for="exportFileName">文件名：</label>
+      <input type="text" v-model="exportFileName" id="exportFileName" />
+      <span class="defaultExportfileName"
+        >（默认：{{ this.currentAcademicYear }}学年_{{
+          this.currentSemester
+        }}学期工作量）</span
+      >
+      <button
+        class="export"
+        @click="exportFile()"
+        :disabled="!dataExists"
+        :class="{ disabled: !dataExists }"
+      >
+         导出Excel至本地
+      </button>
     </div>
-    <!-- <download-excel :data="workloadDataTable"> Download Data </download-excel> -->
     <!--数据列表-->
     <div class="workloadTableWrapper">
+      <div class="noDataHint" v-if="!dataExists" v-text="noDataHint">
+        <!-- 暂无{{ currentAcademicYear }}学年，第{{ currentSemester }}学期的数据！ -->
+      </div>
       <table class="workloadDataTable">
         <thead>
           <tr>
@@ -65,15 +88,19 @@
 
 <script>
 import axios from "axios";
+
 export default {
   name: "TeacherWorkloadTable",
   data() {
     return {
-      academicYears: [],
-      currentAcademicYear: "", //学年
-      currentSemester: 1, //学期
-      workloadTableHeader: [],
-      workloadTableData: [],
+      academicYearRange: [], //学年select列表范围
+      currentAcademicYear: "2022-2023", //选择的学年
+      currentSemester: 1, //选择的学期
+      workloadTableHeader: [], //显示数据表头
+      workloadTableData: [], //显示数据体
+      dataExists: false, //“暂无数据”提示的显示
+      noDataHint: "",
+      exportFileName: "",
     };
   },
   computed: {
@@ -82,52 +109,74 @@ export default {
       return this.workloadTableData.length; //总课程数
     },
   },
+
   methods: {
-    //根据学年和学期获取对应工作量的数据
-    getTableData(year, semester) {
-      console.log(year);
-      console.log(semester);
-      axios({
-        method: "get",
-        url: `http://localhost:3000/teacherWorkload`,
-      }).then((res) => {
-        this.workloadTableHeader = res.data.workloadTableHeader;
-        this.workloadTableData = res.data.workloadTableData;
+    //根据当前学年和学期获取对应工作量的数据
+    getTableData() {
+      // console.log(this.currentAcademicYear);
+      // console.log(this.currentSemester);
+
+      axios
+        .get("http://localhost:3000/teacherWorkload", {
+          params: {
+            year: this.currentAcademicYear,
+            semester: this.currentSemester,
+          },
+        })
+        .then((res) => {
+          //如果有数据
+          if (res.data.workloadTableData.length > 0) {
+            this.workloadTableHeader = res.data.workloadTableHeader;
+            this.workloadTableData = res.data.workloadTableData;
+            this.dataExists = true;
+          }
+          //如果没有数据
+          else {
+            this.workloadTableHeader = [];
+            this.workloadTableData = [];
+            this.dataExists = false;
+            this.noDataHint = `暂无${this.currentAcademicYear}学年，第${this.currentSemester}学期的数据！`;
+          }
+        });
+    },
+    exportFile() {
+      import("xlsx").then((XLSX) => {
+        const data = XLSX.utils.json_to_sheet(this.workloadTableData);
+        const col = XLSX.utils.decode_range(data["!ref"]).e.c; //获取数据的列数（起始列序号为0）
+        //替换第一行的值为中文表头
+        for (let i = 0; i <= col; i++) {
+          data[XLSX.utils.encode_cell({ r: 0, c: i })].v =
+            this.workloadTableHeader[i];
+        }
+        //获取文件名
+        let filename = `${this.currentAcademicYear}学年_${this.currentSemester}学期工作量`; //default
+        if (this.exportFileName != "") {
+          //custom
+          filename = this.exportFileName;
+        }
+        const wb = XLSX.utils.book_new();
+        XLSX.utils.book_append_sheet(wb, data, "data");
+        XLSX.writeFile(wb, filename + ".xlsx");
       });
     },
-    refreshData() {
-      this.getTableData(this.currentAcademicYear, this.currentSemester);
-    },
-    // exportFile() {
-    //   import("@/vendor/Export2Excel").then((excel) => {
-    //     const data = this.formatJson(this.workloadTableData);
-    //     excel.export_json_to_excel({
-    //       header: this.workloadTableHeader, //Header Required
-    //       data, //Specific data Required
-    //       filename: "excel-list", //Optional
-    //       autoWidth: true, //Optional
-    //       bookType: "xlsx", //Optional
-    //     });
-    //   });
-    // },
   },
+
   created() {
-    //向后台获取学年列表
-    axios({
-      method: "get",
-      url: `http://localhost:3000/academicYearList`,
-    }).then((res) => {
-      this.academicYears = res.data;
-      // console.log(res.data[0]);
-      //设置默认学年学期
-      this.currentAcademicYear = res.data[0];
-      this.currentSemester = 1;
-      //调用getTableData()方法获取数据
-      this.getTableData(this.currentAcademicYear, this.currentSemester);
-    });
+    // 设置学年选择范围（近5年），设置default学年学期
+    const date = new Date();
+    let currentYear = date.getFullYear();
+    for (let i = 0; i < 5; i++) {
+      this.academicYearRange[i] = `${currentYear}-${currentYear + 1}`;
+      currentYear = currentYear - 1;
+    }
+    this.currentAcademicYear = this.academicYearRange[0];
+    this.currentSemester = 1;
+    //向后台获取default学年学期数据;
+    this.getTableData();
   },
 };
 </script>
+
 
 <style scoped>
 * {
@@ -168,6 +217,20 @@ export default {
 .tableFilter label {
   margin-right: 3px;
 }
+.tableFilter .confirmYearAndSemesterBtn {
+  /* margin-left: 10px; */
+  margin-right: 10%;
+  width: 50px;
+  height: 25px;
+  border: 1px solid rgba(128, 128, 128, 0.555);
+  border-radius: 5px;
+  color: #fff;
+  font-weight: 550;
+  background-color: rgba(41, 34, 106);
+}
+.tableFilter .confirmYearAndSemesterBtn:hover {
+  background-color: rgba(41, 34, 106, 0.815);
+}
 /* 统计数据 */
 .statistics {
   background-color: #fff;
@@ -195,13 +258,25 @@ export default {
 /*工具栏*/
 .toolBar {
   margin-bottom: 5px;
-  padding-right: 15px;
   padding: 5px 15px;
   background-color: #fff;
   border-radius: 5px;
   text-align: right;
 }
-.toolBar button {
+.toolBar label.customFileName {
+  font-size: 16px;
+}
+.toolBar input#exportFileName {
+  padding-left: 5px;
+  height: 25px;
+  border: 1px solid gray;
+  border-radius: 5px;
+}
+.toolBar span.defaultExportfileName {
+  font-size: 10px;
+  color: gray;
+}
+.toolBar button.export {
   padding: 5px;
   border: 1px solid rgba(128, 128, 128, 0.603);
   border-radius: 5px;
@@ -210,9 +285,13 @@ export default {
   color: rgb(51, 114, 96);
   font-weight: 500;
 }
-.toolBar button:hover {
+.toolBar button.export:hover {
   background-color: rgb(209, 207, 207);
 }
+.toolBar button.disabled {
+  background-color: rgb(209, 207, 207);
+}
+
 /* 数据列表 */
 .workloadTableWrapper {
   position: relative;
