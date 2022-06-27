@@ -2,13 +2,12 @@ package com.example.summer.controller;
 
 import com.example.summer.entity.TeachingWorkloadStatistics;
 import com.example.summer.models.pojo.ResponseCode;
+import com.example.summer.models.vo.SearchPersonVo;
 import com.example.summer.service.TeachingWorkloadService;
 import com.example.summer.service.impl.TeachingWorkloadServiceImpl;
 import com.example.summer.utils.Result;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -26,9 +25,9 @@ public class TeachingWorkloadSearchController {
      * @Return:
      * @Description:按名查询
      */
-    @RequestMapping("/searchPerson")
-    public String searchPerson(@RequestParam(value = "name", required = false) String teacherName) {
-        List<TeachingWorkloadStatistics> teacherList = teacherService.searchTeachingWorkloadByName(teacherName);
+    @RequestMapping(value = "/searchPerson",method = RequestMethod.POST)                 //可以重用到全部查询部分
+    public String searchPerson(@RequestBody(required = false) SearchPersonVo searchPersonVo) {
+        List<TeachingWorkloadStatistics> teacherList = teacherService.searchTeachingWorkloadByName(searchPersonVo.getName());
 //        System.out.println(new Result(ResponseCode.SUCCESS,teacherList));
         if (teacherList == null || teacherList.isEmpty()) {
             return new Result(ResponseCode.NoContentFailure, null).toString();
@@ -44,9 +43,9 @@ public class TeachingWorkloadSearchController {
      * @Return:
      * @Description:按名模糊查询
      */
-    @RequestMapping("/searchPersonLike")
-    public String searchPersonLike(@RequestParam(value = "name", required = false) String teacherName) {
-        List<TeachingWorkloadStatistics> teacherList = teacherService.searchTeachingWorkloadByNameLike(teacherName);
+    @RequestMapping(value = "/searchPersonLike",method = RequestMethod.POST)
+    public String searchPersonLike(@RequestBody(required = false) SearchPersonVo searchPersonVo) {
+        List<TeachingWorkloadStatistics> teacherList = teacherService.searchTeachingWorkloadByNameLike(searchPersonVo.getName());
 //        System.out.println(new Result(ResponseCode.SUCCESS,teacherList));
         if (teacherList == null || teacherList.isEmpty()) {
             return new Result(ResponseCode.NoContentFailure, null).toString();
@@ -61,11 +60,9 @@ public class TeachingWorkloadSearchController {
      * @Return:
      * @Description:按年度范围、学期范围和模糊姓名查询
      */
-    @RequestMapping("/searchRecordInScope")
-    public String searchRecordInScope(@RequestParam(value = "startYear", required = false) String startYear,
-                                      @RequestParam(value = "endYear", required = false) String endYear,
-                                      @RequestParam(value = "name", required = false) String teacherName) {
-        List<TeachingWorkloadStatistics> teacherList = teacherService.searchTeachingWorkloadInScope(startYear, endYear, teacherName);
+    @RequestMapping(value = "/searchRecordInScope",method = RequestMethod.POST)
+    public String searchRecordInScope(@RequestBody(required = false) SearchPersonVo searchPersonVo ) {
+        List<TeachingWorkloadStatistics> teacherList = teacherService.searchTeachingWorkloadInScope(searchPersonVo.getStartYear(), searchPersonVo.getEndYear(), searchPersonVo.getName());
         if (teacherList == null || teacherList.isEmpty()) {
             return new Result(ResponseCode.NoContentFailure, null).toString();
         }
