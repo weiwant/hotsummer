@@ -3,6 +3,8 @@ package com.example.summer.dao;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.example.summer.entity.TeachingWorkloadStatistics;
 import com.example.summer.mapper.TeachingWorkloadStatisticsMapper;
+import com.example.summer.models.vo.TableShowDetailVo;
+import com.example.summer.models.vo.TableShowVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -54,6 +56,28 @@ public class ColumnShowDao {
         QueryWrapper<TeachingWorkloadStatistics> queryWrapper = new QueryWrapper<>();
         queryWrapper.select(st);
         queryWrapper.eq("main_teacher_name", teacherName);
+        List<TeachingWorkloadStatistics> workInColumn = workloadStatisticsMapper.selectList(queryWrapper);
+        return workInColumn;
+
+    }
+
+
+    public List<TeachingWorkloadStatistics> getWorkInColumnCustomByYear(TableShowDetailVo tableShowVo, List<String> names) {
+        //把list转为String
+        String st = "";
+        for (int i = 0; i < names.size(); i++) {
+            if (i == 0) {
+                st += names.get(i);
+            } else {
+                st = st + "," + names.get(i);
+            }
+
+        }
+        QueryWrapper<TeachingWorkloadStatistics> queryWrapper = new QueryWrapper<>();
+        queryWrapper.select(st);
+        queryWrapper.eq("main_teacher_name",tableShowVo.getTeacherName());
+        queryWrapper.eq("academic_year",tableShowVo.getYear());
+        queryWrapper.eq("semester",tableShowVo.getSemester());
         List<TeachingWorkloadStatistics> workInColumn = workloadStatisticsMapper.selectList(queryWrapper);
         return workInColumn;
 
