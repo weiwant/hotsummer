@@ -2,12 +2,14 @@ package com.example.summer.controller;
 
 
 import com.example.summer.models.pojo.ExcelFormat;
+import com.example.summer.service.TeachingWorkloadService;
 import com.example.summer.service.impl.ExportExcelImpl;
 import com.example.summer.service.impl.TeachingWorkloadServiceImpl;
 import org.apache.poi.hssf.usermodel.*;
 import org.apache.poi.ss.usermodel.HorizontalAlignment;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -20,7 +22,7 @@ import java.nio.charset.StandardCharsets;
 public class TeachingWorkloadDownloadController {
 
     @Autowired
-    private TeachingWorkloadServiceImpl exportService;
+    private TeachingWorkloadService exportService;
     @Autowired
     private ExportExcelImpl exportExcel;
 
@@ -69,9 +71,10 @@ public class TeachingWorkloadDownloadController {
      * @Description Excel总表导出控制类
      * @Param startYear 开始学年
      * @Param endYear 结束学年
-     * @Param name 教师姓名
+     * @Param name 教师姓名（精确）
+     * @Param 如果要查找2019-2020年的，请将传入的startYear和endYear都设置为2019-2020
      */
-    @RequestMapping("/excelDownload")
+    @RequestMapping(value="/excelDownload",method = RequestMethod.POST)
     public void test(@RequestParam String startYear, @RequestParam String endYear, @RequestParam(value = "name") String teacherName, HttpServletResponse response) {
         ExcelFormat myExcel = exportExcel.getContentInScope(startYear, endYear, teacherName);
         try {
@@ -86,6 +89,21 @@ public class TeachingWorkloadDownloadController {
         }
     }
 
+
+    @RequestMapping(value="/excelDownloadAll",method = RequestMethod.POST)
+    public void downloadAll(@RequestParam String startYear, @RequestParam String endYear, @RequestParam(value = "name") String teacherName, HttpServletResponse response) {
+        ExcelFormat myExcel = exportExcel.getContentInScope(startYear, endYear, teacherName);
+        try {
+            HSSFWorkbook hssfWorkbook = getHSSFWorkbook(myExcel.sheetName, myExcel.title, myExcel.content, null);
+            this.setResponseHeader(response, myExcel.fileName);
+            OutputStream os = response.getOutputStream();
+            hssfWorkbook.write(os);
+            os.flush();
+            os.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
     /**
      * @Author theLastNYF
      * @Date 2022/6/25

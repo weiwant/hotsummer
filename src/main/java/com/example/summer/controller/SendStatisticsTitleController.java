@@ -1,6 +1,7 @@
 package com.example.summer.controller;
 
 import com.example.summer.models.pojo.ResponseCode;
+import com.example.summer.service.SendStatisticTitleService;
 import com.example.summer.service.impl.SendStatisticTitleServiceImpl;
 import com.example.summer.utils.Result;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,7 +17,7 @@ import java.util.Map;
 @RestController
 public class SendStatisticsTitleController {
     @Autowired
-    SendStatisticTitleServiceImpl service;
+    SendStatisticTitleService service;
 
     @RequestMapping(value = "sendTitle")
     public String sendTitle() {

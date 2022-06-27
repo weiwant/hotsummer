@@ -2,6 +2,7 @@ package com.example.summer.controller;
 
 import com.example.summer.entity.TeachingWorkloadStatistics;
 import com.example.summer.models.pojo.ResponseCode;
+import com.example.summer.service.TeachingWorkloadService;
 import com.example.summer.service.impl.TeachingWorkloadServiceImpl;
 import com.example.summer.utils.Result;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,7 +17,7 @@ import java.util.List;
 public class TeachingWorkloadSearchController {
     //    主要是按名查询的Controller
     @Autowired
-    TeachingWorkloadServiceImpl teacherService;
+    TeachingWorkloadService teacherService;
 
     /**
      * @Author：theLastNYF
