@@ -42,6 +42,12 @@ public class ColumnShowController {
         }
     }
 
+    /**
+     * @author 24047
+     * @date 2022/6/27
+     * @param
+     * @return java.lang.String
+     */
     @RequestMapping(value = "/custom",method = RequestMethod.GET)
     public String getColumnCustom(@RequestParam(value = "teacherName") String teacherName){
         //在这里固定了教师用户能查看的六列数据
@@ -57,7 +63,6 @@ public class ColumnShowController {
         List<String> chineseNamesList= Arrays.asList(chineseNames);
         //在数据库中查询names中每个值代表的字段的数值，并且返回这名老师的对应列的记录
         List<WorkloadData[]> teacherSee = columnShowService.getColumnCustom(names,chineseNamesList,teacherName);
-
         if (teacherSee.size() == 0) {
             return new Result(ResponseCode.NoContentFailure).toString();
         } else {
