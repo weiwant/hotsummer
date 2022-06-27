@@ -28,6 +28,14 @@ public class ExportExcelDao {
         teacherMap.eq("main_teacher_name", teacherName);//不模糊的查询
         return teachingWorkloadStatisticsMapper.selectList(teacherMap);
     }
+
+    public List<TeachingWorkloadStatistics> searchInScopeAccurateAll(String startYear, String endYear) {
+
+        QueryWrapper<TeachingWorkloadStatistics> teacherMap = new QueryWrapper<>();
+//        teacherMap.between("semester",startSemester,endSemester);
+        teacherMap.between("academic_year", startYear, endYear);//限定学年范围
+        return teachingWorkloadStatisticsMapper.selectList(teacherMap);
+    }
 //    public List<TeachingWorkloadStatistics> searchByName(String teacherName) {
 //        QueryWrapper<TeachingWorkloadStatistics> teacherMap = new QueryWrapper<>();
 //        teacherMap.eq("main_teacher_name", teacherName);

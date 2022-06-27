@@ -38,6 +38,12 @@ public class SendStatisticTitleServiceImpl implements SendStatisticTitleService 
         }
         return myMap;
     }
+    /**
+     * @author 24047
+     * @date 2022/6/27
+     * @param titleShow 和上面那个唯一的区别就是返回值类型不同了
+     * @return java.util.Map<java.lang.String,java.lang.String>
+     */
     @Override
     public Map<String, String> getTitleFormat(String[] titleShow){
         Object[] titleObject = ReflexUtil.readAllAttribute(new TeachingWorkloadStatistics());

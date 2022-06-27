@@ -68,14 +68,14 @@ public class TeachingWorkloadDownloadController {
     /**
      * @Author theLastNYF
      * @Date 2022/6/25
-     * @Description Excel总表导出控制类
+     * @Description Excel 教师端总表导出控制类
      * @Param startYear 开始学年
      * @Param endYear 结束学年
      * @Param name 教师姓名（精确）
      * @Param 如果要查找2019-2020年的，请将传入的startYear和endYear都设置为2019-2020
      */
     @RequestMapping(value="/excelDownload",method = RequestMethod.POST)
-    public void test(@RequestParam String startYear, @RequestParam String endYear, @RequestParam(value = "name") String teacherName, HttpServletResponse response) {
+    public void download(@RequestParam String startYear, @RequestParam String endYear, @RequestParam(value = "name") String teacherName, HttpServletResponse response) {
         ExcelFormat myExcel = exportExcel.getContentInScope(startYear, endYear, teacherName);
         try {
             HSSFWorkbook hssfWorkbook = getHSSFWorkbook(myExcel.sheetName, myExcel.title, myExcel.content, null);
@@ -90,9 +90,18 @@ public class TeachingWorkloadDownloadController {
     }
 
 
+    /**
+     * @Author theLastNYF
+     * @Date 2022/6/25
+     * @Description 管理员端Excel总表导出控制类
+     * @Param startYear 开始学年
+     * @Param endYear 结束学年
+     * @Param name 教师姓名（精确）
+     * @Param 如果要查找2019-2020年的，请将传入的startYear和endYear都设置为2019-2020
+     */
     @RequestMapping(value="/excelDownloadAll",method = RequestMethod.POST)
-    public void downloadAll(@RequestParam String startYear, @RequestParam String endYear, @RequestParam(value = "name") String teacherName, HttpServletResponse response) {
-        ExcelFormat myExcel = exportExcel.getContentInScope(startYear, endYear, teacherName);
+    public void downloadAll(@RequestParam String startYear, @RequestParam String endYear, HttpServletResponse response) {
+        ExcelFormat myExcel = exportExcel.getContentInScopeAll(startYear, endYear);
         try {
             HSSFWorkbook hssfWorkbook = getHSSFWorkbook(myExcel.sheetName, myExcel.title, myExcel.content, null);
             this.setResponseHeader(response, myExcel.fileName);

@@ -40,4 +40,24 @@ public class ColumnShowDao {
 
     }
 
+    public List<TeachingWorkloadStatistics> getWorkInColumnCustom(List<String> names,String teacherName) {
+        //把list转为String
+        String st = "";
+        for (int i = 0; i < names.size(); i++) {
+            if (i == 0) {
+                st += names.get(i);
+            } else {
+                st = st + "," + names.get(i);
+            }
+
+        }
+        QueryWrapper<TeachingWorkloadStatistics> queryWrapper = new QueryWrapper<>();
+        queryWrapper.select(st);
+        queryWrapper.eq("main_teacher_name", teacherName);
+        List<TeachingWorkloadStatistics> workInColumn = workloadStatisticsMapper.selectList(queryWrapper);
+        return workInColumn;
+
+    }
+
+
 }

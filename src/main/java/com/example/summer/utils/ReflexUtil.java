@@ -7,7 +7,6 @@ import java.util.Map;
 public class ReflexUtil {
     /**
      * 根据属性名获取属性值
-     *
      * @param fieldName
      * @param object
      * @return
@@ -55,6 +54,7 @@ public class ReflexUtil {
             }
         }
         System.out.println(nameValues.toString());
+
         return nameValues;
     }
 

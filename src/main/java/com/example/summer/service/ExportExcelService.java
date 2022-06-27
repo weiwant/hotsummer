@@ -5,4 +5,6 @@ import com.example.summer.models.pojo.ExcelFormat;
 public interface ExportExcelService {
 
     ExcelFormat getContentInScope(String startYear, String endYear, String teacherName);
+
+    ExcelFormat getContentInScopeAll(String startYear, String endYear);
 }

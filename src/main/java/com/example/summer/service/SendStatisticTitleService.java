@@ -11,4 +11,5 @@ public interface SendStatisticTitleService {
     Map<String, Object> getTitle(String[] titleShow);
 
     Map<String, String> getTitleFormat(String[] titleShow);
+
 }
