@@ -67,4 +67,12 @@ public class TableShowDao {
         Object[] workTableHeader=ReflexUtil.readAllAttribute(t);
         return  workTableHeader;
     }
+
+    public List<TeachingWorkloadStatistics> getDownLoadTables(TableShowVo tableShowVo) {
+        QueryWrapper<TeachingWorkloadStatistics> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("academic_year",tableShowVo.getYear());
+        queryWrapper.eq("semester",tableShowVo.getSemester());
+        List<TeachingWorkloadStatistics> works = teacherMapper.selectList(queryWrapper);
+        return works;
+    }
 }

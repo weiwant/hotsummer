@@ -58,4 +58,15 @@ public class TableShowServiceImpl {
         Object[] workTableHeader=tableShowDao.getWorkTableHeader();
         return  workTableHeader;
     }
+
+    /**
+     * @Author：wwq
+     * @Return：
+     * @Url:
+     * @Description：获取下载表数据
+     */
+    public List<TeachingWorkloadStatistics> getDownloadTable(TableShowVo tableShowVo) {
+        List<TeachingWorkloadStatistics> teachList=tableShowDao.getDownLoadTables(tableShowVo);
+        return  teachList;
+    }
 }

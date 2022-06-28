@@ -9,7 +9,7 @@ import com.alibaba.fastjson.annotation.JSONField;
 public class TableShowVo {
     private String year;//学年
     private int semester;//学期
-    private int pageNumber;
+    private int pageNumber;//页数
 
     public String getYear(){
         return year;

@@ -74,4 +74,20 @@ public class TableShowController {
             return new Result(ResponseCode.SUCCESS, worksInSemester).toString();
         }
     }
+
+    /**
+     * @Author：wwq
+     * @Return：
+     * @Url:
+     * @Description：导出数据获取
+     */
+    @RequestMapping(value = "tabledownload",method = RequestMethod.POST)
+    public String downloadTable(@RequestBody TableShowVo tsv){
+        List<TeachingWorkloadStatistics> teachTable=tableShowService.getDownloadTable(tsv);
+        if (teachTable.size() == 0) {
+            return new Result(ResponseCode.NoContentFailure).toString();
+        } else {
+            return new Result(ResponseCode.SUCCESS, teachTable).toString();
+        }
+    }
 }

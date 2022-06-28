@@ -21,6 +21,8 @@ public interface TableShowService {
     IPage<TeachingWorkloadStatistics> getSemesterTable(TableShowVo tableShowVo);
 
     Object[] getTableHeader();
+
+    List<TeachingWorkloadStatistics> getDownloadTable(TableShowVo tsv);
 }
 
 
