@@ -28,10 +28,10 @@ public class UserLoginController {
         if (exist) {
             boolean rightPsw = login.checkPsw(loginVo);     //检测密码是否正确
             if (rightPsw) {
-                UserLogin userIdentify = new UserLogin();
-                userIdentify.setIdentify(login.selectIdentify(loginVo));
-                userIdentify.setUsername(loginVo.getUsername());
-                return new Result(ResponseCode.SUCCESS, userIdentify).toString();
+                LoginVo loginVo1 = new LoginVo();
+                loginVo1.setIdentify(login.selectIdentify(loginVo));
+                loginVo1.setUsername(loginVo.getUsername());
+                return new Result(ResponseCode.SUCCESS, loginVo1).toString();
             } else {
                 return new Result(ResponseCode.LoginFailure).toString();
             }

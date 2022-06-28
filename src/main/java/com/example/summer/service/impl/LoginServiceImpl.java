@@ -21,15 +21,11 @@ public class LoginServiceImpl implements UserService {
     @Override
     public boolean checkUserExist(LoginVo loginVo) {//检测该用户名的账户是否存在
         UserLogin ul = new UserLogin();
-        System.out.println("0");
         ul = userdao.selectById(loginVo.getUsername());
-        System.out.println("1");
 
         if (ul == null) {
-            System.out.println("2");
             return false;
         } else {
-            System.out.println("3");
             return true;
         }
     }
