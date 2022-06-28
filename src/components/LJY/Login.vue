@@ -43,9 +43,9 @@ export default {
       password: "",
     };
   },
-
   methods: {
     login() {
+      console.log(this.$domainName);
       const self = this;
       if (this.$data.username == "" || this.$data.password == "") {
         alert("账号或密码不能为空！");
@@ -53,7 +53,7 @@ export default {
         //向后端提交数据
         //需要url
         axios
-          .post("http://awjkds.vaiwan.com/users/login", {
+          .post(`${this.$domainName}/users/login`, {
             username: this.$data.username,
             password: this.$data.password,
           })

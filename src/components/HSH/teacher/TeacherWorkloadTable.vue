@@ -115,7 +115,7 @@ export default {
     //根据当前学年和学期获取对应工作量的数据
     getTableData() {
       axios
-        .post(" http://abcds.vaiwan.com/resource/customIndeed", {
+        .post(`${this.$domainName}/resource/customIndeed`, {
           year: this.currentAcademicYear,
           semester: this.currentSemester,
           teacherName: this.currentTeacherName,

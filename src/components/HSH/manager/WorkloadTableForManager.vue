@@ -216,7 +216,7 @@ export default {
     //获取某学年学期数据
     getTableData() {
       axios
-        .post("http://abcs.vaiwan.com/resource/tableinsemester", {
+        .post(`${this.$domainName}/resource/tableinsemester`, {
           year: this.currentAcademicYear,
           semester: this.currentSemester,
           pageNumber: this.currentPage,
@@ -266,7 +266,7 @@ export default {
       switch (this.searchKeyword) {
         case "上课老师":
           axios
-            .post("http://abcds.vaiwan.com/search/searchIndeed", {
+            .post(`${this.$domainName}/search/searchIndeed`, {
               year: this.currentAcademicYear,
               semester: this.currentSemester,
               teacherName: this.searchValue,
@@ -290,7 +290,7 @@ export default {
     //文件导出
     exportFile() {
       axios
-        .post("http://abcs.vaiwan.com/resource/tabledownload", {
+        .post(`${this.$domainName}/resource/tabledownload`, {
           year: this.currentAcademicYear,
           semester: this.currentSemester,
         })
@@ -339,7 +339,7 @@ export default {
       formData.append("semester", _this.semester);
       formData.append("file", file);
       axios
-        .post("http://asyz.vaiwan.com/file/upload", formData, {
+        .post(`${this.$domainName}/file/upload`, formData, {
           headers: {
             "Content-Type": "multipart/form-datas",
           },
