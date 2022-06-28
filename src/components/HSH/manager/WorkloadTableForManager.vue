@@ -1,6 +1,5 @@
 <template>
   <div id="workloadDisplay">
-    <!--component标题-->
     <div class="sectionTitle">教学工作量管理</div>
     <!--上传文件-->
     <div class="subtitle">信息导入</div>
@@ -9,7 +8,7 @@
         <label for="year">学年:&nbsp;</label>
         <select id="year" v-model="uploadFileYearInfo1">
           <option v-for="index in 5" :key="index">
-            {{ 2023 - index }}
+            {{ currentYear - index + 1 }}
           </option>
         </select>
         - {{ uploadFileYearInfo2 }}
@@ -22,26 +21,27 @@
           <option>3</option>
         </select>
       </div>
-
-      <el-input class="upload"
-      type="file"
-      ref="file"
-      name="file"
-      v-model="file"
-      @click="e => {e.target.value = '';}"
-      @change="getFileData"
-      multiple="false"
-      accept=".xls,.xlsx">&nbsp;上传工作量excel文件</el-input>
-
+      <el-input
+        type="file"
+        ref="file"
+        name="file"
+        v-model="file"
+        @change="getFileData"
+        multiple="false"
+        accept=".xls,.xlsx"
+      ></el-input>
     </div>
-    <!--查看已上传信息-->
+    <!--学年和学期选择-->
     <div class="subtitle">信息查询</div>
-    <!--学年和学期筛选-->
     <div class="tableFilter">
       <div class="segment">
         <label for="year">学年</label>
         <select v-model="currentAcademicYear" id="year">
-          <option v-for="item in academicYears" :key="item.id" :value="item">
+          <option
+            v-for="item in academicYearRange"
+            :key="item.id"
+            :value="item"
+          >
             {{ item }}
           </option>
         </select>
@@ -54,13 +54,15 @@
           <option value="3">3</option>
         </select>
       </div>
-      <button class="confirmYearAndSemesterBtn" @click="refreshData()">
+      <button
+        class="confirmYearAndSemesterBtn"
+        @click="confirmYearAndSemester()"
+      >
         确&nbsp;认
       </button>
       <div class="segment">
         <select class="search" v-model="searchKeyword" id="">
           <option>上课老师</option>
-          <option>计划学院</option>
         </select>
         <!-- 搜索框 -->
         <input
@@ -73,29 +75,44 @@
         <button class="search searchBtn" @click="search()"></button>
       </div>
     </div>
-    <!--统计数据栏-->
+    <!--查询结果的统计数据栏-->
     <div class="statistics">
       <ul>
         <li>
-          <div class="name">总课程数</div>
-          <div class="value">{{ totalClassCount }}</div>
+          <div class="name">查询结果数</div>
+          <div class="value">{{ totalItems }}</div>
         </li>
         <li>
-          <div class="name">XXX</div>
-          <div class="value">yyyy</div>
+          <div class="name">总页数</div>
+          <div class="value">{{ allPageCount }}</div>
         </li>
       </ul>
     </div>
-    <!--工具栏-->
+    <!--下载文件工具栏-->
     <div class="toolBar">
-      <button class="download"> 导出Excel至本地</button>
+      <label class="customFileName" for="exportFileName">文件名：</label>
+      <input type="text" v-model="exportFileName" id="exportFileName" />
+      <span class="defaultExportfileName"
+        >（默认：{{ this.currentAcademicYear }}学年_{{
+          this.currentSemester
+        }}学期工作量）</span
+      >
+      <button
+        class="download"
+        @click="exportFile()"
+        :disabled="!dataExists"
+        :class="{ disabled: !dataExists }"
+      >
+         导出Excel至本地
+      </button>
     </div>
     <!--数据列表-->
     <div class="workloadTableWrapper">
+      <div class="noDataHint" v-if="!dataExists" v-html="noDataHint"></div>
       <table class="workloadDataTable">
-        <thead>
+        <thead v-if="dataExists">
           <tr>
-            <th v-for="item in workloadTableHeader" :key="item.id">
+            <th v-for="(item, index) in workloadTableHeader" :key="index">
               {{ item }}
             </th>
           </tr>
@@ -103,13 +120,20 @@
         <tbody>
           <tr
             class="tableDataLine"
-            v-for="item in workloadDataToBeDisplayed"
+            v-for="item in workloadTableData"
             :key="item.id"
           >
-            <td v-for="value in item" :key="value.id">{{ value }}</td>
+            <td v-for="(value, index) in item" :key="index">{{ value }}</td>
           </tr>
         </tbody>
       </table>
+    </div>
+    <div class="pagination">
+      <button @click="pageBefore()" :disabled="noLessPage">&lt;</button>
+      第
+      <input v-model="currentPage" type="text" @keyup.enter="choosePage()" />
+      页
+      <button @click="pageAfter()" :disabled="noMorePage">&gt;</button>
     </div>
   </div>
 </template>
@@ -120,91 +144,191 @@ export default {
   name: "TeacherWorkloadTable",
   data() {
     return {
-      uploadFileYearInfo1: "2021",
+      //文件上传
+      currentYear: 0, //当前年份
+      uploadFileYearInfo1: "",
       uploadFileSemesterInfo: 1,
-      academicYears: [],
-      currentAcademicYear: "2019-2020", //学年
-      currentSemester: 2, //学期
+      file: "",
+      //某学年学期的数据
+      academicYearRange: [],
+      currentAcademicYear: "", //学年
+      currentSemester: 1, //学期
+      workloadTableHeader: [
+        "学年",
+        "辅助",
+        "计算用学时",
+        "课程性质解释",
+        "计算机用时",
+        "课程名称",
+        "课程性质",
+        "课程号",
+        "学分",
+        "折扣",
+        "实验安排",
+        "实验课时",
+        "教分",
+        "合课单位",
+        "实验室核对结果",
+        "上课教师名字",
+        "教师职称",
+        "专业",
+        "折扣前BA1系数",
+        "原始教分",
+        "其他教师名",
+        "计划学院",
+        "实践课时",
+        "备注",
+        "学期",
+        "是否为特殊班级",
+        "是否全英教学",
+        "上课人数",
+        "年级",
+        "教学班",
+        "BA1系数",
+        "开课学院",
+        "理论课时",
+      ],
+      workloadTableData: [],
+      dataExists: false, //“暂无数据”提示的显示
+      noDataHint: "",
+      //条件筛查
       searchFilterRequired: false,
       searchKeyword: "上课老师",
       searchValue: "",
-      workloadTableHeader: [],
-      workloadTableData: [],
-      file: ''
+      //文件导出
+      dataTobeExported: [],
+      exportFileName: "",
+      //pagination
+      noLessPage: true,
+      noMorePage: false,
+      currentPage: 1,
+      allPageCount: 0,
+      totalItems: 0,
     };
   },
   computed: {
     //统计数据
-    totalClassCount() {
-      return this.workloadDataToBeDisplayed.length; //总课程数
-    },
     uploadFileYearInfo2() {
       return Number(this.uploadFileYearInfo1) + 1;
     },
-    //列表数据
-    workloadDataToBeDisplayed() {
-      console.log("computing");
-      if (!this.searchFilterRequired) return this.workloadTableData;
-      else {
-        switch (this.searchKeyword) {
-          case "上课老师":
-            return this.workloadTableData.filter(
-              (item) => item.teacher == `${this.searchValue}`
-            );
-          case "计划学院":
-            return this.workloadTableData.filter(
-              (item) => item.planFaculty == `${this.searchValue}`
-            );
-        }
-      }
-    },
   },
   methods: {
-    //信息筛选
-    //学年学期筛选
-    refreshData() {
-      this.getTableData(this.currentAcademicYear, this.currentSemester);
+    //获取某学年学期数据
+    getTableData() {
+      axios
+        .post("http://abcs.vaiwan.com/resource/tableinsemester", {
+          year: this.currentAcademicYear,
+          semester: this.currentSemester,
+          pageNumber: this.currentPage,
+        })
+        .then((res) => {
+          //如果有数据
+          if (res.data.response.code != 204) {
+            this.dataExists = true;
+            this.workloadTableData = res.data.data.records;
+            this.allPageCount = res.data.data.pages;
+            this.totalItems = res.data.data.total;
+          }
+          //如果没有数据
+          else {
+            this.dataExists = false;
+            this.workloadTableData = [];
+            this.noDataHint = `暂无&nbsp;&nbsp;${this.currentAcademicYear}&nbsp;&nbsp;学年，第&nbsp;&nbsp;${this.currentSemester}&nbsp;&nbsp;学期的数据！`;
+          }
+        });
     },
-    getTableData(year, semester) {
-      console.log(year);
-      console.log(semester);
-      axios({
-        method: "get",
-        url: `http://localhost:3000/teacherWorkload`,
-      }).then((res) => {
-        this.workloadTableHeader = res.data.workloadTableHeader;
-        this.workloadTableData = res.data.workloadTableData;
-      });
+    //页码操作
+    confirmYearAndSemester() {
+      this.currentPage = 1;
+      this.getTableData();
     },
-    //搜索
+    pageBefore() {
+      if (this.currentPage == 1) return;
+      this.currentPage = this.currentPage - 1;
+      this.noMorePage = false;
+      if (this.currentPage == 1) this.noLessPage = true;
+      this.getTableData();
+    },
+    pageAfter() {
+      if (this.currentPage == this.allPageCount) return;
+      this.currentPage = this.currentPage + 1;
+      this.noLessPage = false;
+      if (this.currentPage == this.allPageCount) this.noMorePage = true;
+      this.getTableData();
+    },
+    choosePage() {
+      if (this.currentPage < 1 || this.currentPage > this.allPageCount) return;
+      this.getTableData();
+    },
+    //条件搜索
     search() {
-      console.log(this.searchKeyword);
-      console.log(this.searchValue);
-      if (this.searchValue == "") this.searchFilterRequired = false;
-      else {
-        this.searchFilterRequired = true;
+      if (this.searchValue == "") return;
+      switch (this.searchKeyword) {
+        case "上课老师":
+          axios
+            .post("http://abcds.vaiwan.com/search/searchIndeed", {
+              year: this.currentAcademicYear,
+              semester: this.currentSemester,
+              teacherName: this.searchValue,
+            })
+            .then((res) => {
+              console.log(res);
+              if (res.data.response.code == 200) {
+                console.log("Y");
+                this.dataExists = true;
+                this.workloadTableData = res.data.data;
+                this.totalItems = this.workloadTableData.length;
+              } else {
+                console.log("N");
+                this.dataExists = false;
+                this.workloadTableData = [];
+                this.noDataHint = `暂无&nbsp;&nbsp;${this.currentAcademicYear}&nbsp;&nbsp;学年，第&nbsp;&nbsp;${this.currentSemester}&nbsp;&nbsp;学期<br>${this.searchKeyword}&nbsp;&nbsp;为&nbsp;&nbsp;${this.searchValue}&nbsp;&nbsp;的数据！`;
+              }
+            });
       }
     },
-
+    //文件导出
+    exportFile() {
+      axios
+        .post("http://abcs.vaiwan.com/resource/tabledownload", {
+          year: this.currentAcademicYear,
+          semester: this.currentSemester,
+        })
+        .then((res) => {
+          this.dataTobeExported = res.data.data;
+          import("xlsx").then((XLSX) => {
+            const data = XLSX.utils.json_to_sheet(this.dataTobeExported);
+            const col = XLSX.utils.decode_range(data["!ref"]).e.c; //获取数据的列数（起始列序号为0）
+            for (let i = 0; i <= col; i++) {
+              data[XLSX.utils.encode_cell({ r: 0, c: i })].v =
+                this.workloadTableHeader[i];
+            }
+            //获取文件名
+            let filename = `${this.currentAcademicYear}学年_${this.currentSemester}学期工作量`; //default
+            if (this.exportFileName != "") {
+              //custom
+              filename = this.exportFileName;
+            }
+            const wb = XLSX.utils.book_new();
+            XLSX.utils.book_append_sheet(wb, data, "data");
+            XLSX.writeFile(wb, filename + ".xlsx");
+          });
+        });
+      this.dataTobeExported = [];
+    },
     //点击触发上传方法
-    uploadMaterial(){
-      this.$refs.file.dispatchEvent(new MouseEvent('click'));
+    uploadMaterial() {
+      this.$refs.file.dispatchEvent(new MouseEvent("click"));
     },
-
     //触发选择文件，判断文件类型
-    getFileData(file){
+    getFileData(file) {
       const inputFile = this.$refs.file;
-      let filename = this.$data.file;
-      const isExcel = filename.substring(filename.lastIndexOf('.')+ 1);
-      if(isExcel != "xls" && isExcel != "xlsx"){
-        alert("文件格式不对，请选择.xls或.xlsx文件！");
-      }else{
-        this.uploadFile(inputFile);
-      }
+      let filename = file;
+      const isExcel = filename.substring(filename.lastIndexOf(".") + 1);
+      this.uploadFile(inputFile.$refs.input.files[0]);
     },
-
     //上传文件，学年，学期
-    uploadFile(file){
+    uploadFile(file) {
       const formData = new FormData();
       var _this = this;
       _this.year = this.$data.uploadFileYearInfo1;
@@ -212,55 +336,38 @@ export default {
       formData.append("year", _this.year);
       formData.append("semester", _this.semester);
       formData.append("file", file);
-      // console.log(formData.get("year"));
-      // console.log(formData.get("semester"));
-      // console.log(formData.get("file"));
-
-      输入后端url
-      axios.post('', {
-        formData
-      })
-      .then(function(response){
-        if(response.data.data){
-          alert("报表文件上传成功！");
-        }else{
-          alert("上传失败！");
-          console.log(response);
-        }
-      })
-      .catch(function(error){
-        console.log(error);
-      })
-    }
-
+      axios
+        .post("http://asyz.vaiwan.com/file/upload", formData, {
+          headers: {
+            "Content-Type": "multipart/form-datas",
+          },
+        })
+        .then((res) => {
+          if (res.data.response.code == 200) {
+            alert("报表文件上传成功！");
+          } else {
+            alert("上传失败！");
+          }
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
+    },
   },
   created() {
-    //向后台获取学年列表
-    axios
-      .get("http://abcs.vaiwan.com/resource/tableinsemester", {
-        params: {
-          year: this.currentAcademicYear,
-          semester: this.currentSemester,
-        },
-      })
-      .then(function (res) {
-        console.log(res);
-      })
-      .catch((resp) => {
-        console.log("请求失败：" + resp);
-      });
-    // axios({
-    //   method: "get",
-    //   url: `http://10.128.141.58:8080/academicYearList`,
-    // }).then((res) => {
-    //   this.academicYears = res.data;
-    //   // console.log(res.data[0]);
-    //   //设置默认学年学期
-    //   this.currentAcademicYear = res.data[0];
-    //   this.currentSemester = 1;
-    //   //调用getTableData()方法获取数据
-    //   this.getTableData(this.currentAcademicYear, this.currentSemester);
-    // });
+    // 设置学年选择范围（近5年），设置default学年学期
+    const date = new Date();
+    let currentYear = date.getFullYear();
+    this.currentYear = currentYear;
+    this.uploadFileYearInfo1 = currentYear;
+    for (let i = 0; i < 5; i++) {
+      this.academicYearRange[i] = `${currentYear}-${currentYear + 1}`;
+      currentYear = currentYear - 1;
+    }
+    this.currentAcademicYear = this.academicYearRange[0];
+    this.currentSemester = 1;
+    //向后台获取default学年学期数据;
+    this.getTableData();
   },
 };
 </script>
@@ -301,11 +408,10 @@ export default {
   font-weight: 600;
 }
 
-/* 上传文件板块 */
+/* 上传文件 */
 .uploadSection {
   margin-bottom: 5px;
-  padding-right: 15px;
-  padding: 5px 15px;
+  padding: 15px 15px 10px;
   background-color: #fff;
   border-radius: 5px;
   text-align: left;
@@ -318,23 +424,11 @@ export default {
   font-size: 14px;
   font-weight: 500;
 }
-.uploadSection button.upload {
-  display: block;
-  margin-top: 2%;
-  padding: 5px;
-  border: 1px solid rgba(128, 128, 128, 0.452);
-  border-radius: 5px;
-  background-color: rgb(255, 254, 254);
-  font-family: "icomoon";
-  color: rgb(51, 114, 96);
-  font-weight: 500;
+.uploadSection .el-input input.el-input__inner {
+  border: 0px;
+  padding: 0;
 }
-
-.uploadSection button.upload:hover {
-  background-color: rgba(209, 207, 207, 0.479);
-}
-
-/* 筛选栏 */
+/* 数据查询筛选栏 */
 .tableFilter {
   font-size: 14px;
   margin-bottom: 5px;
@@ -353,7 +447,6 @@ export default {
   margin-right: 3px;
 }
 .tableFilter .confirmYearAndSemesterBtn {
-  /* margin-left: 10px; */
   margin-right: 10%;
   width: 50px;
   height: 25px;
@@ -366,11 +459,6 @@ export default {
 .tableFilter .confirmYearAndSemesterBtn:hover {
   background-color: rgba(41, 34, 106, 0.815);
 }
-/* .tableFilter .searchSegment {
-  margin-right: 10px;
-  padding: 8px;
-  border-radius: 5px;
-} */
 .tableFilter .search {
   height: 30px;
   border: 0px;
@@ -396,7 +484,7 @@ export default {
 .tableFilter button.searchBtn:hover {
   background-color: rgba(41, 34, 106, 0.815);
 }
-/* 统计数据 */
+/* 查询结果的统计数据栏 */
 .statistics {
   background-color: #fff;
   border-radius: 5px;
@@ -420,7 +508,7 @@ export default {
   font-size: 20px;
   font-weight: 500;
 }
-/*工具栏*/
+/*文件下载工具栏*/
 .toolBar {
   margin-bottom: 5px;
   padding-right: 15px;
@@ -428,6 +516,19 @@ export default {
   background-color: #fff;
   border-radius: 5px;
   text-align: right;
+}
+.toolBar label.customFileName {
+  font-size: 16px;
+}
+.toolBar input#exportFileName {
+  padding-left: 5px;
+  height: 25px;
+  border: 1px solid gray;
+  border-radius: 5px;
+}
+.toolBar span.defaultExportfileName {
+  font-size: 10px;
+  color: gray;
 }
 .toolBar button.download {
   padding: 5px;
@@ -441,14 +542,18 @@ export default {
 .toolBar button.download:hover {
   background-color: rgba(209, 207, 207, 0.479);
 }
+.toolBar button.disabled {
+  background-color: rgba(209, 207, 207, 0.479);
+}
 /* 数据列表 */
 .workloadTableWrapper {
   position: relative;
   overflow: scroll;
   height: 60vh;
+  padding-bottom: 15px;
 }
 table.workloadDataTable {
-  width: 1300px;
+  width: 2500px;
 }
 .workloadDataTable thead {
   position: sticky;
@@ -458,6 +563,7 @@ table.workloadDataTable {
   background-color: rgb(239, 241, 247);
 }
 .workloadDataTable tbody {
+  font-size: 13px;
   background-color: #fff;
   padding: 3px 5px;
 }
@@ -470,5 +576,21 @@ table.workloadDataTable {
   #workloadDisplay {
     width: 100vw;
   }
+}
+/* 分页 */
+.pagination button {
+  border: 0;
+  font-size: 20px;
+  padding: 10px 20px;
+  position: relative;
+  top: 1px;
+  background-color: rgb(239, 241, 246);
+}
+.pagination input {
+  border: 1px solid gray;
+  border-radius: 5px;
+  width: 30px;
+  text-align: center;
+  padding: 3px 0;
 }
 </style>

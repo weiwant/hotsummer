@@ -61,13 +61,11 @@
     </div>
     <!--数据列表-->
     <div class="workloadTableWrapper">
-      <div class="noDataHint" v-if="!dataExists" v-text="noDataHint">
-        <!-- 暂无{{ currentAcademicYear }}学年，第{{ currentSemester }}学期的数据！ -->
-      </div>
+      <div class="noDataHint" v-if="!dataExists" v-text="noDataHint"></div>
       <table class="workloadDataTable">
         <thead>
           <tr>
-            <th v-for="item in workloadTableHeader" :key="item.id">
+            <th v-for="(item, index) in workloadTableHeader" :key="index">
               {{ item }}
             </th>
           </tr>
@@ -75,10 +73,12 @@
         <tbody>
           <tr
             class="tableDataLine"
-            v-for="item in workloadTableData"
-            :key="item.id"
+            v-for="arrayItem in workloadTableData"
+            :key="arrayItem.id"
           >
-            <td v-for="value in item" :key="value.id">{{ value }}</td>
+            <td v-for="(value, index) in arrayItem" :key="index">
+              {{ value }}
+            </td>
           </tr>
         </tbody>
       </table>
@@ -93,8 +93,9 @@ export default {
   name: "TeacherWorkloadTable",
   data() {
     return {
+      currentTeacherName: "",
       academicYearRange: [], //学年select列表范围
-      currentAcademicYear: "2022-2023", //选择的学年
+      currentAcademicYear: "", //选择的学年
       currentSemester: 1, //选择的学期
       workloadTableHeader: [], //显示数据表头
       workloadTableData: [], //显示数据体
@@ -113,28 +114,45 @@ export default {
   methods: {
     //根据当前学年和学期获取对应工作量的数据
     getTableData() {
-      // console.log(this.currentAcademicYear);
-      // console.log(this.currentSemester);
-
       axios
-        .get("http://localhost:3000/teacherWorkload", {
-          params: {
-            year: this.currentAcademicYear,
-            semester: this.currentSemester,
-          },
+        .post(" http://abcds.vaiwan.com/resource/customIndeed", {
+          year: this.currentAcademicYear,
+          semester: this.currentSemester,
+          teacherName: this.currentTeacherName,
         })
         .then((res) => {
-          //如果有数据
-          if (res.data.workloadTableData.length > 0) {
-            this.workloadTableHeader = res.data.workloadTableHeader;
-            this.workloadTableData = res.data.workloadTableData;
+          console.log(res);
+          if (res.data.response.code != 204) {
             this.dataExists = true;
+            this.workloadTableHeader = [
+              "课程号",
+              "课程名称",
+              "教学班",
+              "开课学院",
+              "学分",
+              "课程性质",
+              "年级",
+              "专业",
+              "上课老师",
+              "职称",
+              "上课人数",
+              "计算用学时",
+              "合课单位",
+              "备注",
+              "实验安排",
+              "其他教师",
+              "辅助",
+              "课程性质说明",
+              "是否卓工或弘毅",
+              "是否全英文",
+            ];
+            this.workloadTableData = res.data.data;
           }
           //如果没有数据
           else {
+            this.dataExists = false;
             this.workloadTableHeader = [];
             this.workloadTableData = [];
-            this.dataExists = false;
             this.noDataHint = `暂无${this.currentAcademicYear}学年，第${this.currentSemester}学期的数据！`;
           }
         });
@@ -162,6 +180,9 @@ export default {
   },
 
   created() {
+    //获取当前老师用户的姓名
+    this.currentTeacherName = localStorage.getItem("teacherName");
+    console.log(this.currentTeacherName);
     // 设置学年选择范围（近5年），设置default学年学期
     const date = new Date();
     let currentYear = date.getFullYear();
@@ -299,7 +320,7 @@ export default {
   height: 60vh;
 }
 table.workloadDataTable {
-  width: 1300px;
+  width: 2000px;
 }
 .workloadDataTable thead {
   position: sticky;

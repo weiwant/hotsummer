@@ -53,14 +53,14 @@ export default {
         //向后端提交数据
         //需要url
         axios
-          .post("http://10.128.138.131:8080/users/login", {
+          .post("http://awjkds.vaiwan.com/users/login", {
             username: this.$data.username,
             password: this.$data.password,
           })
-          .then(function (response) {
+          .then((response) => {
             //成功时返回名字和身份
             if (response.data.response.code == 200) {
-              alert("登录成功！");
+              // alert("登录成功！");
               localStorage.clear();
               if (response.data.data.identify == 1) {
                 localStorage.setItem(

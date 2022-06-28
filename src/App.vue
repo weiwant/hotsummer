@@ -34,4 +34,14 @@ a {
 input:focus {
   outline: none;
 }
+
+/* 管理员文件上传部分的e-input控件样式 */
+.uploadSection .el-input input.el-input__inner {
+  border: 0px;
+  padding: 0;
+}
+
+.VuePagenation ul {
+  list-style-type: none;
+}
 </style>
