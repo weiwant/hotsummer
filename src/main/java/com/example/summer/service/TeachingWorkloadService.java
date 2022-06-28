@@ -11,4 +11,6 @@ public interface TeachingWorkloadService {
 
     List<TeachingWorkloadStatistics> searchTeachingWorkloadInScope(String startYear, String endYear, String teacherName);
 
+    List<TeachingWorkloadStatistics> searchIndeed(String startYear, int semester, String teacherName);
+
 }

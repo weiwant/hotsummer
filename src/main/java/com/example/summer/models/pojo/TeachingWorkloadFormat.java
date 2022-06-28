@@ -11,23 +11,28 @@ import java.util.Map;
 /**
  * @author 24047
  * @date 2022/6/27
- * 这个类被抛弃了
- * 它重生了
  */
 public class TeachingWorkloadFormat {
-/**
- * @author 24047
- * @date 2022/6/27
- * @param 教师端查询数据需要的参数包括：一串中文名，一串英文名，一个教师姓名，一个开始学年，一个结束学年，一个学期
- */
-private List<String> EnglishName=new ArrayList<>();
-private List<String> ChineseName=new ArrayList<>();
-private String teacherName;
-private String startYear;
-private String endYear;
-private int semester;
-
+    /**
+     * @author 24047
+     * @date 2022/6/27
+     * @param 教师端查询数据需要的参数最多包括：一串中文名，一串英文名，一个教师姓名，一个开始学年，一个结束学年，一个学期
+     * @Description 值得注意的是，这个类将来会被扩展，我相信它会的
+     */
+    private List<String> EnglishName=new ArrayList<>();
+    private List<String> ChineseName=new ArrayList<>();
+    private String teacherName;
+    private String startYear;
+    private String endYear;
+    private int semester;
+    /**
+     * @author 24047
+     * @date 2022/6/28
+     * @description 静态地为ChineseName和EnglishName赋值
+     * @return
+     */
 public TeachingWorkloadFormat(){
+
     this.ChineseName.add("课程号");
     this.ChineseName.add("课程名称");
     this.ChineseName.add("教学班");
@@ -48,7 +53,6 @@ public TeachingWorkloadFormat(){
     this.ChineseName.add("课程性质说明");
     this.ChineseName.add("是否卓工或弘毅");
     this.ChineseName.add("是否全英文");
-    //以后再写吧
     SendStatisticTitleService service=new SendStatisticTitleServiceImpl();
     String[] title = {"学年", "学期", "课程号", "课程名称", "教学班", "开课学院", "计划学院", "学分", "课程性质", "年级", "专业", "上课老师", "职称", "上课人数", "理论", "上机", "实验", "实践", "计划用学时", "合课单位", "备注", "实验安排", "其他教师", "教分（BA1\\ 3\\ 15）原始分", "BA1系数", "教分（BA1\\ 3\\ 15）", "辅助", "课程性质说明", "是否卓工或弘毅", "是否全英文", "是否打折", "BA1系数（未打折前）", "实验室核对结果"};
     Map<String, String> myMap = service.getTitleFormat(title);

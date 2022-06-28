@@ -1,28 +1,23 @@
 package com.example.summer.models.pojo;
 
 import com.alibaba.fastjson.annotation.JSONField;
-import com.baomidou.mybatisplus.annotation.TableField;
 import com.example.summer.entity.TeachingWorkloadStatistics;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.util.List;
-import java.util.Map;
-
 /**
  * @author 24047
  * @date 2022/6/27
- * 这个类被抛弃了
- * 它重生了
+ * 一个实体类，基于教学工作量，面向教师端的实体类，目前写死了
  */
 
 @Getter
 @Setter
-public class TeachingWorkloadMap {
-    public TeachingWorkloadMap(){
+public class TeachingWorkloadRecord {
+    public TeachingWorkloadRecord(){
         //空的构造函数哈哈哈哈哈哈哈
     }
-    public TeachingWorkloadMap(TeachingWorkloadStatistics statistics){
+    public TeachingWorkloadRecord(TeachingWorkloadStatistics statistics){
         //哈哈哈哈哈被我写完了
         this.setAssistant(statistics.getAssistant());
         this.setCalculatingClassHours(statistics.getCalculatingClassHours());
@@ -179,92 +174,4 @@ public class TeachingWorkloadMap {
      */
     @JSONField(ordinal=20)
     private String specialLanguageRemarks;
-
-/*    public void setCourseNumber(String courseNumber) {
-        this.courseNumber = courseNumber;
-    }
-
-    public void setCourseName(String courseName) {
-        this.courseName = courseName;
-    }
-
-    public void setTeachingClass(String teachingClass) {
-        this.teachingClass = teachingClass;
-    }
-
-    public void setTeachingSchool(String teachingSchool) {
-        this.teachingSchool = teachingSchool;
-    }
-
-    public void setCredit(Double credit) {
-        this.credit = credit;
-    }
-
-    public void setCourseNature(String courseNature) {
-        this.courseNature = courseNature;
-    }
-
-    public void setStudentGrade(Integer studentGrade) {
-        this.studentGrade = studentGrade;
-    }
-
-    public void setMajor(String major) {
-        this.major = major;
-    }
-
-    public void setMainTeacherName(String mainTeacherName) {
-        this.mainTeacherName = mainTeacherName;
-    }
-
-    public void setMainTeacherTitle(String mainTeacherTitle) {
-        this.mainTeacherTitle = mainTeacherTitle;
-    }
-
-    public void setStudentAmount(Integer studentAmount) {
-        this.studentAmount = studentAmount;
-    }
-
-    public void setCalculatingClassHours(Integer calculatingClassHours) {
-        this.calculatingClassHours = calculatingClassHours;
-    }
-
-    public void setJointDepartment(String jointDepartment) {
-        this.jointDepartment = jointDepartment;
-    }
-
-    public void setRemarks(String remarks) {
-        this.remarks = remarks;
-    }
-
-    public void setExperimentArrangement(String experimentArrangement) {
-        this.experimentArrangement = experimentArrangement;
-    }
-
-    public void setOtherTeacherName(String otherTeacherName) {
-        this.otherTeacherName = otherTeacherName;
-    }
-
-    public void setFinalTeachingScores(Double finalTeachingScores) {
-        this.finalTeachingScores = finalTeachingScores;
-    }
-
-    public void setAssistant(String assistant) {
-        this.assistant = assistant;
-    }
-
-    public void setClassNatureExplanation(String classNatureExplanation) {
-        this.classNatureExplanation = classNatureExplanation;
-    }
-
-    public void setSpecialClassRemarks(String specialClassRemarks) {
-        this.specialClassRemarks = specialClassRemarks;
-    }
-
-    public void setSpecialLanguageRemarks(String specialLanguageRemarks) {
-        this.specialLanguageRemarks = specialLanguageRemarks;
-    }
-
-    public void setLaboratoryVerificationResults(String laboratoryVerificationResults) {
-        this.laboratoryVerificationResults = laboratoryVerificationResults;
-    }*/
 }
