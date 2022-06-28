@@ -1,6 +1,5 @@
 package com.example.summer.controller;
 
-import com.example.summer.entity.UserLogin;
 import com.example.summer.models.pojo.ResponseCode;
 import com.example.summer.models.vo.LoginVo;
 import com.example.summer.service.impl.LoginServiceImpl;

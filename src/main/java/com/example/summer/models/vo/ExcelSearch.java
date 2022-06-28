@@ -36,7 +36,8 @@ public class ExcelSearch {
         this.semester = semester;
         this.teacherName = teacherName;
     }
-    public ExcelSearch(){
+
+    public ExcelSearch() {
 
     }
 }

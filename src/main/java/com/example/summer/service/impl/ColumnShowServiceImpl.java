@@ -51,55 +51,55 @@ public class ColumnShowServiceImpl implements ColumnShowService {
          * 返回一条教学工作量记录
          */
         //返回一整张表，每一行都是一条记录
-        List<TeachingWorkloadStatistics> someWork = columnShowDao.getWorkInColumnCustom(names,teacherName);
+        List<TeachingWorkloadStatistics> someWork = columnShowDao.getWorkInColumnCustom(names, teacherName);
         //实体类转为Map
         EntityToView entityToView = new EntityToView();
         //存储了一些列Map的List<String>[]，一个map就是对应一个List<String>
-        List<WorkloadData[]> workloadList=new ArrayList<>();
-        for (int i=0;i<someWork.size();i++) {
+        List<WorkloadData[]> workloadList = new ArrayList<>();
+        for (int i = 0; i < someWork.size(); i++) {
             //一个workloadData[]
-            WorkloadData[] data=new WorkloadData[names.size()];
+            WorkloadData[] data = new WorkloadData[names.size()];
             //将一条记录转化为一个WorkloadData数组
-            data= entityToView.TeachingWorkloadToViewChinese(names,ChineseNames,someWork.get(i));
+            data = entityToView.TeachingWorkloadToViewChinese(names, ChineseNames, someWork.get(i));
             workloadList.add(data);
-       }
+        }
         return workloadList;
     }
 
     @Override
-    public List<WorkloadData[]>getColumnCustomByYear(List<String> names, List<String> ChineseNames, TableShowDetailVo tableShowVo){
+    public List<WorkloadData[]> getColumnCustomByYear(List<String> names, List<String> ChineseNames, TableShowDetailVo tableShowVo) {
         //返回一整张表，每一行都是一条记录
-        List<TeachingWorkloadStatistics> someWork = columnShowDao.getWorkInColumnCustomByYear(tableShowVo,names);
+        List<TeachingWorkloadStatistics> someWork = columnShowDao.getWorkInColumnCustomByYear(tableShowVo, names);
         //实体类转为Map
         EntityToView entityToView = new EntityToView();
         //存储了一些列Map的List<String>[]，一个map就是对应一个List<String>
-        List<WorkloadData[]> workloadList=new ArrayList<>();
-        for (int i=0;i<someWork.size();i++) {
+        List<WorkloadData[]> workloadList = new ArrayList<>();
+        for (int i = 0; i < someWork.size(); i++) {
             //一个workloadData[]
-            WorkloadData[] data=new WorkloadData[names.size()];
+            WorkloadData[] data = new WorkloadData[names.size()];
             //将一条记录转化为一个WorkloadData数组
-            data= entityToView.TeachingWorkloadToViewChinese(names,ChineseNames,someWork.get(i));
+            data = entityToView.TeachingWorkloadToViewChinese(names, ChineseNames, someWork.get(i));
             workloadList.add(data);
         }
         return workloadList;
     }
 
     /**
+     * @return java.util.List<com.example.summer.models.pojo.TeachingWorkloadRecord>
      * @author 24047
      * @date 2022/6/28
      * @description 实际在用的教师端查询代码，这里实现的是按学年、学期、指定的教师名字查询
-     * @return java.util.List<com.example.summer.models.pojo.TeachingWorkloadRecord>
      */
     @Override
-    public List<TeachingWorkloadRecord> getColumnIndeed(List<String> names, List<String> ChineseNames, TableShowDetailVo tableShowVo){
+    public List<TeachingWorkloadRecord> getColumnIndeed(List<String> names, List<String> ChineseNames, TableShowDetailVo tableShowVo) {
         //返回一整张表，每一行都是一条记录
-        List<TeachingWorkloadStatistics> someWork = columnShowDao.getWorkInColumnCustomByYear(tableShowVo,names);
+        List<TeachingWorkloadStatistics> someWork = columnShowDao.getWorkInColumnCustomByYear(tableShowVo, names);
         //实体类转为Map的工具类
         EntityToView entityToView = new EntityToView();
         //一个写死了的TeachingWorkloadMap
-        List<TeachingWorkloadRecord> workloadList=new ArrayList<>();
-        for (int i=0;i<someWork.size();i++) {
-            TeachingWorkloadRecord teachingWorkloadRecord =new TeachingWorkloadRecord(someWork.get(i));
+        List<TeachingWorkloadRecord> workloadList = new ArrayList<>();
+        for (int i = 0; i < someWork.size(); i++) {
+            TeachingWorkloadRecord teachingWorkloadRecord = new TeachingWorkloadRecord(someWork.get(i));
             workloadList.add(teachingWorkloadRecord);
         }
         return workloadList;

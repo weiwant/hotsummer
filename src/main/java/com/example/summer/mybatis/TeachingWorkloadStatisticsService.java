@@ -1,15 +1,15 @@
 package com.example.summer.mybatis;
 
-import com.example.summer.entity.TeachingWorkloadStatistics;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.example.summer.entity.TeachingWorkloadStatistics;
 
 /**
  * <p>
- *  服务类
+ * 服务类
  * </p>
  *
- * @author 24047
- * @since 2022-06-25
+ * @author ZWForum
+ * @since 2022-06-27
  */
 public interface TeachingWorkloadStatisticsService extends IService<TeachingWorkloadStatistics> {
 

@@ -3,7 +3,7 @@ package com.example.summer.utils;
 /**
  * @author hy
  * @Date 2022/6/25
- * @Description  跨域配置类
+ * @Description 跨域配置类
  */
 
 

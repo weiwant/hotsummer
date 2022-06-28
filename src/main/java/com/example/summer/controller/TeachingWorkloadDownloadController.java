@@ -4,7 +4,6 @@ package com.example.summer.controller;
 import com.example.summer.models.pojo.ExcelFormat;
 import com.example.summer.service.TeachingWorkloadService;
 import com.example.summer.service.impl.ExportExcelImpl;
-import com.example.summer.service.impl.TeachingWorkloadServiceImpl;
 import org.apache.poi.hssf.usermodel.*;
 import org.apache.poi.ss.usermodel.HorizontalAlignment;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -74,7 +73,7 @@ public class TeachingWorkloadDownloadController {
      * @Param name 教师姓名（精确）
      * @Param 如果要查找2019-2020年的，请将传入的startYear和endYear都设置为2019-2020
      */
-    @RequestMapping(value="/excelDownload",method = RequestMethod.POST)
+    @RequestMapping(value = "/excelDownload", method = RequestMethod.POST)
     public void download(@RequestParam String startYear, @RequestParam String endYear, @RequestParam(value = "name") String teacherName, HttpServletResponse response) {
         ExcelFormat myExcel = exportExcel.getContentInScope(startYear, endYear, teacherName);
         try {
@@ -99,7 +98,7 @@ public class TeachingWorkloadDownloadController {
      * @Param name 教师姓名（精确）
      * @Param 如果要查找2019-2020年的，请将传入的startYear和endYear都设置为2019-2020
      */
-    @RequestMapping(value="/excelDownloadAll",method = RequestMethod.POST)
+    @RequestMapping(value = "/excelDownloadAll", method = RequestMethod.POST)
     public void downloadAll(@RequestParam String startYear, @RequestParam String endYear, HttpServletResponse response) {
         ExcelFormat myExcel = exportExcel.getContentInScopeAll(startYear, endYear);
         try {
@@ -113,6 +112,7 @@ public class TeachingWorkloadDownloadController {
             e.printStackTrace();
         }
     }
+
     /**
      * @Author theLastNYF
      * @Date 2022/6/25

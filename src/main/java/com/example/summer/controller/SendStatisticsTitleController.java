@@ -2,7 +2,6 @@ package com.example.summer.controller;
 
 import com.example.summer.models.pojo.ResponseCode;
 import com.example.summer.service.SendStatisticTitleService;
-import com.example.summer.service.impl.SendStatisticTitleServiceImpl;
 import com.example.summer.utils.Result;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -20,10 +19,10 @@ public class SendStatisticsTitleController {
     SendStatisticTitleService service;
 
     /**
+     * @return java.lang.String
      * @author 24047
      * @date 2022/6/27
      * @Param
-     * @return java.lang.String
      */
     @RequestMapping(value = "sendTitle")
     public String sendTitle() {

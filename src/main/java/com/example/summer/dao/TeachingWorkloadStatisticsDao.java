@@ -6,7 +6,9 @@ import com.example.summer.mapper.TeachingWorkloadStatisticsMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import java.lang.reflect.Field;
 import java.util.List;
+import java.util.Objects;
 
 @Repository
 public class TeachingWorkloadStatisticsDao {
@@ -45,10 +47,37 @@ public class TeachingWorkloadStatisticsDao {
 //        teacherMap.between("semester",startSemester,endSemester);
         //如果是某一年的，那么传一个startYear就可以
         teacherMap.eq("academic_year", startYear);//限定学年范围
-        teacherMap.eq("semester",semester);
+        teacherMap.eq("semester", semester);
         teacherMap.eq("main_teacher_name", teacherName);
 
         return teachingWorkloadStatisticsMapper.selectList(teacherMap);
+    }
+
+
+    public boolean insertEntity(TeachingWorkloadStatistics teachingWorkloadStatistics) throws IllegalAccessException {
+        if (teachingWorkloadStatistics != null) {
+            for (Field field : teachingWorkloadStatistics.getClass().getDeclaredFields()) {
+                if (!field.getName().contains("serialVersionUID")) {
+                    field.setAccessible(true);
+                    if (field.get(teachingWorkloadStatistics) != null && field.get(teachingWorkloadStatistics) != "" && !Objects.equals(field.get(teachingWorkloadStatistics), 0) && !Objects.equals(field.get(teachingWorkloadStatistics), 0.0)) {
+                        teachingWorkloadStatisticsMapper.insert(teachingWorkloadStatistics);
+                        return true;
+                    }
+                }
+            }
+            return false;
+        }
+        return false;
+    }
+
+    public boolean deleteByYear(TeachingWorkloadStatistics teachingWorkloadStatistics) {
+        if (teachingWorkloadStatistics != null) {
+            QueryWrapper<TeachingWorkloadStatistics> wrapper = new QueryWrapper<>();
+            wrapper.eq("academic_year", teachingWorkloadStatistics.getAcademicYear());
+            teachingWorkloadStatisticsMapper.delete(wrapper);
+            return true;
+        }
+        return false;
     }
 
 

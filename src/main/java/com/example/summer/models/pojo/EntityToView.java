@@ -18,7 +18,7 @@ public class EntityToView {
          * @author 24047
          * @date 2022/6/27
          * @param [java.util.List<java.lang.String>, com.example.summer.entity.TeachingWorkloadStatistics]
-         * @return java.util.Map<java.lang.String,java.lang.Object>
+         * @return java.util.Map<java.lang.String, java.lang.Object>
          * 根据提供的一个需要的字段列表，将这条记录转为map
          */
         Map<String, Object> myMap = new HashMap<>();
@@ -31,20 +31,20 @@ public class EntityToView {
         return myMap;
     }
 
-    public WorkloadData[] TeachingWorkloadToViewChinese(List<String> names,List<String>chineseName, TeachingWorkloadStatistics statistics) {
+    public WorkloadData[] TeachingWorkloadToViewChinese(List<String> names, List<String> chineseName, TeachingWorkloadStatistics statistics) {
         /**
          * @author 24047
          * @date 2022/6/27>
          * 根据提供的一个需要的字段列表，将这条记录转为WorkloadData数组
          */
-        WorkloadData[] workloadData=new WorkloadData[names.size()];
-        for (int i=0;i<names.size();i++) {
+        WorkloadData[] workloadData = new WorkloadData[names.size()];
+        for (int i = 0; i < names.size(); i++) {
             //item转为驼峰式,以便查询对象的该字段对应数值
             String outName = CaseUtils.toCamelCase(names.get(i), false, '_');
             //获取这个对象的该属性的值
             Object outValue = ReflexUtil.getFieldValueByFieldName(outName, statistics);
 
-            workloadData[i]=new WorkloadData(chineseName.get(i),outValue);
+            workloadData[i] = new WorkloadData(chineseName.get(i), outValue);
         }
         return workloadData;
     }

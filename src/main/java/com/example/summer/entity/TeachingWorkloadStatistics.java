@@ -2,7 +2,9 @@ package com.example.summer.entity;
 
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableName;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.io.Serializable;
@@ -12,11 +14,13 @@ import java.io.Serializable;
  *
  * </p>
  *
- * @author 24047
- * @since 2022-06-25
+ * @author ZWForum
+ * @since 2022-06-27
  */
 @Getter
 @Setter
+@AllArgsConstructor
+@NoArgsConstructor
 @TableName("teaching_workload_statistics")
 public class TeachingWorkloadStatistics implements Serializable {
 
@@ -80,7 +84,7 @@ public class TeachingWorkloadStatistics implements Serializable {
      * 年级
      */
     @TableField("student_grade")
-    private Integer studentGrade;
+    private String studentGrade;
 
     /**
      * 专业
@@ -206,7 +210,7 @@ public class TeachingWorkloadStatistics implements Serializable {
      * 折扣
      */
     @TableField("discount")
-    private Double discount;
+    private String discount;
 
     /**
      * 折扣前BA1系数

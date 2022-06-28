@@ -9,8 +9,8 @@ import org.apache.ibatis.annotations.Mapper;
  * Mapper 接口
  * </p>
  *
- * @author 24047
- * @since 2022-06-25
+ * @author ZWForum
+ * @since 2022-06-27
  */
 @Mapper
 public interface TeachingWorkloadStatisticsMapper extends BaseMapper<TeachingWorkloadStatistics> {

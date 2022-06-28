@@ -55,8 +55,8 @@ public class TableShowServiceImpl {
      * @Description：获取表头返回数组
      */
     public Object[] getTableHeader() {
-        Object[] workTableHeader=tableShowDao.getWorkTableHeader();
-        return  workTableHeader;
+        Object[] workTableHeader = tableShowDao.getWorkTableHeader();
+        return workTableHeader;
     }
 
     /**
@@ -66,7 +66,7 @@ public class TableShowServiceImpl {
      * @Description：获取下载表数据
      */
     public List<TeachingWorkloadStatistics> getDownloadTable(TableShowVo tableShowVo) {
-        List<TeachingWorkloadStatistics> teachList=tableShowDao.getDownLoadTables(tableShowVo);
-        return  teachList;
+        List<TeachingWorkloadStatistics> teachList = tableShowDao.getDownLoadTables(tableShowVo);
+        return teachList;
     }
 }
