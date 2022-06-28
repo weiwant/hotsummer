@@ -1,5 +1,7 @@
 package com.example.summer.models.vo;
 
+import com.alibaba.fastjson.annotation.JSONField;
+
 /**
  * @author:wwq
  * @Date：2022/6/27：9:35
@@ -7,6 +9,7 @@ package com.example.summer.models.vo;
 public class TableShowVo {
     private String year;//学年
     private int semester;//学期
+    private int pageNumber;
 
     public String getYear(){
         return year;
@@ -16,6 +19,10 @@ public class TableShowVo {
             return semester;
     }
 
+    public int getPageNumber() {
+        return pageNumber;
+    }
+
     public void setSemester(int semester) {
         this.semester = semester;
     }
@@ -23,4 +30,9 @@ public class TableShowVo {
     public void setYear(String year) {
         this.year = year;
     }
+
+    public void setPageNumber(int pageNumber) {
+        this.pageNumber = pageNumber;
+    }
+
 }
