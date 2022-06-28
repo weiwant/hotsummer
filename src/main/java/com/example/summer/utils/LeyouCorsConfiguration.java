@@ -3,7 +3,7 @@ package com.example.summer.utils;
 /**
  * @author hy
  * @Date 2022/6/25
- * @Description
+ * @Description  跨域配置类
  */
 
 
@@ -23,9 +23,9 @@ public class LeyouCorsConfiguration {
 //        初始化cors配置对象
         CorsConfiguration configuration = new CorsConfiguration();
 //        允许跨域的域名，add可以可以多个，set只有一个
-        configuration.addAllowedOrigin("*");
+        configuration.addAllowedOrigin("http://localhost:8080");
 //        允许携带cookie
-//        configuration.setAllowCredentials(true);
+        configuration.setAllowCredentials(true);
         configuration.addAllowedMethod("*"); //表示所有请求方法都可以，例如get，post等等
         configuration.addAllowedHeader("*"); //允许携带任何头信息
 
