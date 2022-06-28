@@ -3,6 +3,7 @@ package com.example.summer.models.pojo;
 /**
  * @author 24047
  * @date 2022/6/27
+ * @description 原本是用来同时展示data的中文名和数据值的，现在被弃用了
  */
 public class WorkloadData {
     private String ChineseName;

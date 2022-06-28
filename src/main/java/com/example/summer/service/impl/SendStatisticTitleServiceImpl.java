@@ -43,6 +43,7 @@ public class SendStatisticTitleServiceImpl implements SendStatisticTitleService 
      * @author 24047
      * @date 2022/6/27
      * @param titleShow 和上面那个唯一的区别就是返回值类型不同了
+     * @description 传入一个字符串数组，返回一个字符串数组和表头的映射,虽然没有什么很大的用处
      * @return java.util.Map<java.lang.String,java.lang.String>
      */
     @Override

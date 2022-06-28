@@ -3,6 +3,7 @@ package com.example.summer.models.vo;
 /**
  * @author 24047
  * @date 2022/6/27
+ * @Description 由前端负责Excel文件导出，这个类现在被弃用了！
  */
 public class ExcelSearch {
     private String startYear;

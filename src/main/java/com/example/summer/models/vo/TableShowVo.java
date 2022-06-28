@@ -5,6 +5,7 @@ import com.alibaba.fastjson.annotation.JSONField;
 /**
  * @author:wwq
  * @Date：2022/6/27：9:35
+ * @Description 管理员端查看，前端发来三个参数
  */
 public class TableShowVo {
     private String year;//学年
