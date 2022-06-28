@@ -331,7 +331,9 @@ export default {
     uploadFile(file) {
       const formData = new FormData();
       var _this = this;
-      _this.year = this.$data.uploadFileYearInfo1;
+      var firstYear = this.$data.uploadFileYearInfo1;
+      var secondYear = firstYear + 1;
+      _this.year = firstYear + "-" + secondYear;
       _this.semester = this.$data.uploadFileSemesterInfo;
       formData.append("year", _this.year);
       formData.append("semester", _this.semester);
