@@ -53,10 +53,12 @@ public class TableShowDao {
         QueryWrapper<TeachingWorkloadStatistics> queryWrapper = new QueryWrapper<>();
         queryWrapper.eq("academic_year", tableShowVo.getYear());
         queryWrapper.eq("semester", tableShowVo.getSemester());
-        Page<TeachingWorkloadStatistics> teachPage=new Page<>(tableShowVo.getPageNumber(),40);
+        int currentPage=tableShowVo.getPageNumber();
+        Page<TeachingWorkloadStatistics> teachPage=new Page<>(currentPage,40);
         IPage<TeachingWorkloadStatistics> teachIPage=teacherMapper.selectPage(teachPage,queryWrapper);
-        System.out.println("总页数"+teachIPage.getPages());
-        System.out.println("总记录数"+teachIPage.getTotal());
+//        System.out.println("总页数"+teachIPage.getPages());
+//        System.out.println("总记录数"+teachIPage.getTotal());
+//        System.out.println("当前页"+currentPage);
         return teachIPage;
     }
 
