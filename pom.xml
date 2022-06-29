@@ -71,6 +71,12 @@
             <artifactId>mybatis-plus-boot-starter</artifactId>
             <version>3.5.2</version>
         </dependency>
+        <!--MybatisPlus扩展-->
+        <dependency>
+            <groupId>com.tangzc</groupId>
+            <artifactId>mybatis-plus-ext-boot-starter</artifactId>
+            <version>3.5.2-EXT140</version>
+        </dependency>
         <!--MybatisPlus代码生成器-->
         <dependency>
             <groupId>com.baomidou</groupId>
