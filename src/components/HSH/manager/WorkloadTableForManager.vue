@@ -212,13 +212,16 @@ export default {
       formData.append("year", _this.year);
       formData.append("semester", _this.semester);
       formData.append("file", file);
+      console.log(file)
       // console.log(formData.get("year"));
       // console.log(formData.get("semester"));
       // console.log(formData.get("file"));
 
-      输入后端url
-      axios.post('', {
-        formData
+      //输入后端url
+      axios.post('http://asyz.vaiwan.com/file/upload', formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data'
+        }
       })
       .then(function(response){
         if(response.data.data){

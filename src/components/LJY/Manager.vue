@@ -79,7 +79,7 @@ export default{
       // console.log(formData.get("excelFile"));
 
       //输入后端url
-      axios.post('', {
+      axios.post('http://abcdef.vaiwan.com/file/upload', {
         formData
       })
       .then(function(response){

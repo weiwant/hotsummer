@@ -53,7 +53,7 @@ export default {
         //向后端提交数据
         //需要url
         axios
-          .post("http://10.128.138.131:8080/users/login", {
+          .post("http://abcdef.vaiwan.com/users/login", {
             username: this.$data.username,
             password: this.$data.password,
           })
