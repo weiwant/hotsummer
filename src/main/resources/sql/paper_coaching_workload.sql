@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 80011
 File Encoding         : 65001
 
-Date: 2022-06-29 16:07:10
+Date: 2022-06-29 16:08:56
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -39,4 +39,4 @@ CREATE TABLE `paper_coaching_workload` (
 -- ----------------------------
 INSERT INTO `paper_coaching_workload` VALUES ('1', '论文指导', '2020-2021', '2', '软件工程概论', '李晓剑', '2', '6', '2', '4', '2021');
 INSERT INTO `paper_coaching_workload` VALUES ('2', '论文指导', '2020-2021', '1', '软件需求建模', '李晓剑', '3', '6', '2', '6', '2020');
-INSERT INTO `paper_coaching_workload` VALUES ('3', '论文指导', null, null, null, null, null, '0', null, null, null);
+INSERT INTO `paper_coaching_workload` VALUES ('3', '论文指导', '2019-2020', '2', '软件架构', '刘峰', '5', '11', '2', '10', '2020');
