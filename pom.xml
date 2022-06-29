@@ -117,6 +117,12 @@
             <artifactId>hutool-all</artifactId>
             <version>5.8.3</version>
         </dependency>
+        <!--动态生成java文件-->
+        <dependency>
+            <groupId>com.squareup</groupId>
+            <artifactId>javapoet</artifactId>
+            <version>1.13.0</version>
+        </dependency>
     </dependencies>
 
     <build>
