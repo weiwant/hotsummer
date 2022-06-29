@@ -16,21 +16,25 @@ import java.util.List;
  * @date 2022/6/23
  */
 public class GeneratorConfig {
+    static String url = "";
+    static String username = "";
+    static String password = "";
+    static List<String> tableName = Arrays.asList(
+
+    );
+
     public static void main(String[] args) {
-        new GeneratorConfig().generator("", "", "", Arrays.asList("", "..."));
+        new GeneratorConfig().generator();
     }
 
     /**
-     * @param url
-     * @param username
-     * @param password
-     * @param tableName
+     * @param
      * @return
      * @author ZWForum
-     * @description 输入url，用户名，密码，表名生成实体类
+     * @description
      * @date 2022/6/29
      */
-    private void generator(String url, String username, String password, List<String> tableName) {
+    private void generator() {
         String path = System.getProperty("user.dir");
         String packageName = (this.getClass().getCanonicalName()).replace(".config.GeneratorConfig", "");
         String codePath = "/src/main/java";
