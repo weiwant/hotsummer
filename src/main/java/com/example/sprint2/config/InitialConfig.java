@@ -94,7 +94,7 @@ public class InitialConfig {
                 .addAnnotation(Test.class)
                 .returns(void.class)
                 .build();
-        TypeSpec typeSpec = TypeSpec.classBuilder(CaseUtils.toCamelCase(project, true) + "ApplicationTests")
+        TypeSpec typeSpec = TypeSpec.classBuilder(CaseUtils.toCamelCase(project, true).replace("-", "") + "ApplicationTests")
                 .addMethod(method)
                 .addAnnotation(SpringBootTest.class)
                 .build();
