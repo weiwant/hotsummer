@@ -11,9 +11,13 @@ import com.example.sprint2.mybatis.entity.TeachingWorkloadStatistics;
  */
 public interface TeachingWorkloadTableService {
     IPage<TeachingWorkloadStatistics> searchByNaturalYearInPage(PageSearchVo pageSearchVo);
+
     IPage<TeachingWorkloadStatistics> searchByTeacherNameInPage(PageSearchVo pageSearchVo);
+
     IPage<TeachingWorkloadStatistics> searchByCourseNameInPage(PageSearchVo pageSearchVo);
+
     IPage<TeachingWorkloadStatistics> searchByStudentGradeInPage(PageSearchVo pageSearchVo);
+
     IPage<TeachingWorkloadStatistics> searchByMajorInPage(PageSearchVo pageSearchVo);
 
 }

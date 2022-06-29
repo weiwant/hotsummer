@@ -7,7 +7,10 @@ import com.example.sprint2.mybatis.entity.TeachingWorkloadStatistics;
 import com.example.sprint2.service.TeachingWorkloadTableService;
 import com.example.sprint2.utils.Result;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RestController;
 
 /**
  * @author 24047
@@ -21,8 +24,8 @@ public class TeachingWorkloadTableController {
     TeachingWorkloadTableService teachingWorkloadTableService;
 
 
-    @RequestMapping(value = "getAll",method= RequestMethod.POST)
-    public String getAll(@RequestBody PageSearchVo pageSearchVo){
+    @RequestMapping(value = "getAll", method = RequestMethod.POST)
+    public String getAll(@RequestBody PageSearchVo pageSearchVo) {
         /**
          * @author 24047
          * @date 2022/6/29
@@ -40,8 +43,8 @@ public class TeachingWorkloadTableController {
     }
 
 
-    @RequestMapping(value = "searchTeacherName",method= RequestMethod.POST)
-    public String searchTeacherName(@RequestBody PageSearchVo pageSearchVo){
+    @RequestMapping(value = "searchTeacherName", method = RequestMethod.POST)
+    public String searchTeacherName(@RequestBody PageSearchVo pageSearchVo) {
         /**
          * @author 24047
          * @date 2022/6/29
@@ -59,8 +62,8 @@ public class TeachingWorkloadTableController {
     }
 
 
-    @RequestMapping(value = "searchCourseName",method= RequestMethod.POST)
-    public String searchCourseName(@RequestBody PageSearchVo pageSearchVo){
+    @RequestMapping(value = "searchCourseName", method = RequestMethod.POST)
+    public String searchCourseName(@RequestBody PageSearchVo pageSearchVo) {
         /**
          * @author 24047
          * @date 2022/6/29
@@ -78,8 +81,8 @@ public class TeachingWorkloadTableController {
     }
 
 
-    @RequestMapping(value = "searchCourseName",method= RequestMethod.POST)
-    public String searchMajor(@RequestBody PageSearchVo pageSearchVo){
+    @RequestMapping(value = "searchCourseName", method = RequestMethod.POST)
+    public String searchMajor(@RequestBody PageSearchVo pageSearchVo) {
         /**
          * @author 24047
          * @date 2022/6/29
@@ -96,8 +99,8 @@ public class TeachingWorkloadTableController {
         }
     }
 
-    @RequestMapping(value = "searchStudentGrade",method= RequestMethod.POST)
-    public String searchStudentGrade(@RequestBody PageSearchVo pageSearchVo){
+    @RequestMapping(value = "searchStudentGrade", method = RequestMethod.POST)
+    public String searchStudentGrade(@RequestBody PageSearchVo pageSearchVo) {
         /**
          * @author 24047
          * @date 2022/6/29

@@ -24,18 +24,18 @@ public class TeachingWorkloadTableServiceImpl implements TeachingWorkloadTableSe
 
     @Override
     public IPage<TeachingWorkloadStatistics> searchByTeacherNameInPage(PageSearchVo pageSearchVo) {
-        return teachingWorkloadStatisticsDao.selectByTeacherNameInPage(pageSearchVo.getNaturalYear(),pageSearchVo.getTeacherName(), pageSearchVo.getPageNumber(), pageSearchVo.getPageSize());
+        return teachingWorkloadStatisticsDao.selectByTeacherNameInPage(pageSearchVo.getNaturalYear(), pageSearchVo.getTeacherName(), pageSearchVo.getPageNumber(), pageSearchVo.getPageSize());
     }
 
     @Override
     public IPage<TeachingWorkloadStatistics> searchByCourseNameInPage(PageSearchVo pageSearchVo) {
-        return teachingWorkloadStatisticsDao.selectByCourseNameInPage(pageSearchVo.getNaturalYear(), pageSearchVo.getCourseName(),pageSearchVo.getPageNumber(), pageSearchVo.getPageSize());
+        return teachingWorkloadStatisticsDao.selectByCourseNameInPage(pageSearchVo.getNaturalYear(), pageSearchVo.getCourseName(), pageSearchVo.getPageNumber(), pageSearchVo.getPageSize());
 
     }
 
     @Override
     public IPage<TeachingWorkloadStatistics> searchByStudentGradeInPage(PageSearchVo pageSearchVo) {
-        return teachingWorkloadStatisticsDao.selectByStudentGradeInPage(pageSearchVo.getNaturalYear(),pageSearchVo.getStudentGrade(), pageSearchVo.getPageNumber(), pageSearchVo.getPageSize());
+        return teachingWorkloadStatisticsDao.selectByStudentGradeInPage(pageSearchVo.getNaturalYear(), pageSearchVo.getStudentGrade(), pageSearchVo.getPageNumber(), pageSearchVo.getPageSize());
 
     }
 
