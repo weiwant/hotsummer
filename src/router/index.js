@@ -6,8 +6,8 @@ import TeacherWorkloadTable from '../components/HSH/teacher/TeacherWorkloadTable
 import TeacherPersonalInfo from '../components/HSH/teacher/TeacherPersonalInfo.vue'
 import Managerhome from '../components/HSH/manager/Managerhome.vue'
 import ManagerPersonalInfo from '../components/HSH/manager/ManagerPersonalInfo.vue'
-import WorkloadTableForManager from '../components/HSH/manager/WorkloadTableForManager.vue'
-// import CheckTable from '../components/LJY/CheckTable.vue'
+import CheckWorkload from '../components/HSH/manager/CheckWorkload.vue'
+import UploadWorkload from '../components/HSH/manager/UploadWorkload.vue'
 import Login from '../components/LJY/Login.vue'
 
 Vue.use(VueRouter)
@@ -16,12 +16,11 @@ const routes = [
   {
     path: '/',
     name: 'Login',
-    component: Login
-    // redirect: '/teacherhome'
+    // component: Login
+    redirect: '/managerhome/checkWorkload'
   },
   {
     path: '/teacherhome',
-    // name: 'Teacherhome',
     component: Teacherhome,
     children: [
       { path: '', redirect: "PersonalInfo" },
@@ -32,18 +31,12 @@ const routes = [
   },
   {
     path: '/managerhome',
-    // name: 'Managerhome',
     component: Managerhome,
     children: [
-      // {
-      //   path: '/checktable',
-      //   name: 'CheckTable',
-      //   component: CheckTable
-      // }
       { path: '', redirect: "personalInfo" },
       { path: 'personalInfo', component: ManagerPersonalInfo },
-      { path: 'managerPersonalInfo', component: ManagerPersonalInfo },
-      { path: 'workloadTableForManager', component: WorkloadTableForManager }
+      { path: 'uploadWorkload', component: UploadWorkload },
+      { path: "checkWorkload", component: CheckWorkload }
     ]
   },
 ]

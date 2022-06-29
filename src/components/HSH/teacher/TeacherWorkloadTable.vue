@@ -1,7 +1,7 @@
 <template>
-  <div id="workloadDisplay">
+  <div class="ComponentWrapper">
     <!--component标题-->
-    <div class="sectionTitle">教学工作量</div>
+    <div class="componentSectionTitle">教学工作量</div>
     <!--学年和学期筛选-->
     <div class="tableFilter">
       <div class="segment">
@@ -200,28 +200,6 @@ export default {
 
 
 <style scoped>
-* {
-  list-style: none;
-  text-decoration: none;
-  margin: 0;
-  padding: 0;
-}
-#workloadDisplay {
-  float: left;
-  overflow: hidden;
-  width: 85vw;
-  height: 100vh;
-  padding: 10px 15px;
-  background-color: rgb(239, 241, 247);
-}
-.sectionTitle {
-  text-align: left;
-  font-size: 27px;
-  font-weight: 600;
-  color: rgb(29, 74, 51);
-  height: 50px;
-  line-height: 50px;
-}
 /* 学年学期筛选 */
 .tableFilter {
   font-size: 14px;
@@ -332,15 +310,5 @@ table.workloadDataTable {
 .workloadDataTable tbody {
   background-color: #fff;
   padding: 3px 5px;
-}
-@media screen and (max-width: 1000px) and (min-width: 600px) {
-  #workloadDisplay {
-    width: 77vw;
-  }
-}
-@media screen and (max-width: 600px) {
-  #workloadDisplay {
-    width: 100vw;
-  }
 }
 </style>

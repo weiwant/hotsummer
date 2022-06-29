@@ -6,17 +6,13 @@
     <div class="title">管理员界面</div>
     <ul class="mainFunctions">
       <li>
-        <router-link to="managerPersonalInfo"
-          ><span></span> 个人信息</router-link
-        >
+        <router-link to="personalInfo"> 个人信息</router-link>
       </li>
       <li>
-        <router-link to="workloadTableForManager"
-          ><span></span> 教学工作量管理
-        </router-link>
+        <router-link to="uploadWorkload"> 上传教学工作量 </router-link>
       </li>
       <li>
-        <!-- <router-link to=""> 上传工作量文件 </router-link> -->
+        <router-link to="checkWorkload"> 查看教学工作量 </router-link>
       </li>
     </ul>
     <ul class="tool"></ul>
@@ -26,10 +22,6 @@
 <script>
 export default {
   name: "ManagerSidebar",
-  data() {
-    return {};
-  },
-  methods: {},
 };
 </script>
 
@@ -46,7 +38,7 @@ export default {
   padding-top: 10px;
   padding-left: 10px;
   padding-right: 10px;
-  width: 15vw;
+  width: 200px;
   height: 100vh;
   background-color: rgb(71, 159, 134);
   text-align: left;
@@ -70,6 +62,7 @@ export default {
   font-size: 15px;
   line-height: 50px;
   border-radius: 5px;
+  font-family: "icomoon";
 }
 .mainFunctions li a:hover {
   background-color: rgb(143, 196, 181);
@@ -78,15 +71,8 @@ export default {
 .router-link-active {
   background-color: rgb(143, 196, 181);
 }
-.mainFunctions li a span {
-  font-family: "icomoon";
-}
-@media screen and (max-width: 1000px) and (min-width: 600px) {
-  #sideBar {
-    width: 23vw;
-  }
-}
-@media screen and (max-width: 600px) {
+
+@media screen and (max-width: 800px) {
   #sideBar {
     display: none;
   }

@@ -46,7 +46,7 @@ export default {
   padding-top: 10px;
   padding-left: 10px;
   padding-right: 10px;
-  width: 15vw;
+  width: 200px;
   height: 100vh;
   background-color: rgb(71, 159, 134);
   text-align: left;
@@ -79,12 +79,7 @@ export default {
 .router-link-active {
   background-color: rgb(143, 196, 181);
 }
-@media screen and (max-width: 1000px) and (min-width: 600px) {
-  #sideBar {
-    width: 23vw;
-  }
-}
-@media screen and (max-width: 600px) {
+@media screen and (max-width: 800px) {
   #sideBar {
     display: none;
   }
