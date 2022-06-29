@@ -55,7 +55,13 @@ public class InitialConfig {
         //要创建的资源目录
         List<String> resourceDirToCreate = Arrays.asList(
                 "mapper",
-                "sql"
+                "sql",
+                "static",
+                "templates"
+        );
+        //要创建的资源文件
+        List<String> resourceFileToCreate = Arrays.asList(
+                "application.properties"
         );
         //创建包
         for (String singlePackage : packageToCreate) {
@@ -69,6 +75,13 @@ public class InitialConfig {
             File file = new File(resourcesPath + "\\" + singleResource.replace(".", "\\"));
             if (!file.exists()) {
                 file.mkdirs();
+            }
+        }
+        //创建资源文件
+        for (String singleResource : resourceFileToCreate) {
+            File file = new File(resourcesPath + "\\" + singleResource);
+            if (!file.exists()) {
+                file.createNewFile();
             }
         }
         //创建测试根目录
