@@ -43,9 +43,9 @@ export default {
       password: "",
     };
   },
-
   methods: {
     login() {
+      console.log(this.$domainName);
       const self = this;
       if (this.$data.username == "" || this.$data.password == "") {
         alert("账号或密码不能为空！");
@@ -53,14 +53,14 @@ export default {
         //向后端提交数据
         //需要url
         axios
-          .post("http://abcdef.vaiwan.com/users/login", {
+          .post(`${this.$domainName}/users/login`, {
             username: this.$data.username,
             password: this.$data.password,
           })
-          .then(function (response) {
+          .then((response) => {
             //成功时返回名字和身份
             if (response.data.response.code == 200) {
-              alert("登录成功！");
+              // alert("登录成功！");
               localStorage.clear();
               if (response.data.data.identify == 1) {
                 localStorage.setItem(
