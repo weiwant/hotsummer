@@ -167,5 +167,20 @@ public class SpecialWorkload implements Serializable {
     @TableField("status")
     private String status;
 
+    /**
+     * 预留字段1
+     */
+    @TableField("addtion_one")
+    private String addtionOne;
+
+    @TableField("addtion_two")
+    private String addtionTwo;
+
+    @TableField("addition_three")
+    private String additionThree;
+
+    @TableField("addtion_four")
+    private String addtionFour;
+
 
 }
