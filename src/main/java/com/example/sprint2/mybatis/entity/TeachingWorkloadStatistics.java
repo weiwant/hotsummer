@@ -4,18 +4,17 @@ import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
+import java.io.Serializable;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.io.Serializable;
-
 /**
  * <p>
- *
+ * 
  * </p>
  *
- * @author ZWForum
- * @since 2022-06-29
+ * @author 24047
+ * @since 2022-06-30
  */
 @Getter
 @Setter
