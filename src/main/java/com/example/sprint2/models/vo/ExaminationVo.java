@@ -13,7 +13,7 @@ public class ExaminationVo {
     private String naturalYear;//自然年
     private String year;//学年
     private int pageNumber;//页数
-    IPage<ExaminationWorkload> exampage;//页
+    IPage<ExaminationWorkload> examPage;//页
     private String teacher;//教师
     private String courseName;//课程名称
 
