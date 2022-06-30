@@ -41,7 +41,7 @@ public class TeachingWorkloadTableServiceImpl implements TeachingWorkloadTableSe
 
     @Override
     public IPage<TeachingWorkloadStatistics> searchByMajorInPage(TeachingWorkloadVo teachingWorkloadVo) {
-        return teachingWorkloadStatisticsDao.selectByMajorInPage(teachingWorkloadVo.getNaturalYear(), teachingWorkloadVo.getMajor(),teachingWorkloadVo.getPageNumber(),teachingWorkloadVo.getPageSize());
+        return teachingWorkloadStatisticsDao.selectByMajorInPage(teachingWorkloadVo.getNaturalYear(), teachingWorkloadVo.getMajor(), teachingWorkloadVo.getPageNumber(), teachingWorkloadVo.getPageSize());
     }
 }
 

@@ -2,15 +2,16 @@ package com.example.sprint2.controller;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.example.sprint2.models.enumerate.impl.ResponseCode;
-import com.example.sprint2.models.vo.ExaminationBackVo;
 import com.example.sprint2.models.vo.ExaminationVo;
 import com.example.sprint2.mybatis.entity.ExaminationWorkload;
 import com.example.sprint2.service.ExaminationService;
 import com.example.sprint2.utils.Result;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RestController;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -29,15 +30,15 @@ public class ExaminationController {
      * @Url:/examination/yearpage
      * @Description：获取年份考务工作量。分页查询
      */
-    @RequestMapping(value = "/yearpage",method = RequestMethod.POST)
-    public String getPageYearWorkload(@RequestBody ExaminationVo exam){
-        IPage<ExaminationWorkload> examinationIPage= examinationService.getPageYearWorkload(exam);
-        ExaminationVo examinationVo=new ExaminationVo();
+    @RequestMapping(value = "/yearpage", method = RequestMethod.POST)
+    public String getPageYearWorkload(@RequestBody ExaminationVo exam) {
+        IPage<ExaminationWorkload> examinationIPage = examinationService.getPageYearWorkload(exam);
+        ExaminationVo examinationVo = new ExaminationVo();
         examinationVo.setExampage(examinationIPage);
-        if(examinationIPage.getTotal()==0){
+        if (examinationIPage.getTotal() == 0) {
             return new Result(ResponseCode.NoContentFailure).toString();
-        }else{
-            return new Result(ResponseCode.SUCCESS,examinationIPage).toString();
+        } else {
+            return new Result(ResponseCode.SUCCESS, examinationIPage).toString();
         }
     }
 
@@ -47,13 +48,13 @@ public class ExaminationController {
      * @Url:examination/year
      * @Description：管理员自然年不分页查询
      */
-    @RequestMapping(value = "year",method = RequestMethod.POST)
-    public String getYearWorkload(@RequestBody ExaminationVo examinationVo){
-        List<ExaminationWorkload> examinationWorkloadList=examinationService.getYearWorkload(examinationVo);
-        if(examinationWorkloadList.size()==0){
+    @RequestMapping(value = "year", method = RequestMethod.POST)
+    public String getYearWorkload(@RequestBody ExaminationVo examinationVo) {
+        List<ExaminationWorkload> examinationWorkloadList = examinationService.getYearWorkload(examinationVo);
+        if (examinationWorkloadList.size() == 0) {
             return new Result(ResponseCode.NoContentFailure).toString();
-        }else{
-            return new Result(ResponseCode.SUCCESS,examinationWorkloadList).toString();
+        } else {
+            return new Result(ResponseCode.SUCCESS, examinationWorkloadList).toString();
         }
     }
 
@@ -63,13 +64,13 @@ public class ExaminationController {
      * @Url:examination/teacher
      * @Description：管理员/教师不分页查询上课教师
      */
-    @RequestMapping(value = "teacher",method = RequestMethod.POST)
-    public String getTeacherWorkload(@RequestBody ExaminationVo examinationVo){
-        List<ExaminationWorkload> examinationWorkloadList=examinationService.getTeacherWorkload(examinationVo);
-        if(examinationWorkloadList.size()==0){
+    @RequestMapping(value = "teacher", method = RequestMethod.POST)
+    public String getTeacherWorkload(@RequestBody ExaminationVo examinationVo) {
+        List<ExaminationWorkload> examinationWorkloadList = examinationService.getTeacherWorkload(examinationVo);
+        if (examinationWorkloadList.size() == 0) {
             return new Result(ResponseCode.NoContentFailure).toString();
-        }else{
-            return new Result(ResponseCode.SUCCESS,examinationWorkloadList).toString();
+        } else {
+            return new Result(ResponseCode.SUCCESS, examinationWorkloadList).toString();
         }
     }
 
@@ -79,13 +80,13 @@ public class ExaminationController {
      * @Url:examination/course
      * @Description：管理员不分页查询课程名称（监考课程名）
      */
-    @RequestMapping(value = "course",method = RequestMethod.POST)
-    public String getCourseWorkload(@RequestBody ExaminationVo examinationVo){
-        List<ExaminationWorkload> examinationWorkloadList=examinationService.getCourseWorkload(examinationVo);
-        if(examinationWorkloadList.size()==0){
+    @RequestMapping(value = "course", method = RequestMethod.POST)
+    public String getCourseWorkload(@RequestBody ExaminationVo examinationVo) {
+        List<ExaminationWorkload> examinationWorkloadList = examinationService.getCourseWorkload(examinationVo);
+        if (examinationWorkloadList.size() == 0) {
             return new Result(ResponseCode.NoContentFailure).toString();
-        }else{
-            return new Result(ResponseCode.SUCCESS,examinationWorkloadList).toString();
+        } else {
+            return new Result(ResponseCode.SUCCESS, examinationWorkloadList).toString();
         }
     }
 

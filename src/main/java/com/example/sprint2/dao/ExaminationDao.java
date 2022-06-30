@@ -27,10 +27,10 @@ public class ExaminationDao {
      * @Description：获取自然年考务工作量。分页查询
      */
     public IPage<ExaminationWorkload> getPageYearWorkload(ExaminationVo exam) {
-        QueryWrapper<ExaminationWorkload> queryWrapper=new QueryWrapper<>();
-        queryWrapper.eq("natural_year",exam.getNaturalYear());//查询自然年
-        Page<ExaminationWorkload> examPage=new Page<>(exam.getPageNumber(),40);
-        IPage<ExaminationWorkload> examYear=examinationWorkloadMapper.selectPage(examPage,queryWrapper);
+        QueryWrapper<ExaminationWorkload> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("natural_year", exam.getNaturalYear());//查询自然年
+        Page<ExaminationWorkload> examPage = new Page<>(exam.getPageNumber(), 40);
+        IPage<ExaminationWorkload> examYear = examinationWorkloadMapper.selectPage(examPage, queryWrapper);
         return examYear;
     }
 
@@ -41,9 +41,9 @@ public class ExaminationDao {
      * @Description：自然年考务工作量。不分页
      */
     public List<ExaminationWorkload> getYearWorkload(ExaminationVo examinationVo) {
-        QueryWrapper<ExaminationWorkload> queryWrapper=new QueryWrapper<>();
-        queryWrapper.eq("natural_year",examinationVo.getNaturalYear());
-        List<ExaminationWorkload> resultList=examinationWorkloadMapper.selectList(queryWrapper);
+        QueryWrapper<ExaminationWorkload> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("natural_year", examinationVo.getNaturalYear());
+        List<ExaminationWorkload> resultList = examinationWorkloadMapper.selectList(queryWrapper);
         return resultList;
     }
 
@@ -54,10 +54,10 @@ public class ExaminationDao {
      * @Description：在自然年基础上，按教师名称查询。不分页
      */
     public List<ExaminationWorkload> getTeacherWorkload(ExaminationVo examinationVo) {
-        QueryWrapper<ExaminationWorkload> queryWrapper=new QueryWrapper<>();
-        queryWrapper.eq("natural_year",examinationVo.getYear());
-        queryWrapper.eq("main_teacher_name",examinationVo.getTeacher());
-        List<ExaminationWorkload> resultList=examinationWorkloadMapper.selectList(queryWrapper);
+        QueryWrapper<ExaminationWorkload> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("natural_year", examinationVo.getYear());
+        queryWrapper.eq("main_teacher_name", examinationVo.getTeacher());
+        List<ExaminationWorkload> resultList = examinationWorkloadMapper.selectList(queryWrapper);
         return resultList;
     }
 
@@ -68,10 +68,10 @@ public class ExaminationDao {
      * @Description：在自然年基础上，按课程性质（监考课程名称）不分页查询
      */
     public List<ExaminationWorkload> getCourseWorkload(ExaminationVo examinationVo) {
-        QueryWrapper<ExaminationWorkload> queryWrapper=new QueryWrapper<>();
-        queryWrapper.eq("natural_year",examinationVo.getNaturalYear());
-        queryWrapper.eq("course_name",examinationVo.getCourseName());
-        List<ExaminationWorkload> resultList=examinationWorkloadMapper.selectList(queryWrapper);
+        QueryWrapper<ExaminationWorkload> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("natural_year", examinationVo.getNaturalYear());
+        queryWrapper.eq("course_name", examinationVo.getCourseName());
+        List<ExaminationWorkload> resultList = examinationWorkloadMapper.selectList(queryWrapper);
         return resultList;
     }
 }

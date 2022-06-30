@@ -2,11 +2,9 @@ package com.example.sprint2.service.impl;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.example.sprint2.dao.ExaminationDao;
-import com.example.sprint2.models.enumerate.impl.ResponseCode;
 import com.example.sprint2.models.vo.ExaminationVo;
 import com.example.sprint2.mybatis.entity.ExaminationWorkload;
 import com.example.sprint2.service.ExaminationService;
-import com.example.sprint2.utils.Result;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -29,7 +27,7 @@ public class ExaminationServiceImpl implements ExaminationService {
      */
     @Override
     public IPage<ExaminationWorkload> getPageYearWorkload(ExaminationVo exam) {
-        IPage<ExaminationWorkload> examinationIPage=examinationDao.getPageYearWorkload(exam);
+        IPage<ExaminationWorkload> examinationIPage = examinationDao.getPageYearWorkload(exam);
         return examinationIPage;
     }
 
@@ -41,7 +39,7 @@ public class ExaminationServiceImpl implements ExaminationService {
      */
     @Override
     public List<ExaminationWorkload> getTeacherWorkload(ExaminationVo examinationVo) {
-        List<ExaminationWorkload> examinationWorkloadList=examinationDao.getTeacherWorkload(examinationVo);
+        List<ExaminationWorkload> examinationWorkloadList = examinationDao.getTeacherWorkload(examinationVo);
         return examinationWorkloadList;
     }
 
@@ -53,7 +51,7 @@ public class ExaminationServiceImpl implements ExaminationService {
      */
     @Override
     public List<ExaminationWorkload> getCourseWorkload(ExaminationVo examinationVo) {
-        List<ExaminationWorkload> examinationWorkloadList=examinationDao.getCourseWorkload(examinationVo);
+        List<ExaminationWorkload> examinationWorkloadList = examinationDao.getCourseWorkload(examinationVo);
         return examinationWorkloadList;
     }
 
@@ -64,8 +62,8 @@ public class ExaminationServiceImpl implements ExaminationService {
      * @Description：管理员不分页按年份查询考务
      */
     @Override
-    public List<ExaminationWorkload> getYearWorkload(ExaminationVo examinationVo){
-        List<ExaminationWorkload> examinationWorkloadList=examinationDao.getYearWorkload(examinationVo);
+    public List<ExaminationWorkload> getYearWorkload(ExaminationVo examinationVo) {
+        List<ExaminationWorkload> examinationWorkloadList = examinationDao.getYearWorkload(examinationVo);
         return examinationWorkloadList;
     }
 }
