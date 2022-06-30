@@ -16,15 +16,11 @@
   font-style: normal;
   font-display: block;
 }
-
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
   list-style: none;
-}
-a {
-  text-decoration: none;
 }
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
@@ -33,18 +29,64 @@ a {
   text-align: center;
   color: #2c3e50;
 }
+a {
+  text-decoration: none;
+}
 input:focus {
   outline: none;
 }
-/* 管理员文件上传部分的e-input控件样式 */
-.componentSubsection .el-input input.el-input__inner {
-  border: 0px;
-  padding: 0;
+/*侧边栏*/
+#sideBar {
+  float: left;
+  position: relative;
+  padding-top: 10px;
+  padding-left: 10px;
+  padding-right: 10px;
+  width: 200px;
+  height: 100vh;
+  background-color: rgb(71, 159, 134);
+  text-align: left;
+  z-index: 1;
+  color: white;
+}
+.schoolLogo {
+  width: 70%;
+}
+.schoolLogo img {
+  width: 100%;
+}
+.title {
+  font-size: 22px;
+  font-weight: 900;
+  margin-bottom: 40px;
+}
+.mainFunctions li a {
+  display: block;
+  padding-left: 10px;
+  margin-bottom: 15px;
+  height: 50px;
+  font-size: 15px;
+  line-height: 50px;
+  border-radius: 5px;
+  font-family: "icomoon";
+  color: white;
+}
+.mainFunctions li a:hover {
+  background-color: rgb(143, 196, 181);
+}
+.router-link-exact-active,
+.router-link-active {
+  background-color: rgb(143, 196, 181);
+}
+
+@media screen and (max-width: 800px) {
+  #sideBar {
+    display: none;
+  }
 }
 /*每个section最外层盒子的样式*/
 .componentWrapper {
   position: absolute;
-  z-index: -1;
   overflow-y: auto;
   width: 100vw;
   height: 100vh;
@@ -72,7 +114,6 @@ input:focus {
   height: 50px;
   line-height: 50px;
 }
-
 /*每个section内部子板块最外层盒子的样式*/
 .componentSubsection {
   position: relative;
@@ -92,7 +133,7 @@ input:focus {
   font-size: 20px;
   font-weight: 600;
 }
-/*处理工作量文件（上传、下载）的绿色btn样式*/
+/* 处理excel文件的绿色btn*/
 button.workloadFileProcessingBtn {
   padding: 5px;
   border: 1px solid rgba(128, 128, 128, 0.452);
@@ -119,5 +160,10 @@ button.universalBlueBtn {
 }
 button.universalBlueBtn:hover {
   background-color: rgba(41, 34, 106, 0.815);
+}
+/******管理员文件上传部分的e-input控件样式******/
+.componentSubsection .el-input input.el-input__inner {
+  border: 0px;
+  padding: 0;
 }
 </style>

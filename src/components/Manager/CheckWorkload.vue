@@ -1,68 +1,21 @@
 <template>
   <div class="componentWrapper">
     <div class="componentSectionTitle">查看教学工作量</div>
-    <!-- 查询条件 -->
-    <div class="tableFilter">
-      <!--年份选择-->
-      <label
-        >年份
-        <select v-model="yearChosen">
-          <option
-            v-for="index in 5"
-            :key="index"
-            :value="currentYear - index + 1"
-          >
-            {{ currentYear - index + 1 }}
-          </option>
-        </select>
-      </label>
-      <button class="universalBlueBtn confirmYearBtn" @click="confirmYear()">
-        确&nbsp;认
-      </button>
-      <!-- 条件搜索 -->
-      <select class="search" v-model="searchKeyword" id="">
-        <option>上课老师</option>
-      </select>
-      <input
-        class="search"
-        type="search"
-        v-model="searchValue"
-        placeholder="查询内容"
-        @keyup.enter="search()"
-      />
-      <button class="searchBtn universalBlueBtn" @click="search()"></button>
-    </div>
-    <!--查询结果的统计数据栏-->
-    <div class="componentSubsection">
-      <ul class="resultStatistics">
-        <li>
-          <div class="name">查询结果数</div>
-          <div class="value">{{ totalItems }}</div>
-        </li>
-        <li>
-          <div class="name">总页数</div>
-          <div class="value">{{ allPageCount }}</div>
-        </li>
-      </ul>
-    </div>
-    <!--下载文件工具栏-->
-    <div class="componentSubsection toolbar">
-      <label class="customFileName"
-        >文件名：
-        <input type="text" v-model="exportFileName" />
-      </label>
-      <span class="defaultExportfileName"
-        >（默认：{{ this.yearChosen }}年度工作量）</span
-      >
-      <button
-        class="workloadFileProcessingBtn"
-        @click="exportFile()"
-        :disabled="!dataExists"
-        :class="{ disabled: !dataExists }"
-      >
-         导出Excel至本地
-      </button>
-    </div>
+    <FilterWithSearch
+      :searchKeywords="searchKeywords"
+      @yearOnly="confirmYear"
+      @yearAndSearchValue="search"
+    ></FilterWithSearch>
+    <TableStatisticsBar
+      :allPageCount="allPageCount"
+      :totalItems="totalItems"
+    ></TableStatisticsBar>
+    <DownloadExcelFile
+      :btnText="'导出excel至本地'"
+      :disabled="!dataExists"
+      :defaultFileName="`${yearChosen}年度工作量`"
+      @exportFile="exportFile"
+    ></DownloadExcelFile>
     <!--数据列表-->
     <div class="workloadTableWrapper">
       <div class="noDataHint" v-if="!dataExists" v-html="noDataHint"></div>
@@ -88,7 +41,7 @@
     <div class="pagination">
       <button @click="pageBefore()" :disabled="noLessPage">&lt;</button>
       第
-      <input v-model="currentPage" type="text" @keyup.enter="choosePage()" />
+      <input v-model="cPage" type="text" @keyup.enter="choosePage()" />
       页
       <button @click="pageAfter()" :disabled="noMorePage">&gt;</button>
     </div>
@@ -97,15 +50,23 @@
 
 <script>
 import axios from "axios";
+import TableStatisticsBar from "../SharingComponent/TableStatisticsBar.vue";
+import DownloadExcelFile from "../SharingComponent/DownloadExcelFile.vue";
+import FilterWithSearch from "../SharingComponent/FilterWithSearch.vue";
 export default {
   name: "CheckWorkload",
+  components: {
+    TableStatisticsBar,
+    DownloadExcelFile,
+    FilterWithSearch,
+  },
   data() {
     return {
       //查询条件
       currentYear: this.$currentYear,
       yearChosen: this.$currentYear, //年份
-      searchFilterRequired: false,
-      searchKeyword: "上课老师",
+      searchKeywords: ["上课老师", "教分"],
+      searchKeyword: "",
       searchValue: "",
       //pagination
       currentPage: 0,
@@ -169,7 +130,6 @@ export default {
       axios
         .post(`${this.$domainName}/resource/tableinsemester`, {
           year: this.currentAcademicYear,
-          semester: this.currentSemester,
           pageNumber: this.currentPage,
         })
         .then((res) => {
@@ -192,11 +152,12 @@ export default {
           }
         });
     },
-    //页码操作
-    confirmYearAndSemester() {
+    confirmYear(year) {
+      this.yearChosen = year;
       this.currentPage = 1;
       this.getTableData();
     },
+    //页码操作
     pageBefore() {
       if (this.currentPage == 1) return;
       this.currentPage = this.currentPage - 1;
@@ -216,35 +177,39 @@ export default {
       this.getTableData();
     },
     //条件搜索
-    search() {
-      if (this.searchValue == "") return;
-      switch (this.searchKeyword) {
+    search(year, searchKeyword, searchValue) {
+      this.yearChosen = year;
+      this.searchKeyword = searchKeyword;
+      this.searchValue = searchValue; //获取值主要是为了显示提示信息
+      switch (searchKeyword) {
         case "上课老师":
           axios
             .post(`${this.$domainName}/search/searchIndeed`, {
-              year: this.currentAcademicYear,
-              semester: this.currentSemester,
-              teacherName: this.searchValue,
+              year: year,
+              teacherName: searchValue,
             })
             .then((res) => {
-              console.log(res);
               if (res.data.response.code == 200) {
-                console.log("Y");
                 this.dataExists = true;
                 this.workloadTableData = res.data.data;
                 this.totalItems = this.workloadTableData.length;
-                this.allPageCount = 1;
+                this.currentPage = 1;
               } else {
-                console.log("N");
                 this.dataExists = false;
                 this.workloadTableData = [];
+                this.currentPage = 0;
                 this.noDataHint = `暂无&nbsp;&nbsp;${this.year}&nbsp;&nbsp;年度，${this.searchKeyword}&nbsp;&nbsp;为&nbsp;&nbsp;${this.searchValue}&nbsp;&nbsp;的数据！`;
               }
             });
+          break;
+        case "教分":
+          console.log(year);
+          console.log(searchKeyword);
+          console.log(searchValue);
       }
     },
     //文件导出
-    exportFile() {
+    exportFile(filename) {
       axios
         .post(`${this.$domainName}/resource/tabledownload`, {
           year: this.currentAcademicYear,
@@ -258,12 +223,6 @@ export default {
             for (let i = 0; i <= col; i++) {
               data[XLSX.utils.encode_cell({ r: 0, c: i })].v =
                 this.workloadTableHeader[i];
-            }
-            //获取文件名
-            let filename = `${this.yearChosen}年度工作量`; //default
-            if (this.exportFileName != "") {
-              //custom
-              filename = this.exportFileName;
             }
             const wb = XLSX.utils.book_new();
             XLSX.utils.book_append_sheet(wb, data, "data");
@@ -281,82 +240,6 @@ export default {
 </script>
 
 <style scoped>
-/* 数据查询筛选栏 */
-.tableFilter {
-  font-size: 14px;
-  margin-bottom: 5px;
-  text-align: left;
-  padding: 5px 15px;
-}
-.tableFilter select {
-  height: 20px;
-}
-
-.tableFilter .confirmYearBtn {
-  margin-left: 5%;
-  margin-right: 15%;
-  width: 50px;
-  height: 25px;
-  border: 1px solid rgba(128, 128, 128, 0.555);
-}
-.tableFilter .search {
-  height: 30px;
-  border: 0px;
-  background-color: #fff;
-}
-.tableFilter select.search {
-  vertical-align: bottom;
-  border-top-left-radius: 5px;
-  border-bottom-left-radius: 5px;
-}
-.tableFilter input.search {
-  padding-left: 10px;
-}
-.tableFilter button.searchBtn {
-  width: 35px;
-  height: 30px;
-  vertical-align: bottom;
-  border-top-left-radius: 0;
-  border-bottom-left-radius: 0;
-}
-
-/* 查询结果的统计数据栏 */
-ul.resultStatistics {
-  text-align: left;
-  padding-left: 15px;
-}
-ul.resultStatistics li {
-  display: inline-block;
-  padding-right: 30px;
-  margin-right: 30px;
-  text-align: center;
-  border-right: 1px solid rgba(128, 128, 128, 0.212);
-}
-ul.resultStatistics li .name {
-  font-size: 10px;
-}
-ul.resultStatistics li .value {
-  font-size: 20px;
-  font-weight: 500;
-}
-/*文件下载工具栏*/
-div.componentSubsection.toolbar {
-  text-align: right;
-}
-label.customFileName {
-  font-size: 14px;
-}
-label.customFileName input {
-  padding-left: 5px;
-  height: 25px;
-  border: 1px solid gray;
-  border-radius: 5px;
-}
-span.defaultExportfileName {
-  font-size: 10px;
-  color: gray;
-}
-
 /* 数据列表 */
 .workloadTableWrapper {
   position: relative;
@@ -379,7 +262,6 @@ table.workloadDataTable {
   background-color: #fff;
   padding: 3px 5px;
 }
-
 /* 分页 */
 .pagination button {
   border: 0;

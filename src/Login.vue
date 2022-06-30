@@ -1,16 +1,8 @@
 <template>
   <div id="body">
     <header>
-      <img
-        src="../../assets/schoolImg/bg-footer.png"
-        class="background"
-        alt=""
-      />
-      <img
-        src="../../assets/schoolImg/schoolLogo.png"
-        alt=""
-        class="schoolLogo"
-      />
+      <img src="./assets/schoolImg/bg-footer.png" class="background" />
+      <img src="./assets/schoolImg/schoolLogo.png" class="schoolLogo" />
       <div class="title">
         工&nbsp;作&nbsp;量&nbsp;管&nbsp;理&nbsp;平&nbsp;台
       </div>
