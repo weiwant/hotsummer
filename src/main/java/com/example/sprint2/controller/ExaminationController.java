@@ -34,7 +34,7 @@ public class ExaminationController {
     public String getPageYearWorkload(@RequestBody ExaminationVo exam) {
         IPage<ExaminationWorkload> examinationIPage = examinationService.getPageYearWorkload(exam);
         ExaminationVo examinationVo = new ExaminationVo();
-        examinationVo.setExampage(examinationIPage);
+        examinationVo.setExamPage(examinationIPage);
         if (examinationIPage.getTotal() == 0) {
             return new Result(ResponseCode.NoContentFailure).toString();
         } else {
