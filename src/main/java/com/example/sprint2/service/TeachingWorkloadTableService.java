@@ -1,7 +1,7 @@
 package com.example.sprint2.service;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.example.sprint2.models.vo.PageSearchVo;
+import com.example.sprint2.models.vo.TeachingWorkloadVo;
 import com.example.sprint2.mybatis.entity.TeachingWorkloadStatistics;
 
 /**
@@ -10,14 +10,14 @@ import com.example.sprint2.mybatis.entity.TeachingWorkloadStatistics;
  * @description 教学工作量表所有查询
  */
 public interface TeachingWorkloadTableService {
-    IPage<TeachingWorkloadStatistics> searchByNaturalYearInPage(PageSearchVo pageSearchVo);
+    IPage<TeachingWorkloadStatistics> searchByNaturalYearInPage(TeachingWorkloadVo teachingWorkloadVo);
 
-    IPage<TeachingWorkloadStatistics> searchByTeacherNameInPage(PageSearchVo pageSearchVo);
+    IPage<TeachingWorkloadStatistics> searchByTeacherNameInPage(TeachingWorkloadVo teachingWorkloadVo);
 
-    IPage<TeachingWorkloadStatistics> searchByCourseNameInPage(PageSearchVo pageSearchVo);
+    IPage<TeachingWorkloadStatistics> searchByCourseNameInPage(TeachingWorkloadVo teachingWorkloadVo);
 
-    IPage<TeachingWorkloadStatistics> searchByStudentGradeInPage(PageSearchVo pageSearchVo);
+    IPage<TeachingWorkloadStatistics> searchByStudentGradeInPage(TeachingWorkloadVo teachingWorkloadVo);
 
-    IPage<TeachingWorkloadStatistics> searchByMajorInPage(PageSearchVo pageSearchVo);
+    IPage<TeachingWorkloadStatistics> searchByMajorInPage(TeachingWorkloadVo teachingWorkloadVo);
 
 }

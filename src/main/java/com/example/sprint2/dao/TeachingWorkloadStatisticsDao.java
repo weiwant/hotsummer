@@ -107,4 +107,12 @@ public class TeachingWorkloadStatisticsDao {
         return teachIPage;
     }
 
+    public IPage<TeachingWorkloadStatistics> selectByMajorInPage(String naturalYear, String major, int pageNumber, int pageSize) {
+        QueryWrapper<TeachingWorkloadStatistics> wrapper = new QueryWrapper<>();
+        wrapper.eq("natural_year", naturalYear);
+        wrapper.eq("major", major);
+        Page<TeachingWorkloadStatistics> teachPage = new Page<>(pageNumber, pageSize);
+        IPage<TeachingWorkloadStatistics> teachIPage = teachingWorkloadStatisticsMapper.selectPage(teachPage, wrapper);
+        return teachIPage;
+    }
 }

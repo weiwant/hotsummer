@@ -2,7 +2,7 @@ package com.example.sprint2.service.impl;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.example.sprint2.dao.TeachingWorkloadStatisticsDao;
-import com.example.sprint2.models.vo.PageSearchVo;
+import com.example.sprint2.models.vo.TeachingWorkloadVo;
 import com.example.sprint2.mybatis.entity.TeachingWorkloadStatistics;
 import com.example.sprint2.service.TeachingWorkloadTableService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,30 +18,30 @@ public class TeachingWorkloadTableServiceImpl implements TeachingWorkloadTableSe
     TeachingWorkloadStatisticsDao teachingWorkloadStatisticsDao;
 
     @Override
-    public IPage<TeachingWorkloadStatistics> searchByNaturalYearInPage(PageSearchVo pageSearchVo) {
-        return teachingWorkloadStatisticsDao.selectByNaturalYearInPage(pageSearchVo.getNaturalYear(), pageSearchVo.getPageNumber(), pageSearchVo.getPageSize());
+    public IPage<TeachingWorkloadStatistics> searchByNaturalYearInPage(TeachingWorkloadVo teachingWorkloadVo) {
+        return teachingWorkloadStatisticsDao.selectByNaturalYearInPage(teachingWorkloadVo.getNaturalYear(), teachingWorkloadVo.getPageNumber(), teachingWorkloadVo.getPageSize());
     }
 
     @Override
-    public IPage<TeachingWorkloadStatistics> searchByTeacherNameInPage(PageSearchVo pageSearchVo) {
-        return teachingWorkloadStatisticsDao.selectByTeacherNameInPage(pageSearchVo.getNaturalYear(), pageSearchVo.getTeacherName(), pageSearchVo.getPageNumber(), pageSearchVo.getPageSize());
+    public IPage<TeachingWorkloadStatistics> searchByTeacherNameInPage(TeachingWorkloadVo teachingWorkloadVo) {
+        return teachingWorkloadStatisticsDao.selectByTeacherNameInPage(teachingWorkloadVo.getNaturalYear(), teachingWorkloadVo.getTeacherName(), teachingWorkloadVo.getPageNumber(), teachingWorkloadVo.getPageSize());
     }
 
     @Override
-    public IPage<TeachingWorkloadStatistics> searchByCourseNameInPage(PageSearchVo pageSearchVo) {
-        return teachingWorkloadStatisticsDao.selectByCourseNameInPage(pageSearchVo.getNaturalYear(), pageSearchVo.getCourseName(), pageSearchVo.getPageNumber(), pageSearchVo.getPageSize());
-
-    }
-
-    @Override
-    public IPage<TeachingWorkloadStatistics> searchByStudentGradeInPage(PageSearchVo pageSearchVo) {
-        return teachingWorkloadStatisticsDao.selectByStudentGradeInPage(pageSearchVo.getNaturalYear(), pageSearchVo.getStudentGrade(), pageSearchVo.getPageNumber(), pageSearchVo.getPageSize());
+    public IPage<TeachingWorkloadStatistics> searchByCourseNameInPage(TeachingWorkloadVo teachingWorkloadVo) {
+        return teachingWorkloadStatisticsDao.selectByCourseNameInPage(teachingWorkloadVo.getNaturalYear(), teachingWorkloadVo.getCourseName(), teachingWorkloadVo.getPageNumber(), teachingWorkloadVo.getPageSize());
 
     }
 
     @Override
-    public IPage<TeachingWorkloadStatistics> searchByMajorInPage(PageSearchVo pageSearchVo) {
-        return null;
+    public IPage<TeachingWorkloadStatistics> searchByStudentGradeInPage(TeachingWorkloadVo teachingWorkloadVo) {
+        return teachingWorkloadStatisticsDao.selectByStudentGradeInPage(teachingWorkloadVo.getNaturalYear(), teachingWorkloadVo.getStudentGrade(), teachingWorkloadVo.getPageNumber(), teachingWorkloadVo.getPageSize());
+
+    }
+
+    @Override
+    public IPage<TeachingWorkloadStatistics> searchByMajorInPage(TeachingWorkloadVo teachingWorkloadVo) {
+        return teachingWorkloadStatisticsDao.selectByMajorInPage(teachingWorkloadVo.getNaturalYear(), teachingWorkloadVo.getMajor(),teachingWorkloadVo.getPageNumber(),teachingWorkloadVo.getPageSize());
     }
 }
 
