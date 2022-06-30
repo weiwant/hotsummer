@@ -7,10 +7,7 @@ import com.example.sprint2.mybatis.entity.TeachingWorkloadStatistics;
 import com.example.sprint2.service.TeachingWorkloadTableService;
 import com.example.sprint2.utils.Result;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * @author 24047
@@ -18,14 +15,14 @@ import org.springframework.web.bind.annotation.RestController;
  */
 
 @RestController
-@RequestMapping("/manager/teachingWorkload")
+@RequestMapping("/manager/teaching-workload")
 public class TeachingWorkloadTableController {
     @Autowired
     TeachingWorkloadTableService teachingWorkloadTableService;
 
 
-    @RequestMapping(value = "getAll", method = RequestMethod.POST)
-    public String getAll(@RequestBody PageSearchVo pageSearchVo) {
+    @RequestMapping(value = "get-all",method= RequestMethod.POST)
+    public String getAll(@RequestBody PageSearchVo pageSearchVo){
         /**
          * @author 24047
          * @date 2022/6/29
@@ -33,18 +30,18 @@ public class TeachingWorkloadTableController {
          * @description 前端提供naturalYear，pageNumber，pageSize即可对教学工作量表进行分页查询
          * @return java.lang.String
          */
-        IPage<TeachingWorkloadStatistics> worksInSemester = teachingWorkloadTableService.searchByNaturalYearInPage(pageSearchVo);
+        IPage<TeachingWorkloadStatistics> workloadPage = teachingWorkloadTableService.searchByNaturalYearInPage(pageSearchVo);
 
-        if (worksInSemester.getTotal() == 0) {
+        if (workloadPage.getTotal() == 0) {
             return new Result(ResponseCode.NoContentFailure).toString();
         } else {
-            return new Result(ResponseCode.SUCCESS, worksInSemester).toString();
+            return new Result(ResponseCode.SUCCESS, workloadPage).toString();
         }
     }
 
 
-    @RequestMapping(value = "searchTeacherName", method = RequestMethod.POST)
-    public String searchTeacherName(@RequestBody PageSearchVo pageSearchVo) {
+    @RequestMapping(value = "search-teacher-name",method= RequestMethod.POST)
+    public String searchTeacherName(@RequestBody PageSearchVo pageSearchVo){
         /**
          * @author 24047
          * @date 2022/6/29
@@ -52,18 +49,18 @@ public class TeachingWorkloadTableController {
          * @description 前端提供naturalYear，teacherName，pageNumber，pageSize即可对教学工作量表进行分页查询
          * @return java.lang.String
          */
-        IPage<TeachingWorkloadStatistics> worksInSemester = teachingWorkloadTableService.searchByTeacherNameInPage(pageSearchVo);
+        IPage<TeachingWorkloadStatistics> workloadPage = teachingWorkloadTableService.searchByTeacherNameInPage(pageSearchVo);
 
-        if (worksInSemester.getTotal() == 0) {
+        if (workloadPage.getTotal() == 0) {
             return new Result(ResponseCode.NoContentFailure).toString();
         } else {
-            return new Result(ResponseCode.SUCCESS, worksInSemester).toString();
+            return new Result(ResponseCode.SUCCESS, workloadPage).toString();
         }
     }
 
 
-    @RequestMapping(value = "searchCourseName", method = RequestMethod.POST)
-    public String searchCourseName(@RequestBody PageSearchVo pageSearchVo) {
+    @RequestMapping(value = "search-course-name",method= RequestMethod.POST)
+    public String searchCourseName(@RequestBody PageSearchVo pageSearchVo){
         /**
          * @author 24047
          * @date 2022/6/29
@@ -71,18 +68,18 @@ public class TeachingWorkloadTableController {
          * @description 前端提供naturalYear，courseName，pageNumber，pageSize即可对教学工作量表进行分页查询
          * @return java.lang.String
          */
-        IPage<TeachingWorkloadStatistics> worksInSemester = teachingWorkloadTableService.searchByCourseNameInPage(pageSearchVo);
+        IPage<TeachingWorkloadStatistics> workloadPage = teachingWorkloadTableService.searchByCourseNameInPage(pageSearchVo);
 
-        if (worksInSemester.getTotal() == 0) {
+        if (workloadPage.getTotal() == 0) {
             return new Result(ResponseCode.NoContentFailure).toString();
         } else {
-            return new Result(ResponseCode.SUCCESS, worksInSemester).toString();
+            return new Result(ResponseCode.SUCCESS, workloadPage).toString();
         }
     }
 
 
-    @RequestMapping(value = "searchCourseName", method = RequestMethod.POST)
-    public String searchMajor(@RequestBody PageSearchVo pageSearchVo) {
+    @RequestMapping(value = "search-major",method= RequestMethod.POST)
+    public String searchMajor(@RequestBody PageSearchVo pageSearchVo){
         /**
          * @author 24047
          * @date 2022/6/29
@@ -90,17 +87,17 @@ public class TeachingWorkloadTableController {
          * @description 前端提供naturalYear，pageNumber，pageSize即可对教学工作量表进行分页查询
          * @return java.lang.String
          */
-        IPage<TeachingWorkloadStatistics> worksInSemester = teachingWorkloadTableService.searchByMajorInPage(pageSearchVo);
+        IPage<TeachingWorkloadStatistics> workloadPage = teachingWorkloadTableService.searchByMajorInPage(pageSearchVo);
 
-        if (worksInSemester.getTotal() == 0) {
+        if (workloadPage.getTotal() == 0) {
             return new Result(ResponseCode.NoContentFailure).toString();
         } else {
-            return new Result(ResponseCode.SUCCESS, worksInSemester).toString();
+            return new Result(ResponseCode.SUCCESS, workloadPage).toString();
         }
     }
 
-    @RequestMapping(value = "searchStudentGrade", method = RequestMethod.POST)
-    public String searchStudentGrade(@RequestBody PageSearchVo pageSearchVo) {
+    @RequestMapping(value = "search-student-grade",method= RequestMethod.POST)
+    public String searchStudentGrade(@RequestBody PageSearchVo pageSearchVo){
         /**
          * @author 24047
          * @date 2022/6/29
@@ -108,12 +105,12 @@ public class TeachingWorkloadTableController {
          * @description 前端提供naturalYear，pageNumber，pageSize即可对教学工作量表进行分页查询
          * @return java.lang.String
          */
-        IPage<TeachingWorkloadStatistics> worksInSemester = teachingWorkloadTableService.searchByStudentGradeInPage(pageSearchVo);
+        IPage<TeachingWorkloadStatistics> workloadPage = teachingWorkloadTableService.searchByStudentGradeInPage(pageSearchVo);
 
-        if (worksInSemester.getTotal() == 0) {
+        if (workloadPage.getTotal() == 0) {
             return new Result(ResponseCode.NoContentFailure).toString();
         } else {
-            return new Result(ResponseCode.SUCCESS, worksInSemester).toString();
+            return new Result(ResponseCode.SUCCESS, workloadPage).toString();
         }
     }
 }

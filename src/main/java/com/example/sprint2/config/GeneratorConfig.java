@@ -20,7 +20,6 @@ public class GeneratorConfig {
     static String username = "root";
     static String password = "31415926";
     static List<String> tableName = Arrays.asList(
-
     );
 
     public static void main(String[] args) {
