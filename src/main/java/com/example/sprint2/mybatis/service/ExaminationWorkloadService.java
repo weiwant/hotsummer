@@ -1,11 +1,11 @@
 package com.example.sprint2.mybatis.service;
 
-import com.example.sprint2.mybatis.entity.ExaminationWorkload;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.example.sprint2.mybatis.entity.ExaminationWorkload;
 
 /**
  * <p>
- *  服务类
+ * 服务类
  * </p>
  *
  * @author 24047

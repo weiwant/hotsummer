@@ -1,12 +1,12 @@
 package com.example.sprint2.mybatis.mapper;
 
-import com.example.sprint2.mybatis.entity.SpecialWorkload;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.example.sprint2.mybatis.entity.SpecialWorkload;
 import org.apache.ibatis.annotations.Mapper;
 
 /**
  * <p>
- *  Mapper 接口
+ * Mapper 接口
  * </p>
  *
  * @author 24047

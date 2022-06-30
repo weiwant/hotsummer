@@ -2,7 +2,6 @@ package com.example.sprint2.mybatis.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.example.sprint2.mybatis.entity.UserLogin;
-import com.example.sprint2.mybatis.entity.UserLogin;
 import org.apache.ibatis.annotations.Mapper;
 
 /**

@@ -2,8 +2,6 @@ package com.example.sprint2.dao;
 
 import com.example.sprint2.mybatis.entity.UserLogin;
 import com.example.sprint2.mybatis.mapper.UserloginMapper;
-import com.example.sprint2.mybatis.entity.UserLogin;
-import com.example.sprint2.mybatis.mapper.UserloginMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 

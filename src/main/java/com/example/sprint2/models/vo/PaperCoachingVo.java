@@ -1,10 +1,6 @@
 package com.example.sprint2.models.vo;
 
-import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.example.sprint2.mybatis.entity.PaperCoachingWorkload;
 import lombok.Data;
-
-import java.util.List;
 
 /**
  * @author hy

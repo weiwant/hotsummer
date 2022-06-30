@@ -1,8 +1,8 @@
 package com.example.sprint2.service.impl;
 
 import com.example.sprint2.dao.UserDao;
-import com.example.sprint2.mybatis.entity.UserLogin;
 import com.example.sprint2.models.vo.LoginVo;
+import com.example.sprint2.mybatis.entity.UserLogin;
 import com.example.sprint2.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
