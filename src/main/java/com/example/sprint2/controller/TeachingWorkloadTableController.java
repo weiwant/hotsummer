@@ -21,7 +21,7 @@ public class TeachingWorkloadTableController {
     TeachingWorkloadTableService teachingWorkloadTableService;
 
 
-    @RequestMapping(value = "get-all",method= RequestMethod.POST)
+    @RequestMapping(value = "all",method= RequestMethod.POST)
     public String getAll(@RequestBody PageSearchVo pageSearchVo){
         /**
          * @author 24047
@@ -40,7 +40,7 @@ public class TeachingWorkloadTableController {
     }
 
 
-    @RequestMapping(value = "search-teacher-name",method= RequestMethod.POST)
+    @RequestMapping(value = "teacher-name",method= RequestMethod.POST)
     public String searchTeacherName(@RequestBody PageSearchVo pageSearchVo){
         /**
          * @author 24047
@@ -59,7 +59,7 @@ public class TeachingWorkloadTableController {
     }
 
 
-    @RequestMapping(value = "search-course-name",method= RequestMethod.POST)
+    @RequestMapping(value = "course-name",method= RequestMethod.POST)
     public String searchCourseName(@RequestBody PageSearchVo pageSearchVo){
         /**
          * @author 24047
@@ -78,7 +78,7 @@ public class TeachingWorkloadTableController {
     }
 
 
-    @RequestMapping(value = "search-major",method= RequestMethod.POST)
+    @RequestMapping(value = "major",method= RequestMethod.POST)
     public String searchMajor(@RequestBody PageSearchVo pageSearchVo){
         /**
          * @author 24047
@@ -96,7 +96,7 @@ public class TeachingWorkloadTableController {
         }
     }
 
-    @RequestMapping(value = "search-student-grade",method= RequestMethod.POST)
+    @RequestMapping(value = "student-grade",method= RequestMethod.POST)
     public String searchStudentGrade(@RequestBody PageSearchVo pageSearchVo){
         /**
          * @author 24047
