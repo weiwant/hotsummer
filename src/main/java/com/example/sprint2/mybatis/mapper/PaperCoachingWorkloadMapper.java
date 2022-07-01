@@ -1,7 +1,7 @@
 package com.example.sprint2.mybatis.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import com.example.sprint2.mybatis.entity.TeachingWorkloadStatistics;
+import com.example.sprint2.mybatis.entity.PaperCoachingWorkload;
 import org.apache.ibatis.annotations.Mapper;
 
 /**
@@ -9,10 +9,10 @@ import org.apache.ibatis.annotations.Mapper;
  * Mapper 接口
  * </p>
  *
- * @author 24047
+ * @author 25906
  * @since 2022-06-30
  */
 @Mapper
-public interface TeachingWorkloadStatisticsMapper extends BaseMapper<TeachingWorkloadStatistics> {
+public interface PaperCoachingWorkloadMapper extends BaseMapper<PaperCoachingWorkload> {
 
 }

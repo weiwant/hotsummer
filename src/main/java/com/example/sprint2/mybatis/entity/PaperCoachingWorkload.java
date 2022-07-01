@@ -10,22 +10,24 @@ import lombok.Setter;
 import java.io.Serializable;
 
 /**
- * <p>
- *
- * </p>
- *
- * @author 24047
+ * @author hy
  * @since 2022-06-30
  */
 @Getter
 @Setter
-@TableName("examination_workload")
-public class ExaminationWorkload implements Serializable {
+@TableName("paper_coaching_workload")
+public class PaperCoachingWorkload implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
     @TableId(value = "id", type = IdType.AUTO)
     private Integer id;
+
+    /**
+     * 工作量类型
+     */
+    @TableField("workload_type")
+    private String workloadType;
 
     /**
      * 学年
@@ -46,16 +48,16 @@ public class ExaminationWorkload implements Serializable {
     private String courseName;
 
     /**
-     * 上课老师
+     * 上课教师姓名
      */
     @TableField("main_teacher_name")
     private String mainTeacherName;
 
     /**
-     * 计算用学时
+     * 计算用人数
      */
-    @TableField("calculating_class_hours")
-    private Double calculatingClassHours;
+    @TableField("student_amount")
+    private Double studentAmount;
 
     /**
      * 原始教分
@@ -70,7 +72,7 @@ public class ExaminationWorkload implements Serializable {
     private Double teachingCoefficient;
 
     /**
-     * 教分（BA1\ 3\ 15）
+     * 教分（BA1/3/15）
      */
     @TableField("final_teaching_scores")
     private Double finalTeachingScores;
@@ -78,14 +80,8 @@ public class ExaminationWorkload implements Serializable {
     /**
      * 自然年
      */
-    @TableField("natural_year")
-    private String naturalYear;
-
-    /**
-     * 工作性质
-     */
-    @TableField("workload_attribute")
-    private String workloadAttribute;
+    @TableField("nutural_year")
+    private String nuturalYear;
 
 
 }
