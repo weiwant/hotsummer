@@ -5,7 +5,9 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.example.sprint2.models.vo.ExaminationVo;
 import com.example.sprint2.mybatis.entity.ExaminationWorkload;
+import com.example.sprint2.mybatis.entity.TotalTable;
 import com.example.sprint2.mybatis.mapper.ExaminationWorkloadMapper;
+import com.example.sprint2.mybatis.mapper.TotalTableMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -19,6 +21,8 @@ import java.util.List;
 public class ExaminationDao {
     @Autowired
     ExaminationWorkloadMapper examinationWorkloadMapper;
+    @Autowired
+    TotalTableMapper totalTableMapper;
 
     /**
      * @Author：wwq
@@ -73,5 +77,20 @@ public class ExaminationDao {
         queryWrapper.eq("course_name", examinationVo.getCourseName());
         List<ExaminationWorkload> resultList = examinationWorkloadMapper.selectList(queryWrapper);
         return resultList;
+    }
+
+    public void insertEntity(ExaminationWorkload examinationWorkload) {
+        examinationWorkloadMapper.insert(examinationWorkload);
+        TotalTable totalTable = new TotalTable();
+        totalTable.setNaturalYear(examinationWorkload.getNaturalYear());
+        totalTable.setTeacherName(examinationWorkload.getMainTeacherName());
+        totalTable.setExaminationWorkId(examinationWorkload.getId());
+        totalTableMapper.insert(totalTable);
+    }
+
+    public void deleteByNaturalYear(ExaminationWorkload examinationWorkload) {
+        QueryWrapper<ExaminationWorkload> wrapper = new QueryWrapper<>();
+        wrapper.eq("natural_year", examinationWorkload.getNaturalYear());
+        examinationWorkloadMapper.delete(wrapper);
     }
 }

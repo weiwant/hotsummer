@@ -5,7 +5,9 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.example.sprint2.models.vo.PaperCoachingVo;
 import com.example.sprint2.mybatis.entity.PaperCoachingWorkload;
+import com.example.sprint2.mybatis.entity.TotalTable;
 import com.example.sprint2.mybatis.mapper.PaperCoachingWorkloadMapper;
+import com.example.sprint2.mybatis.mapper.TotalTableMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -21,6 +23,8 @@ import java.util.List;
 public class PaperCoachingDao {
     @Autowired
     PaperCoachingWorkloadMapper mapper;
+    @Autowired
+    TotalTableMapper totalTableMapper;
 
 
     /**
@@ -94,5 +98,19 @@ public class PaperCoachingDao {
         return iPage;
     }
 
+    public void insertEntity(PaperCoachingWorkload paperCoachingWorkload) {
+        mapper.insert(paperCoachingWorkload);
+        TotalTable totalTable = new TotalTable();
+        totalTable.setTeacherName(paperCoachingWorkload.getMainTeacherName());
+        totalTable.setNaturalYear(paperCoachingWorkload.getNuturalYear());
+        totalTable.setPaperWorkId(paperCoachingWorkload.getId());
+        totalTableMapper.insert(totalTable);
+    }
+
+    public void deleteByNaturalYear(PaperCoachingWorkload paperCoachingWorkload) {
+        QueryWrapper<PaperCoachingWorkload> wrapper = new QueryWrapper<>();
+        wrapper.eq("nutural_year", paperCoachingWorkload.getNuturalYear());
+        mapper.delete(wrapper);
+    }
 
 }

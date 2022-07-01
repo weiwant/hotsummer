@@ -4,7 +4,9 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.example.sprint2.mybatis.entity.TeachingWorkloadStatistics;
+import com.example.sprint2.mybatis.entity.TotalTable;
 import com.example.sprint2.mybatis.mapper.TeachingWorkloadStatisticsMapper;
+import com.example.sprint2.mybatis.mapper.TotalTableMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -19,6 +21,8 @@ import java.util.List;
 public class TeachingWorkloadStatisticsDao {
     @Autowired
     TeachingWorkloadStatisticsMapper teachingWorkloadStatisticsMapper;
+    @Autowired
+    TotalTableMapper totalTableMapper;
 
     /**
      * @param teachingWorkloadStatistics
@@ -42,6 +46,11 @@ public class TeachingWorkloadStatisticsDao {
      */
     public void insertEntity(TeachingWorkloadStatistics teachingWorkloadStatistics) {
         teachingWorkloadStatisticsMapper.insert(teachingWorkloadStatistics);
+        TotalTable totalTable = new TotalTable();
+        totalTable.setTeacherName(teachingWorkloadStatistics.getMainTeacherName());
+        totalTable.setNaturalYear(teachingWorkloadStatistics.getNaturalYear());
+        totalTable.setAcademicWorkId(teachingWorkloadStatistics.getId());
+        totalTableMapper.insert(totalTable);
     }
 
     /**
