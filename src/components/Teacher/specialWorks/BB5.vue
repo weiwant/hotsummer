@@ -19,9 +19,9 @@
         <tr>
         <td>级别:    </td>
         <td>
-          <input type="radio" name="class" id="jibie" checked="checked"> 权威       
-          <input type="radio" name="class" id="jibie" > 核心 
-          <input type="radio" name="class" id="jibie" > 非核心
+          <input type="radio" name="level" id="jibie" checked="checked"> 权威       
+          <input type="radio" name="level" id="jibie" > 核心 
+          <input type="radio" name="level" id="jibie" > 非核心
         </td>
         <br>
       </tr>
@@ -43,11 +43,7 @@
         <td>刊物期数:   </td>
         <td>
           <input type=”month”>
-          <input type="number"
-          min="0"
-	        max="10"
-	        step="100"
-	        value="0">期
+          <input type="number"  min="0"  max="100"   step="1" value="0">期
         </td>
         <br>
       </tr>
@@ -60,6 +56,10 @@
         </td>
         <br>
       </tr>
+       <tr>
+        <input type="reset"  value="重置">
+      </tr>
+
       </form>
       <button class="universalBlueBtn complete" @click="commit">
         提&nbsp;交

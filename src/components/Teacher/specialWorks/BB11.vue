@@ -1,6 +1,6 @@
 <template>
   <div class="componentSubsection category">
-    <div class="categoryTitle">课程建设BB1</div>
+    <div class="categoryTitle">教学兼职BB11</div>
     <!-- 历史上报记录 -->
     <div class="history">
       <div class="historyTitle">
@@ -15,6 +15,33 @@
     </div>
     <!-- 填报与添加区域 -->
     <div class="addNew">
+      <from>
+        <tr>
+          <td>内容</td>
+          <td>
+            <input type="textarea" placeholder="请输入教学兼职相关内容">
+          </td>
+          <br>
+        </tr>
+         <tr>
+          <td>教师姓名:   </td>
+          <td>
+            <input type="text" placeholder="请输入教师姓名">
+          </td>
+          <br>
+        </tr>
+        <tr>
+        <td>教分</td>
+        <td>
+          <input type="number" min="1" max="10" step="1" value="1">
+        </td>
+        <br>  
+      </tr>
+       <tr>
+        <input type="reset"  value="重置">
+      </tr>
+        
+      </from>
       <button class="universalBlueBtn complete" @click="commit">
         提&nbsp;交
       </button>

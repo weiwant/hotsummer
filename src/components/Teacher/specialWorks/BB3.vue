@@ -15,7 +15,8 @@
     </div>
     <!-- 填报与添加区域 -->
     <div class="addNew">
-      <tr>
+      <form>
+        <tr>
         <td>级别:    </td>
         <td>
           <input type="radio" name="class" id="jibie" checked="checked"> 国家级        
@@ -66,8 +67,12 @@
         </td>
         <br>
       </tr>
-      
+       <tr>
+        <input type="reset"  value="重置">
+      </tr>
 
+      </form>
+      
       <button class="universalBlueBtn complete" @click="commit">
         提&nbsp;交
       </button>

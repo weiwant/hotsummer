@@ -67,6 +67,10 @@
         </td>
         <br>
       </tr>
+       <tr>
+        <input type="reset"  value="重置">
+      </tr>
+
 
       </form>
 

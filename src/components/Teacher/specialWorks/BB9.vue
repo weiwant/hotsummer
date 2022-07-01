@@ -1,6 +1,6 @@
 <template>
   <div class="componentSubsection category">
-    <div class="categoryTitle">课程建设BB1</div>
+    <div class="categoryTitle">指导学生竞赛获奖BB9</div>
     <!-- 历史上报记录 -->
     <div class="history">
       <div class="historyTitle">
@@ -38,7 +38,7 @@
           <input type="radio" name="class" id="jibie" checked="checked"> 国际      
           <input type="radio" name="class" id="jibie" > 全国  
           <input type="radio" name="class" id="jibie" > 省级
-           <input type="radio" name="class" id="jibie" > 校级
+          <input type="radio" name="class" id="jibie" > 校级
         </td>
         <br>
       </tr>

@@ -1,6 +1,6 @@
 <template>
   <div class="componentSubsection category">
-    <div class="categoryTitle">课程建设BB1</div>
+    <div class="categoryTitle">指导优秀毕业论文BB8</div>
     <!-- 历史上报记录 -->
     <div class="history">
       <div class="historyTitle">
@@ -28,21 +28,21 @@
         <tr>
           <td>论文名称:   </td>学生姓名
           <td>
-            <input type="论文名称" placeholder="请输入论文名称">
+            <input type="text" placeholder="请输入论文名称">
           </td>
           <br>
         </tr>
         <tr>
           <td>学生姓名:   </td>
           <td>
-            <input type="学生姓名" placeholder="请输入学生姓名">
+            <input type="text" placeholder="请输入学生姓名">
           </td>
           <br>
         </tr>
         <tr>
           <td>学生姓名:   </td>
           <td>
-            <input type="学生姓名" placeholder="请输入学生姓名">
+            <input type="text" placeholder="请输入学生姓名">
           </td>
           <br>
         </tr>

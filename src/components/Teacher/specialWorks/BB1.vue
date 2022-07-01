@@ -73,11 +73,6 @@
       </tr>
     </form>
 
-    <button class="universalBlueBtn complete" @click="commit">
-        重&nbsp;置
-      </button>
-
-
       <button class="universalBlueBtn complete" @click="commit">
         提&nbsp;交
       </button>

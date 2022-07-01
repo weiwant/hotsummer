@@ -1,6 +1,6 @@
 <template>
   <div class="componentSubsection category">
-    <div class="categoryTitle">课程建设BB1</div>
+    <div class="categoryTitle">出版教材BB6</div>
     <!-- 历史上报记录 -->
     <div class="history">
       <div class="historyTitle">
@@ -89,6 +89,10 @@
         </td>
         <br>
       </tr>
+       <tr>
+        <input type="reset"  value="重置">
+      </tr>
+
 
       </form>
       <button class="universalBlueBtn complete" @click="commit">
