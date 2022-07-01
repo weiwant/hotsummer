@@ -1,14 +1,14 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import Teacherhome from '../components/HSH/teacher/Teacherhome.vue'
-import SpecialWorkload from '../components/HSH/teacher/SpecialWorkload.vue'
-import TeacherWorkloadTable from '../components/HSH/teacher/TeacherWorkloadTable.vue'
-import TeacherPersonalInfo from '../components/HSH/teacher/TeacherPersonalInfo.vue'
-import Managerhome from '../components/HSH/manager/Managerhome.vue'
-import ManagerPersonalInfo from '../components/HSH/manager/ManagerPersonalInfo.vue'
-import CheckWorkload from '../components/HSH/manager/CheckWorkload.vue'
-import UploadWorkload from '../components/HSH/manager/UploadWorkload.vue'
-import Login from '../components/LJY/Login.vue'
+const Teacherhome = () => import('../components/Teacher/Teacherhome.vue')
+const SpecialWorkload = () => import('../components/Teacher/SpecialWorkload.vue')
+const TeacherWorkloadTable = () => import('../components/Teacher/TeacherWorkloadTable.vue')
+const TeacherPersonalInfo = () => import('../components/Teacher/TeacherPersonalInfo.vue')
+const Managerhome = () => import('../components/Manager/Managerhome.vue')
+const ManagerPersonalInfo = () => import('../components/Manager/ManagerPersonalInfo.vue')
+const CheckWorkload = () => import('../components/Manager/CheckWorkload.vue')
+const UploadWorkload = () => import('../components/Manager/UploadWorkload.vue')
+const Login = () => import('../Login.vue')
 
 Vue.use(VueRouter)
 
@@ -17,7 +17,7 @@ const routes = [
     path: '/',
     name: 'Login',
     // component: Login
-    redirect: '/managerhome/checkWorkload'
+    redirect: '/teacherhome/SpecialWorkload'
   },
   {
     path: '/teacherhome',
