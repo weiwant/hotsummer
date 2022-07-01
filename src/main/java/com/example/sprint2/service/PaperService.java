@@ -13,9 +13,14 @@ import java.util.List;
  */
 public interface PaperService {
     public List<PaperCoachingWorkload> selectAll();
+
     public IPage<PaperCoachingWorkload> selectAllPage(PaperCoachingVo paperCoachingVo);
+
     public List<PaperCoachingWorkload> selectYear(PaperCoachingVo paperCoachingVo);
+
     public IPage<PaperCoachingWorkload> selectYearPage(PaperCoachingVo paperCoachingVo);
+
     public List<PaperCoachingWorkload> selectTeacher(PaperCoachingVo paperCoachingVo);
+
     public List<PaperCoachingWorkload> selectCourse(PaperCoachingVo paperCoachingVo);
 }
