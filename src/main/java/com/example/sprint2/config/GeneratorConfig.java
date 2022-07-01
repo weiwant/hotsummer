@@ -16,10 +16,11 @@ import java.util.List;
  * @date 2022/6/23
  */
 public class GeneratorConfig {
-    static String url = "jdbc:mysql://localhost:3306/ice_project?useUnicode=true&useSSL=false&characterEncoding=utf8&serverTimezone=Asia/Shanghai";
-    static String username = "root";
-    static String password = "31415926";
+    static String url = "";
+    static String username = "";
+    static String password = "";
     static List<String> tableName = Arrays.asList(
+
     );
 
     public static void main(String[] args) {
