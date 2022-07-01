@@ -8,6 +8,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.io.Serializable;
+import java.time.LocalDate;
 
 /**
  * <p>
@@ -15,7 +16,7 @@ import java.io.Serializable;
  * </p>
  *
  * @author 24047
- * @since 2022-06-30
+ * @since 2022-07-01
  */
 @Getter
 @Setter
@@ -34,7 +35,7 @@ public class SpecialWorkload implements Serializable {
      * 申报时间
      */
     @TableField("report_time")
-    private String reportTime;
+    private LocalDate reportTime;
 
     /**
      * 申报人
@@ -64,7 +65,7 @@ public class SpecialWorkload implements Serializable {
      * 教分
      */
     @TableField("teaching_scores")
-    private String teachingScores;
+    private Double teachingScores;
 
     /**
      * 成果/作品/参赛项目/参评项目/论文/专著名称
@@ -169,19 +170,16 @@ public class SpecialWorkload implements Serializable {
     private String status;
 
     /**
-     * 预留字段1
+     * 备注
      */
-    @TableField("addtion_one")
-    private String addtionOne;
+    @TableField("remarks")
+    private String remarks;
 
-    @TableField("addtion_two")
-    private String addtionTwo;
-
-    @TableField("addition_three")
-    private String additionThree;
-
-    @TableField("addtion_four")
-    private String addtionFour;
+    /**
+     * 文件路径
+     */
+    @TableField("file_path")
+    private String filePath;
 
 
 }

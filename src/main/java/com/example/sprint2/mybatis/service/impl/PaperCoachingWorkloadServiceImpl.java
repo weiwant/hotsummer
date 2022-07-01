@@ -11,8 +11,8 @@ import org.springframework.stereotype.Service;
  * 服务实现类
  * </p>
  *
- * @author 25906
- * @since 2022-06-30
+ * @author 24047
+ * @since 2022-07-01
  */
 @Service
 public class PaperCoachingWorkloadServiceImpl extends ServiceImpl<PaperCoachingWorkloadMapper, PaperCoachingWorkload> implements PaperCoachingWorkloadService {

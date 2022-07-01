@@ -9,7 +9,7 @@ import com.example.sprint2.mybatis.entity.ExaminationWorkload;
  * </p>
  *
  * @author 24047
- * @since 2022-06-30
+ * @since 2022-07-01
  */
 public interface ExaminationWorkloadService extends IService<ExaminationWorkload> {
 

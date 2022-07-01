@@ -9,8 +9,8 @@ import org.apache.ibatis.annotations.Mapper;
  * Mapper 接口
  * </p>
  *
- * @author 25906
- * @since 2022-06-30
+ * @author 24047
+ * @since 2022-07-01
  */
 @Mapper
 public interface PaperCoachingWorkloadMapper extends BaseMapper<PaperCoachingWorkload> {

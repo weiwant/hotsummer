@@ -10,7 +10,7 @@ import org.apache.ibatis.annotations.Mapper;
  * </p>
  *
  * @author 24047
- * @since 2022-06-30
+ * @since 2022-07-01
  */
 @Mapper
 public interface ExaminationWorkloadMapper extends BaseMapper<ExaminationWorkload> {

@@ -8,8 +8,8 @@ import com.example.sprint2.mybatis.entity.PaperCoachingWorkload;
  * 服务类
  * </p>
  *
- * @author 25906
- * @since 2022-06-30
+ * @author 24047
+ * @since 2022-07-01
  */
 public interface PaperCoachingWorkloadService extends IService<PaperCoachingWorkload> {
 
