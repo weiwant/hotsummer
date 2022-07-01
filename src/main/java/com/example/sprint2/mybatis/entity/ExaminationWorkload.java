@@ -4,6 +4,8 @@ import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
+import com.example.sprint2.utils.annotations.ExcludeField;
+import com.example.sprint2.utils.annotations.StartRow;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -17,6 +19,7 @@ import java.io.Serializable;
  * @author 24047
  * @since 2022-07-01
  */
+//@StartRow()
 @Getter
 @Setter
 @TableName("examination_workload")
@@ -24,6 +27,7 @@ public class ExaminationWorkload implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
+    @ExcludeField
     @TableId(value = "id", type = IdType.AUTO)
     private Integer id;
 
@@ -78,12 +82,14 @@ public class ExaminationWorkload implements Serializable {
     /**
      * 自然年
      */
+    @ExcludeField(method = "getNaturalYear")
     @TableField("natural_year")
     private String naturalYear;
 
     /**
      * 工作性质
      */
+    @ExcludeField(param = 1)
     @TableField("workload_attribute")
     private String workloadAttribute;
 
