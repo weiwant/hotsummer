@@ -3,7 +3,7 @@
     <div class="componentSectionTitle">特殊工作量上报</div>
     <div class="componentSubtitle">类型选择</div>
     <MenuBar :menuItems="menuItems" @show="show" @hide="hide"></MenuBar>
-    <div class="componentSubtitle">内容填报</div>
+    <div class="componentSubtitle" id="contentSectionTitle">内容填报</div>
     <transition>
       <BB1 v-if="render0"></BB1>
     </transition>
@@ -80,12 +80,70 @@ export default {
 </script>
 
 <style scoped>
+#contentSectionTitle {
+  margin-bottom: 45px;
+}
+/* 最外层盒子 */
 .category {
   position: relative;
-  height: 200px;
+  min-height: 200px;
   max-width: 1000px;
   border: 1px solid rgba(128, 128, 128, 0.301);
+  padding-bottom: 35px;
+  transition: all 0.2s;
 }
+/* 标题 */
+.componentSubsection.category >>> .categoryTitle {
+  display: inline-block;
+  position: absolute;
+  top: -35px;
+  padding: 5px;
+  font-weight: 400;
+  font-size: 16px;
+  text-align: center;
+  background-color: white;
+  border: 1px solid rgba(128, 128, 128, 0.301);
+  border-bottom: 0;
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+}
+/* 历史上报记录 */
+.componentSubsection.category >>> .historyTitle {
+  font-weight: 500;
+}
+.componentSubsection.category >>> .historyTitle span.historyDisplayBtn {
+  margin-left: 10px;
+  font-family: "icomoon";
+  font-size: 14px;
+  color: gray;
+  cursor: pointer;
+}
+.componentSubsection.category >>> .historyTitle span.historyDisplayBtn:hover {
+  color: rgb(48, 60, 78);
+}
+.componentSubsection.category >>> .historyTableWrapper {
+  position: relative;
+  border-bottom: 1px dashed gray;
+  height: 100px;
+  background-color: rgba(91, 104, 129, 0.185);
+}
+
+/* 填报与添加区域 */
+.componentSubsection.category >>> .addNew {
+  height: 100px;
+  padding-top: 5px;
+}
+/* 添加新上报按钮 */
+.componentSubsection.category >>> button.complete {
+  position: absolute;
+  bottom: 5px;
+  right: 15px;
+  padding: 5px;
+  border-radius: 8px;
+  border: 1px solid rgba(128, 128, 128, 0.555);
+}
+
+/*收集框显隐动画 */
 .v-enter {
   right: -1000px;
 }
@@ -105,6 +163,28 @@ export default {
   top: 10px;
 }
 .v-leave-active {
+  transition: all 0.2s;
+}
+/*  历史记录显影动画 */
+.history-enter {
+  top: -10px;
+  opacity: 0;
+}
+.history-enter-to {
+  top: 0;
+  opacity: 1;
+}
+.history-enter-active {
+  transition: all 0.2s;
+}
+
+.history-leave {
+  opacity: 1;
+}
+.history-leave-to {
+  opacity: 0;
+}
+.history-leave-active {
   transition: all 0.2s;
 }
 </style>
