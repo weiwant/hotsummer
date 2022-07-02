@@ -7,11 +7,11 @@
 <style>
 @font-face {
   font-family: "icomoon";
-  src: url("assets/fonts/icomoon.eot?lx5url");
-  src: url("assets/fonts/icomoon.eot?lx5url#iefix") format("embedded-opentype"),
-    url("assets/fonts/icomoon.ttf?lx5url") format("truetype"),
-    url("assets/fonts/icomoon.woff?lx5url") format("woff"),
-    url("assets/fonts/icomoon.svg?lx5url#icomoon") format("svg");
+  src: url("assets/fonts/icomoon.eot?tyg5tf");
+  src: url("assets/fonts/icomoon.eot?tyg5tf#iefix") format("embedded-opentype"),
+    url("assets/fonts/icomoon.ttf?tyg5tf") format("truetype"),
+    url("assets/fonts/icomoon.woff?tyg5tf") format("woff"),
+    url("assets/fonts/icomoon.svg?tyg5tf#icomoon") format("svg");
   font-weight: normal;
   font-style: normal;
   font-display: block;
