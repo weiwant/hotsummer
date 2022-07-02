@@ -50,6 +50,7 @@ export default {
   font-size: 14px;
   margin-bottom: 5px;
   text-align: left;
+  padding: 5px 15px;
 }
 
 .tableFilter select {

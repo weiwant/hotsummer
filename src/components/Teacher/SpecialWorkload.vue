@@ -13,6 +13,44 @@
     <transition>
       <BB3 v-if="render2"></BB3>
     </transition>
+    <transition>
+      <BB4 v-if="render3"></BB4>
+    </transition>
+
+    <transition>
+      <BB5 v-if="render4"></BB5>
+    </transition>
+
+    <transition>
+      <BB6 v-if="render5"></BB6>
+    </transition>
+
+    <transition>
+      <BB7 v-if="render6"></BB7>
+    </transition>
+
+    <transition>
+      <BB8 v-if="render7"></BB8>
+    </transition>
+
+    <transition>
+      <BB9 v-if="render8"></BB9>
+    </transition>
+    <transition>
+      <BB10 v-if="render9"></BB10>
+    </transition>
+    <transition>
+      <BB11 v-if="render10"></BB11>
+    </transition>
+    <transition>
+      <BB12 v-if="render11"></BB12>
+    </transition>
+    <transition>
+      <BB13 v-if="render12"></BB13>
+    </transition>
+    <transition>
+      <BB13 v-if="render13"></BB13>
+    </transition>
   </div>
 </template>
 
@@ -24,15 +62,47 @@ import BB3 from "./specialWorks/BB3.vue";
 import BB4 from "./specialWorks/BB4.vue";
 import BB5 from "./specialWorks/BB5.vue";
 import BB6 from "./specialWorks/BB6.vue";
-
+import BB7 from "./specialWorks/BB7.vue";
+import BB8 from "./specialWorks/BB8.vue";
+import BB9 from "./specialWorks/BB9.vue";
+import BB10 from "./specialWorks/BB10.vue";
+import BB11 from "./specialWorks/BB11.vue";
+import BB12 from "./specialWorks/BB12.vue";
+import BB13 from "./specialWorks/BB13.vue";
 export default {
   name: "SpecialWorkload",
-  components: { MenuBar, BB1, BB2, BB3 },
+  components: {
+    MenuBar,
+    BB1,
+    BB2,
+    BB3,
+    BB4,
+    BB5,
+    BB6,
+    BB7,
+    BB8,
+    BB9,
+    BB10,
+    BB11,
+    BB12,
+    BB13,
+  },
   data() {
     return {
       render0: false,
       render1: false,
       render2: false,
+      render3: false,
+      render4: false,
+      render5: false,
+      render6: false,
+      render7: false,
+      render8: false,
+      render9: false,
+      render10: false,
+      render11: false,
+      render12: false,
+      render13: false,
       menuItems: [
         "课程建设BB1",
         "教研项目BB2",
@@ -45,16 +115,14 @@ export default {
         "指导学生竞赛获奖BB9",
         "指导学生科研立项并顺利完成项目BB10",
         "教学兼职BB11",
-        "本科生培养活动BB12",
-        "本科生主考之外的监考计BB13",
-        "其他BB14"
+        "BB12",
+        "本科生培养活动BB13",
+        "本科生主考之外的监考计BB14",
       ],
     };
   },
   methods: {
     show(index) {
-      console.log("接收");
-      console.log(index);
       switch (index) {
         case 0:
           this.render0 = true;
@@ -64,6 +132,39 @@ export default {
           break;
         case 2:
           this.render2 = true;
+          break;
+        case 3:
+          this.render3 = true;
+          break;
+        case 4:
+          this.render4 = true;
+          break;
+        case 5:
+          this.render5 = true;
+          break;
+        case 6:
+          this.render6 = true;
+          break;
+        case 7:
+          this.render7 = true;
+          break;
+        case 8:
+          this.render8 = true;
+          break;
+        case 9:
+          this.render9 = true;
+          break;
+        case 10:
+          this.render10 = true;
+          break;
+        case 11:
+          this.render11 = true;
+          break;
+        case 12:
+          this.render12 = true;
+          break;
+        case 13:
+          this.render13 = true;
           break;
       }
     },
@@ -77,6 +178,39 @@ export default {
           break;
         case 2:
           this.render2 = false;
+          break;
+        case 3:
+          this.render3 = false;
+          break;
+        case 4:
+          this.render4 = false;
+          break;
+        case 5:
+          this.render5 = false;
+          break;
+        case 6:
+          this.render6 = false;
+          break;
+        case 7:
+          this.render7 = false;
+          break;
+        case 8:
+          this.render8 = false;
+          break;
+        case 9:
+          this.render9 = false;
+          break;
+        case 10:
+          this.render10 = false;
+          break;
+        case 11:
+          this.render11 = false;
+          break;
+        case 12:
+          this.render12 = false;
+          break;
+        case 13:
+          this.render13 = false;
           break;
       }
     },
@@ -171,25 +305,25 @@ export default {
   transition: all 0.2s;
 }
 /*  历史记录显影动画 */
-.history-enter {
+.componentSubsection.category >>> .history-enter {
   top: -10px;
   opacity: 0;
 }
-.history-enter-to {
+.componentSubsection.category >>> .history-enter-to {
   top: 0;
   opacity: 1;
 }
-.history-enter-active {
+.componentSubsection.category >>> .history-enter-active {
   transition: all 0.2s;
 }
 
-.history-leave {
+.componentSubsection.category >>> .history-leave {
   opacity: 1;
 }
-.history-leave-to {
+.componentSubsection.category >>> .history-leave-to {
   opacity: 0;
 }
-.history-leave-active {
+.componentSubsection.category >>> .history-leave-active {
   transition: all 0.2s;
 }
 </style>

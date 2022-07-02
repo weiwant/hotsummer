@@ -70,9 +70,9 @@ export default {
 .tableFilter {
   position: relative;
   font-size: 14px;
-  margin-bottom: 5px;
+
   text-align: left;
-  padding: 5px 5px;
+
   clear: both;
 }
 .wrapper {
