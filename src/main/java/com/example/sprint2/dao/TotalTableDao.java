@@ -40,7 +40,7 @@ public class TotalTableDao {
      * @date 2022/6/29
      */
     public void insertEntity(TotalTable totalTable) throws IllegalAccessException {
-        List<Field> fields = Arrays.stream(TotalTable.class.getDeclaredFields()).filter(field -> field.getName().contains("WorkId")).collect(Collectors.toList());
+        List<Field> fields = Arrays.stream(TotalTable.class.getDeclaredFields()).filter(field -> field.getAnnotation(ForeignKey.class) != null).collect(Collectors.toList());
         Boolean isNotNull = false;
         for (Field field : fields) {
             field.setAccessible(true);

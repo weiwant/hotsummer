@@ -5,7 +5,10 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.example.sprint2.models.vo.ExaminationVo;
 import com.example.sprint2.mybatis.entity.ExaminationWorkload;
+import com.example.sprint2.mybatis.entity.TotalTable;
 import com.example.sprint2.mybatis.mapper.ExaminationWorkloadMapper;
+import com.example.sprint2.mybatis.mapper.TotalTableMapper;
+import com.example.sprint2.utils.annotations.DaoTarget;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -15,10 +18,13 @@ import java.util.List;
  * @author:wwq
  * @Date：2022/6/29：16:12
  */
+@DaoTarget(ExaminationWorkload.class)
 @Repository
 public class ExaminationDao {
     @Autowired
     ExaminationWorkloadMapper examinationWorkloadMapper;
+    @Autowired
+    TotalTableMapper totalTableMapper;
 
     /**
      * @Author：wwq
@@ -73,5 +79,24 @@ public class ExaminationDao {
         queryWrapper.eq("course_name", examinationVo.getCourseName());
         List<ExaminationWorkload> resultList = examinationWorkloadMapper.selectList(queryWrapper);
         return resultList;
+    }
+
+    public void insertEntity(ExaminationWorkload examinationWorkload) {
+        examinationWorkloadMapper.insert(examinationWorkload);
+        TotalTable totalTable = new TotalTable();
+        totalTable.setNaturalYear(examinationWorkload.getNaturalYear());
+        totalTable.setTeacherName(examinationWorkload.getMainTeacherName());
+        totalTable.setExaminationWorkId(examinationWorkload.getId());
+        totalTableMapper.insert(totalTable);
+    }
+
+    public void deleteByNaturalYear(ExaminationWorkload examinationWorkload) {
+        QueryWrapper<ExaminationWorkload> wrapper = new QueryWrapper<>();
+        wrapper.eq("natural_year", examinationWorkload.getNaturalYear());
+        examinationWorkloadMapper.delete(wrapper);
+        QueryWrapper<TotalTable> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("natural_year", examinationWorkload.getNaturalYear());
+        queryWrapper.isNotNull("examination_work_id");
+        totalTableMapper.delete(queryWrapper);
     }
 }
