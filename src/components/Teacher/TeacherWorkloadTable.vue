@@ -14,43 +14,35 @@
       @exportFile="exportFile"
     ></DownloadExcelFile>
     <!--数据列表-->
-    <div class="workloadTableWrapper">
-      <div class="noDataHint" v-if="!dataExists" v-text="noDataHint"></div>
-      <table class="workloadDataTable">
-        <thead>
-          <tr>
-            <th v-for="(item, index) in workloadTableHeader" :key="index">
-              {{ item }}
-            </th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr
-            class="tableDataLine"
-            v-for="arrayItem in workloadTableData"
-            :key="arrayItem.id"
-          >
-            <td v-for="(value, index) in arrayItem" :key="index">
-              {{ value }}
-            </td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
+    <PlainTable
+      :dataExists="dataExists"
+      :tableData="workloadTableData"
+      :tableHeader="workloadTableHeader"
+      :noDataHint="noDataHint"
+    ></PlainTable>
+    <Pagination
+      :currentPage="currentPage"
+      :allPageCount="allPageCount"
+      @pageBefore="pageBefore"
+      @pageAfter="pageAfter"
+    ></Pagination>
   </div>
 </template>
 
 <script>
-import axios from "axios";
 import TableStatisticsBar from "../SharingComponent/TableStatisticsBar.vue";
 import DownloadExcelFile from "../SharingComponent/DownloadExcelFile.vue";
 import YearFilter from "../SharingComponent/YearFilter.vue";
+import Pagination from "../SharingComponent/Pagination.vue";
+import PlainTable from "../SharingComponent/PlainTable.vue";
 export default {
   name: "TeacherWorkloadTable",
   components: {
     TableStatisticsBar,
     DownloadExcelFile,
     YearFilter,
+    PlainTable,
+    Pagination,
   },
   data() {
     return {
@@ -58,64 +50,56 @@ export default {
       currentTeacherName: "",
       //统计数据
       totalItems: 0,
-      allPageCount: 0,
-      currentPage: 0,
-      //数据
-      yearChosen: this.$currentYear,
-      workloadTableHeader: [],
+      //分页
+      allPageCount: 1,
+      currentPage: 1,
+      //表格数据
+      yearChosen: "",
+      workloadTableHeader: [
+        "课程号",
+        "课程名称",
+        "教学班",
+        "开课学院",
+        "学分",
+        "课程性质",
+        "年级",
+        "专业",
+        "上课老师",
+        "职称",
+        "上课人数",
+        "计算用学时",
+        "合课单位",
+        "备注",
+        "实验安排",
+        "其他教师",
+        "辅助",
+        "课程性质说明",
+        "是否卓工或弘毅",
+        "是否全英文",
+      ],
       workloadTableData: [],
       dataExists: false, //“暂无数据”提示的显示
       noDataHint: "",
     };
   },
-  computed: {
-    noLessPage() {
-      return this.currentPage == 0 || this.currentPage == 1;
-    },
-    noMorePage() {
-      return this.currentPage == this.allPageCount;
-    },
-  },
   methods: {
     //根据当前学年和学期获取对应工作量的数据
     getTableData() {
-      axios
+      this.$axios
         .post(`${this.$domainName}/resource/customIndeed`, {
           year: this.yearChosen,
           teacherName: this.currentTeacherName,
+          page: this.currentPage,
         })
         .then((res) => {
           console.log(res);
-          if (res.data.response.code != 204) {
+          if (res.data.response.code == 200) {
             this.dataExists = true;
-            this.workloadTableHeader = [
-              "课程号",
-              "课程名称",
-              "教学班",
-              "开课学院",
-              "学分",
-              "课程性质",
-              "年级",
-              "专业",
-              "上课老师",
-              "职称",
-              "上课人数",
-              "计算用学时",
-              "合课单位",
-              "备注",
-              "实验安排",
-              "其他教师",
-              "辅助",
-              "课程性质说明",
-              "是否卓工或弘毅",
-              "是否全英文",
-            ];
             this.workloadTableData = res.data.data;
           }
           //如果没有数据
           else {
             this.dataExists = false;
-            this.workloadTableHeader = [];
             this.workloadTableData = [];
             this.noDataHint = `暂无${this.currentAcademicYear}学年，第${this.currentSemester}学期的数据！`;
           }
@@ -123,22 +107,44 @@ export default {
     },
     yearConfirmed(year) {
       this.yearChosen = year;
-      console.log(this.yearChosen);
-      // this.getTableData();
+      this.getTableData();
+    },
+    pageBefore() {
+      this.currentPage = this.currentPage + 1;
+      this.getTableData();
+    },
+    pageAfter() {
+      this.currentPage = this.currentPage + 1;
+      this.getTableData();
+    },
+    pageBefore() {
+      this.currentPage = this.currentPage - 1;
+      this.getTableData();
     },
     exportFile(filename) {
-      import("xlsx").then((XLSX) => {
-        const data = XLSX.utils.json_to_sheet(this.workloadTableData);
-        const col = XLSX.utils.decode_range(data["!ref"]).e.c; //获取数据的列数（起始列序号为0）
-        //替换第一行的值为中文表头
-        for (let i = 0; i <= col; i++) {
-          data[XLSX.utils.encode_cell({ r: 0, c: i })].v =
-            this.workloadTableHeader[i];
-        }
-        const wb = XLSX.utils.book_new();
-        XLSX.utils.book_append_sheet(wb, data, "data");
-        XLSX.writeFile(wb, filename + ".xlsx");
-      });
+      //老师的数据一般都不多，由于是按照每40项1页来做的
+      //所以如果总长不超过40，就证明前端已经有所有要导出excel的数据了，可以直接导出
+      //反之就需要再向后端请求所有数据
+      if (this.workloadTableData.length <= 40) {
+        this.$exportExcelFile(
+          this.workloadTableData,
+          this.workloadTableHeader,
+          filename
+        );
+      } else {
+        this.$axios
+          .post("", {
+            year: this.yearChosen,
+            teacherName: this.currentTeacherName,
+          })
+          .then((res) => {
+            this.$exportExcelFile(
+              res.data.data,
+              this.workloadTableHeader,
+              filename
+            );
+          });
+      }
     },
   },
 
@@ -152,24 +158,4 @@ export default {
 </script>
 
 <style scoped>
-/* 数据列表 */
-.workloadTableWrapper {
-  position: relative;
-  overflow: scroll;
-  height: 60vh;
-}
-table.workloadDataTable {
-  width: 2000px;
-}
-.workloadDataTable thead {
-  position: sticky;
-  top: 0;
-  font-size: 10px;
-  font-weight: 500;
-  background-color: rgb(239, 241, 247);
-}
-.workloadDataTable tbody {
-  background-color: #fff;
-  padding: 3px 5px;
-}
 </style>

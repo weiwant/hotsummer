@@ -56,12 +56,12 @@
       </button>
     </div>
     <!-- part3 -->
-    <div class="componentSubtitle" v-if="managerType != 2">**工作量</div>
+    <div class="componentSubtitle" v-if="managerType != 2">论文工作量</div>
     <div class="componentSubsection" v-if="managerType != 2">
       <!-- 年份选择 -->
       <label
         >年份:&nbsp;
-        <select v-model="yearForXXWorkloadTable">
+        <select v-model="yearForPaperWorkloadTable">
           <option v-for="index in 5" :key="index">
             {{ currentYear - index + 1 }}
           </option>
@@ -94,10 +94,10 @@ export default {
       currentYear: this.$currentYear,
       yearForClassWorkloadTable: this.$currentYear,
       yearForExaminationWorkloadTable: this.$currentYear,
-      yearForXXWorkloadTable: this.$currentYear,
+      yearForPaperWorkloadTable: this.$currentYear,
       classWorkloadTableTemplate: [{ 年份: "", 上课老师: "" }],
       examinationWorkloadTableTemplate: [],
-      xxWorkloadTableTemplate: [],
+      paperWorkloadTableTemplate: [],
     };
   },
   methods: {
@@ -123,7 +123,7 @@ export default {
       formData.append("year", _this.year);
       formData.append("semester", _this.semester);
       formData.append("file", file);
-      axios
+      this.$axios
         .post(`${this.$domainName}/file/upload`, formData, {
           headers: {
             "Content-Type": "multipart/form-datas",
@@ -141,6 +141,7 @@ export default {
         });
     },
     //下载模版
+    //由于模版下载的数据格式和一般的数据不太一样，就不调用全局方法了
     downloadTemplate(type) {
       import("xlsx").then((XLSX) => {
         let data;
@@ -158,7 +159,7 @@ export default {
             break;
           case 3:
             data = XLSX.utils.json_to_sheet(this.xxWorkloadTableTemplate);
-            fileName = "XX工作量（模版）";
+            fileName = "论文工作量（模版）";
             break;
         }
         const wb = XLSX.utils.book_new();

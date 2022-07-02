@@ -4,7 +4,7 @@
     <FilterWithSearch
       :searchKeywords="searchKeywords"
       @yearOnly="confirmYear"
-      @yearAndSearchValue="search"
+      @yearAndSearchValue="confirmSearchValue"
     ></FilterWithSearch>
     <TableStatisticsBar
       :allPageCount="allPageCount"
@@ -17,60 +17,47 @@
       @exportFile="exportFile"
     ></DownloadExcelFile>
     <!--数据列表-->
-    <div class="workloadTableWrapper">
-      <div class="noDataHint" v-if="!dataExists" v-html="noDataHint"></div>
-      <table class="workloadDataTable">
-        <thead v-if="dataExists">
-          <tr>
-            <th v-for="(item, index) in workloadTableHeader" :key="index">
-              {{ item }}
-            </th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr
-            class="tableDataLine"
-            v-for="item in workloadTableData"
-            :key="item.id"
-          >
-            <td v-for="(value, index) in item" :key="index">{{ value }}</td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-    <div class="pagination">
-      <button @click="pageBefore()" :disabled="noLessPage">&lt;</button>
-      第
-      <input v-model="cPage" type="text" @keyup.enter="choosePage()" />
-      页
-      <button @click="pageAfter()" :disabled="noMorePage">&gt;</button>
-    </div>
+    <PlainTable
+      :dataExists="dataExists"
+      :noDataHint="noDataHint"
+      :tableData="workloadTableData"
+      :tableHeader="workloadTableHeader"
+    ></PlainTable>
+    <Pagination
+      :currentPage="currentPage"
+      :allPageCount="allPageCount"
+      @pageAfter="pageAfter"
+      @pageBefore="pageBefore"
+    ></Pagination>
   </div>
 </template>
 
 <script>
-import axios from "axios";
 import TableStatisticsBar from "../SharingComponent/TableStatisticsBar.vue";
 import DownloadExcelFile from "../SharingComponent/DownloadExcelFile.vue";
 import FilterWithSearch from "../SharingComponent/FilterWithSearch.vue";
+import Pagination from "../SharingComponent/Pagination.vue";
+import PlainTable from "../SharingComponent/PlainTable.vue";
 export default {
   name: "CheckWorkload",
   components: {
     TableStatisticsBar,
     DownloadExcelFile,
     FilterWithSearch,
+    PlainTable,
+    Pagination,
   },
   data() {
     return {
-      //查询条件
-      currentYear: this.$currentYear,
-      yearChosen: this.$currentYear, //年份
       searchKeywords: ["上课老师", "教分"],
-      searchKeyword: "",
-      searchValue: "",
+      //当前的状态
+      useSearch: false,
+      yearChosen: this.$currentYear,
+      currentSearchKeyword: "",
+      currentSearchValue: "",
       //pagination
-      currentPage: 0,
-      allPageCount: 0,
+      currentPage: 1,
+      allPageCount: 1,
       //查询结果
       workloadTableHeader: [
         "学年",
@@ -111,93 +98,61 @@ export default {
       totalItems: 0,
       dataExists: false,
       noDataHint: "", //“暂无数据”提示
-      //文件导出
-      dataTobeExported: [],
-      exportFileName: "",
     };
   },
-  computed: {
-    noLessPage() {
-      return this.currentPage == 0 || this.currentPage == 1;
-    },
-    noMorePage() {
-      return this.currentPage == this.allPageCount;
-    },
-  },
   methods: {
-    //获取某学年学期数据
+    /*
+     *getTableData()与search()永远不会是事件的第一handler
+     *每个事件都有其对应的第一handler，负责将请求参数都配置好后
+     *再调用getTableData()或search()
+     */
+    //获取某学年全部数据
     getTableData() {
-      axios
+      this.$axios
         .post(`${this.$domainName}/resource/tableinsemester`, {
-          year: this.currentAcademicYear,
+          year: this.yearChosen,
           pageNumber: this.currentPage,
         })
         .then((res) => {
           console.log(res);
           //如果有数据
-          if (res.data.response.code != 204) {
+          if (res.data.response.code == 200) {
             this.dataExists = true;
             this.workloadTableData = res.data.data.records;
             this.allPageCount = res.data.data.pages;
-            this.currentPage = 1;
             this.totalItems = res.data.data.total;
           }
           //如果没有数据
           else {
             this.dataExists = false;
-            this.allPageCount = 0;
-            this.currentPage = 0;
             this.workloadTableData = [];
+            this.allPageCount = 1;
+            this.totalItems = 0;
             this.noDataHint = `暂无&nbsp;&nbsp;${this.yearChosen}&nbsp;&nbsp;年度的数据！`;
           }
         });
     },
-    confirmYear(year) {
-      this.yearChosen = year;
-      this.currentPage = 1;
-      this.getTableData();
-    },
-    //页码操作
-    pageBefore() {
-      if (this.currentPage == 1) return;
-      this.currentPage = this.currentPage - 1;
-      this.noMorePage = false;
-      if (this.currentPage == 1) this.noLessPage = true;
-      this.getTableData();
-    },
-    pageAfter() {
-      if (this.currentPage == this.allPageCount) return;
-      this.currentPage = this.currentPage + 1;
-      this.noLessPage = false;
-      if (this.currentPage == this.allPageCount) this.noMorePage = true;
-      this.getTableData();
-    },
-    choosePage() {
-      if (this.currentPage < 1 || this.currentPage > this.allPageCount) return;
-      this.getTableData();
-    },
     //条件搜索
-    search(year, searchKeyword, searchValue) {
-      this.yearChosen = year;
-      this.searchKeyword = searchKeyword;
-      this.searchValue = searchValue; //获取值主要是为了显示提示信息
-      switch (searchKeyword) {
+    search() {
+      switch (this.searchKeyword) {
         case "上课老师":
-          axios
+          this.$axios
             .post(`${this.$domainName}/search/searchIndeed`, {
-              year: year,
-              teacherName: searchValue,
+              year: this.yearChosen,
+              teacherName: this.searchValue,
+              pageNumber: this.currentPage,
             })
             .then((res) => {
               if (res.data.response.code == 200) {
                 this.dataExists = true;
                 this.workloadTableData = res.data.data;
-                this.totalItems = this.workloadTableData.length;
-                this.currentPage = 1;
+                this.allPageCount = res.data.data.pages;
+                this.totalItems = res.data.data.total;
               } else {
                 this.dataExists = false;
                 this.workloadTableData = [];
-                this.currentPage = 0;
+                this.allPageCount = 1;
+                this.totalItems = 0;
                 this.noDataHint = `暂无&nbsp;&nbsp;${this.year}&nbsp;&nbsp;年度，${this.searchKeyword}&nbsp;&nbsp;为&nbsp;&nbsp;${this.searchValue}&nbsp;&nbsp;的数据！`;
               }
             });
@@ -208,32 +163,65 @@ export default {
           console.log(searchValue);
       }
     },
-    //文件导出
+
+    //选择了年份并确认
+    confirmYear(year) {
+      //请求数据前设置好参数
+      this.useSearch = false;
+      this.yearChosen = year;
+      this.currentPage = 1;
+      this.getTableData();
+    },
+    //选择了年份和搜索条件，并给出了搜索值后确认
+    confirmSearchValue(year, searchKeyword, searchValue) {
+      //在请求数据前设置好参数
+      this.useSearch = true;
+      this.yearChosen = year;
+      this.searchKeyword = searchKeyword;
+      this.searchValue = searchValue;
+      this.currentPage = 1;
+      this.search();
+    },
+    //页面切换
+    //进行页面切换时，基本的搜索参数没变，只需要调整页数
+    pageBefore() {
+      this.currentPage = this.currentPage - 1; //由于组件内存在计算属性把关是否前面还存在页面，所以可以直接-1
+      if (this.useSearch) {
+        //在基本表格是通过关键词搜索的情况下得到时
+        this.search();
+      } else {
+        //在基本表格是在单纯年份的条件下得到时
+        this.getTableData();
+      }
+    },
+    pageAfter() {
+      this.currentPage = this.currentPage + 1;
+      if (this.useSearch) {
+        this.search();
+      } else {
+        this.getTableData();
+      }
+    },
+    //文件导出(暂时还不考虑在search状态下的导出，只导出全年的)
     exportFile(filename) {
-      axios
+      this.$axios
         .post(`${this.$domainName}/resource/tabledownload`, {
-          year: this.currentAcademicYear,
-          semester: this.currentSemester,
+          year: this.yearChosen,
         })
         .then((res) => {
-          this.dataTobeExported = res.data.data;
-          import("xlsx").then((XLSX) => {
-            const data = XLSX.utils.json_to_sheet(this.dataTobeExported);
-            const col = XLSX.utils.decode_range(data["!ref"]).e.c; //获取数据的列数（起始列序号为0）
-            for (let i = 0; i <= col; i++) {
-              data[XLSX.utils.encode_cell({ r: 0, c: i })].v =
-                this.workloadTableHeader[i];
-            }
-            const wb = XLSX.utils.book_new();
-            XLSX.utils.book_append_sheet(wb, data, "data");
-            XLSX.writeFile(wb, filename + ".xlsx");
-          });
+          this.$exportExcelFile(
+            res.data.data,
+            this.workloadTableHeader,
+            filename
+          );
         });
-      this.dataTobeExported = [];
     },
   },
   created() {
     //获取default年度数据;
+    this.useSearch = false;
+    this.yearChosen = this.$currentYear;
+    this.currentPage = 1;
     this.getTableData();
   },
 };
@@ -241,41 +229,4 @@ export default {
 
 <style scoped>
 /* 数据列表 */
-.workloadTableWrapper {
-  position: relative;
-  overflow: scroll;
-  height: 60vh;
-  padding-bottom: 15px;
-}
-table.workloadDataTable {
-  width: 2500px;
-}
-.workloadDataTable thead {
-  position: sticky;
-  top: 0;
-  font-size: 10px;
-  font-weight: 500;
-  background-color: rgb(239, 241, 247);
-}
-.workloadDataTable tbody {
-  font-size: 13px;
-  background-color: #fff;
-  padding: 3px 5px;
-}
-/* 分页 */
-.pagination button {
-  border: 0;
-  font-size: 20px;
-  padding: 10px 20px;
-  position: relative;
-  top: 1px;
-  background-color: rgb(239, 241, 246);
-}
-.pagination input {
-  border: 1px solid gray;
-  border-radius: 5px;
-  width: 30px;
-  text-align: center;
-  padding: 3px 0;
-}
 </style>
