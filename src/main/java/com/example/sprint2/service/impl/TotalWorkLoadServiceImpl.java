@@ -32,6 +32,9 @@ public class TotalWorkLoadServiceImpl implements TotalWorkLoadService {
     public String getCombineWorkLoad(WorkloadVo workloadVo) throws IllegalAccessException {
         TotalTable totalTable = new TotalTable();
         totalTable.setNaturalYear(workloadVo.getNaturalYear());
+        if (workloadVo.getMainTeacherName() != null) {
+            totalTable.setTeacherName(workloadVo.getMainTeacherName());
+        }
         //根据自然年查询总表
         List<TotalTable> totalTables = totalTableDao.selectByNaturalYear(totalTable);
         List<WorkloadVo> output = totalTableDao.combine(totalTables, workloadVo);
@@ -45,6 +48,9 @@ public class TotalWorkLoadServiceImpl implements TotalWorkLoadService {
     public String getCombineWorkLoadPage(WorkloadVo workloadVo, Integer page) throws IllegalAccessException {
         TotalTable totalTable = new TotalTable();
         totalTable.setNaturalYear(workloadVo.getNaturalYear());
+        if (workloadVo.getMainTeacherName() != null) {
+            totalTable.setTeacherName(workloadVo.getMainTeacherName());
+        }
         IPage<TotalTable> totalTablePage = totalTableDao.selectPageByNatualYear(totalTable, page);
         List<WorkloadVo> output = totalTableDao.combine(totalTablePage.getRecords(), workloadVo);
         if (output.isEmpty()) {

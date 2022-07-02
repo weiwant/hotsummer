@@ -8,8 +8,6 @@ import com.example.sprint2.service.SpecialWorkloadTableService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-
 /**
  * @author hy
  * @Date 2022/7/1
@@ -23,40 +21,42 @@ public class SpecialWorkloadTableImpl implements SpecialWorkloadTableService {
 
     /**
      * @author hy
-     * @description  根据BB类型查询  分页
+     * @description 根据BB类型查询  分页
      */
     @Override
-    public IPage<SpecialWorkload> selectBB(SpecialWorkloadVo specialWorkloadVo){
+    public IPage<SpecialWorkload> selectBB(SpecialWorkloadVo specialWorkloadVo) {
         IPage<SpecialWorkload> iPage = specialWorkloadDao.selectBB(specialWorkloadVo);
         return iPage;
     }
 
     /**
      * @author hy
-     * @description  根据申报人姓名查询  分页
+     * @description 根据申报人姓名查询  分页
      */
     @Override
-    public IPage<SpecialWorkload> selectDeclarantName(SpecialWorkloadVo specialWorkloadVo){
+    public IPage<SpecialWorkload> selectDeclarantName(SpecialWorkloadVo specialWorkloadVo) {
         IPage<SpecialWorkload> iPage = specialWorkloadDao.selectDeclarantName(specialWorkloadVo);
         return iPage;
     }
 
     /**
      * @author hy
-     * @description  根据教师姓名查询  分页
+     * @description 根据教师姓名查询  分页
      */
     @Override
-    public IPage<SpecialWorkload> selectTeacherName(SpecialWorkloadVo specialWorkloadVo){
+    public IPage<SpecialWorkload> selectTeacherName(SpecialWorkloadVo specialWorkloadVo) {
         IPage<SpecialWorkload> iPage = specialWorkloadDao.selectTeacherName(specialWorkloadVo);
         return iPage;
     }
+
     @Override
-    public IPage<SpecialWorkload> selectYear(SpecialWorkloadVo specialWorkloadVo){
+    public IPage<SpecialWorkload> selectYear(SpecialWorkloadVo specialWorkloadVo) {
         IPage<SpecialWorkload> iPage = specialWorkloadDao.selectByYear(specialWorkloadVo);
         return iPage;
     }
+
     @Override
-    public SpecialWorkload selectId(SpecialWorkloadVo specialWorkloadVo){
+    public SpecialWorkload selectId(SpecialWorkloadVo specialWorkloadVo) {
         SpecialWorkload specialWorkload = specialWorkloadDao.selectById(specialWorkloadVo);
         return specialWorkload;
     }

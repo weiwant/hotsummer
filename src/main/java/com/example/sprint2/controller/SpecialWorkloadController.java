@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 /**
  * @author hy
  * @Date 2022/7/1
- * @Description  特殊工作量控制器类
+ * @Description 特殊工作量控制器类
  */
 
 @RestController
@@ -24,8 +24,8 @@ public class SpecialWorkloadController {
     @Autowired
     SpecialWorkloadTableService service;
 
-    @RequestMapping(value = "/bb",method = RequestMethod.POST)         //分页  BB类别查询
-    public String selectBB(@RequestBody SpecialWorkloadVo specialWorkloadVo){
+    @RequestMapping(value = "/bb", method = RequestMethod.POST)         //分页  BB类别查询
+    public String selectBB(@RequestBody SpecialWorkloadVo specialWorkloadVo) {
         IPage<SpecialWorkload> iPage = service.selectBB(specialWorkloadVo);
         if (iPage.getTotal() == 0) {
             return new Result(ResponseCode.NoContentFailure).toString();
@@ -34,8 +34,8 @@ public class SpecialWorkloadController {
         }
     }
 
-    @RequestMapping(value = "/declarant",method = RequestMethod.POST)      //分页  申报人姓名查询
-    public String selectDeclarantName(@RequestBody SpecialWorkloadVo specialWorkloadVo){
+    @RequestMapping(value = "/declarant", method = RequestMethod.POST)      //分页  申报人姓名查询
+    public String selectDeclarantName(@RequestBody SpecialWorkloadVo specialWorkloadVo) {
         IPage<SpecialWorkload> iPage = service.selectDeclarantName(specialWorkloadVo);
         if (iPage.getTotal() == 0) {
             return new Result(ResponseCode.NoContentFailure).toString();
@@ -44,8 +44,8 @@ public class SpecialWorkloadController {
         }
     }
 
-    @RequestMapping(value = "/teacher",method = RequestMethod.POST)     //分页  教师姓名查询
-    public String selectTeacherName(@RequestBody SpecialWorkloadVo specialWorkloadVo){
+    @RequestMapping(value = "/teacher", method = RequestMethod.POST)     //分页  教师姓名查询
+    public String selectTeacherName(@RequestBody SpecialWorkloadVo specialWorkloadVo) {
         IPage<SpecialWorkload> iPage = service.selectTeacherName(specialWorkloadVo);
         if (iPage.getTotal() == 0) {
             return new Result(ResponseCode.NoContentFailure).toString();
@@ -54,8 +54,8 @@ public class SpecialWorkloadController {
         }
     }
 
-    @RequestMapping(value = "/year",method = RequestMethod.POST)      //分页 按年份查询
-    public String selectYear(@RequestBody SpecialWorkloadVo specialWorkloadVo){
+    @RequestMapping(value = "/year", method = RequestMethod.POST)      //分页 按年份查询
+    public String selectYear(@RequestBody SpecialWorkloadVo specialWorkloadVo) {
         IPage<SpecialWorkload> iPage = service.selectYear(specialWorkloadVo);
         if (iPage.getTotal() == 0) {
             return new Result(ResponseCode.NoContentFailure).toString();
@@ -64,13 +64,13 @@ public class SpecialWorkloadController {
         }
     }
 
-    @RequestMapping(value = "/id",method = RequestMethod.POST)       //按主键查询
-    public String selectId(@RequestBody SpecialWorkloadVo specialWorkloadVo){
+    @RequestMapping(value = "/id", method = RequestMethod.POST)       //按主键查询
+    public String selectId(@RequestBody SpecialWorkloadVo specialWorkloadVo) {
         SpecialWorkload specialWorkload = service.selectId(specialWorkloadVo);
-        if (specialWorkload == null){
+        if (specialWorkload == null) {
             return new Result(ResponseCode.NoContentFailure).toString();
-        }else {
-            return new Result(ResponseCode.SUCCESS,specialWorkload).toString();
+        } else {
+            return new Result(ResponseCode.SUCCESS, specialWorkload).toString();
         }
     }
 }

@@ -2,8 +2,6 @@ package com.example.sprint2.models.vo;
 
 import lombok.Data;
 
-import java.time.LocalDate;
-
 /**
  * @author hy
  * @Date 2022/7/1

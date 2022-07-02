@@ -1,6 +1,5 @@
 package com.example.sprint2.dao;
 
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.example.sprint2.mybatis.entity.SpecialWorkload;
 import com.example.sprint2.mybatis.mapper.SpecialWorkloadMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,9 +21,9 @@ public class SpecialSaveDao {
      * @Description：插入一条记录。返回1代表成功，其他失败。
      */
     public boolean save(SpecialWorkload specialWorkload) {
-        if(specialWorkloadMapper.insert(specialWorkload)==1){
+        if (specialWorkloadMapper.insert(specialWorkload) == 1) {
             return true;
-        }else{
+        } else {
             return false;
         }
     }

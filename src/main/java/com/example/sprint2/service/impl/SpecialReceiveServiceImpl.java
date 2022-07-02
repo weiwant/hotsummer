@@ -1,8 +1,5 @@
 package com.example.sprint2.service.impl;
 
-import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONArray;
-import com.alibaba.fastjson.JSONObject;
 import com.example.sprint2.dao.SpecialSaveDao;
 import com.example.sprint2.models.vo.SpecialReceiveVo;
 import com.example.sprint2.mybatis.entity.SpecialWorkload;
@@ -10,7 +7,6 @@ import com.example.sprint2.service.SpecialReceiveService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDate;
 import java.util.List;
 
 /**
@@ -30,12 +26,12 @@ public class SpecialReceiveServiceImpl implements SpecialReceiveService {
      */
     @Override
     public boolean save(SpecialReceiveVo data) {
-        boolean flag=true;
+        boolean flag = true;
         //获取List《》
-        List<SpecialWorkload> list=data.getData();
-        for (SpecialWorkload workload:list ) {
+        List<SpecialWorkload> list = data.getData();
+        for (SpecialWorkload workload : list) {
 
-            SpecialWorkload specialWorkload=new SpecialWorkload();//一个实体类对象
+            SpecialWorkload specialWorkload = new SpecialWorkload();//一个实体类对象
 
             specialWorkload.setReportTime(workload.getReportTime());//申报时间
             specialWorkload.setDeclarantName(workload.getDeclarantName());//申报人
@@ -61,8 +57,8 @@ public class SpecialReceiveServiceImpl implements SpecialReceiveService {
             specialWorkload.setStatus(workload.getStatus());//审核状态
 
             //插入数据库
-            if(!specialSaveDao.save(workload)){
-                flag=false;
+            if (!specialSaveDao.save(workload)) {
+                flag = false;
             }
         }
 

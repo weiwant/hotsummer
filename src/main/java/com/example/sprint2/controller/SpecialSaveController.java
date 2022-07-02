@@ -1,7 +1,5 @@
 package com.example.sprint2.controller;
 
-import com.alibaba.fastjson.JSONArray;
-import com.alibaba.fastjson.JSONObject;
 import com.example.sprint2.models.enumerate.impl.ResponseCode;
 import com.example.sprint2.models.vo.SpecialReceiveVo;
 import com.example.sprint2.service.SpecialReceiveService;
@@ -12,12 +10,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.List;
-
 /**
  * @author:wwq
  * @Date：2022/7/1：9:54
- *
  */
 
 // TODO: 2022/7/1 对于附件，生成对应文件夹，将附件信息存入文件夹
@@ -36,11 +31,11 @@ public class SpecialSaveController {
      * @Url:special-workload/upload
      * @Description：接受前端json数据，存入数据库。
      */
-    @RequestMapping(value = "upload",method = RequestMethod.POST)
-    public String uploadSpecialWorkload(@RequestBody SpecialReceiveVo data){
-        if(specialReceiveService.save(data)){
-        return new Result(ResponseCode.SUCCESS).toString();
-        }else{
+    @RequestMapping(value = "upload", method = RequestMethod.POST)
+    public String uploadSpecialWorkload(@RequestBody SpecialReceiveVo data) {
+        if (specialReceiveService.save(data)) {
+            return new Result(ResponseCode.SUCCESS).toString();
+        } else {
             return new Result(ResponseCode.UnknownFailure).toString();
         }
     }

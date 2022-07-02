@@ -41,7 +41,7 @@ public class TotalTableDao {
      */
     public void insertEntity(TotalTable totalTable) throws IllegalAccessException {
         List<Field> fields = Arrays.stream(TotalTable.class.getDeclaredFields()).filter(field -> field.getAnnotation(ForeignKey.class) != null).collect(Collectors.toList());
-        Boolean isNotNull = false;
+        boolean isNotNull = false;
         for (Field field : fields) {
             field.setAccessible(true);
             if (field.get(totalTable) != null) {
@@ -67,21 +67,26 @@ public class TotalTableDao {
      * @date 2022/6/29
      */
     public List<TotalTable> selectByNaturalYear(TotalTable totalTable) {
-        QueryWrapper<TotalTable> wrapper = new QueryWrapper<>();
-        wrapper.eq("natural_year", totalTable.getNaturalYear());
-        wrapper.orderByAsc("teacher_name");
-        wrapper.orderByAsc(getColumns());
+        QueryWrapper<TotalTable> wrapper = getWrapper(totalTable);
         return totalTableMapper.selectList(wrapper);
     }
 
     public IPage<TotalTable> selectPageByNatualYear(TotalTable totalTable, Integer page) {
-        QueryWrapper<TotalTable> wrapper = new QueryWrapper<>();
-        wrapper.eq("natural_year", totalTable.getNaturalYear());
-        wrapper.orderByAsc("teacher_name");
-        wrapper.orderByAsc(getColumns());
+        QueryWrapper<TotalTable> wrapper = getWrapper(totalTable);
         Integer size = 3;
         Page<TotalTable> totalTablePage = new Page<>(page, size);
         return totalTableMapper.selectPage(totalTablePage, wrapper);
+    }
+
+    private QueryWrapper<TotalTable> getWrapper(TotalTable totalTable) {
+        QueryWrapper<TotalTable> wrapper = new QueryWrapper<>();
+        wrapper.eq("natural_year", totalTable.getNaturalYear());
+        if (totalTable.getTeacherName() != null) {
+            wrapper.eq("teacher_name", totalTable.getTeacherName());
+        }
+        wrapper.orderByAsc("teacher_name");
+        wrapper.orderByAsc(getColumns());
+        return wrapper;
     }
 
     /**
@@ -111,6 +116,9 @@ public class TotalTableDao {
         boolean select = false;
         for (Field field : fieldList) {
             field.setAccessible(true);
+            if (field.getName().equals("naturalYear")) {
+                continue;
+            }
             if (field.get(workloadVo) != null) {
                 select = true;
                 break;
@@ -171,7 +179,7 @@ public class TotalTableDao {
                                 Field temp = foreignKey.value().getDeclaredField(Objects.equals(singleReference.fieldName(), "") ? singleField.getName() : singleReference.fieldName());
                                 temp.setAccessible(true);
                                 singleField.setAccessible(true);
-                                singleField.set(vo, temp.getType() == Double.class && singleField.getType() == Integer.class ? ((Double) temp.get(result.get(0))).intValue() : temp.get(result.get(0)));
+                                singleField.set(vo, temp.getType() == Double.class && singleField.getType() == Integer.class ? (temp.get(result.get(0)) != null ? ((Double) temp.get(result.get(0))).intValue() : null) : temp.get(result.get(0)));
                             } catch (NoSuchFieldException | IllegalAccessException e) {
                                 e.printStackTrace();
                             }
