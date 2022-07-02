@@ -125,7 +125,7 @@ export default {
     show(index) {
       switch (index) {
         case 0:
-          this.render0 = true;
+          this.render0 = false;
           break;
         case 1:
           this.render1 = true;
