@@ -4,7 +4,7 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.example.sprint2.models.enumerate.impl.ResponseCode;
 import com.example.sprint2.models.vo.PaperCoachingVo;
 import com.example.sprint2.mybatis.entity.PaperCoachingWorkload;
-import com.example.sprint2.service.impl.PaperServiceImpl;
+import com.example.sprint2.service.PaperService;
 import com.example.sprint2.utils.Result;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -25,7 +25,7 @@ import java.util.List;
 public class PaperCoachingController {
 
     @Autowired
-    PaperServiceImpl paperService;
+    PaperService paperService;
 
     @RequestMapping(value = "/all-page", method = RequestMethod.POST)
     public String showAllByPage(@RequestBody PaperCoachingVo paperCoachingVo) {    //带分页的控制层方法，返回所有数据
