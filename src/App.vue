@@ -16,7 +16,6 @@
   font-style: normal;
   font-display: block;
 }
-
 * {
   margin: 0;
   padding: 0;
@@ -161,5 +160,10 @@ button.universalBlueBtn {
 }
 button.universalBlueBtn:hover {
   background-color: rgba(41, 34, 106, 0.815);
+}
+/******管理员文件上传部分的e-input控件样式******/
+.componentSubsection .el-input input.el-input__inner {
+  border: 0px;
+  padding: 0;
 }
 </style>

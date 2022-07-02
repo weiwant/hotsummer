@@ -1,6 +1,6 @@
 <template>
   <div class="componentSubsection category">
-    <div class="categoryTitle">课程建设BB1</div>
+    <div class="categoryTitle">教学名师BB7</div>
     <!-- 历史上报记录 -->
     <div class="history">
       <div class="historyTitle">
@@ -15,6 +15,42 @@
     </div>
     <!-- 填报与添加区域 -->
     <div class="addNew">
+      <form>
+        <tr>
+        <td>级别:    </td>
+        <td>
+          <input type="radio" name="class" id="jibie" checked="checked"> 国家级        
+          <input type="radio" name="class" id="jibie" > 省级  
+          <input type="radio" name="class" id="jibie" > 校级
+        </td>
+        <br>
+      </tr>
+        <tr>
+        <td>评奖时间:   </td>
+        <td>
+          <input type="date" placeholder="请选择评奖时间">
+        </td>
+        <br>
+      </tr>
+      <tr>
+        <td>姓名</td>
+        <td>
+          <input type="text" placeholder="请输入姓名">
+        </td>
+        <br>
+      </tr>
+      <tr>
+        <td>教分</td>
+        <td>
+          <input type="number" min="1" max="10" step="1" value="1">
+        </td>
+        <br>  
+      </tr>
+       <tr>
+        <input type="reset"  value="重置">
+      </tr>
+
+      </form>
       <button class="universalBlueBtn complete" @click="commit">
         提&nbsp;交
       </button>
