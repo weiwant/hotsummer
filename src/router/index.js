@@ -8,6 +8,7 @@ const Managerhome = () => import('../components/Manager/Managerhome.vue')
 const ManagerPersonalInfo = () => import('../components/Manager/ManagerPersonalInfo.vue')
 const CheckWorkload = () => import('../components/Manager/CheckWorkload.vue')
 const UploadWorkload = () => import('../components/Manager/UploadWorkload.vue')
+const AuditWorkload = () => import('../components/Manager/AuditWorkload.vue')
 const Login = () => import('../Login.vue')
 
 Vue.use(VueRouter)
@@ -36,7 +37,8 @@ const routes = [
       { path: '', redirect: "personalInfo" },
       { path: 'personalInfo', component: ManagerPersonalInfo },
       { path: 'uploadWorkload', component: UploadWorkload },
-      { path: "checkWorkload", component: CheckWorkload }
+      { path: "checkWorkload", component: CheckWorkload },
+      { path: "auditWorkload", component: AuditWorkload },
     ]
   },
 ]

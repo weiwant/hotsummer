@@ -14,6 +14,9 @@
       <li>
         <router-link to="checkWorkload"> 查看教学工作量 </router-link>
       </li>
+      <li>
+        <router-link to="auditWorkload"> 审批特殊工作量</router-link>
+      </li>
     </ul>
     <ul class="tool"></ul>
   </div>
