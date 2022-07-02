@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
+
 /**
  * @author:wwq
  * @Date：2022/7/1：9:54
@@ -35,22 +37,13 @@ public class SpecialSaveController {
      * @Description：接受前端json数据，存入数据库。
      */
     @RequestMapping(value = "upload",method = RequestMethod.POST)
-    public String uploadSpecialWorkload(@RequestBody String json){
-        if(specialReceiveService.saveJson(json)){
+    public String uploadSpecialWorkload(@RequestBody SpecialReceiveVo data){
+        if(specialReceiveService.save(data)){
         return new Result(ResponseCode.SUCCESS).toString();
         }else{
             return new Result(ResponseCode.UnknownFailure).toString();
         }
     }
 
-    /**
-     * @Author：wwq
-     * @Return：
-     * @Url:
-     * @Description：jsonObject
-     */
-    @RequestMapping(value = "/json",method = RequestMethod.POST)
-    public String getJson(@RequestBody JSONArray jsonObject){
-        return "";
-    }
+
 }

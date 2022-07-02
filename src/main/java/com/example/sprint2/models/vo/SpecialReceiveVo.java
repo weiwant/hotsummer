@@ -1,10 +1,12 @@
 package com.example.sprint2.models.vo;
 
 import com.alibaba.fastjson.JSONObject;
+import com.example.sprint2.mybatis.entity.SpecialWorkload;
 import lombok.Getter;
 import lombok.Setter;
 
 import java.io.File;
+import java.util.List;
 
 /**
  * @author:wwq
@@ -12,6 +14,6 @@ import java.io.File;
  */
 @Getter
 @Setter
-public class SpecialReceiveVo {
-    private String json;
+public class SpecialReceiveVo{
+    private List<SpecialWorkload> data;
 }

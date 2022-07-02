@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.util.List;
 
 /**
  * @author:wwq
@@ -25,41 +26,42 @@ public class SpecialReceiveServiceImpl implements SpecialReceiveService {
      * @Author：wwq
      * @Return：
      * @Url:
-     * @Description：将json键值对数据赋给实体类，并插入。成功返回true，失败false。
+     * @Description：
      */
     @Override
-    public boolean saveJson(String json) {
+    public boolean save(SpecialReceiveVo data) {
         boolean flag=true;
-        JSONArray jsonArray= JSON.parseArray(json);
-        for (Object o : jsonArray) {
-            JSONObject jsOb=(JSONObject) o;//每次一个jsonObject对象
+        //获取List《》
+        List<SpecialWorkload> list=data.getData();
+        for (SpecialWorkload workload:list ) {
+
             SpecialWorkload specialWorkload=new SpecialWorkload();//一个实体类对象
 
-            specialWorkload.setReportTime(LocalDate.parse(jsOb.getString("reportTime")));//申报时间
-            specialWorkload.setDeclarantName(jsOb.getString("declarantName"));//申报人
-            specialWorkload.setTeacherName(jsOb.getString("teacherName"));//教师姓名
-            specialWorkload.setType(jsOb.getString("type"));//类型
-            specialWorkload.setTeachingScores(Double.valueOf(jsOb.getString("teachingScores")));//教分
-            specialWorkload.setAchievementName(jsOb.getString("achievementName"));//成果/作品/参赛项目/参评项目/论文/专著名称
-            specialWorkload.setLevel(jsOb.getString("level"));//级别
-            specialWorkload.setProjectCategory(jsOb.getString("projectCategory"));//课程/项目/奖项/竞赛/论文指导类别
-            specialWorkload.setProjectName(jsOb.getString("projectName"));//课程/项目/奖项/竞赛详细名称
-            specialWorkload.setAwardLevel(jsOb.getString("awardLevel"));//获奖等级
-            specialWorkload.setAwardDate(jsOb.getString("awardDate"));//获奖/获评/出版日期
-            specialWorkload.setProjectStatus(jsOb.getString("projectStatus"));//项目进展
-            specialWorkload.setAwardApartment(jsOb.getString("awardApartment"));//授奖单位
-            specialWorkload.setPublicationName(jsOb.getString("publicationName"));//刊物/出版社名称
-            specialWorkload.setPublicationsNumber(jsOb.getString("publicationsNumber"));//刊物期数/出版版次
-            specialWorkload.setIsbn(jsOb.getString("isbn"));//ISBN号
-            specialWorkload.setBriefIntroduction(jsOb.getString("briefIntroduction"));//内容简介
-            specialWorkload.setReceivingHonor(jsOb.getString("receivingHonor"));//所获荣誉
-            specialWorkload.setGuidingStudentTeam(jsOb.getString("guidingStudentTeam"));//指导学生团队名
-            specialWorkload.setGuidingStudentName(jsOb.getString("guidingStudentName"));//指导学生姓名
-            specialWorkload.setGuidingStudentId(jsOb.getString("guidingStudentId"));//指导学生学号
-            specialWorkload.setStatus(jsOb.getString("status"));//审核状态
+            specialWorkload.setReportTime(workload.getReportTime());//申报时间
+            specialWorkload.setDeclarantName(workload.getDeclarantName());//申报人
+            specialWorkload.setTeacherName(workload.getTeacherName());//教师姓名
+            specialWorkload.setType(workload.getType());//类型
+            specialWorkload.setTeachingScores(workload.getTeachingScores());//教分
+            specialWorkload.setAchievementName(workload.getAchievementName());//成果/作品/参赛项目/参评项目/论文/专著名称
+            specialWorkload.setLevel(workload.getLevel());//级别
+            specialWorkload.setProjectCategory(workload.getProjectCategory());//课程/项目/奖项/竞赛/论文指导类别
+            specialWorkload.setProjectName(workload.getProjectName());//课程/项目/奖项/竞赛详细名称
+            specialWorkload.setAwardLevel(workload.getAwardLevel());//获奖等级
+            specialWorkload.setAwardDate(workload.getAwardDate());//获奖/获评/出版日期
+            specialWorkload.setProjectStatus(workload.getProjectStatus());//项目进展
+            specialWorkload.setAwardApartment(workload.getAwardApartment());//授奖单位
+            specialWorkload.setPublicationName(workload.getPublicationName());//刊物/出版社名称
+            specialWorkload.setPublicationsNumber(workload.getPublicationsNumber());//刊物期数/出版版次
+            specialWorkload.setIsbn(workload.getIsbn());//ISBN号
+            specialWorkload.setBriefIntroduction(workload.getBriefIntroduction());//内容简介
+            specialWorkload.setReceivingHonor(workload.getReceivingHonor());//所获荣誉
+            specialWorkload.setGuidingStudentTeam(workload.getGuidingStudentTeam());//指导学生团队名
+            specialWorkload.setGuidingStudentName(workload.getGuidingStudentName());//指导学生姓名
+            specialWorkload.setGuidingStudentId(workload.getGuidingStudentId());//指导学生学号
+            specialWorkload.setStatus(workload.getStatus());//审核状态
 
             //插入数据库
-            if(!specialSaveDao.save(specialWorkload)){
+            if(!specialSaveDao.save(workload)){
                 flag=false;
             }
         }
