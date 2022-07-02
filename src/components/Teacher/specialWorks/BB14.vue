@@ -1,6 +1,6 @@
 <template>
   <div class="componentSubsection category">
-    <div class="categoryTitle">课程建设BB1</div>
+    <div class="categoryTitle">其他BB15</div>
     <!-- 历史上报记录 -->
     <div class="history">
       <div class="historyTitle">
@@ -15,6 +15,28 @@
     </div>
     <!-- 填报与添加区域 -->
     <div class="addNew">
+      <form>
+        <tr>
+          <td>内容:   </td>
+          <td>
+            <input ty="textarea" placeholder="请输入相关工作量描述">
+          </td>
+        </tr>
+         <tr>
+          <td>教师姓名:   </td>
+          <td>
+            <input ty="textarea" placeholder="请输入教师姓名">
+          </td>
+        </tr>
+        <tr>
+        <td>教分</td>
+        <td>
+          <input type="number" min="1" max="10" step="1" value="1">
+        </td>
+        <br> 
+        </tr>
+         
+      </form>
       <button class="universalBlueBtn complete" @click="commit">
         提&nbsp;交
       </button>

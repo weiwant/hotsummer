@@ -19,7 +19,7 @@
         <tr>
           <td>书名:   </td>
           <td>
-            《<input type="textarea" placeholder="请输入出版书籍的书名">》
+            <input type="textarea" placeholder="请输入出版书籍的书名">
           </td>
           <br>
         </tr>
@@ -33,7 +33,7 @@
         <tr>
           <td>内容简介:   </td>
           <td>
-            《<input type="textarea" placeholder="请在此输入教材的内容简介">》
+            <input type="textarea"  placeholder="请在此输入教材的内容简介">
           </td>
           <br>
         </tr>
@@ -77,7 +77,7 @@
         <tr>
           <td>所获荣誉</td>
           <td>
-            <input type="textarea"  placeholder="请在此填入你所获的荣誉，没有请填无。">
+            <input type="textarea"  placeholder="请在此填入你所获的荣誉">
           </td>
           <br>
         </tr>

@@ -49,8 +49,9 @@
       <BB13 v-if="render12"></BB13>
     </transition>
     <transition>
-      <BB13 v-if="render13"></BB13>
+      <BB14 v-if="render13"></BB14>
     </transition>
+    
   </div>
 </template>
 
@@ -69,6 +70,8 @@ import BB10 from "./specialWorks/BB10.vue";
 import BB11 from "./specialWorks/BB11.vue";
 import BB12 from "./specialWorks/BB12.vue";
 import BB13 from "./specialWorks/BB13.vue";
+import BB14 from "./specialWorks/BB14.vue";
+
 export default {
   name: "SpecialWorkload",
   components: {
@@ -86,6 +89,7 @@ export default {
     BB11,
     BB12,
     BB13,
+    BB14,
   },
   data() {
     return {
@@ -103,6 +107,7 @@ export default {
       render11: false,
       render12: false,
       render13: false,
+     
       menuItems: [
         "课程建设BB1",
         "教研项目BB2",
@@ -115,14 +120,15 @@ export default {
         "指导学生竞赛获奖BB9",
         "指导学生科研立项并顺利完成项目BB10",
         "教学兼职BB11",
-        "BB12",
-        "本科生培养活动BB13",
-        "本科生主考之外的监考计BB14",
+        "本科生培养活动BB12",
+        "本科生主考之外的监考计BB13",
+        "其他BB14",
       ],
     };
   },
   methods: {
     show(index) {
+      console.log(index)
       switch (index) {
         case 0:
           this.render0 = true;
@@ -166,9 +172,11 @@ export default {
         case 13:
           this.render13 = true;
           break;
+         
       }
     },
     hide(index) {
+      console.log(index)
       switch (index) {
         case 0:
           this.render0 = false;
@@ -212,6 +220,7 @@ export default {
         case 13:
           this.render13 = false;
           break;
+       
       }
     },
   },

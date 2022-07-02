@@ -1,6 +1,6 @@
 <template>
   <div class="componentSubsection category">
-    <div class="categoryTitle">本科生培养活动BB12</div>
+    <div class="categoryTitle">本科生培养活动BB13</div>
     <!-- 历史上报记录 -->
     <div class="history">
       <div class="historyTitle">

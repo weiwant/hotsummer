@@ -26,7 +26,7 @@
           <br>
         </tr>
         <tr>
-          <td>论文名称:   </td>学生姓名
+          <td>论文名称:   </td>
           <td>
             <input type="text" placeholder="请输入论文名称">
           </td>

@@ -1,6 +1,6 @@
 <template>
   <div class="componentSubsection category">
-    <div class="categoryTitle">本科生主考之外的监考计BB13</div>
+    <div class="categoryTitle">本科生主考之外的监考计BB14</div>
     <!-- 历史上报记录 -->
     <div class="history">
       <div class="historyTitle">
@@ -19,7 +19,7 @@
          <tr>
           <td>内容</td>
           <td>
-            <input type="textarea" placeholder="请输入教学兼职相关内容">
+            <input type="textarea" placeholder="请输入工作量相关内容">
           </td>
           <br>
         </tr>

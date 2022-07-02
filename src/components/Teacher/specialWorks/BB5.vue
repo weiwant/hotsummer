@@ -42,17 +42,19 @@
        <tr>
         <td>刊物期数:   </td>
         <td>
-          <input type=”month”>
-          <input type="number"  min="0"  max="100"   step="1" value="0">期
+          <input type="month" placeholder="请选择出版月份">
+          <input type="number"  min="1"  max="100"   step="1" value="1">期
         </td>
         <br>
       </tr>
        <tr>
         <td>证明文件：   </td>
         <td>
-          <input type="file"  placeholder="请选择论文对应封面" >
-          <input type="file"  placeholder="请选择论文对应目录" >
-          <input type="file"  placeholder="请选择论文对应正文" >
+         
+          <input type="file" value="论文封面"  >
+       
+          <input type="file"  value="论文目录" >
+          <input type="file"  value="论文正文" >
         </td>
         <br>
       </tr>
