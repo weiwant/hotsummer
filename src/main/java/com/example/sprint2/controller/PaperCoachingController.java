@@ -21,7 +21,7 @@ import java.util.List;
  */
 
 @RestController
-@RequestMapping("manager/paper")
+@RequestMapping("/paper")
 public class PaperCoachingController {
 
     @Autowired
