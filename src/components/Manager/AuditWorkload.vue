@@ -38,8 +38,7 @@ export default {
     exportFile() {},
     yearConfirmed(year) {
       this.yearChosen = year;
-      console.log(this.yearChosen);
-      // this.getTableData();
+      this.getTableData();
     },
   },
 };
