@@ -108,8 +108,10 @@
           <input type="file" />
         </td>
       </tr>
+      
       <!-- 动态增删填报项组件 -->
       <DynamicCollection @update="changeParticipant"></DynamicCollection>
+
       <button class="universalBlueBtn complete" @click="commit">
         提&nbsp;交
       </button>
