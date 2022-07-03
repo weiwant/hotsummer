@@ -19,7 +19,7 @@
         ref="file"
         name="file"
         v-model="file"
-        @change="getFileData"
+        @change="getFileData(file, 1)"
         multiple="false"
         accept=".xls,.xlsx"
       ></el-input>
@@ -46,7 +46,7 @@
         ref="file"
         name="file"
         v-model="file"
-        @change="getFileData"
+        @change="getFileData(file, 2)"
         multiple="false"
         accept=".xls,.xlsx"
       ></el-input>
@@ -73,7 +73,7 @@
         ref="file"
         name="file"
         v-model="file"
-        @change="getFileData"
+        @change="getFileData(file, 3)"
         multiple="false"
         accept=".xls,.xlsx"
       ></el-input>
@@ -106,39 +106,85 @@ export default {
       this.$refs.file.dispatchEvent(new MouseEvent("click"));
     },
     //触发选择文件，判断文件类型
-    getFileData(file) {
+    getFileData(file, a) {
       const inputFile = this.$refs.file;
       let filename = file;
       const isExcel = filename.substring(filename.lastIndexOf(".") + 1);
-      this.uploadFile(inputFile.$refs.input.files[0]);
+      if(isExcel != "xls" && isExcel != "xlsx"){
+        alert("文件格式错误，请上传xls或xlsx类型文件！");
+      }else{
+        this.uploadFile(inputFile.$refs.input.files[0], a);
+      }
     },
-    //上传文件，学年，学期
-    uploadFile(file) {
+    //上传文件，自然学年
+    uploadFile(file, a) {
       const formData = new FormData();
       var _this = this;
-      var firstYear = this.$data.uploadFileYearInfo1;
-      var secondYear = firstYear + 1;
-      _this.year = firstYear + "-" + secondYear;
-      _this.semester = this.$data.uploadFileSemesterInfo;
-      formData.append("year", _this.year);
-      formData.append("semester", _this.semester);
-      formData.append("file", file);
-      this.$axios
-        .post(`${this.$domainName}/file/upload`, formData, {
-          headers: {
-            "Content-Type": "multipart/form-datas",
-          },
-        })
-        .then((res) => {
-          if (res.data.response.code == 200) {
-            alert("报表文件上传成功！");
-          } else {
-            alert("上传失败！");
-          }
-        })
-        .catch(function (error) {
-          console.log(error);
-        });
+      //课程工作量上传
+      if(a == 1){
+        formData.append("year", this.$data.yearForClassWorkloadTable);
+        formData.append("file", file);
+        this.$axios
+          .post(`${this.$domainName}/file/upload`, formData, {
+            headers: {
+              "Content-Type": "multipart/form-datas",
+            },
+          })
+          .then((res) => {
+            if (res.data.response.code == 200) {
+              alert("报表文件上传成功！");
+            } else {
+              alert("上传失败！");
+            }
+          })
+          .catch(function (error) {
+            console.log(error);
+          });
+      }
+      //监考工作量上传
+      else if(a == 2){
+        formData.append("year", this.$data.yearForExaminationWorkloadTable);
+        formData.append("file", file);
+        this.$axios
+          .post(`${this.$domainName}/file/upload`, formData, {
+            headers: {
+              "Content-Type": "multipart/form-datas",
+            },
+          })
+          .then((res) => {
+            if (res.data.response.code == 200) {
+              alert("报表文件上传成功！");
+            } else {
+              alert("上传失败！");
+            }
+          })
+          .catch(function (error) {
+            console.log(error);
+          });
+      }
+      //论文工作量上传
+      else if(a == 3){
+        formData.append("year", this.$data.yearForPaperWorkloadTable);
+        formData.append("file", file);
+        this.$axios
+          .post(`${this.$domainName}/file/upload`, formData, {
+            headers: {
+              "Content-Type": "multipart/form-datas",
+            },
+          })
+          .then((res) => {
+            if (res.data.response.code == 200) {
+              alert("报表文件上传成功！");
+            } else {
+              alert("上传失败！");
+            }
+          })
+          .catch(function (error) {
+            console.log(error);
+          });
+      }else{
+        alert("错误！");
+      }
     },
     //下载模版
     //由于模版下载的数据格式和一般的数据不太一样，就不调用全局方法了
