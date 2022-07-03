@@ -21,7 +21,7 @@ public class SpecialWorkloadTableImpl implements SpecialWorkloadTableService {
 
     /**
      * @author hy
-     * @description 根据BB类型查询  分页
+     * @description 根据BB类型和自然年份查询  分页
      */
     @Override
     public IPage<SpecialWorkload> selectBB(SpecialWorkloadVo specialWorkloadVo) {
