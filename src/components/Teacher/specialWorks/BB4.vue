@@ -15,64 +15,73 @@
     </div>
     <!-- 填报与添加区域 -->
     <div class="addNew">
-      <form>
+  
         <tr>
         <td>级别:    </td>
         <td>
-          <input type="radio" name="class" id="jibie" checked="checked"> 国家级        
-          <input type="radio" name="class" id="jibie" > 省级  
-          <input type="radio" name="class" id="jibie" > 校级
+          <input type="radio" id="nation" value="国家级" v-model="awardLevel" />
+          <label for="nation">国家级</label>
+          <input type="radio" id="province" value="省级" v-model="awardLevel" />
+          <label for="province">省级</label>
+          <input type="radio" id="school" value="校级" v-model="awardLevel" />
+          <label for="school">校级</label>
         </td>
-        <br>
+     
       </tr>
        <tr>
         <td>竞赛名称:   </td>
         <td>
-          <input type="text" placeholder="请输入比赛的名称">
+          <input type="text" 
+          placeholder="请输入比赛的名称"
+          v-model="competitionname">
         </td>
-        <br>
+    
       </tr>
       <tr>
         <td>奖项类别:   </td>
         <td>
-          <input type="text" placeholder="请输入所获奖项目的类别">
+          <input type="text"
+           placeholder="请输入所获奖项目的类别"
+           v-model="awardCategory">
         </td>
-        <br>
+    
       </tr>
       <tr>
         <td>获奖等级:   </td>
         <td>
-          <input type="text" placeholder="请输入获奖等级">
+          <input type="text" 
+          placeholder="请输入获奖等级"
+          v-model="level">
         </td>
-        <br>
+ 
       </tr>
       <tr>
         <td>授奖单位:   </td>
         <td>
-          <input type="text" placeholder="请输入授奖单位">
+          <input type="text" 
+          placeholder="请输入授奖单位"
+          v-model="Awardingunit">
         </td>
-        <br>
+
       </tr>
        <tr>
         <td>获奖时间:   </td>
         <td>
-          <input type="date" placeholder="请选择获奖时间">
+          <input type="date" 
+          placeholder="请选择获奖时间"
+          v-model="time">
         </td>
-        <br>
+   
       </tr>
       <tr>
         <td>证明文件：   </td>
         <td>
           <input type="file">
         </td>
-        <br>
+      
       </tr>
-       <tr>
-        <input type="reset"  value="重置">
-      </tr>
-
-
-      </form>
+      
+      <DynamicCollection @update="changeParticipant"></DynamicCollection>
 
       <button class="universalBlueBtn complete" @click="commit">
         提&nbsp;交
@@ -82,11 +91,20 @@
 </template>
 
 <script>
+import DynamicCollection from "./DynamicCollection.vue";
 export default {
+   components: { DynamicCollection },
   data() {
     return {
       historyDisplayBtnText: "展开 ",
       historyShown: false,
+      awardLevel:"",
+      competitionname:"",
+      awardCategory:"",
+      level:"",
+      Awardingunit:"",
+      time:"",
+      participants: []
     };
   },
   methods: {
@@ -98,6 +116,11 @@ export default {
         this.historyDisplayBtnText = "展开 ";
         this.historyShown = false;
       }
+    },
+     // 动态增删participants
+    changeParticipant(participants) {
+      this.participants = participants;
+      console.log(this.participants);
     },
     /*提交上报数据*/
     commit() {},

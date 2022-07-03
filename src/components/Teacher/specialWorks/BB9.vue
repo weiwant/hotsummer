@@ -15,81 +15,92 @@
     </div>
     <!-- 填报与添加区域 -->
     <div class="addNew">
-      <form>
          <tr>
         <td>竞赛类别:    </td>
         <td>
-          <input type="radio" name="class" id="jibie" checked="checked"> A       
-          <input type="radio" name="class" id="jibie" > B  
-          <input type="radio" name="class" id="jibie" > C
+          <input type="radio"  id="A" value="A " v-model="competitioncategory"> 
+          <label for="A">A</label>      
+          <input type="radio"  id="B" value="B" v-model="competitioncategory">  
+          <label for="B">B</label>  
+          <input type="radio"  id="C" value="C"  v-model="competitioncategory"> 
+          <label for="C">C</label> 
         </td>
-        <br>
       </tr>
        <tr>
           <td>竞赛名称:   </td>
           <td>
-            <input type="text" placeholder="请输入竞赛名称">
+            <input type="text" 
+            placeholder="请输入竞赛名称"
+            v-model="competitionname">
           </td>
-          <br>
         </tr>
           <tr>
         <td>竞赛级别:    </td>
         <td>
-          <input type="radio" name="class" id="jibie" checked="checked"> 国际      
-          <input type="radio" name="class" id="jibie" > 全国  
-          <input type="radio" name="class" id="jibie" > 省级
-          <input type="radio" name="class" id="jibie" > 校级
+          <input type="radio" id="international" value="国际" v-model="level">   
+          <label for="international">国际</label>    
+          <input type="radio"  id="national" value="全国  " v-model="level"> 
+          <label for="international">全国</label>    
+          <input type="radio"  id="provence" value="省级" v-model="level"> 
+          <label for="international">省级</label>    
+          <input type="radio"  id="school" value="校级">
+          <label for="international">校级</label>    
         </td>
-        <br>
       </tr>
        <tr>
           <td>竞赛等级:   </td>
           <td>
-            <input type="text" placeholder="请输入竞赛等级">
+            <input type="radio" id="first" value="一等奖" v-model="category">   
+          <label for="first">一等奖</label>    
+          <input type="radio"  id="second" value="二等奖  " v-model="category"> 
+          <label for="second">二等奖</label>    
+          <input type="radio"  id="third" value="三等奖" v-model="category"> 
+          <label for="third">三等奖</label>    
+          <input type="radio"  id="others" value="其他">
+          <label for="others">其他</label>   
           </td>
           <br>
         </tr>
         <tr>
           <td>参赛作品名称:   </td>
           <td>
-            <input type="text" placeholder="请输入参赛作品名称">
+            <input type="text" 
+            placeholder="请输入参赛作品名称"
+            v-model="workname">
           </td>
-          <br>
         </tr>
         <tr>
           <td>参赛队伍名称:   </td>
           <td>
-            <input type="text" placeholder="请输入参赛队伍名称">
-          </td>
-          <br>
+            <input type="text" 
+            placeholder="请输入参赛队伍名称"
+            v-model="teamname">
+            </td>
+
         </tr>
         <tr>
           <td>参赛学生姓名:   </td>
           <td>
-            <input type="text" placeholder="请输入参赛学生姓名">
+            <input type="text" 
+            placeholder="请输入参赛学生姓名"
+            v-model="studentname">
           </td>
-          <br>
         </tr>
          <tr>
           <td>指导老师姓名:   </td>
           <td>
-            <input type="text" placeholder="请输入指导老师姓名">
+            <input type="text"
+             placeholder="请输入指导老师姓名"
+            v-model="teachername">
           </td>
-          <br>
         </tr>
          <tr>
         <td>证明文件：   </td>
         <td>
           <input type="file"  placeholder="请选择相关文件" >
-        
         </td>
-        <br>
-      </tr>
-      <tr>
-        <input type="reset"  value="重置">
       </tr>
 
-      </form>
       <button class="universalBlueBtn complete" @click="commit">
         提&nbsp;交
       </button>
@@ -103,6 +114,15 @@ export default {
     return {
       historyDisplayBtnText: "展开 ",
       historyShown: false,
+      competitioncategory:"",
+      competitionname:"",
+      level:"",
+      category:"",
+      workname:"",
+      teamname:"",
+      studentname:"",
+      teachername:"",
+
     };
   },
   methods: {

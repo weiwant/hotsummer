@@ -15,59 +15,88 @@
     </div>
     <!-- 填报与添加区域 -->
     <div class="addNew">
-      <form>
+
         <tr>
         <td>级别:    </td>
         <td>
-          
-          <input type="radio" name="class" id="jibie" checked="checked"> 国家级        
-          <input type="radio" name="class" id="jibie" > 省级  
-          <input type="radio" name="class" id="jibie" > 校级
+          <input type="radio" 
+           id="national"  
+           value="国家级" v-model="level">  
+           <label for="nation">国家级</label>
+          <input type="radio"  id="provincial level" value="省级 "  v-model="level"> 
+          <label for="provincial level">省级</label>
+          <input type="radio" 
+           id="school level"
+            value=" 校级 " v-model="level">
+          <label for="school level">校级</label>
         </td>
-        <br>
       </tr>
       <tr>
         <td>项目名称:   </td>
         <td>
-           <input type="text" placeholder="请输入所建设项目的名称">
+           <input type="text" 
+           placeholder="请输入所建设项目的名称"
+           v-model="projrctname">
         </td>
-        <br>
       </tr>
       <tr>
         <td>项目类别:   </td>
         <td>
-           <select>
-            <option value="leibie" selected="selected">课程思政示范专业建设项目</option>
-            <option value="leibie">自由选题建设项目</option>
-            <option value="leibie">社会实践课程建设项目</option>
-            <option value="leibie">教师教学发展研究项目</option>
-            <option value="leibie">MOOC课程建设项目</option>
-            <option value="leibie">课程思政课程建设项目</option>
+           <select v-model="projectCategory">
+            <option value="课程思政示范专业建设项目" selected="selected">
+              课程思政示范专业建设项目</option>
+            <option value="自由选题建设项目">自由选题建设项目</option>
+            <option >社会实践课程建设项目</option>
+            <option value="教师教学发展研究项目">教师教学发展研究项目</option>
+            <option value="MOOC课程建设项目">MOOC课程建设项目</option>
+            <option value="课程思政课程建设项目">课程思政课程建设项目</option>
           </select>
         </td>
-        <br>
       </tr>
       <tr>
         <td>负责人姓名:   </td>
         <td>
-           <input type="text" placeholder="请输入项目负责人姓名">
+           <input type="text"
+            placeholder="请输入项目负责人姓名"
+            v-model="managername">
         </td>
-        <br>
       </tr>
       <tr>
         <td>进展情况:   </td>
         <td>
-          <input type="radio" name="priod" id="jibie" checked="checked">立项         
-          <input type="radio" name="priod" id="jibie" >结题  
-          <input type="radio" name="priod" id="jibie" >建设中
+          <input
+            type="radio"
+            id="established"
+            value="立项"
+            v-model="projectStatus"
+          />
+          <label for="established">立项</label>
+          <input type="radio" id="done" value="结题" v-model="projectStatus" />
+          <label for="done">结题</label>
+          <input
+            type="radio"
+            id="doing"
+            value="建设中"
+            v-model="projectStatus"
+          />
+          <label for="doing">建设中</label>
         </td>
-        <br>
       </tr>
        <tr>
-        <input type="reset"  value="重置">
+        <td>教分</td>
+        <td>
+          <input type="number"
+           min="1" 
+           max="10" 
+           step="1" 
+           value="1"
+           v-model="score">
+        </td>
+        <br>  
       </tr>
 
-      </form>
+      <!-- 动态增删填报项组件 -->
+      <DynamicCollection @update="changeParticipant"></DynamicCollection>
       <button class="universalBlueBtn complete" @click="commit">
         提&nbsp;交
       </button>
@@ -76,11 +105,22 @@
 </template>
 
 <script>
+import DynamicCollection from "./DynamicCollection.vue";
 export default {
+  components: { DynamicCollection },
   data() {
     return {
       historyDisplayBtnText: "展开 ",
       historyShown: false,
+      //填报数据
+      level :"",
+      projrctname:"",
+      projectCategory:"",
+      managername:"",
+      projectStatus:"",
+      score:"",
+      participants: [],
+
     };
   },
   methods: {
@@ -92,6 +132,11 @@ export default {
         this.historyDisplayBtnText = "展开 ";
         this.historyShown = false;
       }
+    },
+    // 动态增删participants
+    changeParticipant(participants) {
+      this.participants = participants;
+      console.log(this.participants);
     },
     /*提交上报数据*/
     commit() {},
