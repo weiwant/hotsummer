@@ -47,7 +47,12 @@
         <td>刊物期数:   </td>
         <td>
           <input type="month" placeholder="请选择出版月份" v-model="month">
-          <input type="number"  min="1"  max="100"   step="1" value="1" v-model="stage">期
+          <input type="number" 
+           min="1" 
+            max="100"  
+             step="1" 
+             value="1" 
+             v-model="stage">期
         </td>
       </tr>
        <tr>

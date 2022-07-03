@@ -18,12 +18,20 @@
         <tr>
           <td>指导类型:   </td>
           <td>
-          <input type="radio"  id="independent" value="独立指导 " v-model="category">   
+          <input type="radio"
+            id="independent"
+             value="独立指导 "
+              v-model="category">   
           <label for="independent">独立指导</label>
-          <input type="radio" id="cooperation" value="与院外合作指导 "  v-model="category"> 
+
+          <input type="radio"
+           id="cooperation"
+            value="与院外合作指导 " 
+             v-model="category"> 
            <label for="cooperation">与院外合作指导 </label>
           </td>
         </tr>
+
         <tr>
           <td>论文名称:   </td>
           <td>
@@ -32,6 +40,7 @@
             v-model="title">
           </td>
         </tr>
+
         <tr>
           <td>学生姓名:   </td>
           <td>
@@ -40,6 +49,7 @@
              v-model="studnet">
           </td>
         </tr>
+
         <tr>
           <td>教师姓名:   </td>
           <td>
@@ -48,6 +58,7 @@
              v-model="teacher">
           </td>
         </tr>
+
         <tr>
         <td>教分</td>
         <td>
@@ -59,6 +70,7 @@
            v-model="score">
         </td>
       </tr>
+      
       <button class="universalBlueBtn complete" @click="commit">
         提&nbsp;交
       </button>

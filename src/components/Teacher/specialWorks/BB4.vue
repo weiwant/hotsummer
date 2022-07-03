@@ -60,7 +60,7 @@
         <td>
           <input type="text" 
           placeholder="请输入授奖单位"
-          v-model="Awardingunit">
+          v-model="awardingunit">
         </td>
 
       </tr>
@@ -102,7 +102,7 @@ export default {
       competitionname:"",
       awardCategory:"",
       level:"",
-      Awardingunit:"",
+      awardingunit:"",
       time:"",
       participants: []
     };

@@ -28,13 +28,15 @@
         <tr>
           <td>ISBN:   </td>
           <td>
-            <input type="text" placeholder="请输入教材的国际标准书号">
+            <input type="text" 
+            placeholder="请输入教材的国际标准书号">
           </td>
         </tr>
         <tr>
           <td>内容简介:   </td>
           <td>
-            <input type="textarea"  placeholder="请在此输入教材的内容简介">
+            <input type="textarea" 
+             placeholder="请在此输入教材的内容简介">
           </td>
         </tr>
         <tr>
@@ -109,7 +111,7 @@ export default {
       edition:"",
       number:"",
       award:"",
-       participants: [],
+      participants: [],
 
 
 

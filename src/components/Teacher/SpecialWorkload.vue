@@ -4,54 +4,55 @@
     <div class="componentSubtitle">类型选择</div>
     <MenuBar :menuItems="menuItems" @show="show" @hide="hide"></MenuBar>
     <div class="componentSubtitle" id="contentSectionTitle">内容填报</div>
-    <transition>
-      <BB1 v-if="render0"></BB1>
-    </transition>
-    <transition>
-      <BB2 v-if="render1"></BB2>
-    </transition>
-    <transition>
-      <BB3 v-if="render2"></BB3>
-    </transition>
-    <transition>
-      <BB4 v-if="render3"></BB4>
-    </transition>
+    <div class="flexBox">
+      <transition>
+        <BB1 v-if="render0"></BB1>
+      </transition>
+      <transition>
+        <BB2 v-if="render1"></BB2>
+      </transition>
+      <transition>
+        <BB3 v-if="render2"></BB3>
+      </transition>
+      <transition>
+        <BB4 v-if="render3"></BB4>
+      </transition>
 
-    <transition>
-      <BB5 v-if="render4"></BB5>
-    </transition>
+      <transition>
+        <BB5 v-if="render4"></BB5>
+      </transition>
 
-    <transition>
-      <BB6 v-if="render5"></BB6>
-    </transition>
+      <transition>
+        <BB6 v-if="render5"></BB6>
+      </transition>
 
-    <transition>
-      <BB7 v-if="render6"></BB7>
-    </transition>
+      <transition>
+        <BB7 v-if="render6"></BB7>
+      </transition>
 
-    <transition>
-      <BB8 v-if="render7"></BB8>
-    </transition>
+      <transition>
+        <BB8 v-if="render7"></BB8>
+      </transition>
 
-    <transition>
-      <BB9 v-if="render8"></BB9>
-    </transition>
-    <transition>
-      <BB10 v-if="render9"></BB10>
-    </transition>
-    <transition>
-      <BB11 v-if="render10"></BB11>
-    </transition>
-    <transition>
-      <BB12 v-if="render11"></BB12>
-    </transition>
-    <transition>
-      <BB13 v-if="render12"></BB13>
-    </transition>
-    <transition>
-      <BB14 v-if="render13"></BB14>
-    </transition>
-    
+      <transition>
+        <BB9 v-if="render8"></BB9>
+      </transition>
+      <transition>
+        <BB10 v-if="render9"></BB10>
+      </transition>
+      <transition>
+        <BB11 v-if="render10"></BB11>
+      </transition>
+      <transition>
+        <BB12 v-if="render11"></BB12>
+      </transition>
+      <transition>
+        <BB13 v-if="render12"></BB13>
+      </transition>
+      <transition>
+        <BB14 v-if="render13"></BB14>
+      </transition>
+    </div>
   </div>
 </template>
 
@@ -107,7 +108,7 @@ export default {
       render11: false,
       render12: false,
       render13: false,
-     
+
       menuItems: [
         "课程建设BB1",
         "教研项目BB2",
@@ -128,7 +129,7 @@ export default {
   },
   methods: {
     show(index) {
-      console.log(index)
+      console.log(index);
       switch (index) {
         case 0:
           this.render0 = true;
@@ -172,11 +173,10 @@ export default {
         case 13:
           this.render13 = true;
           break;
-         
       }
     },
     hide(index) {
-      console.log(index)
+      console.log(index);
       switch (index) {
         case 0:
           this.render0 = false;
@@ -220,7 +220,6 @@ export default {
         case 13:
           this.render13 = false;
           break;
-       
       }
     },
   },
@@ -229,15 +228,21 @@ export default {
 
 <style scoped>
 #contentSectionTitle {
-  margin-bottom: 45px;
+  margin-bottom: 35px;
+}
+.flexBox {
+  display: flex;
+  flex-wrap: wrap;
 }
 /* 最外层盒子 */
 .category {
   position: relative;
+  padding-bottom: 40px;
+  margin-right: 2vw;
+  margin-top: 10px;
   min-height: 200px;
-  max-width: 1000px;
+  width: 500px;
   border: 1px solid rgba(128, 128, 128, 0.301);
-  padding-bottom: 35px;
   transition: all 0.2s;
 }
 /* 标题 */
@@ -258,33 +263,58 @@ export default {
 /* 历史上报记录 */
 .componentSubsection.category >>> .historyTitle {
   font-weight: 500;
+  font-size: 15px;
+  color: rgb(242, 191, 72);
 }
 .componentSubsection.category >>> .historyTitle span.historyDisplayBtn {
   margin-left: 10px;
   font-family: "icomoon";
   font-size: 14px;
-  color: gray;
+  color: rgba(128, 128, 128, 0.733);
   cursor: pointer;
 }
 .componentSubsection.category >>> .historyTitle span.historyDisplayBtn:hover {
-  color: rgb(48, 60, 78);
+  color: rgba(48, 60, 78, 0.774);
 }
 .componentSubsection.category >>> .historyTableWrapper {
   position: relative;
-  border-bottom: 1px dashed gray;
+  border-radius: 3px;
   height: 100px;
-  background-color: rgba(91, 104, 129, 0.185);
+  background-color: rgba(215, 186, 125, 0.082);
 }
 
 /* 填报与添加区域 */
-.componentSubsection.category >>> .addNew {
-  height: 100px;
-  padding-top: 5px;
+.componentSubsection.category >>> .addNew td {
+  padding-top: 10px;
+  font-size: 15px;
 }
-/* 添加新上报按钮 */
+.componentSubsection.category >>> .addNew tr > td:nth-child(1) {
+  font-weight: 500;
+  border-bottom: 4px solid rgba(128, 128, 128, 0.116);
+}
+.componentSubsection.category >>> .addNew tr > td:nth-child(2) {
+  padding-left: 15px;
+}
+.componentSubsection.category >>> .addNew td label {
+  margin-left: 5px;
+  margin-right: 18px;
+}
+.componentSubsection.category >>> .addNew td input[type="text"] {
+  width: 200px;
+  height: 30px;
+  border: 1px solid rgb(128, 128, 128);
+  border-radius: 5px;
+  padding-left: 5px;
+}
+.componentSubsection.category >>> .addNew td select {
+  height: 30px;
+  border: 1px solid gray;
+  border-radius: 5px;
+}
+/* 确认按钮 */
 .componentSubsection.category >>> button.complete {
   position: absolute;
-  bottom: 5px;
+  bottom: 10px;
   right: 15px;
   padding: 5px;
   border-radius: 8px;

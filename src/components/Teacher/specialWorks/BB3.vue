@@ -31,35 +31,45 @@
        <tr>
         <td>奖项名称:   </td>
         <td>
-          <input type="text" placeholder="请输入所获奖项目的名称" v-model="awardname">
+          <input type="text"
+          placeholder="请输入所获奖项目的名称" 
+          v-model="awardname">
         </td>
         
       </tr>
       <tr>
         <td>奖项类别:   </td>
         <td>
-          <input type="text" placeholder="请输入所获奖项目的类别" v-model="awardCategory">
+          <input type="text" 
+          placeholder="请输入所获奖项目的类别" 
+          v-model="awardCategory">
         </td>
        
       </tr>
        <tr>
         <td>获奖等级:   </td>
         <td>
-          <input type="text" placeholder="请输入获奖等级" v-model="level">
+          <input type="text" 
+          placeholder="请输入获奖等级" 
+          v-model="level">
         </td>
       
       </tr>
        <tr>
         <td>授奖单位:   </td>
         <td>
-          <input type="text" placeholder="请输入授奖单位" v-model="Awardingunit"> 
+          <input type="text" 
+          placeholder="请输入授奖单位" 
+          v-model="Awardingunit"> 
         </td>
    
       </tr>
       <tr>
         <td>获奖时间:   </td>
         <td>
-          <input type="date" placeholder="请输入获奖时间" v-model="time">
+          <input type="date"
+           placeholder="请输入获奖时间"
+            v-model="time">
         </td>
        
       </tr>
