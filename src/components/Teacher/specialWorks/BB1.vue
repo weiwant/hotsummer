@@ -105,7 +105,12 @@
       <tr>
         <td>上传附件</td>
         <td>
-          <input type="file" />
+          <input
+           type="file"
+           ref="file"
+           name="file"
+           @change="getFileData()"
+           multiple="true" />
         </td>
       </tr>
       
@@ -135,6 +140,8 @@ export default {
       projectName: "",
       awardLevel: "",
       participants: [],
+      //封装文件信息
+      uploadFile: [],
     };
   },
   methods: {
@@ -153,22 +160,43 @@ export default {
       this.participants = participants;
       console.log(this.participants);
     },
+    //点击触发上传方法
+    uploadMaterial() {
+      this.$refs.file.dispatchEvent(new MouseEvent("click"));
+    },
+    //添加文件数据
+    getFileData(file){
+      var _this = this;
+      const inputFile = this.$refs.file.files[0];
+      this.$data.uploadFile.push(inputFile);
+    },
     /*提交上报数据*/
     commit() {
       var _this = this;
       const formData = new FormData();
-      formData.append("award_level", this.$data.awardLevel);
-      formData.append("project_status", this.$data.projectStatus);
-      formData.append("project_category", this.$data.projectCategory);
-      formData.append("project_name", this.$data.projectName);
+      // formData.append("awardLevel", this.$data.awardLevel);
+      // formData.append("projectStatus", this.$data.projectStatus);
+      // formData.append("projectCategory", this.$data.projectCategory);
+      // formData.append("projectName", projectName);
       formData.append("files", this.$data.uploadFile);
+      console.log(formData.get("files"));
       //以下需要修改接口
-      this.axios
-        .post(`${this.$domainName}/file/upload`, formData, {
-            headers: {
+      this.$axios({
+        method: 'post',
+        url: 'http://abcs.vaiwan.com/special-workload/upload',
+        params:{
+          data:[{
+            awardLevel: this.$data.awardLevel,
+            projectStatus: this.$data.projectStatus,
+            projectCategory: this.$data.projectCategory,
+            projectName: this.$data.projectName
+          }],
+          files: formData
+        },
+        headers: {
               "Content-Type": "multipart/form-datas",
-            },
-          })
+            }
+      })
           .then((res) => {
             if (res.data.response.code == 200) {
               alert("报表文件上传成功！");

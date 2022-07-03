@@ -16,10 +16,9 @@
       <!-- 文件上传控件 -->
       <el-input
         type="file"
-        ref="file"
-        name="file"
-        v-model="file"
-        @change="getFileData(file, 1)"
+        ref="file_1"
+        v-model="file_1"
+        @change="getFileData(file_1, 1)"
         multiple="false"
         accept=".xls,.xlsx"
       ></el-input>
@@ -43,10 +42,9 @@
       <!-- 文件上传控件 -->
       <el-input
         type="file"
-        ref="file"
-        name="file"
-        v-model="file"
-        @change="getFileData(file, 2)"
+        ref="file_2"
+        v-model="file_2"
+        @change="getFileData(file_2, 2)"
         multiple="false"
         accept=".xls,.xlsx"
       ></el-input>
@@ -70,10 +68,9 @@
       <!-- 文件上传控件 -->
       <el-input
         type="file"
-        ref="file"
-        name="file"
-        v-model="file"
-        @change="getFileData(file, 3)"
+        ref="file_3"
+        v-model="file_3"
+        @change="getFileData(file_3, 3)"
         multiple="false"
         accept=".xls,.xlsx"
       ></el-input>
@@ -98,16 +95,29 @@ export default {
       classWorkloadTableTemplate: [{ 年份: "", 上课老师: "" }],
       examinationWorkloadTableTemplate: [],
       paperWorkloadTableTemplate: [],
+      file_1: "",
+      file_2: "",
+      file_3: "",
     };
   },
   methods: {
     //点击触发上传方法
     uploadMaterial() {
-      this.$refs.file.dispatchEvent(new MouseEvent("click"));
+      this.$refs.file_1.dispatchEvent(new MouseEvent("click"));
+      this.$refs.file_2.dispatchEvent(new MouseEvent("click"));
+      this.$refs.file_3.dispatchEvent(new MouseEvent("click"));
     },
     //触发选择文件，判断文件类型
     getFileData(file, a) {
-      const inputFile = this.$refs.file;
+      var _this = this;
+      let inputFile;
+      if(a == 1){
+        inputFile = this.$refs.file_1;
+      }else if(a == 2){
+        inputFile = this.$refs.file_2;
+      }else{
+        inputFile = this.$refs.file_3;
+      }
       let filename = file;
       const isExcel = filename.substring(filename.lastIndexOf(".") + 1);
       if(isExcel != "xls" && isExcel != "xlsx"){
@@ -122,10 +132,10 @@ export default {
       var _this = this;
       //课程工作量上传
       if(a == 1){
-        formData.append("year", this.$data.yearForClassWorkloadTable);
+        formData.append("naturalYear", this.$data.yearForClassWorkloadTable);
         formData.append("file", file);
         this.$axios
-          .post(`${this.$domainName}/file/upload`, formData, {
+          .post(`${this.$domainName}/file/upload/academic`, formData, {
             headers: {
               "Content-Type": "multipart/form-datas",
             },
@@ -133,6 +143,7 @@ export default {
           .then((res) => {
             if (res.data.response.code == 200) {
               alert("报表文件上传成功！");
+              console.log(response);
             } else {
               alert("上传失败！");
             }
@@ -143,10 +154,10 @@ export default {
       }
       //监考工作量上传
       else if(a == 2){
-        formData.append("year", this.$data.yearForExaminationWorkloadTable);
+        formData.append("naturalYear", this.$data.yearForExaminationWorkloadTable);
         formData.append("file", file);
         this.$axios
-          .post(`${this.$domainName}/file/upload`, formData, {
+          .post(`${this.$domainName}/file/upload/examination`, formData, {
             headers: {
               "Content-Type": "multipart/form-datas",
             },
@@ -154,6 +165,7 @@ export default {
           .then((res) => {
             if (res.data.response.code == 200) {
               alert("报表文件上传成功！");
+              console.log(response);
             } else {
               alert("上传失败！");
             }
@@ -164,10 +176,10 @@ export default {
       }
       //论文工作量上传
       else if(a == 3){
-        formData.append("year", this.$data.yearForPaperWorkloadTable);
+        formData.append("naturalYear", this.$data.yearForPaperWorkloadTable);
         formData.append("file", file);
         this.$axios
-          .post(`${this.$domainName}/file/upload`, formData, {
+          .post(`${this.$domainName}/file/upload/paper`, formData, {
             headers: {
               "Content-Type": "multipart/form-datas",
             },
@@ -175,6 +187,7 @@ export default {
           .then((res) => {
             if (res.data.response.code == 200) {
               alert("报表文件上传成功！");
+              console.log(response);
             } else {
               alert("上传失败！");
             }
