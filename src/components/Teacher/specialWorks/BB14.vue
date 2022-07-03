@@ -16,35 +16,24 @@
     <!-- 填报与添加区域 -->
     <div class="addNew">
         <tr>
-          <td>内容:   </td>
+          <td>内容</td>
           <td>
-            <input ty="textarea" 
+            <input type="textarea" 
             placeholder="请输入相关工作量描述"
             v-model="content">
           </td>
         </tr>
 
          <tr>
-          <td>教师姓名:   </td>
+          <td>教师姓名</td>
           <td>
-            <input ty="textarea" 
+            <input type="textarea" 
             placeholder="请输入教师姓名"
             v-model="teachername">
           </td>
         </tr>
 
-        <tr>
-        <td>教分</td>
-        <td>
-          <input type="number"
-           min="1"
-            max="10" 
-            step="1" 
-            value="1"
-            v-model="score">
-        </td>
-        </tr>
-         
+        
       <button class="universalBlueBtn complete" @click="commit">
         提&nbsp;交
       </button>
@@ -60,7 +49,7 @@ export default {
       historyShown: false,
       content:"",
       teachername:"",
-      socore:"",
+     
     };
   },
   methods: {
