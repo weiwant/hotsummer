@@ -87,7 +87,10 @@
             v-model="projectStatus"
           />
           <label for="established">立项</label>
-          <input type="radio" id="done" value="结题" v-model="projectStatus" />
+          <input type="radio" 
+          id="done" value="结题" 
+          v-model="projectStatus" 
+          />
           <label for="done">结题</label>
           <input
             type="radio"
@@ -102,16 +105,13 @@
       <tr>
         <td>上传附件</td>
         <td>
-          <input
-           type="file"
-           ref="file"
-           name="file"
-           @change="getFileData()"
-           multiple="true" />
+          <input type="file" />
         </td>
       </tr>
+      
       <!-- 动态增删填报项组件 -->
       <DynamicCollection @update="changeParticipant"></DynamicCollection>
+
       <button class="universalBlueBtn complete" @click="commit">
         提&nbsp;交
       </button>
@@ -133,9 +133,8 @@ export default {
       projectStatus: "",
       projectCategory: "",
       projectName: "",
+      awardLevel: "",
       participants: [],
-      //封装文件信息
-      uploadFile: [],
     };
   },
   methods: {
@@ -153,16 +152,6 @@ export default {
     changeParticipant(participants) {
       this.participants = participants;
       console.log(this.participants);
-    },
-    //点击触发上传方法
-    uploadMaterial() {
-      this.$refs.file.dispatchEvent(new MouseEvent("click"));
-    },
-    //添加文件数据
-    getFileData(file){
-      var _this = this;
-      const inputFile = this.$refs.file.files[0];
-      this.$data.uploadFile.push(inputFile);
     },
     /*提交上报数据*/
     commit() {

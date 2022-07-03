@@ -15,42 +15,39 @@
     </div>
     <!-- 填报与添加区域 -->
     <div class="addNew">
-      <form>
         <tr>
         <td>级别:    </td>
         <td>
-          <input type="radio" name="class" id="jibie" checked="checked"> 国家级        
-          <input type="radio" name="class" id="jibie" > 省级  
-          <input type="radio" name="class" id="jibie" > 校级
+          <input type="radio" id="nation" value="国家级" v-model="awardLevel" />
+          <label for="nation">国家级</label>
+          <input type="radio" id="province" value="省级" v-model="awardLevel" />
+          <label for="province">省级</label>
+          <input type="radio" id="school" value="校级" v-model="awardLevel" />
+          <label for="school">校级</label>
         </td>
-        <br>
       </tr>
         <tr>
         <td>评奖时间:   </td>
         <td>
-          <input type="date" placeholder="请选择评奖时间">
+          <input type="date" placeholder="请选择评奖时间" v-model="date">
         </td>
-        <br>
       </tr>
       <tr>
         <td>姓名</td>
         <td>
-          <input type="text" placeholder="请输入姓名">
+          <input type="text" placeholder="请输入姓名" v-model="name">
         </td>
-        <br>
       </tr>
       <tr>
         <td>教分</td>
         <td>
-          <input type="number" min="1" max="10" step="1" value="1">
-        </td>
-        <br>  
+          <input type="number"
+           min="1"
+            max="10" 
+            step="1" 
+            value="1" v-model="score">
+        </td> 
       </tr>
-       <tr>
-        <input type="reset"  value="重置">
-      </tr>
-
-      </form>
       <button class="universalBlueBtn complete" @click="commit">
         提&nbsp;交
       </button>
@@ -64,6 +61,10 @@ export default {
     return {
       historyDisplayBtnText: "展开 ",
       historyShown: false,
+      awardLevel:"",
+      date:"",
+      name:"",
+      score:"",
     };
   },
   methods: {
@@ -76,6 +77,7 @@ export default {
         this.historyShown = false;
       }
     },
+   
     /*提交上报数据*/
     commit() {},
   },
