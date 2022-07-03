@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.io.IOException;
+
 /**
  * @author:wwq
  * @Date：2022/7/1：9:54
@@ -32,8 +34,8 @@ public class SpecialSaveController {
      * @Description：接受前端json数据，存入数据库。
      */
     @RequestMapping(value = "upload", method = RequestMethod.POST)
-    public String uploadSpecialWorkload(@RequestBody SpecialReceiveVo data) {
-        if (specialReceiveService.save(data)) {
+    public String uploadSpecialWorkload(@RequestBody SpecialReceiveVo specialReceiveVo) throws IOException {
+        if (specialReceiveService.save(specialReceiveVo)) {
             return new Result(ResponseCode.SUCCESS).toString();
         } else {
             return new Result(ResponseCode.UnknownFailure).toString();

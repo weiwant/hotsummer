@@ -3,6 +3,7 @@ package com.example.sprint2.models.vo;
 import com.example.sprint2.mybatis.entity.SpecialWorkload;
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -14,4 +15,6 @@ import java.util.List;
 @Setter
 public class SpecialReceiveVo {
     private List<SpecialWorkload> data;
+
+    private MultipartFile[] files;
 }

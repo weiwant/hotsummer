@@ -3,10 +3,12 @@ package com.example.sprint2.service.impl;
 import com.example.sprint2.dao.SpecialSaveDao;
 import com.example.sprint2.models.vo.SpecialReceiveVo;
 import com.example.sprint2.mybatis.entity.SpecialWorkload;
+import com.example.sprint2.service.FileDealService;
 import com.example.sprint2.service.SpecialReceiveService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.io.IOException;
 import java.util.List;
 
 /**
@@ -17,6 +19,8 @@ import java.util.List;
 public class SpecialReceiveServiceImpl implements SpecialReceiveService {
     @Autowired
     SpecialSaveDao specialSaveDao;
+    @Autowired
+    FileDealService fileDealService;
 
     /**
      * @Author：wwq
@@ -25,10 +29,20 @@ public class SpecialReceiveServiceImpl implements SpecialReceiveService {
      * @Description：
      */
     @Override
-    public boolean save(SpecialReceiveVo data) {
+    public boolean save(SpecialReceiveVo specialReceiveVo) throws IOException {
+
         boolean flag = true;
+        //处理file
+        String filePath;
+        if(specialReceiveVo.getFiles()!=null) {
+            filePath = fileDealService.uploadFileWithPath(specialReceiveVo.getFiles());
+        }else{
+            filePath=null;
+        }
+        //处理data
+
         //获取List《》
-        List<SpecialWorkload> list = data.getData();
+        List<SpecialWorkload> list = specialReceiveVo.getData();
         for (SpecialWorkload workload : list) {
 
             SpecialWorkload specialWorkload = new SpecialWorkload();//一个实体类对象
@@ -55,12 +69,17 @@ public class SpecialReceiveServiceImpl implements SpecialReceiveService {
             specialWorkload.setGuidingStudentName(workload.getGuidingStudentName());//指导学生姓名
             specialWorkload.setGuidingStudentId(workload.getGuidingStudentId());//指导学生学号
             specialWorkload.setStatus(workload.getStatus());//审核状态
+            specialWorkload.setFilePath(filePath);//文件路径
 
             //插入数据库
             if (!specialSaveDao.save(workload)) {
                 flag = false;
             }
         }
+
+
+
+
 
         return flag;
     }
