@@ -22,12 +22,13 @@
          <label for="international">国家级</label>
           <input type="radio"  id="provence" value="省级" v-model="level"> 
           <label for="international">省级</label>    
-          <input type="radio"  id="school" value="校级">
+          <input type="radio"  id="school" value="校级" v-model="level">
           <label for="international">校级</label>    
            <input type="radio" id="college" value="院级" v-model="level">   
           <label for="college">院级</label>    
         </td>
       </tr>
+
       <tr>
           <td>项目荣誉:   </td>
           <td>
@@ -37,6 +38,7 @@
              </td>
 
         </tr>
+
         <tr>
           <td>项目名称:   </td>
           <td>
@@ -45,6 +47,7 @@
             v-model="projectname">
           </td>
         </tr>
+
         <tr>
           <td>学生团队名称:   </td>
           <td>
@@ -53,6 +56,7 @@
              v-model="teamname">
           </td>
         </tr>
+
          <tr>
           <td>学生姓名:   </td>
           <td>
@@ -61,6 +65,7 @@
             v-model="studentname">
           </td>
         </tr>
+
         <tr>
           <td>学生学号:   </td>
           <td>
@@ -78,6 +83,7 @@
             v-model="teachername">
             </td>
         </tr>
+        
         <tr>
         <td>教分</td>
         <td>

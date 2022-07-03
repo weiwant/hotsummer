@@ -23,6 +23,7 @@
             v-model="conten">
           </td>
         </tr>
+
          <tr>
           <td>教师姓名:   </td>
           <td>
@@ -31,6 +32,7 @@
              v-model="teachername">
           </td>
         </tr>
+
         <tr>
         <td>教分</td>
         <td>
@@ -42,6 +44,7 @@
            v-model="score">
         </td> 
       </tr>
+      
       <button class="universalBlueBtn complete" @click="commit">
         提&nbsp;交
       </button>

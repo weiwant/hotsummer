@@ -23,12 +23,12 @@
            id="national"  
            value="国家级" v-model="level">  
            <label for="nation">国家级</label>
-          <input type="radio"  id="provincial level" value="省级 "  v-model="level"> 
-          <label for="provincial level">省级</label>
+          <input type="radio"  id="provinciallevel" value="省级 "  v-model="level"> 
+          <label for="provinciallevel">省级</label>
           <input type="radio" 
-           id="school level"
+           id="schoollevel"
             value=" 校级 " v-model="level">
-          <label for="school level">校级</label>
+          <label for="schoollevel">校级</label>
         </td>
       </tr>
       <tr>
