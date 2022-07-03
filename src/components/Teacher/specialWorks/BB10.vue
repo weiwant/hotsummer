@@ -16,31 +16,30 @@
     <!-- 填报与添加区域 -->
     <div class="addNew">
         <tr>
-        <td>项目级别:    </td>
+        <td>项目级别</td>
         <td>
-          <input type="radio"  id="national" value="国家级 " v-model="level"> 
-         <label for="international">国家级</label>
-          <input type="radio"  id="provence" value="省级" v-model="level"> 
-          <label for="international">省级</label>    
+          <input type="radio"  id="national" value="国家级" v-model="level"> 
+         <label for="national">国家级</label>
+          <input type="radio"  id="province" value="省级" v-model="level"> 
+          <label for="province">省级</label>    
           <input type="radio"  id="school" value="校级" v-model="level">
-          <label for="international">校级</label>    
+          <label for="school">校级</label>    
            <input type="radio" id="college" value="院级" v-model="level">   
           <label for="college">院级</label>    
         </td>
       </tr>
 
       <tr>
-          <td>项目荣誉:   </td>
+          <td>项目荣誉</td>
           <td>
             <input type="text"
              placeholder="请输入项目荣誉"
              v-model="honor">
              </td>
-
         </tr>
 
         <tr>
-          <td>项目名称:   </td>
+          <td>项目名称</td>
           <td>
             <input type="text" 
             placeholder="请输入项目名称"
@@ -49,7 +48,7 @@
         </tr>
 
         <tr>
-          <td>学生团队名称:   </td>
+          <td>学生团队名称</td>
           <td>
             <input type="text"
              placeholder="请输入学生团队名称"
@@ -58,7 +57,7 @@
         </tr>
 
          <tr>
-          <td>学生姓名:   </td>
+          <td>学生姓名</td>
           <td>
             <input type="text" 
             placeholder="请输入学生姓名"
@@ -67,7 +66,7 @@
         </tr>
 
         <tr>
-          <td>学生学号:   </td>
+          <td>学生学号</td>
           <td>
             <input type="text" 
             placeholder="请输入学生学号"
@@ -76,7 +75,7 @@
           </td>
         </tr>
          <tr>
-          <td>指导老师姓名:   </td>
+          <td>指导老师姓名</td>
           <td>
             <input type="text" 
             placeholder="请输入指导老师姓名"
@@ -84,20 +83,6 @@
             </td>
         </tr>
         
-        <tr>
-        <td>教分</td>
-        <td>
-          <input type="number" 
-          min="1"
-           max="10"
-            step="1" 
-            value="1"
-            v-model="score">
-        </td>
-      </tr>
-      
-
-
       <button class="universalBlueBtn complete" @click="commit">
         提&nbsp;交
       </button>
@@ -117,12 +102,7 @@ export default {
       teamname:"",
       studentname:"",
       teachername:"",
-      score:"",
-
-
-
-
-
+      
     };
   },
   methods: {
