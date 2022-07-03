@@ -1,6 +1,7 @@
 package com.example.sprint2.service.impl;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.example.sprint2.dao.TotalTableDao;
 import com.example.sprint2.models.enumerate.impl.ResponseCode;
 import com.example.sprint2.models.vo.WorkloadVo;
@@ -10,6 +11,7 @@ import com.example.sprint2.utils.Result;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -51,12 +53,28 @@ public class TotalWorkLoadServiceImpl implements TotalWorkLoadService {
         if (workloadVo.getMainTeacherName() != null) {
             totalTable.setTeacherName(workloadVo.getMainTeacherName());
         }
-        IPage<TotalTable> totalTablePage = totalTableDao.selectPageByNatualYear(totalTable, page);
-        List<WorkloadVo> output = totalTableDao.combine(totalTablePage.getRecords(), workloadVo);
+        //根据自然年查询总表
+        int size = 3;
+        List<TotalTable> totalTables = totalTableDao.selectByNaturalYear(totalTable);
+        List<WorkloadVo> workloadVoList = totalTableDao.combine(totalTables, workloadVo);
+        IPage<WorkloadVo> voIPage = listToPage(workloadVoList, page, size);
+        List<WorkloadVo> output = voIPage.getRecords();
         if (output.isEmpty()) {
             return new Result(ResponseCode.NoContentFailure).toString();
         } else {
             return new Result(ResponseCode.SUCCESS, output).toString();
         }
+    }
+
+    private static IPage<WorkloadVo> listToPage(List<WorkloadVo> list, int pageNum, int pageSize) {
+        List<WorkloadVo> pageList = new ArrayList<>();
+        int curIdx = pageNum > 1 ? (pageNum - 1) * pageSize : 0;
+        for (int i = 0; i < pageSize && curIdx + i < list.size(); i++) {
+            pageList.add(list.get(curIdx + i));
+        }
+        IPage<WorkloadVo> page = new Page<>(pageNum, pageSize);
+        page.setRecords(pageList);
+        page.setTotal(list.size());
+        return page;
     }
 }

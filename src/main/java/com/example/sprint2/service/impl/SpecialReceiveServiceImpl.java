@@ -34,10 +34,10 @@ public class SpecialReceiveServiceImpl implements SpecialReceiveService {
         boolean flag = true;
         //处理file
         String filePath;
-        if(specialReceiveVo.getFiles()!=null) {
+        if (specialReceiveVo.getFiles() != null) {
             filePath = fileDealService.uploadFileWithPath(specialReceiveVo.getFiles());
-        }else{
-            filePath=null;
+        } else {
+            filePath = null;
         }
         //处理data
 
@@ -76,9 +76,6 @@ public class SpecialReceiveServiceImpl implements SpecialReceiveService {
                 flag = false;
             }
         }
-
-
-
 
 
         return flag;

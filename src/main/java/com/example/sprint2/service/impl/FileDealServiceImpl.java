@@ -164,7 +164,7 @@ public class FileDealServiceImpl implements FileDealService {
     @Override
     public List<String> downloadById(int id, HttpServletResponse response) throws UnsupportedEncodingException {
 //        String projectPath = "D:\\myTest";//实际上是System.getProperty("user.dir")
-        String projectPath=System.getProperty("user.dir");
+        String projectPath = System.getProperty("user.dir");
         String fileFolderPath = projectPath + "\\" + fileDealDao.selectFilePath(id);
         //实际上fileFolderPath还需要加上根目录路径
         File fileFolder = new File(fileFolderPath);
@@ -181,10 +181,10 @@ public class FileDealServiceImpl implements FileDealService {
     @Override
     public List<String> compressedDownload(int id, HttpServletResponse response) {
 //        String projectPath = "D:\\myTest";//实际上是System.getProperty("user.dir")
-        String projectPath=System.getProperty("user.dir");
-        String comparativeFilePath=fileDealDao.selectFilePath(id);
+        String projectPath = System.getProperty("user.dir");
+        String comparativeFilePath = fileDealDao.selectFilePath(id);
         List<String> msg = new ArrayList<>();
-        if(comparativeFilePath==null){
+        if (comparativeFilePath == null) {
             msg.add("没有附件！");
             return msg;
         }
@@ -276,11 +276,11 @@ public class FileDealServiceImpl implements FileDealService {
         }
         */
         if (files.length > 0) {
-            String id="id";//实际上需要从某个位置来获取
+            String id = "id";//实际上需要从某个位置来获取
             //新建一个文件夹，理论上讲需要调用dao方法来确定这个文件夹的路径
 //            String projectPath = "D:\\myTest";//实际上是System.getProperty("user.dir")
-            String projectPath =System.getProperty("user.dir");
-            String comparativeFilePath=this.setPathInt();
+            String projectPath = System.getProperty("user.dir");
+            String comparativeFilePath = this.setPathInt();
             String filePath = projectPath + "\\" + comparativeFilePath;
             msg.add(comparativeFilePath);
             File file = new File(filePath);
@@ -348,13 +348,13 @@ public class FileDealServiceImpl implements FileDealService {
     @Override
     public String setPath(String id) {
         SimpleDateFormat formatter = new SimpleDateFormat("yyyyMMddHHmmssSSS");
-        return  formatter.format(new Date())+" id "+id;
+        return formatter.format(new Date()) + " id " + id;
     }
 
 
     @Override
     public String setPathInt() {
         SimpleDateFormat formatter = new SimpleDateFormat("yyyyMMddHHmmssSSS");
-        return  formatter.format(new Date());
+        return formatter.format(new Date());
     }
 }
