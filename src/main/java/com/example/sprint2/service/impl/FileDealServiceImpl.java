@@ -182,10 +182,14 @@ public class FileDealServiceImpl implements FileDealService {
     public List<String> compressedDownload(int id, HttpServletResponse response) {
 //        String projectPath = "D:\\myTest";//实际上是System.getProperty("user.dir")
         String projectPath=System.getProperty("user.dir");
+        String comparativeFilePath=fileDealDao.selectFilePath(id);
+        List<String> msg = new ArrayList<>();
+        if(comparativeFilePath==null){
+            msg.add("没有附件！");
+            return msg;
+        }
         String fileFolderPath = projectPath + "\\" + fileDealDao.selectFilePath(id);
         //实际上fileFolderPath还需要加上根目录路径
-
-        List<String> msg = new ArrayList<>();
         File fileFolder = new File(fileFolderPath);
         if (!fileFolder.exists()) {
             msg.add("文件不存在！请检查数据库或者文件地址：" + fileFolderPath);
