@@ -15,55 +15,34 @@
     </div>
     <!-- 填报与添加区域 -->
     <div class="addNew">
-        <tr>
-        <td>级别:    </td>
+      <tr>
+        <td>级别</td>
         <td>
-          <input type="radio" 
-          id="nation" 
-          value="国家级" 
-          v-model="awardLevel" />
+          <input type="radio" id="nation" value="国家级" v-model="awardLevel" />
           <label for="nation">国家级</label>
 
-          <input type="radio"
-           id="province" 
-           value="省级" 
-           v-model="awardLevel" />
+          <input type="radio" id="province" value="省级" v-model="awardLevel" />
           <label for="province">省级</label>
 
-          <input type="radio" 
-          id="school" 
-          value="校级" 
-          v-model="awardLevel" />
+          <input type="radio" id="school" value="校级" v-model="awardLevel" />
           <label for="school">校级</label>
         </td>
       </tr>
 
-        <tr>
-        <td>评奖时间:   </td>
+      <tr>
+        <td>评奖时间</td>
         <td>
-          <input type="date" placeholder="请选择评奖时间" v-model="date">
+          <input type="date" placeholder="请选择评奖时间" v-model="date" />
         </td>
       </tr>
 
       <tr>
         <td>姓名</td>
         <td>
-          <input type="text" placeholder="请输入姓名" v-model="name">
+          <input type="text" placeholder="请输入姓名" v-model="name" />
         </td>
       </tr>
 
-      <tr>
-        <td>教分</td>
-        <td>
-          <input type="number"
-           min="1"
-            max="10" 
-            step="1" 
-            value="1" 
-            v-model="score">
-        </td> 
-      </tr>
-      
       <button class="universalBlueBtn complete" @click="commit">
         提&nbsp;交
       </button>
@@ -77,10 +56,9 @@ export default {
     return {
       historyDisplayBtnText: "展开 ",
       historyShown: false,
-      awardLevel:"",
-      date:"",
-      name:"",
-      score:"",
+      awardLevel: "",
+      date: "",
+      name: "",
     };
   },
   methods: {
@@ -93,7 +71,7 @@ export default {
         this.historyShown = false;
       }
     },
-   
+
     /*提交上报数据*/
     commit() {},
   },
