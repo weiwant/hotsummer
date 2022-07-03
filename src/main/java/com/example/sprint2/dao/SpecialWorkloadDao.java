@@ -23,14 +23,13 @@ public class SpecialWorkloadDao {
 
     /**
      * @author hy
-     * @description 根据BB类型查询  分页
+     * @description 根据BB类型和年份查询  分页
      */
     public IPage<SpecialWorkload> selectBB(SpecialWorkloadVo specialWorkloadVo) {
         int currentPage = specialWorkloadVo.getPagenumber();
         QueryWrapper<SpecialWorkload> queryWrapper = new QueryWrapper<>();
         queryWrapper.eq("type", specialWorkloadVo.getType());
-        String s = specialWorkloadVo.getType();
-        queryWrapper.eq("type", s);
+        queryWrapper.like("report_time", specialWorkloadVo.getYear());
         Page<SpecialWorkload> page = new Page<>(currentPage, 5);
         IPage<SpecialWorkload> iPage = specialWorkloadMapper.selectPage(page, queryWrapper);
         return iPage;
@@ -84,4 +83,13 @@ public class SpecialWorkloadDao {
         return iPage;
 
     }
+
+ /*   *//**
+     * @author hy
+     * @description  将所有查询条件封装到一个方法中接收
+     *//*
+    public IPage<SpecialWorkload> selectByConditions(SpecialWorkloadVo specialWorkloadVo){
+        int currentPage = specialWorkloadVo.getPagenumber();
+
+    }*/
 }

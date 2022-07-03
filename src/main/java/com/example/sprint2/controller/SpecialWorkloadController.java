@@ -24,7 +24,7 @@ public class SpecialWorkloadController {
     @Autowired
     SpecialWorkloadTableService service;
 
-    @RequestMapping(value = "/bb", method = RequestMethod.POST)         //分页  BB类别查询
+    @RequestMapping(value = "/bb", method = RequestMethod.POST)         //分页  按照BB类别和年份查询
     public String selectBB(@RequestBody SpecialWorkloadVo specialWorkloadVo) {
         IPage<SpecialWorkload> iPage = service.selectBB(specialWorkloadVo);
         if (iPage.getTotal() == 0) {
