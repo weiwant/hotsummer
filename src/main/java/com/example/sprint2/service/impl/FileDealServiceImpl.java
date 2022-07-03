@@ -276,7 +276,9 @@ public class FileDealServiceImpl implements FileDealService {
             //新建一个文件夹，理论上讲需要调用dao方法来确定这个文件夹的路径
 //            String projectPath = "D:\\myTest";//实际上是System.getProperty("user.dir")
             String projectPath =System.getProperty("user.dir");
-            String filePath = projectPath + "\\" + this.setPath(id);
+            String comparativeFilePath=this.setPathInt();
+            String filePath = projectPath + "\\" + comparativeFilePath;
+            msg.add(comparativeFilePath);
             File file = new File(filePath);
             if (!file.exists()) {
                 file.mkdirs();
@@ -300,7 +302,8 @@ public class FileDealServiceImpl implements FileDealService {
     @Override
     public String uploadFileWithPath(MultipartFile[] files) throws IOException {
         List<String> msg = this.uploadFile(files);
-        return this.setPathInt();
+        return msg.get(0);
+
         /*
         if(!file.isEmpty()){
 
