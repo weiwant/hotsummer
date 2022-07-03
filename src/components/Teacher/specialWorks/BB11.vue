@@ -29,7 +29,7 @@
           <td>
             <input type="text"
              placeholder="请输入教师姓名"
-             v-model="teachername">
+             v-model="teacheNname">
           </td>
         </tr>
 
@@ -42,13 +42,15 @@
 </template>
 
 <script>
+import { threadId } from 'worker_threads';
+
 export default {
   data() {
     return {
       historyDisplayBtnText: "展开 ",
       historyShown: false,
       content:"",
-      teachername:"",
+      teacherName:"",
     };
   },
   methods: {
@@ -62,7 +64,19 @@ export default {
       }
     },
     /*提交上报数据*/
-    commit() {},
+    commit() {
+      this.$axios.post('url:', {
+        data:[
+          {
+            content:this.content,
+            teacher_name:this.teacherName,
+          }
+        ]
+      }).then(res=>{
+        console.log(res.data)
+      })
+
+    },
   },
   created() {},
 };

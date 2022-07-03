@@ -112,7 +112,20 @@ export default {
       }
     },
     /*提交上报数据*/
-    commit() {},
+    commit() {
+      this.$axios.post('',{
+        data:[
+          {
+            category:this.category,
+            time:this.time,
+            name:this.name,
+
+          }
+        ]
+      }).then(res=>{
+        console.log(res.data)
+      })
+    },
   },
   created() {},
 };

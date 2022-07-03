@@ -46,7 +46,7 @@
           <td>
             <input type="text"
              placeholder="请输入学生姓名"
-             v-model="studnetname">
+             v-model="studnetName">
           </td>
         </tr>
 
@@ -55,7 +55,7 @@
           <td>
             <input type="text"
              placeholder="请输入教师姓名"
-             v-model="teachername">
+             v-model="teacherName">
           </td>
         </tr>
       
@@ -74,8 +74,8 @@ export default {
       historyShown: false,
       category:"",
       title:"",
-      studnetname:"",
-      teachername:"",
+      studnetName:"",
+      teacherName:"",
     };
   },
   methods: {
@@ -89,7 +89,21 @@ export default {
       }
     },
     /*提交上报数据*/
-    commit() {},
+    commit() {
+      this.$axios.post('url',{
+        data:[
+          {
+            category:this.category,
+            title:this.title,
+            student_name:this.studnetName,
+            teacher_name:this.teacherName,
+
+          }
+        ]
+      }).then(res=>{
+        console.log(res.data)
+      })
+    },
   },
   created() {},
 };

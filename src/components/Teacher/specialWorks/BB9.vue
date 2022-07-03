@@ -21,19 +21,19 @@
           <input type="radio"  
           id="A" 
           value="A"
-           v-model="competitioncategory"> 
+           v-model="competitionCategory"> 
           <label for="A">A</label>   
 
           <input type="radio" 
            id="B" 
            value="B"
-            v-model="competitioncategory">  
+            v-model="competitionCategory">  
           <label for="B">B</label>  
 
           <input type="radio"
             id="C" 
             value="C"  
-            v-model="competitioncategory"> 
+            v-model="competitionCategory"> 
           <label for="C">C</label> 
 
         </td>
@@ -44,7 +44,7 @@
           <td>
             <input type="text" 
             placeholder="请输入竞赛名称"
-            v-model="competitionname">
+            v-model="competitionName">
           </td>
         </tr>
 
@@ -110,7 +110,7 @@
           <td>
             <input type="text" 
             placeholder="请输入参赛作品名称"
-            v-model="workname">
+            v-model="workName">
           </td>
         </tr>
 
@@ -119,7 +119,7 @@
           <td>
             <input type="text" 
             placeholder="请输入参赛队伍名称"
-            v-model="teamname">
+            v-model="teamName">
             </td>
         </tr>
 
@@ -128,7 +128,7 @@
           <td>
             <input type="text" 
             placeholder="请输入参赛学生姓名"
-            v-model="studentname">
+            v-model="studentName">
           </td>
         </tr>
 
@@ -137,7 +137,7 @@
           <td>
             <input type="text"
              placeholder="请输入指导老师姓名"
-            v-model="teachername">
+            v-model="teacherName">
           </td>
         </tr>
 
@@ -161,14 +161,14 @@ export default {
     return {
       historyDisplayBtnText: "展开 ",
       historyShown: false,
-      competitioncategory:"",
-      competitionname:"",
+      competitionCategory:"",
+      competitionName:"",
       level:"",
       category:"",
-      workname:"",
-      teamname:"",
-      studentname:"",
-      teachername:"",
+      workName:"",
+      teamName:"",
+      studentName:"",
+      teacherName:"",
      
     };
   },
@@ -183,7 +183,25 @@ export default {
       }
     },
     /*提交上报数据*/
-    commit() {},
+    commit() {
+      this.$axios.post('url:',{
+        data:[
+          {
+            project_category:this.competitionCategory,
+            project_naem:this.competitionName,
+            level:this.level,
+            category:this.category,
+            work_name:this.workName,
+            team_naem:this.teamName,
+            student_name:this.studentName,
+            teacher_name:this.teacherName,
+
+          }
+        ]
+      }).then(res=>{
+        console.log(res.data)
+      })
+    },
   },
   created() {},
 };

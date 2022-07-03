@@ -43,7 +43,7 @@
           <td>
             <input type="text" 
             placeholder="请输入项目名称"
-            v-model="projectname">
+            v-model="projectName">
           </td>
         </tr>
 
@@ -52,7 +52,7 @@
           <td>
             <input type="text"
              placeholder="请输入学生团队名称"
-             v-model="teamname">
+             v-model="teamName">
           </td>
         </tr>
 
@@ -61,7 +61,7 @@
           <td>
             <input type="text" 
             placeholder="请输入学生姓名"
-            v-model="studentname">
+            v-model="studentName">
           </td>
         </tr>
 
@@ -79,7 +79,7 @@
           <td>
             <input type="text" 
             placeholder="请输入指导老师姓名"
-            v-model="teachername">
+            v-model="teacherName">
             </td>
         </tr>
         
@@ -98,10 +98,10 @@ export default {
       historyShown: false,
       level:"",
       honor:"",
-      projectname:"",
-      teamname:"",
-      studentname:"",
-      teachername:"",
+      projectName:"",
+      teamName:"",
+      studentName:"",
+      teacherName:"",
       
     };
   },
@@ -116,7 +116,23 @@ export default {
       }
     },
     /*提交上报数据*/
-    commit() {},
+    commit() {
+      this.$axios.post('url:',{
+        data:[
+          {
+            level:this.level,
+            honor:this.honor,
+            project_name:this.projectName,
+            team_name:this.teamName,
+            studnet_name:this.studentName,
+            teacher_naem:this.teacherName,
+
+          }
+        ]
+      }).then(res=>{
+        console.log(res.data)
+      })
+    },
   },
   created() {},
 };

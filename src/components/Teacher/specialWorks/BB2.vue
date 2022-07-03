@@ -82,21 +82,7 @@
           <label for="doing">建设中</label>
         </td>
       </tr>
-       <tr>
-        <td>教分</td>
-        <td>
-          <input type="number"
-           min="1" 
-           max="10" 
-           step="1" 
-           value="1"
-           v-model="score">
-        </td>
-        <br>  
-      </tr>
 
-      <!-- 动态增删填报项组件 -->
-      <DynamicCollection @update="changeParticipant"></DynamicCollection>
       <button class="universalBlueBtn complete" @click="commit">
         提&nbsp;交
       </button>
@@ -105,22 +91,20 @@
 </template>
 
 <script>
-import DynamicCollection from "./DynamicCollection.vue";
+
 export default {
-  components: { DynamicCollection },
+  
   data() {
     return {
       historyDisplayBtnText: "展开 ",
       historyShown: false,
       //填报数据
       level :"",
-      projrctname:"",
+      projrctName:"",
       projectCategory:"",
-      managername:"",
+      managerName:"",
       projectStatus:"",
-      score:"",
-      participants: [],
-
+      
     };
   },
   methods: {
@@ -133,13 +117,24 @@ export default {
         this.historyShown = false;
       }
     },
-    // 动态增删participants
-    changeParticipant(participants) {
-      this.participants = participants;
-      console.log(this.participants);
-    },
+   
     /*提交上报数据*/
-    commit() {},
+    commit() {
+      this.$axios.post('url:',{
+        data:[
+          {
+           level: this.level,
+           project_name:this.projrctName,
+           project_category:this.projectCategory,
+           manager_naem:this.managerName,
+           project_status:this.projrctStatus,
+
+          }
+        ]
+      }).then(res=>{
+        console.log(res.data)
+      })
+    },
   },
   created() {},
 };

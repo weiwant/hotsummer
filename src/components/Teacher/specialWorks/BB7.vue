@@ -51,18 +51,6 @@
           <input type="text" placeholder="请输入姓名" v-model="name">
         </td>
       </tr>
-
-      <tr>
-        <td>教分</td>
-        <td>
-          <input type="number"
-           min="1"
-            max="10" 
-            step="1" 
-            value="1" 
-            v-model="score">
-        </td> 
-      </tr>
       
       <button class="universalBlueBtn complete" @click="commit">
         提&nbsp;交
@@ -80,7 +68,7 @@ export default {
       awardLevel:"",
       date:"",
       name:"",
-      score:"",
+      
     };
   },
   methods: {
@@ -95,7 +83,20 @@ export default {
     },
    
     /*提交上报数据*/
-    commit() {},
+    commit() {
+      this.$axios.post('url:',{
+        data:[
+          {
+          awardLevel :this.awardLevel,
+          award_date:this.data,
+          name:this.name,
+
+          }
+        ]
+      }).then(res=>{
+        console.log(res.data)
+      })
+    },
   },
   created() {},
 };
