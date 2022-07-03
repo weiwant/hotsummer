@@ -15,72 +15,83 @@
     </div>
     <!-- 填报与添加区域 -->
     <div class="addNew">
-      <form>
         <tr>
         <td>项目级别:    </td>
         <td>
-          <input type="radio" name="class" id="jibie" checked="checked"> 国家级        
-          <input type="radio" name="class" id="jibie" > 省级  
-          <input type="radio" name="class" id="jibie" > 校级
-          <input type="radio" name="class" id="jibie" > 院级  
+          <input type="radio"  id="national" value="国家级 " v-model="level"> 
+         <label for="international">国家级</label>
+          <input type="radio"  id="provence" value="省级" v-model="level"> 
+          <label for="international">省级</label>    
+          <input type="radio"  id="school" value="校级">
+          <label for="international">校级</label>    
+           <input type="radio" id="college" value="院级" v-model="level">   
+          <label for="college">院级</label>    
         </td>
-        <br>
       </tr>
       <tr>
           <td>项目荣誉:   </td>
           <td>
-            <input type="text" placeholder="请输入项目荣誉">
-          </td>
-          <br>
+            <input type="text"
+             placeholder="请输入项目荣誉"
+             v-model="honor">
+             </td>
+
         </tr>
         <tr>
           <td>项目名称:   </td>
           <td>
-            <input type="text" placeholder="请输入项目名称">
+            <input type="text" 
+            placeholder="请输入项目名称"
+            v-model="projectname">
           </td>
-          <br>
         </tr>
         <tr>
           <td>学生团队名称:   </td>
           <td>
-            <input type="text" placeholder="请输入学生团队名称">
+            <input type="text"
+             placeholder="请输入学生团队名称"
+             v-model="teamname">
           </td>
-          <br>
         </tr>
          <tr>
           <td>学生姓名:   </td>
           <td>
-            <input type="text" placeholder="请输入学生姓名">
+            <input type="text" 
+            placeholder="请输入学生姓名"
+            v-model="studentname">
           </td>
-          <br>
         </tr>
         <tr>
           <td>学生学号:   </td>
           <td>
-            <input type="text" placeholder="请输入学生学号">
+            <input type="text" 
+            placeholder="请输入学生学号"
+            v-model="number">
+            
           </td>
-          <br>
         </tr>
          <tr>
           <td>指导老师姓名:   </td>
           <td>
-            <input type="text" placeholder="请输入指导老师姓名">
-          </td>
-          <br>
+            <input type="text" 
+            placeholder="请输入指导老师姓名"
+            v-model="teachername">
+            </td>
         </tr>
         <tr>
         <td>教分</td>
         <td>
-          <input type="number" min="1" max="10" step="1" value="1">
+          <input type="number" 
+          min="1"
+           max="10"
+            step="1" 
+            value="1"
+            v-model="score">
         </td>
-        <br>  
       </tr>
-       <tr>
-        <input type="reset"  value="重置">
-      </tr>
+      
 
 
-      </form>
       <button class="universalBlueBtn complete" @click="commit">
         提&nbsp;交
       </button>
@@ -94,6 +105,18 @@ export default {
     return {
       historyDisplayBtnText: "展开 ",
       historyShown: false,
+      level:"",
+      honor:"",
+      projectname:"",
+      teamname:"",
+      studentname:"",
+      teachername:"",
+      score:"",
+
+
+
+
+
     };
   },
   methods: {

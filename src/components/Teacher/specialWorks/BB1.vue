@@ -87,7 +87,10 @@
             v-model="projectStatus"
           />
           <label for="established">立项</label>
-          <input type="radio" id="done" value="结题" v-model="projectStatus" />
+          <input type="radio" 
+          id="done" value="结题" 
+          v-model="projectStatus" 
+          />
           <label for="done">结题</label>
           <input
             type="radio"
@@ -105,8 +108,10 @@
           <input type="file" />
         </td>
       </tr>
+      
       <!-- 动态增删填报项组件 -->
       <DynamicCollection @update="changeParticipant"></DynamicCollection>
+
       <button class="universalBlueBtn complete" @click="commit">
         提&nbsp;交
       </button>

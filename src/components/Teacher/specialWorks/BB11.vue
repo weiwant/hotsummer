@@ -15,33 +15,33 @@
     </div>
     <!-- 填报与添加区域 -->
     <div class="addNew">
-      <from>
         <tr>
           <td>内容</td>
           <td>
-            <input type="textarea" placeholder="请输入教学兼职相关内容">
+            <input type="textarea" 
+            placeholder="请输入教学兼职相关内容"
+            v-model="conten">
           </td>
-          <br>
         </tr>
          <tr>
           <td>教师姓名:   </td>
           <td>
-            <input type="text" placeholder="请输入教师姓名">
+            <input type="text"
+             placeholder="请输入教师姓名"
+             v-model="teachername">
           </td>
-          <br>
         </tr>
         <tr>
         <td>教分</td>
         <td>
-          <input type="number" min="1" max="10" step="1" value="1">
-        </td>
-        <br>  
+          <input type="number"
+           min="1" 
+           max="10" 
+           step="1" 
+           value="1"
+           v-model="score">
+        </td> 
       </tr>
-       <tr>
-        <input type="reset"  value="重置">
-      </tr>
-        
-      </from>
       <button class="universalBlueBtn complete" @click="commit">
         提&nbsp;交
       </button>
@@ -55,6 +55,10 @@ export default {
     return {
       historyDisplayBtnText: "展开 ",
       historyShown: false,
+      content:"",
+      teachername:"",
+      score:"",
+
     };
   },
   methods: {

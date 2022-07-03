@@ -15,49 +15,50 @@
     </div>
     <!-- 填报与添加区域 -->
     <div class="addNew">
-      <form>
         <tr>
           <td>指导类型:   </td>
           <td>
-          <input type="radio" name="class" id="level" checked="checked"> 独立指导        
-          <input type="radio" name="class" id="level" > 与院外合作指导  
-         
+          <input type="radio"  id="independent" value="独立指导 " v-model="category">   
+          <label for="independent">独立指导</label>
+          <input type="radio" id="cooperation" value="与院外合作指导 "  v-model="category"> 
+           <label for="cooperation">与院外合作指导 </label>
           </td>
-          <br>
         </tr>
         <tr>
           <td>论文名称:   </td>
           <td>
-            <input type="text" placeholder="请输入论文名称">
+            <input type="text" 
+            placeholder="请输入论文名称"
+            v-model="title">
           </td>
-          <br>
         </tr>
         <tr>
           <td>学生姓名:   </td>
           <td>
-            <input type="text" placeholder="请输入学生姓名">
+            <input type="text"
+             placeholder="请输入学生姓名"
+             v-model="studnet">
           </td>
-          <br>
         </tr>
         <tr>
-          <td>学生姓名:   </td>
+          <td>教师姓名:   </td>
           <td>
-            <input type="text" placeholder="请输入学生姓名">
+            <input type="text"
+             placeholder="请输入教师姓名"
+             v-model="teacher">
           </td>
-          <br>
         </tr>
         <tr>
         <td>教分</td>
         <td>
-          <input type="number" min="1" max="10" step="1" value="1">
+          <input type="number"
+           min="1" 
+           max="10" 
+           step="1" 
+           value="1"
+           v-model="score">
         </td>
-        <br>  
       </tr>
-         <tr>
-        <input type="reset"  value="重置">
-      </tr>
-
-      </form>
       <button class="universalBlueBtn complete" @click="commit">
         提&nbsp;交
       </button>
@@ -71,6 +72,11 @@ export default {
     return {
       historyDisplayBtnText: "展开 ",
       historyShown: false,
+      category:"",
+      title:"",
+      studnet:"",
+      teacher:"",
+      score:"",
     };
   },
   methods: {
