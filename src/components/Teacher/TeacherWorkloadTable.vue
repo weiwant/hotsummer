@@ -56,26 +56,33 @@ export default {
       //表格数据
       yearChosen: "",
       workloadTableHeader: [
-        "课程号",
         "课程名称",
-        "教学班",
-        "开课学院",
-        "学分",
         "课程性质",
-        "年级",
-        "专业",
-        "上课老师",
-        "职称",
-        "上课人数",
-        "计算用学时",
-        "合课单位",
-        "备注",
+        "学分",
+        "折扣",
         "实验安排",
-        "其他教师",
-        "辅助",
-        "课程性质说明",
-        "是否卓工或弘毅",
-        "是否全英文",
+        "实验课时",
+        "教分",
+        "合课单位",
+        "实验室核对结果",
+        "上课教师名字",
+        "教师职称",
+        "专业",
+        "折扣前BA1系数",
+        "原始教分",
+        "其他教师名",
+        "计划学院",
+        "实践课时",
+        "备注",
+        "是否为特殊班级",
+        "是否全英教学",
+        "上课人数",
+        "年级",
+        "教学班",
+        "BA1系数",
+        "开课学院",
+        "理论学用时",
+        "工作性质",
       ],
       workloadTableData: [],
       dataExists: false, //“暂无数据”提示的显示
@@ -85,24 +92,29 @@ export default {
   methods: {
     //根据当前学年和学期获取对应工作量的数据
     getTableData() {
+      const formData = new FormData();
+      formData.append("naturalYear", this.yearChosen);
+      formData.append("page", this.currentPage);
+      formData.append("mainTeacherName", this.currentTeacherName);
       this.$axios
-        .post(`${this.$domainName}/resource/customIndeed`, {
-          year: this.yearChosen,
-          teacherName: this.currentTeacherName,
-          page: this.currentPage,
-        })
+        .post(`http://abcd.vaiwan.com/total/records/page`, formData)
         .then((res) => {
-          console.log(res);
           if (res.data.response.code == 200) {
             this.dataExists = true;
-            this.workloadTableData = res.data.data;
-          }
-          //如果没有数据
-          else {
+            this.workloadTableData = res.data.data.records;
+            this.allPageCount = res.data.data.pageNum;
+            this.totalItems = res.data.data.itemNum;
+          } else {
             this.dataExists = false;
             this.workloadTableData = [];
-            this.noDataHint = `暂无${this.currentAcademicYear}学年，第${this.currentSemester}学期的数据！`;
+            this.allPageCount = 1;
+            this.totalItems = 0;
+            this.noDataHint = `暂无${this.yearChosen}年度的数据！`;
           }
+        })
+        .catch((err) => {
+          console.log(err);
+          this.noDataHint = "获取数据出错！";
         });
     },
     yearConfirmed(year) {
@@ -147,10 +159,11 @@ export default {
       }
     },
   },
-
   created() {
     //获取当前老师用户的姓名
-    this.currentTeacherName = localStorage.getItem("teacherName");
+    // this.currentTeacherName = localStorage.getItem("teacherName");
+    this.currentTeacherName = "丁建利";
+    this.yearChosen = this.$currentYear;
     //向后台获取default学年学期数据;
     this.getTableData();
   },

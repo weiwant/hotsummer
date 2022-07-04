@@ -45,11 +45,11 @@
         <td>项目类别</td>
         <td>
           <select v-model="projectCategory">
-            <option value="课程思政示范专业建设项目" selected="selected">
+            <option value="课程思政示范专业建设项目">
               课程思政示范专业建设项目
             </option>
             <option value="自由选题建设项目">自由选题建设项目</option>
-            <option>社会实践课程建设项目</option>
+            <option value="社会实践课程建设项目">社会实践课程建设项目</option>
             <option value="教师教学发展研究项目">教师教学发展研究项目</option>
             <option value="MOOC课程建设项目">MOOC课程建设项目</option>
             <option value="课程思政课程建设项目">课程思政课程建设项目</option>
@@ -62,7 +62,7 @@
           <input
             type="text"
             placeholder="请输入项目负责人姓名"
-            v-model="managername"
+            v-model="teacherName"
           />
         </td>
       </tr>
@@ -87,9 +87,6 @@
           <label for="doing">建设中</label>
         </td>
       </tr>
-
-      <!-- 动态增删填报项组件 -->
-      <DynamicCollection @update="changeParticipant"></DynamicCollection>
       <button class="universalBlueBtn complete" @click="commit">
         提&nbsp;交
       </button>
@@ -98,20 +95,17 @@
 </template>
 
 <script>
-import DynamicCollection from "./DynamicCollection.vue";
 export default {
-  components: { DynamicCollection },
   data() {
     return {
       historyDisplayBtnText: "展开 ",
       historyShown: false,
       //填报数据
       level: "",
-      projectname: "",
+      projectName: "",
       projectCategory: "",
-      managername: "",
+      teacherName: "",
       projectStatus: "",
-      participants: [],
     };
   },
   methods: {
@@ -124,13 +118,25 @@ export default {
         this.historyShown = false;
       }
     },
-    // 动态增删participants
-    changeParticipant(participants) {
-      this.participants = participants;
-      console.log(this.participants);
-    },
+
     /*提交上报数据*/
-    commit() {},
+    commit() {
+      this.$axios
+        .post(`${this.$domainName}/special-workload/upload`, {
+          data: [
+            {
+              level: this.level,
+              projectName: this.projectName,
+              projectCategory: this.projectCategory,
+              teacherName: this.teacherName,
+              projectStatus: this.projectStatus,
+            },
+          ],
+        })
+        .then((res) => {
+          console.log(res);
+        });
+    },
   },
   created() {},
 };

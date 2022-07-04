@@ -57,7 +57,7 @@ export default {
       if (this.searchValue == "") return;
       this.$emit(
         "yearAndSearchValue",
-        year,
+        this.year,
         this.searchKeyword,
         this.searchValue.trim()
       );
