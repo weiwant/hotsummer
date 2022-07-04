@@ -47,6 +47,8 @@ public class SpecialReceiveServiceImpl implements SpecialReceiveService {
 
             SpecialWorkload specialWorkload = new SpecialWorkload();//一个实体类对象
 
+            specialWorkload.setAuthorOrder(workload.getAuthorOrder());//排序，位次
+            specialWorkload.setRemarks(workload.getRemarks());//备注
             specialWorkload.setReportTime(workload.getReportTime());//申报时间
             specialWorkload.setDeclarantName(workload.getDeclarantName());//申报人
             specialWorkload.setTeacherName(workload.getTeacherName());//教师姓名
