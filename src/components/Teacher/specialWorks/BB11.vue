@@ -20,28 +20,20 @@
           <td>
             <input type="textarea" 
             placeholder="请输入教学兼职相关内容"
-            v-model="conten">
+            v-model="content">
           </td>
         </tr>
+
          <tr>
-          <td>教师姓名:   </td>
+          <td>教师姓名</td>
           <td>
             <input type="text"
              placeholder="请输入教师姓名"
              v-model="teachername">
           </td>
         </tr>
-        <tr>
-        <td>教分</td>
-        <td>
-          <input type="number"
-           min="1" 
-           max="10" 
-           step="1" 
-           value="1"
-           v-model="score">
-        </td> 
-      </tr>
+
+        
       <button class="universalBlueBtn complete" @click="commit">
         提&nbsp;交
       </button>
@@ -57,8 +49,6 @@ export default {
       historyShown: false,
       content:"",
       teachername:"",
-      score:"",
-
     };
   },
   methods: {

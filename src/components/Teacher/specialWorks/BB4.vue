@@ -15,9 +15,8 @@
     </div>
     <!-- 填报与添加区域 -->
     <div class="addNew">
-  
-        <tr>
-        <td>级别:    </td>
+      <tr>
+        <td>级别</td>
         <td>
           <input type="radio" id="nation" value="国家级" v-model="awardLevel" />
           <label for="nation">国家级</label>
@@ -26,61 +25,56 @@
           <input type="radio" id="school" value="校级" v-model="awardLevel" />
           <label for="school">校级</label>
         </td>
-     
-      </tr>
-       <tr>
-        <td>竞赛名称:   </td>
-        <td>
-          <input type="text" 
-          placeholder="请输入比赛的名称"
-          v-model="competitionname">
-        </td>
-    
       </tr>
       <tr>
-        <td>奖项类别:   </td>
+        <td>竞赛名称</td>
         <td>
-          <input type="text"
-           placeholder="请输入所获奖项目的类别"
-           v-model="awardCategory">
+          <input
+            type="text"
+            placeholder="请输入比赛的名称"
+            v-model="competitionname"
+          />
         </td>
-    
       </tr>
       <tr>
-        <td>获奖等级:   </td>
+        <td>奖项类别</td>
         <td>
-          <input type="text" 
-          placeholder="请输入获奖等级"
-          v-model="level">
+          <input
+            type="text"
+            placeholder="请输入所获奖项目的类别"
+            v-model="awardCategory"
+          />
         </td>
- 
       </tr>
       <tr>
-        <td>授奖单位:   </td>
+        <td>获奖等级</td>
         <td>
-          <input type="text" 
-          placeholder="请输入授奖单位"
-          v-model="Awardingunit">
+          <input type="text" placeholder="请输入获奖等级" v-model="level" />
         </td>
+      </tr>
+      <tr>
+        <td>授奖单位</td>
+        <td>
+          <input
+            type="text"
+            placeholder="请输入授奖单位"
+            v-model="awardingunit"
+          />
+        </td>
+      </tr>
+      <tr>
+        <td>获奖时间</td>
+        <td>
+          <input type="date" placeholder="请选择获奖时间" v-model="time" />
+        </td>
+      </tr>
+      <tr>
+        <td>证明文件</td>
+        <td>
+          <input type="file" />
+        </td>
+      </tr>
 
-      </tr>
-       <tr>
-        <td>获奖时间:   </td>
-        <td>
-          <input type="date" 
-          placeholder="请选择获奖时间"
-          v-model="time">
-        </td>
-   
-      </tr>
-      <tr>
-        <td>证明文件：   </td>
-        <td>
-          <input type="file">
-        </td>
-      
-      </tr>
-      
       <DynamicCollection @update="changeParticipant"></DynamicCollection>
 
       <button class="universalBlueBtn complete" @click="commit">
@@ -93,18 +87,18 @@
 <script>
 import DynamicCollection from "./DynamicCollection.vue";
 export default {
-   components: { DynamicCollection },
+  components: { DynamicCollection },
   data() {
     return {
       historyDisplayBtnText: "展开 ",
       historyShown: false,
-      awardLevel:"",
-      competitionname:"",
-      awardCategory:"",
-      level:"",
-      Awardingunit:"",
-      time:"",
-      participants: []
+      awardLevel: "",
+      competitionname: "",
+      awardCategory: "",
+      level: "",
+      awardingunit: "",
+      time: "",
+      participants: [],
     };
   },
   methods: {
@@ -117,7 +111,7 @@ export default {
         this.historyShown = false;
       }
     },
-     // 动态增删participants
+    // 动态增删participants
     changeParticipant(participants) {
       this.participants = participants;
       console.log(this.participants);

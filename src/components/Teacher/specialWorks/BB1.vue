@@ -30,14 +30,26 @@
       <tr>
         <td>级别</td>
         <td>
-          <input type="radio" id="nation" value="国家级" v-model="awardLevel" />
+          <input type="radio"
+           id="nation" 
+           value="国家级"
+            v-model="awardLevel" />
           <label for="nation">国家级</label>
-          <input type="radio" id="province" value="省级" v-model="awardLevel" />
+
+          <input type="radio"
+           id="province" 
+           value="省级" 
+           v-model="awardLevel" />
           <label for="province">省级</label>
-          <input type="radio" id="school" value="校级" v-model="awardLevel" />
+
+          <input type="radio"
+           id="school" 
+           value="校级"
+            v-model="awardLevel" />
           <label for="school">校级</label>
         </td>
       </tr>
+
       <!-- text -->
       <tr>
         <td>项目名称</td>
@@ -49,6 +61,7 @@
           />
         </td>
       </tr>
+
       <!-- select -->
       <tr>
         <td>课程类别</td>
@@ -77,6 +90,7 @@
           </select>
         </td>
       </tr>
+
       <tr>
         <td>进展情况</td>
         <td>
@@ -101,6 +115,7 @@
           <label for="doing">建设中</label>
         </td>
       </tr>
+      
       <!-- file -->
       <tr>
         <td>上传附件</td>

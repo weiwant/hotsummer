@@ -15,38 +15,41 @@
     </div>
     <!-- 填报与添加区域 -->
     <div class="addNew">
-
-        <tr>
-        <td>级别:    </td>
+      <tr>
+        <td>级别</td>
         <td>
-          <input type="radio" 
-           id="national"  
-           value="国家级" v-model="level">  
-           <label for="nation">国家级</label>
-          <input type="radio"  id="provincial level" value="省级 "  v-model="level"> 
-          <label for="provincial level">省级</label>
-          <input type="radio" 
-           id="school level"
-            value=" 校级 " v-model="level">
-          <label for="school level">校级</label>
+          <input type="radio" id="nation" value="国家级" v-model="level" />
+          <label for="nation">国家级</label>
+          <input
+            type="radio"
+            id="provinciallevel"
+            value="省级"
+            v-model="level"
+          />
+          <label for="provinciallevel">省级</label>
+          <input type="radio" id="schoollevel" value="校级" v-model="level" />
+          <label for="schoollevel">校级</label>
         </td>
       </tr>
       <tr>
         <td>项目名称</td>
         <td>
-           <input type="text" 
-           placeholder="请输入所建设项目的名称"
-           v-model="projrctname">
+          <input
+            type="text"
+            placeholder="请输入所建设项目的名称"
+            v-model="projectname"
+          />
         </td>
       </tr>
       <tr>
         <td>项目类别</td>
         <td>
-           <select v-model="projectCategory">
+          <select v-model="projectCategory">
             <option value="课程思政示范专业建设项目" selected="selected">
-              课程思政示范专业建设项目</option>
+              课程思政示范专业建设项目
+            </option>
             <option value="自由选题建设项目">自由选题建设项目</option>
-            <option >社会实践课程建设项目</option>
+            <option>社会实践课程建设项目</option>
             <option value="教师教学发展研究项目">教师教学发展研究项目</option>
             <option value="MOOC课程建设项目">MOOC课程建设项目</option>
             <option value="课程思政课程建设项目">课程思政课程建设项目</option>
@@ -56,9 +59,11 @@
       <tr>
         <td>负责人姓名</td>
         <td>
-           <input type="text"
+          <input
+            type="text"
             placeholder="请输入项目负责人姓名"
-            v-model="managername">
+            v-model="managername"
+          />
         </td>
       </tr>
       <tr>
@@ -82,18 +87,6 @@
           <label for="doing">建设中</label>
         </td>
       </tr>
-       <tr>
-        <td>教分</td>
-        <td>
-          <input type="number"
-           min="1" 
-           max="10" 
-           step="1" 
-           value="1"
-           v-model="score">
-        </td>
-        <br>  
-      </tr>
 
       <!-- 动态增删填报项组件 -->
       <DynamicCollection @update="changeParticipant"></DynamicCollection>
@@ -113,14 +106,12 @@ export default {
       historyDisplayBtnText: "展开 ",
       historyShown: false,
       //填报数据
-      level :"",
-      projrctname:"",
-      projectCategory:"",
-      managername:"",
-      projectStatus:"",
-      score:"",
+      level: "",
+      projectname: "",
+      projectCategory: "",
+      managername: "",
+      projectStatus: "",
       participants: [],
-
     };
   },
   methods: {

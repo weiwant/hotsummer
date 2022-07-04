@@ -1,5 +1,5 @@
 <template>
-  <div class="tableFilter">
+  <div class="searchFilter">
     <YearFilter
       @yearSelected="selectYear"
       @yearConfirmed="confirmYearOnly"
@@ -67,39 +67,34 @@ export default {
 </script>
 
 <style scoped>
-.tableFilter {
+.searchFilter {
   position: relative;
   font-size: 14px;
-
   text-align: left;
-
-  clear: both;
 }
 .wrapper {
   position: absolute;
-  top: 8px;
+  top: -3px;
   left: 200px;
-  overflow: hidden;
+  padding: 5px 0;
 }
-.tableFilter .search {
-  position: relative;
+.wrapper .search {
   height: 30px;
   border: 0px;
   background-color: #fff;
 }
-.tableFilter select.search {
+.wrapper select.search {
   vertical-align: bottom;
   border-top-left-radius: 5px;
   border-bottom-left-radius: 5px;
 }
-.tableFilter input.search {
+.wrapper input.search {
   padding-left: 10px;
 }
-.tableFilter button.searchBtn {
-  position: relative;
+.searchFilter button.searchBtn {
+  vertical-align: bottom;
   width: 35px;
   height: 30px;
-  vertical-align: bottom;
   border-top-left-radius: 0;
   border-bottom-left-radius: 0;
 }

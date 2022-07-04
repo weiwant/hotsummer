@@ -49,21 +49,9 @@ export default {
           })
           .then((response) => {
             //成功时返回名字和身份
-            console.log(response);
             if (response.data.response.code == 200) {
-              // alert("登录成功！");
               localStorage.clear();
-              if (response.data.data.identify == 1) {
-                localStorage.setItem(
-                  "managerName",
-                  response.data.data.username
-                );
-                localStorage.setItem(
-                  "userIdentify",
-                  response.data.data.identify
-                );
-                self.$router.push("/managerhome");
-              } else if (response.data.data.identify == 2) {
+              if (response.data.data.identify == 0) {
                 localStorage.setItem(
                   "teacherName",
                   response.data.data.username
@@ -73,10 +61,19 @@ export default {
                   response.data.data.identify
                 );
                 self.$router.push("/teacherhome");
+              } else {
+                localStorage.setItem(
+                  "managerName",
+                  response.data.data.username
+                );
+                localStorage.setItem(
+                  "userIdentify",
+                  response.data.data.identify
+                );
+                self.$router.push("/managerhome");
               }
             } else {
               alert("登录失败！");
-              console.log(response);
             }
           })
           .catch(function (error) {
