@@ -157,12 +157,6 @@ export default {
       participants: [],
       //封装文件信息
       uploadFile: [],
-      data:{
-        awardLevel: "",
-        projectStatus: "",
-        projectCategory: "",
-        projectName: ""
-      }
     };
   },
   methods: {
@@ -205,14 +199,14 @@ export default {
       }]);
 
       formData.append("data", data);
-      console.log(this.$data.uploadFile);
 
       for(let i = 0; i < this.$data.uploadFile.length; i++){
         formData.append("files", this.$data.uploadFile[i]);
       }
 
-      console.log(formData.get("data"));
-      console.log(formData.get("files"));
+      // console.log(formData.get("data"));
+      // console.log(formData.get("files"));
+
       //以下需要修改接口
       this.$axios
         .post(`${this.$domainName}/special-workload/upload`, formData, {

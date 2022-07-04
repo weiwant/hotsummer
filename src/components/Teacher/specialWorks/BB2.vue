@@ -37,7 +37,7 @@
           <input
             type="text"
             placeholder="请输入所建设项目的名称"
-            v-model="projectname"
+            v-model="projectName"
           />
         </td>
       </tr>
@@ -62,7 +62,7 @@
           <input
             type="text"
             placeholder="请输入项目负责人姓名"
-            v-model="managername"
+            v-model="teacherName"
           />
         </td>
       </tr>
@@ -107,9 +107,9 @@ export default {
       historyShown: false,
       //填报数据
       level: "",
-      projectname: "",
+      projectName: "",
       projectCategory: "",
-      managername: "",
+      teacherName: "",
       projectStatus: "",
       participants: [],
     };
@@ -130,7 +130,39 @@ export default {
       console.log(this.participants);
     },
     /*提交上报数据*/
-    commit() {},
+    commit() {
+      var _this = this;
+      const formData = new FormData();
+
+      var data = JSON.stringify([{
+        awardLevel: this.$data.awardLevel,
+        projectStatus: this.$data.projectStatus,
+        projectCategory: this.$data.projectCategory,
+        projectName: this.$data.projectName
+      }]);
+
+      formData.append("data", data);
+
+      console.log(formData.get("data"));
+
+      //以下需要修改接口
+      this.$axios
+        .post(`${this.$domainName}/special-workload/upload`, formData, {
+            headers: {
+              "Content-Type": "multipart/form-datas",
+            },
+          })
+          .then((res) => {
+            if (res.data.response.code == 200) {
+              alert("报表文件上传成功！");
+            } else {
+              alert("上传失败！");
+            }
+          })
+          .catch(function (error) {
+            console.log(error);
+          });
+    },
   },
   created() {},
 };
