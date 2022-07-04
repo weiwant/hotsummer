@@ -14,7 +14,12 @@ import java.util.List;
 @Getter
 @Setter
 public class SpecialReceiveVo {
-    private List<SpecialWorkload> data;
 
-    private MultipartFile[] files;
+    private List<SpecialWorkload> data;//特殊工作量数据
+
+    private MultipartFile[] files;//附件
+
+    private Integer id;//主键
+    private double teachingScore;//教分
+    private String remark;//打分备注
 }

@@ -1,9 +1,13 @@
 package com.example.sprint2.dao;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.example.sprint2.models.vo.SpecialReceiveVo;
 import com.example.sprint2.mybatis.entity.SpecialWorkload;
 import com.example.sprint2.mybatis.mapper.SpecialWorkloadMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+
+import java.util.List;
 
 /**
  * @author:wwq
@@ -26,5 +30,25 @@ public class SpecialSaveDao {
         } else {
             return false;
         }
+    }
+
+    /**
+     * @Author：wwq
+     * @Return：
+     * @Url:
+     * @Description：根据id插入教分及备注
+     */
+    public boolean mark(SpecialReceiveVo specialReceiveVo) {
+        boolean flag=true;
+        QueryWrapper<SpecialWorkload> qw=new QueryWrapper<>();
+        //查询有无对应id
+        qw.eq("id",specialReceiveVo.getId());
+        List<SpecialWorkload> thisWorkload=specialWorkloadMapper.selectList(qw);
+        if(thisWorkload.size()==0){
+            flag=false;
+        }else{
+
+        }
+        return flag;
     }
 }

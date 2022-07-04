@@ -26,7 +26,7 @@ public class SpecialReceiveServiceImpl implements SpecialReceiveService {
      * @Author：wwq
      * @Return：
      * @Url:
-     * @Description：
+     * @Description：保存特殊工作量
      */
     @Override
     public boolean save(SpecialReceiveVo specialReceiveVo) throws IOException {
@@ -81,5 +81,21 @@ public class SpecialReceiveServiceImpl implements SpecialReceiveService {
 
 
         return flag;
+    }
+
+    /**
+     * @Author：wwq
+     * @Return：
+     * @Url:
+     * @Description：特殊工作量评分及备注
+     */
+    @Override
+    public boolean mark(SpecialReceiveVo specialReceiveVo) {
+        if(specialSaveDao.mark(specialReceiveVo)){
+            return true;
+        } else {
+            return false;
+        }
+
     }
 }

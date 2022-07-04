@@ -12,4 +12,6 @@ import java.io.IOException;
 @Service
 public interface SpecialReceiveService {
     boolean save(SpecialReceiveVo specialReceiveVo) throws IOException;
+
+    boolean mark(SpecialReceiveVo specialReceiveVo);
 }

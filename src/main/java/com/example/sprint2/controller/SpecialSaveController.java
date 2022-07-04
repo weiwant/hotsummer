@@ -35,7 +35,7 @@ public class SpecialSaveController {
      * @Description：接受前端json数据，存入数据库。
      */
     @RequestMapping(value = "upload", method = RequestMethod.POST)
-    public String uploadSpecialWorkload(@RequestParam("data") @Nullable String data, @RequestPart MultipartFile[] files) throws IOException {
+    public String uploadSpecialWorkload(@RequestParam("data") @Nullable String data, @RequestParam("files") @Nullable MultipartFile[] files) throws IOException {
         SpecialReceiveVo specialReceiveVo = new SpecialReceiveVo();
         specialReceiveVo.setFiles(files);
         JSONArray jsonArray = JSONArray.parseArray(data);
@@ -45,6 +45,16 @@ public class SpecialSaveController {
         } else {
             return new Result(ResponseCode.UnknownFailure).toString();
         }
+    }
+
+    @RequestMapping(value = "mark",method = RequestMethod.POST)
+    public String markSpecialWorkload(@RequestBody SpecialReceiveVo specialReceiveVo){
+        if(specialReceiveService.mark(specialReceiveVo)){
+            return new Result(ResponseCode.SUCCESS).toString();
+        }else{
+            return new Result(ResponseCode.UnknownFailure).toString();
+        }
+
     }
 
 
