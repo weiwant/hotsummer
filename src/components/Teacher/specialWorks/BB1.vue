@@ -120,7 +120,12 @@
       <tr>
         <td>上传附件</td>
         <td>
-          <input type="file" />
+          <input
+           type="file"
+           ref="file"
+           name="file"
+           @change="getFileData()"
+           multiple="true" />
         </td>
       </tr>
       
@@ -150,6 +155,8 @@ export default {
       projectName: "",
       awardLevel: "",
       participants: [],
+      //封装文件信息
+      uploadFile: [],
     };
   },
   methods: {
@@ -168,8 +175,56 @@ export default {
       this.participants = participants;
       console.log(this.participants);
     },
+    //点击触发上传方法
+    uploadMaterial() {
+      this.$refs.file.dispatchEvent(new MouseEvent("click"));
+    },
+    //添加文件数据
+    getFileData(file){
+      var _this = this;
+      const inputFile = this.$refs.file.files[0];
+      this.$data.uploadFile.push(inputFile);
+    },
     /*提交上报数据*/
-    commit() {},
+    commit() {
+      var _this = this;
+      const formData = new FormData();
+      console.log("响应");
+
+      var data = JSON.stringify([{
+        awardLevel: this.$data.awardLevel,
+        projectStatus: this.$data.projectStatus,
+        projectCategory: this.$data.projectCategory,
+        projectName: this.$data.projectName
+      }]);
+
+      formData.append("data", data);
+
+      for(let i = 0; i < this.$data.uploadFile.length; i++){
+        formData.append("files", this.$data.uploadFile[i]);
+      }
+
+      // console.log(formData.get("data"));
+      // console.log(formData.get("files"));
+
+      //以下需要修改接口
+      this.$axios
+        .post(`${this.$domainName}/special-workload/upload`, formData, {
+            headers: {
+              "Content-Type": "multipart/form-datas",
+            },
+          })
+          .then((res) => {
+            if (res.data.response.code == 200) {
+              alert("报表文件上传成功！");
+            } else {
+              alert("上传失败！");
+            }
+          })
+          .catch(function (error) {
+            console.log(error);
+          });
+    },
   },
   created() {},
 };

@@ -56,6 +56,7 @@ export default {
     return {
       historyDisplayBtnText: "展开 ",
       historyShown: false,
+      //填报数据
       awardLevel: "",
       date: "",
       name: "",
@@ -73,7 +74,39 @@ export default {
     },
 
     /*提交上报数据*/
-    commit() {},
+    /*提交上报数据*/
+    commit() {
+      var _this = this;
+      const formData = new FormData();
+
+      var data = JSON.stringify([{
+        awardLevel: this.$data.awardLevel,
+        date: this.$data.date,
+        name: this.$data.name,
+      }]);
+
+      formData.append("data", data);
+
+      console.log(formData.get("data"));
+
+      //以下需要修改接口
+      this.$axios
+        .post(`${this.$domainName}/special-workload/upload`, formData, {
+            headers: {
+              "Content-Type": "multipart/form-datas",
+            },
+          })
+          .then((res) => {
+            if (res.data.response.code == 200) {
+              alert("报表文件上传成功！");
+            } else {
+              alert("上传失败！");
+            }
+          })
+          .catch(function (error) {
+            console.log(error);
+          });
+    },
   },
   created() {},
 };

@@ -60,8 +60,14 @@ export default {
       allPageCount: 1,
       //查询结果
       workloadTableHeader: [
+        "学年",
+        "辅助",
+        "计算用学时",
+        "课程性质解释",
+        "计算机用时",
         "课程名称",
         "课程性质",
+        "课程号",
         "学分",
         "折扣",
         "实验安排",
@@ -78,6 +84,7 @@ export default {
         "计划学院",
         "实践课时",
         "备注",
+        "学期",
         "是否为特殊班级",
         "是否全英教学",
         "上课人数",
@@ -85,7 +92,7 @@ export default {
         "教学班",
         "BA1系数",
         "开课学院",
-        "理论学用时",
+        "理论课时",
         "工作性质",
       ],
       workloadTableData: [],
@@ -206,13 +213,14 @@ export default {
     },
     //文件导出(暂时还不考虑在search状态下的导出，只导出全年的)
     exportFile(filename) {
+      const formData = new FormData();
+      formData.append("naturalYear", this.yearChosen);
       this.$axios
-        .post(`http://abcd.vaiwan.com/total/records`, {
-          year: this.yearChosen,
-        })
+        .post(`http://abcd.vaiwan.com/total/records`, formData)
         .then((res) => {
+          console.log(res);
           this.$exportExcelFile(
-            res.data.data.records,
+            res.data.data,
             this.workloadTableHeader,
             filename
           );

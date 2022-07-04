@@ -16,10 +16,9 @@
       <!-- 文件上传控件 -->
       <el-input
         type="file"
-        ref="file"
-        name="file"
-        v-model="file"
-        @change="getFileData"
+        ref="file_1"
+        v-model="file_1"
+        @change="getFileData(file_1, 1)"
         multiple="false"
         accept=".xls,.xlsx"
       ></el-input>
@@ -29,7 +28,7 @@
       </button>
     </div>
     <!-- part2 -->
-    <div class="componentSubtitle" v-if="managerType != 3">监考工作量</div>
+    <div class="componentSubtitle" v-if="managerType != 3">考务工作量</div>
     <div class="componentSubsection" v-if="managerType != 3">
       <!-- 年份选择 -->
       <label
@@ -43,10 +42,9 @@
       <!-- 文件上传控件 -->
       <el-input
         type="file"
-        ref="file"
-        name="file"
-        v-model="file"
-        @change="getFileData"
+        ref="file_2"
+        v-model="file_2"
+        @change="getFileData(file_2, 2)"
         multiple="false"
         accept=".xls,.xlsx"
       ></el-input>
@@ -70,10 +68,9 @@
       <!-- 文件上传控件 -->
       <el-input
         type="file"
-        ref="file"
-        name="file"
-        v-model="file"
-        @change="getFileData"
+        ref="file_3"
+        v-model="file_3"
+        @change="getFileData(file_3, 3)"
         multiple="false"
         accept=".xls,.xlsx"
       ></el-input>
@@ -95,50 +92,174 @@ export default {
       yearForClassWorkloadTable: this.$currentYear,
       yearForExaminationWorkloadTable: this.$currentYear,
       yearForPaperWorkloadTable: this.$currentYear,
-      classWorkloadTableTemplate: [{ 年份: "", 上课老师: "" }],
-      examinationWorkloadTableTemplate: [],
-      paperWorkloadTableTemplate: [],
+      classWorkloadTableTemplate: [
+        {
+          学年: "",
+          辅助: "",
+          计算用学时: "",
+          课程性质解释: "",
+          计算机用时: "",
+          课程名称: "",
+          课程性质: "",
+          课程号: "",
+          学分: "",
+          折扣: "",
+          实验安排: "",
+          实验课时: "",
+          教分: "",
+          合课单位: "",
+          实验室核对结果: "",
+          上课教师名字: "",
+          教师职称: "",
+          专业: "",
+          折扣前BA1系数: "",
+          原始教分: "",
+          其他教师名: "",
+          计划学院: "",
+          实践课时: "",
+          备注: "",
+          学期: "",
+          是否为特殊班级: "",
+          是否全英教学: "",
+          上课人数: "",
+          年级: "",
+          教学班: "",
+          BA1系数: "",
+          开课学院: "",
+          理论课时: "",
+          工作性质: "",
+        },
+      ],
+      examinationWorkloadTableTemplate: [
+        {
+          学年: "",
+          学期: "",
+          课程名称: "",
+          上课老师: "",
+          计算用学时: "",
+          教分原始分: "",
+          BA1系数: "",
+          教分: "",
+        },
+      ],
+      paperWorkloadTableTemplate: [
+        {
+          学年: "",
+          学期: "",
+          课程名称: "",
+          上课老师: "",
+          计算用学时: "",
+          教分原始分: "",
+          BA1系数: "",
+          教分: "",
+        },
+      ],
+      file_1: "",
+      file_2: "",
+      file_3: "",
     };
   },
   methods: {
     //点击触发上传方法
     uploadMaterial() {
-      this.$refs.file.dispatchEvent(new MouseEvent("click"));
+      this.$refs.file_1.dispatchEvent(new MouseEvent("click"));
+      this.$refs.file_2.dispatchEvent(new MouseEvent("click"));
+      this.$refs.file_3.dispatchEvent(new MouseEvent("click"));
     },
     //触发选择文件，判断文件类型
-    getFileData(file) {
-      const inputFile = this.$refs.file;
+    getFileData(file, a) {
+      var _this = this;
+      let inputFile;
+      if (a == 1) {
+        inputFile = this.$refs.file_1;
+      } else if (a == 2) {
+        inputFile = this.$refs.file_2;
+      } else {
+        inputFile = this.$refs.file_3;
+      }
       let filename = file;
       const isExcel = filename.substring(filename.lastIndexOf(".") + 1);
-      this.uploadFile(inputFile.$refs.input.files[0]);
+      if (isExcel != "xls" && isExcel != "xlsx") {
+        alert("文件格式错误，请上传xls或xlsx类型文件！");
+      } else {
+        this.uploadFile(inputFile.$refs.input.files[0], a);
+      }
     },
-    //上传文件，学年，学期
-    uploadFile(file) {
+    //上传文件，自然学年
+    uploadFile(file, a) {
       const formData = new FormData();
       var _this = this;
-      var firstYear = this.$data.uploadFileYearInfo1;
-      var secondYear = firstYear + 1;
-      _this.year = firstYear + "-" + secondYear;
-      _this.semester = this.$data.uploadFileSemesterInfo;
-      formData.append("year", _this.year);
-      formData.append("semester", _this.semester);
-      formData.append("file", file);
-      this.$axios
-        .post(`${this.$domainName}/file/upload`, formData, {
-          headers: {
-            "Content-Type": "multipart/form-datas",
-          },
-        })
-        .then((res) => {
-          if (res.data.response.code == 200) {
-            alert("报表文件上传成功！");
-          } else {
-            alert("上传失败！");
-          }
-        })
-        .catch(function (error) {
-          console.log(error);
-        });
+      //课程工作量上传
+      if (a == 1) {
+        formData.append("naturalYear", this.$data.yearForClassWorkloadTable);
+        formData.append("file", file);
+        this.$axios
+          .post(`${this.$domainName}/file/upload/academic`, formData, {
+            headers: {
+              "Content-Type": "multipart/form-datas",
+            },
+          })
+          .then((res) => {
+            if (res.data.response.code == 200) {
+              alert("报表文件上传成功！");
+              console.log(response);
+            } else {
+              alert("上传失败！");
+            }
+          })
+          .catch(function (error) {
+            console.log(error);
+          });
+      }
+      //监考工作量上传
+      else if (a == 2) {
+        formData.append(
+          "naturalYear",
+          this.$data.yearForExaminationWorkloadTable
+        );
+        formData.append("file", file);
+        this.$axios
+          .post(`${this.$domainName}/file/upload/examination`, formData, {
+            headers: {
+              "Content-Type": "multipart/form-datas",
+            },
+          })
+          .then((res) => {
+            if (res.data.response.code == 200) {
+              alert("报表文件上传成功！");
+              console.log(response);
+            } else {
+              alert("上传失败！");
+            }
+          })
+          .catch(function (error) {
+            console.log(error);
+          });
+      }
+      //论文工作量上传
+      else if (a == 3) {
+        formData.append("naturalYear", this.$data.yearForPaperWorkloadTable);
+        formData.append("file", file);
+        this.$axios
+          .post(`${this.$domainName}/file/upload/paper`, formData, {
+            headers: {
+              "Content-Type": "multipart/form-datas",
+            },
+          })
+          .then((res) => {
+            if (res.data.response.code == 200) {
+              alert("报表文件上传成功！");
+              console.log(response);
+            } else {
+              alert("上传失败！");
+            }
+          })
+          .catch(function (error) {
+            console.log(error);
+          });
+      } else {
+        alert("错误！");
+      }
     },
     //下载模版
     //由于模版下载的数据格式和一般的数据不太一样，就不调用全局方法了
