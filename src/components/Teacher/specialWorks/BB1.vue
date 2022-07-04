@@ -142,6 +142,12 @@ export default {
       participants: [],
       //封装文件信息
       uploadFile: [],
+      data:{
+        awardLevel: "",
+        projectStatus: "",
+        projectCategory: "",
+        projectName: ""
+      }
     };
   },
   methods: {
@@ -174,29 +180,31 @@ export default {
     commit() {
       var _this = this;
       const formData = new FormData();
-      // formData.append("awardLevel", this.$data.awardLevel);
-      // formData.append("projectStatus", this.$data.projectStatus);
-      // formData.append("projectCategory", this.$data.projectCategory);
-      // formData.append("projectName", projectName);
-      formData.append("files", this.$data.uploadFile);
+      console.log("响应");
+
+      var data = JSON.stringify([{
+        awardLevel: this.$data.awardLevel,
+        projectStatus: this.$data.projectStatus,
+        projectCategory: this.$data.projectCategory,
+        projectName: this.$data.projectName
+      }]);
+
+      formData.append("data", data);
+      console.log(this.$data.uploadFile);
+
+      for(let i = 0; i < this.$data.uploadFile.length; i++){
+        formData.append("files", this.$data.uploadFile[i]);
+      }
+
+      console.log(formData.get("data"));
       console.log(formData.get("files"));
       //以下需要修改接口
-      this.$axios({
-        method: 'post',
-        url: 'http://abcs.vaiwan.com/special-workload/upload',
-        params:{
-          data:[{
-            awardLevel: this.$data.awardLevel,
-            projectStatus: this.$data.projectStatus,
-            projectCategory: this.$data.projectCategory,
-            projectName: this.$data.projectName
-          }],
-          files: formData
-        },
-        headers: {
+      this.$axios
+        .post(`${this.$domainName}/special-workload/upload`, formData, {
+            headers: {
               "Content-Type": "multipart/form-datas",
-            }
-      })
+            },
+          })
           .then((res) => {
             if (res.data.response.code == 200) {
               alert("报表文件上传成功！");
