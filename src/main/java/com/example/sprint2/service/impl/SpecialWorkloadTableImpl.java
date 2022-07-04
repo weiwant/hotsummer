@@ -62,7 +62,7 @@ public class SpecialWorkloadTableImpl implements SpecialWorkloadTableService {
     }
 
     @Override
-    public IPage<SpecialWorkload> selectByConditions(SpecialWorkloadVo specialWorkloadVo){
+    public IPage<SpecialWorkload> selectByConditions(SpecialWorkloadVo specialWorkloadVo) {
         IPage<SpecialWorkload> iPage = specialWorkloadDao.selectByConditions(specialWorkloadVo);
         return iPage;
     }

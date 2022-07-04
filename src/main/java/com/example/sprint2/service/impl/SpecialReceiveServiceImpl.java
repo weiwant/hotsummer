@@ -91,7 +91,7 @@ public class SpecialReceiveServiceImpl implements SpecialReceiveService {
      */
     @Override
     public boolean mark(SpecialReceiveVo specialReceiveVo) {
-        if(specialSaveDao.mark(specialReceiveVo)){
+        if (specialSaveDao.mark(specialReceiveVo)) {
             return true;
         } else {
             return false;

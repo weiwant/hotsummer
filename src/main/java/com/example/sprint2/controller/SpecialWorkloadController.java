@@ -74,9 +74,9 @@ public class SpecialWorkloadController {
         }
     }
 
-    @RequestMapping(value = "/conditions",method = RequestMethod.POST)
-    public String selectByConditions(@RequestBody SpecialWorkloadVo specialWorkloadVo){
-        IPage<SpecialWorkload> iPage =service.selectByConditions(specialWorkloadVo);
+    @RequestMapping(value = "/conditions", method = RequestMethod.POST)
+    public String selectByConditions(@RequestBody SpecialWorkloadVo specialWorkloadVo) {
+        IPage<SpecialWorkload> iPage = service.selectByConditions(specialWorkloadVo);
         if (iPage.getTotal() == 0) {
             return new Result(ResponseCode.NoContentFailure).toString();
         } else {

@@ -11,7 +11,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import java.lang.reflect.Field;
-import java.util.*;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 /**
@@ -107,13 +110,13 @@ public class SpecialWorkloadDao {
                     if (field.getName().equals("year")) {
                         queryWrapper = queryWrapper.like("report_time", specialWorkloadVo.getYear());
                     } else {
-                        queryWrapper = queryWrapper.eq(map.get(field.getName()),field.get(specialWorkloadVo));
+                        queryWrapper = queryWrapper.eq(map.get(field.getName()), field.get(specialWorkloadVo));
                     }
                 } else {
                     continue;
                 }
             }
-        }catch(Exception ex){
+        } catch (Exception ex) {
             System.out.println(ex);
         }
         Page<SpecialWorkload> page = new Page<>(currentPage, 40);

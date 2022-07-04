@@ -47,11 +47,11 @@ public class SpecialSaveController {
         }
     }
 
-    @RequestMapping(value = "mark",method = RequestMethod.POST)
-    public String markSpecialWorkload(@RequestBody SpecialReceiveVo specialReceiveVo){
-        if(specialReceiveService.mark(specialReceiveVo)){
+    @RequestMapping(value = "mark", method = RequestMethod.POST)
+    public String markSpecialWorkload(@RequestBody SpecialReceiveVo specialReceiveVo) {
+        if (specialReceiveService.mark(specialReceiveVo)) {
             return new Result(ResponseCode.SUCCESS).toString();
-        }else{
+        } else {
             return new Result(ResponseCode.UnknownFailure).toString();
         }
 
