@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.example.sprint2.dao.TotalTableDao;
 import com.example.sprint2.models.enumerate.impl.ResponseCode;
+import com.example.sprint2.models.vo.WorkloadPageVo;
 import com.example.sprint2.models.vo.WorkloadVo;
 import com.example.sprint2.mybatis.entity.TotalTable;
 import com.example.sprint2.service.TotalWorkLoadService;
@@ -54,15 +55,19 @@ public class TotalWorkLoadServiceImpl implements TotalWorkLoadService {
             totalTable.setTeacherName(workloadVo.getMainTeacherName());
         }
         //根据自然年查询总表
-        int size = 3;
+        int size = 40;
         List<TotalTable> totalTables = totalTableDao.selectByNaturalYear(totalTable);
         List<WorkloadVo> workloadVoList = totalTableDao.combine(totalTables, workloadVo);
         IPage<WorkloadVo> voIPage = listToPage(workloadVoList, page, size);
         List<WorkloadVo> output = voIPage.getRecords();
+        WorkloadPageVo workloadPageVo = new WorkloadPageVo();
+        workloadPageVo.setRecords(output);
+        workloadPageVo.setPageNum(voIPage.getPages());
+        workloadPageVo.setItemNum(workloadVoList.size());
         if (output.isEmpty()) {
             return new Result(ResponseCode.NoContentFailure).toString();
         } else {
-            return new Result(ResponseCode.SUCCESS, output).toString();
+            return new Result(ResponseCode.SUCCESS, workloadPageVo).toString();
         }
     }
 

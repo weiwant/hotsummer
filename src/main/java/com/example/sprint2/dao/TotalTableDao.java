@@ -3,8 +3,6 @@ package com.example.sprint2.dao;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.example.sprint2.models.vo.WorkloadVo;
 import com.example.sprint2.mybatis.entity.TotalTable;
 import com.example.sprint2.mybatis.mapper.TotalTableMapper;
@@ -17,6 +15,8 @@ import org.springframework.stereotype.Repository;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -69,13 +69,6 @@ public class TotalTableDao {
     public List<TotalTable> selectByNaturalYear(TotalTable totalTable) {
         QueryWrapper<TotalTable> wrapper = getWrapper(totalTable);
         return totalTableMapper.selectList(wrapper);
-    }
-
-    public IPage<TotalTable> selectPageByNatualYear(TotalTable totalTable, Integer page) {
-        QueryWrapper<TotalTable> wrapper = getWrapper(totalTable);
-        Integer size = 3;
-        Page<TotalTable> totalTablePage = new Page<>(page, size);
-        return totalTableMapper.selectPage(totalTablePage, wrapper);
     }
 
     private QueryWrapper<TotalTable> getWrapper(TotalTable totalTable) {
@@ -179,7 +172,13 @@ public class TotalTableDao {
                                 Field temp = foreignKey.value().getDeclaredField(Objects.equals(singleReference.fieldName(), "") ? singleField.getName() : singleReference.fieldName());
                                 temp.setAccessible(true);
                                 singleField.setAccessible(true);
-                                singleField.set(vo, temp.getType() == Double.class && singleField.getType() == Integer.class ? (temp.get(result.get(0)) != null ? ((Double) temp.get(result.get(0))).intValue() : null) : temp.get(result.get(0)));
+                                if (temp.getType() == Double.class && singleField.getType() == Integer.class) {
+                                    singleField.set(vo, (temp.get(result.get(0)) != null ? ((Double) temp.get(result.get(0))).intValue() : null));
+                                } else if (temp.getType() == Double.class) {
+                                    singleField.set(vo, (temp.get(result.get(0)) != null ? BigDecimal.valueOf((Double) temp.get(result.get(0))).setScale(2, RoundingMode.HALF_UP).doubleValue() : null));
+                                } else {
+                                    singleField.set(vo, temp.get(result.get(0)));
+                                }
                             } catch (NoSuchFieldException | IllegalAccessException e) {
                                 e.printStackTrace();
                             }

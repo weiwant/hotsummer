@@ -1,15 +1,16 @@
 package com.example.sprint2.controller;
 
+import com.alibaba.fastjson.JSONArray;
 import com.example.sprint2.models.enumerate.impl.ResponseCode;
 import com.example.sprint2.models.vo.SpecialReceiveVo;
+import com.example.sprint2.mybatis.entity.SpecialWorkload;
 import com.example.sprint2.service.SpecialReceiveService;
 import com.example.sprint2.utils.Result;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import javax.annotation.Nullable;
 import java.io.IOException;
 
 /**
@@ -34,12 +35,26 @@ public class SpecialSaveController {
      * @Description：接受前端json数据，存入数据库。
      */
     @RequestMapping(value = "upload", method = RequestMethod.POST)
-    public String uploadSpecialWorkload(@RequestBody SpecialReceiveVo specialReceiveVo) throws IOException {
+    public String uploadSpecialWorkload(@RequestParam("data") @Nullable String data, @RequestParam("files") @Nullable MultipartFile[] files) throws IOException {
+        SpecialReceiveVo specialReceiveVo = new SpecialReceiveVo();
+        specialReceiveVo.setFiles(files);
+        JSONArray jsonArray = JSONArray.parseArray(data);
+        specialReceiveVo.setData(jsonArray.toJavaList(SpecialWorkload.class));
         if (specialReceiveService.save(specialReceiveVo)) {
             return new Result(ResponseCode.SUCCESS).toString();
         } else {
             return new Result(ResponseCode.UnknownFailure).toString();
         }
+    }
+
+    @RequestMapping(value = "mark",method = RequestMethod.POST)
+    public String markSpecialWorkload(@RequestBody SpecialReceiveVo specialReceiveVo){
+        if(specialReceiveService.mark(specialReceiveVo)){
+            return new Result(ResponseCode.SUCCESS).toString();
+        }else{
+            return new Result(ResponseCode.UnknownFailure).toString();
+        }
+
     }
 
 

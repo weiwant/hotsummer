@@ -1,5 +1,6 @@
 package com.example.sprint2.models.vo;
 
+import com.alibaba.fastjson.annotation.JSONField;
 import com.example.sprint2.mybatis.entity.ExaminationWorkload;
 import com.example.sprint2.mybatis.entity.PaperCoachingWorkload;
 import com.example.sprint2.mybatis.entity.TeachingWorkloadStatistics;
@@ -241,6 +242,7 @@ public class WorkloadVo {
     /**
      * 自然年
      */
+    @JSONField(serialize = false)
     @ReferenceField(value = ExaminationWorkload.class, dataBaseName = "natural_year")
     @ReferenceField(value = PaperCoachingWorkload.class, dataBaseName = "nutural_year", fieldName = "nuturalYear")
     @ReferenceField(value = TeachingWorkloadStatistics.class, dataBaseName = "natural_year")

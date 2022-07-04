@@ -26,7 +26,7 @@ public class SpecialReceiveServiceImpl implements SpecialReceiveService {
      * @Author：wwq
      * @Return：
      * @Url:
-     * @Description：
+     * @Description：保存特殊工作量
      */
     @Override
     public boolean save(SpecialReceiveVo specialReceiveVo) throws IOException {
@@ -47,6 +47,8 @@ public class SpecialReceiveServiceImpl implements SpecialReceiveService {
 
             SpecialWorkload specialWorkload = new SpecialWorkload();//一个实体类对象
 
+            specialWorkload.setAuthorOrder(workload.getAuthorOrder());//排序，位次
+            specialWorkload.setRemarks(workload.getRemarks());//备注
             specialWorkload.setReportTime(workload.getReportTime());//申报时间
             specialWorkload.setDeclarantName(workload.getDeclarantName());//申报人
             specialWorkload.setTeacherName(workload.getTeacherName());//教师姓名
@@ -68,16 +70,32 @@ public class SpecialReceiveServiceImpl implements SpecialReceiveService {
             specialWorkload.setGuidingStudentTeam(workload.getGuidingStudentTeam());//指导学生团队名
             specialWorkload.setGuidingStudentName(workload.getGuidingStudentName());//指导学生姓名
             specialWorkload.setGuidingStudentId(workload.getGuidingStudentId());//指导学生学号
-            specialWorkload.setStatus(workload.getStatus());//审核状态
+            specialWorkload.setStatus("待审核");//审核状态
             specialWorkload.setFilePath(filePath);//文件路径
 
             //插入数据库
-            if (!specialSaveDao.save(workload)) {
+            if (!specialSaveDao.save(specialWorkload)) {
                 flag = false;
             }
         }
 
 
         return flag;
+    }
+
+    /**
+     * @Author：wwq
+     * @Return：
+     * @Url:
+     * @Description：特殊工作量评分及备注
+     */
+    @Override
+    public boolean mark(SpecialReceiveVo specialReceiveVo) {
+        if(specialSaveDao.mark(specialReceiveVo)){
+            return true;
+        } else {
+            return false;
+        }
+
     }
 }
