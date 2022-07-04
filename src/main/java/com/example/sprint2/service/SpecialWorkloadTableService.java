@@ -21,4 +21,6 @@ public interface SpecialWorkloadTableService {
     IPage<SpecialWorkload> selectYear(SpecialWorkloadVo specialWorkloadVo);
 
     SpecialWorkload selectId(SpecialWorkloadVo specialWorkloadVo);
+
+    IPage<SpecialWorkload> selectByConditions(SpecialWorkloadVo specialWorkloadVo);
 }

@@ -6,8 +6,13 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.example.sprint2.models.vo.SpecialWorkloadVo;
 import com.example.sprint2.mybatis.entity.SpecialWorkload;
 import com.example.sprint2.mybatis.mapper.SpecialWorkloadMapper;
+import com.example.sprint2.utils.ColumnUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+
+import java.lang.reflect.Field;
+import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * @author hy
@@ -20,6 +25,7 @@ public class SpecialWorkloadDao {
 
     @Autowired
     SpecialWorkloadMapper specialWorkloadMapper;
+
 
     /**
      * @author hy
@@ -72,24 +78,47 @@ public class SpecialWorkloadDao {
 
     /**
      * @author hy
-     * @description 按照年份查询
+     * @description 按照年份查询  分页
      */
     public IPage<SpecialWorkload> selectByYear(SpecialWorkloadVo specialWorkloadVo) {
         int currentPage = specialWorkloadVo.getPagenumber();
         QueryWrapper<SpecialWorkload> queryWrapper = new QueryWrapper<>();
         queryWrapper.like("report_time", specialWorkloadVo.getYear());
-        Page<SpecialWorkload> page = new Page<>(currentPage, 5);
+        Page<SpecialWorkload> page = new Page<>(currentPage, 40);
         IPage<SpecialWorkload> iPage = specialWorkloadMapper.selectPage(page, queryWrapper);
         return iPage;
 
     }
 
- /*   *//**
+    /**
      * @author hy
-     * @description  将所有查询条件封装到一个方法中接收
-     *//*
-    public IPage<SpecialWorkload> selectByConditions(SpecialWorkloadVo specialWorkloadVo){
+     * @description 将所有查询条件封装到一个方法中接收
+     */
+    public IPage<SpecialWorkload> selectByConditions(SpecialWorkloadVo specialWorkloadVo) {
         int currentPage = specialWorkloadVo.getPagenumber();
-
-    }*/
+        QueryWrapper<SpecialWorkload> queryWrapper = new QueryWrapper<>();
+        List<Field> fields = Arrays.stream(specialWorkloadVo.getClass().getDeclaredFields()).filter(field -> !field.getName().equals("pagenumber")).collect(Collectors.toList());
+        Map<String, String> map = new HashMap<>();
+        ColumnUtil.setMap(map);
+        try {
+            for (Field field : fields) {
+                field.setAccessible(true);
+                if (field.get(specialWorkloadVo) != null) {
+                    if (field.getName().equals("year")) {
+                        queryWrapper = queryWrapper.like("report_time", specialWorkloadVo.getYear());
+                    } else {
+                        queryWrapper = queryWrapper.eq(map.get(field.getName()),field.get(specialWorkloadVo));
+                    }
+                } else {
+                    continue;
+                }
+            }
+        }catch(Exception ex){
+            System.out.println(ex);
+        }
+        Page<SpecialWorkload> page = new Page<>(currentPage, 40);
+        IPage<SpecialWorkload> iPage = specialWorkloadMapper.selectPage(page, queryWrapper);
+        iPage.getRecords();
+        return iPage;
+    }
 }

@@ -60,4 +60,10 @@ public class SpecialWorkloadTableImpl implements SpecialWorkloadTableService {
         SpecialWorkload specialWorkload = specialWorkloadDao.selectById(specialWorkloadVo);
         return specialWorkload;
     }
+
+    @Override
+    public IPage<SpecialWorkload> selectByConditions(SpecialWorkloadVo specialWorkloadVo){
+        IPage<SpecialWorkload> iPage = specialWorkloadDao.selectByConditions(specialWorkloadVo);
+        return iPage;
+    }
 }
