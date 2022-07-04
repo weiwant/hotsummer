@@ -70,11 +70,11 @@ public class SpecialReceiveServiceImpl implements SpecialReceiveService {
             specialWorkload.setGuidingStudentTeam(workload.getGuidingStudentTeam());//指导学生团队名
             specialWorkload.setGuidingStudentName(workload.getGuidingStudentName());//指导学生姓名
             specialWorkload.setGuidingStudentId(workload.getGuidingStudentId());//指导学生学号
-            specialWorkload.setStatus(workload.getStatus());//审核状态
+            specialWorkload.setStatus("待审核");//审核状态
             specialWorkload.setFilePath(filePath);//文件路径
 
             //插入数据库
-            if (!specialSaveDao.save(workload)) {
+            if (!specialSaveDao.save(specialWorkload)) {
                 flag = false;
             }
         }

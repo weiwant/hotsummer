@@ -42,12 +42,17 @@ public class SpecialSaveDao {
         boolean flag=true;
         QueryWrapper<SpecialWorkload> qw=new QueryWrapper<>();
         //查询有无对应id
-        qw.eq("id",specialReceiveVo.getId());
-        List<SpecialWorkload> thisWorkload=specialWorkloadMapper.selectList(qw);
-        if(thisWorkload.size()==0){
-            flag=false;
-        }else{
 
+
+        if(specialReceiveVo.getId()==null) {
+            flag = false;
+        } else {
+            SpecialWorkload specialWorkload=new SpecialWorkload();
+            specialWorkload.setId(specialReceiveVo.getId());//id
+            specialWorkload.setTeachingScores(specialReceiveVo.getTeachingScore());//教分
+            specialWorkload.setRemarks(specialReceiveVo.getRemark());//备注
+            specialWorkload.setStatus("已审核");
+            specialWorkloadMapper.updateById(specialWorkload);
         }
         return flag;
     }
