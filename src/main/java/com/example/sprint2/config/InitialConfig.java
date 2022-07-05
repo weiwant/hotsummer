@@ -39,6 +39,7 @@ public class InitialConfig {
                 "controller",
                 "dao",
                 "models.abc",
+                "models.abc.sub",
                 "models.enumerate",
                 "models.enumerate.impl",
                 "models.pojo",
