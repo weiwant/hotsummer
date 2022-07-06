@@ -1,0 +1,2 @@
+"use strict";(self["webpackChunkmis"]=self["webpackChunkmis"]||[]).push([[691],{8691:function(e,t,n){n.r(t),n.d(t,{default:function(){return u}});var s=function(){var e=this,t=e.$createElement;e._self._c;return e._m(0)},r=[function(){var e=this,t=e.$createElement,n=e._self._c||t;return n("div",{staticClass:"componentWrapper"},[n("div",{staticClass:"componentSectionTitle"},[e._v("审批特殊工作量")])])}],c={name:"AuditWorkload"},i=c,a=n(3736),l=(0,a.Z)(i,s,r,!1,null,"47187f8e",null),u=l.exports}}]);
+//# sourceMappingURL=691.388b7b3b.js.map

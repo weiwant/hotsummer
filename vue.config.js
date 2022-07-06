@@ -4,7 +4,7 @@ module.exports = defineConfig({
   devServer: {
     proxy: {
       'users': {
-        target: "http://abcds.vaiwan.com:8080/users",
+        target: "http://abcs.vaiwan.com:8080/users",
         ws: true,
         changeOrigin: true,
         pathRewrite: {
