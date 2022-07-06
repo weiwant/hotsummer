@@ -28,7 +28,7 @@
       </button>
     </div>
     <!-- part2 -->
-    <div class="componentSubtitle" v-if="managerType != 3">监考工作量</div>
+    <div class="componentSubtitle" v-if="managerType != 3">考务工作量</div>
     <div class="componentSubsection" v-if="managerType != 3">
       <!-- 年份选择 -->
       <label
@@ -92,9 +92,68 @@ export default {
       yearForClassWorkloadTable: this.$currentYear,
       yearForExaminationWorkloadTable: this.$currentYear,
       yearForPaperWorkloadTable: this.$currentYear,
-      classWorkloadTableTemplate: [{ 年份: "", 上课老师: "" }],
-      examinationWorkloadTableTemplate: [],
-      paperWorkloadTableTemplate: [],
+      classWorkloadTableTemplate: [
+        {
+          学年: "",
+          辅助: "",
+          计算用学时: "",
+          课程性质解释: "",
+          计算机用时: "",
+          课程名称: "",
+          课程性质: "",
+          课程号: "",
+          学分: "",
+          折扣: "",
+          实验安排: "",
+          实验课时: "",
+          教分: "",
+          合课单位: "",
+          实验室核对结果: "",
+          上课教师名字: "",
+          教师职称: "",
+          专业: "",
+          折扣前BA1系数: "",
+          原始教分: "",
+          其他教师名: "",
+          计划学院: "",
+          实践课时: "",
+          备注: "",
+          学期: "",
+          是否为特殊班级: "",
+          是否全英教学: "",
+          上课人数: "",
+          年级: "",
+          教学班: "",
+          BA1系数: "",
+          开课学院: "",
+          理论课时: "",
+          工作性质: "",
+        },
+      ],
+      examinationWorkloadTableTemplate: [
+        {
+          学年: "",
+          学期: "",
+          课程名称: "",
+          上课老师: "",
+          计算用学时: "",
+          教分原始分: "",
+          BA1系数: "",
+          教分: "",
+        },
+      ],
+      paperWorkloadTableTemplate: [
+        {
+          学年: "",
+          学期: "",
+          课程名称: "",
+          上课老师: "",
+          计算用学时: "",
+          教分原始分: "",
+          BA1系数: "",
+          教分: "",
+        },
+      ],
       file_1: "",
       file_2: "",
       file_3: "",
@@ -111,18 +170,18 @@ export default {
     getFileData(file, a) {
       var _this = this;
       let inputFile;
-      if(a == 1){
+      if (a == 1) {
         inputFile = this.$refs.file_1;
-      }else if(a == 2){
+      } else if (a == 2) {
         inputFile = this.$refs.file_2;
-      }else{
+      } else {
         inputFile = this.$refs.file_3;
       }
       let filename = file;
       const isExcel = filename.substring(filename.lastIndexOf(".") + 1);
-      if(isExcel != "xls" && isExcel != "xlsx"){
+      if (isExcel != "xls" && isExcel != "xlsx") {
         alert("文件格式错误，请上传xls或xlsx类型文件！");
-      }else{
+      } else {
         this.uploadFile(inputFile.$refs.input.files[0], a);
       }
     },
@@ -131,7 +190,7 @@ export default {
       const formData = new FormData();
       var _this = this;
       //课程工作量上传
-      if(a == 1){
+      if (a == 1) {
         formData.append("naturalYear", this.$data.yearForClassWorkloadTable);
         formData.append("file", file);
         this.$axios
@@ -153,8 +212,11 @@ export default {
           });
       }
       //监考工作量上传
-      else if(a == 2){
-        formData.append("naturalYear", this.$data.yearForExaminationWorkloadTable);
+      else if (a == 2) {
+        formData.append(
+          "naturalYear",
+          this.$data.yearForExaminationWorkloadTable
+        );
         formData.append("file", file);
         this.$axios
           .post(`${this.$domainName}/file/upload/examination`, formData, {
@@ -175,7 +237,7 @@ export default {
           });
       }
       //论文工作量上传
-      else if(a == 3){
+      else if (a == 3) {
         formData.append("naturalYear", this.$data.yearForPaperWorkloadTable);
         formData.append("file", file);
         this.$axios
@@ -195,7 +257,7 @@ export default {
           .catch(function (error) {
             console.log(error);
           });
-      }else{
+      } else {
         alert("错误！");
       }
     },

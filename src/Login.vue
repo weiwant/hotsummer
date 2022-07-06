@@ -49,6 +49,7 @@ export default {
           })
           .then((response) => {
             //成功时返回名字和身份
+            console.log(response);
             if (response.data.response.code == 200) {
               localStorage.clear();
               if (response.data.data.identify == 0) {

@@ -1,25 +1,15 @@
 <template>
   <div class="componentSubsection category">
-    <div class="categoryTitle">出版教材BB6</div>
-    <!-- 历史上报记录 -->
-    <div class="history">
-      <div class="historyTitle">
-        历史
-        <span class="historyDisplayBtn" @click="showHistory">{{
-          historyDisplayBtnText
-        }}</span>
-      </div>
-      <transition name="history">
-        <div class="historyTableWrapper" v-if="historyShown"></div>
-      </transition>
-    </div>
+    <div class="categoryTitle saved" v-if="!committed">仅保存</div>
+    <div class="categoryTitle commited" v-if="committed">已提交</div>
+
     <!-- 填报与添加区域 -->
     <div class="addNew">
       <tr>
         <td>书名</td>
         <td>
           <input
-            type="textarea"
+            type="text"
             placeholder="请输入出版书籍的书名"
             v-model="title"
           />
@@ -32,15 +22,19 @@
         </td>
       </tr>
       <tr>
-        <td>内容简介</td>
+        <td style="width: 60px; vertical-align: middle">内容简介</td>
         <td>
-          <input type="textarea" placeholder="请在此输入教材的内容简介" />
+          <textarea
+            cols="30"
+            rows="10"
+            placeholder="请在此输入教材的内容简介"
+          ></textarea>
         </td>
       </tr>
       <tr>
         <td>出版日期</td>
         <td>
-          <input type="”date”" v-model="time" />
+          <input type="date" v-model="time" />
         </td>
       </tr>
       <tr>
@@ -58,7 +52,7 @@
             <option value="第九版">第九版</option>
             <option value="第十版">第十版</option>
           </select>
-          <select v-model="number">
+          <select v-model="number" style="margin-left: 10px">
             <option value="第一次印刷">第一次印刷</option>
             <option value="第二次印刷">第二次印刷</option>
             <option value="第三次印刷">第三次印刷</option>
@@ -75,37 +69,60 @@
       <tr>
         <td>所获荣誉</td>
         <td>
-          <input
-            type="textarea"
+          <textarea
+            cols="30"
+            rows="10"
             placeholder="请在此填入你所获的荣誉"
-            v-model="award"
-          />
+          ></textarea>
         </td>
       </tr>
       <tr>
-        <td>证明文件</td>
+        <td style="vertical-align: middle">证明文件</td>
         <td>
           <input type="file" placeholder="请选择对应封面图片" />
           <input type="file" placeholder="请选择对应封底图片" />
         </td>
       </tr>
-      <DynamicCollection @update="changeParticipant"></DynamicCollection>
+      <DynamicCollection
+        ref="dynamic"
+        @transmit="updateParticipants"
+      ></DynamicCollection>
 
-      <button class="universalBlueBtn complete" @click="commit">
+      <button
+        class="universalBlueBtn complete commit"
+        @click="commit"
+        v-if="!committed"
+      >
         提&nbsp;交
+      </button>
+      <button
+        class="universalBlueBtn complete notCommit"
+        @click="save"
+        v-if="isEditing && !committed"
+      >
+        保&nbsp;存
+      </button>
+      <button
+        class="universalBlueBtn complete notCommit"
+        @click="edit"
+        v-if="!isEditing && !committed"
+      >
+        编&nbsp;辑
       </button>
     </div>
   </div>
 </template>
 
 <script>
-import DynamicCollection from "./DynamicCollection.vue";
+import DynamicCollection from "../sharing/DynamicCollection.vue";
 export default {
   components: { DynamicCollection },
   data() {
     return {
-      historyDisplayBtnText: "展开 ",
-      historyShown: false,
+      //编辑状态
+      isEditing: false,
+      //提交状态
+      committed: true,
       title: "",
       edition: "",
       number: "",
@@ -113,24 +130,30 @@ export default {
       participants: [],
     };
   },
+  props: ["data"],
   methods: {
-    showHistory() {
-      if (!this.historyShown) {
-        this.historyDisplayBtnText = "收起 ";
-        this.historyShown = true;
-      } else {
-        this.historyDisplayBtnText = "展开 ";
-        this.historyShown = false;
-      }
-    },
-    changeParticipant(participants) {
+    updateParticipants(participants) {
       this.participants = participants;
-      console.log(this.participants);
     },
-    /*提交上报数据*/
-    commit() {},
+    // 编辑
+    edit() {
+      this.isEditing = true;
+    },
+    // 提交
+    commit() {
+      this.isEditing = false;
+      this.$refs.dynamic.transmitData();
+    },
+    // 保存
+    save() {
+      this.isEditing = false;
+      //点击保存，调用DynamicCollection组件的方法，将其中含有的数据同步至本组件内
+      this.$refs.dynamic.transmitData();
+    },
   },
-  created() {},
+  created() {
+    this.$refs.dynamic.changeState(); //默认没有disable，需要调整
+  },
 };
 </script>
 

@@ -12,7 +12,19 @@
       :defaultFileName="`${yearChosen}年度特殊工作量审批记录`"
       @exportFile="exportFile"
     ></DownloadExcelFile>
-    <div class="tableWrapper">
+    <PlainTable
+      :dataExists="dataExists"
+      :noDataHint="noDataHint"
+      :tableData="tableData"
+      :tableHeader="tableHeader"
+    ></PlainTable>
+    <Pagination
+      :currentPage="currentPage"
+      :allPageCount="allPageCount"
+      @pageAfter="pageAfter"
+      @pageBefore="pageBefore"
+    ></Pagination>
+    <!-- <div class="tableWrapper">
       <table class="specialWorkloadTable">
         <thead>
           <tr>
@@ -23,13 +35,13 @@
         </thead>
         <tbody>
           <tr v-for="(object, index) in tableData" :key="index">
-            <td v-for="index in 25" :key="index">
-              {{ object[index] }}
+            <td v-for="(value,key) in object" :key="key">
+              {{ value }}
             </td>
           </tr>
         </tbody>
       </table>
-    </div>
+    </div> -->
   </div>
 </template>
 
@@ -37,19 +49,25 @@
 import YearFilter from "../SharingComponent/YearFilter.vue";
 import TableStatisticsBar from "../SharingComponent/TableStatisticsBar.vue";
 import DownloadExcelFile from "../SharingComponent/DownloadExcelFile.vue";
+import PlainTable from "../SharingComponent/PlainTable.vue";
+import Pagination from "../SharingComponent/Pagination.vue";
 export default {
   name: "AuditWorkload",
   components: {
     YearFilter,
     TableStatisticsBar,
     DownloadExcelFile,
+    PlainTable,
+    Pagination,
   },
   data() {
     return {
-      yearChosen: this.$currentYear,
+      yearChosen: "",
+      currentPage: 1,
       dataExists: false,
-      allPageCount: 0,
+      allPageCount: 1,
       totalItems: 0,
+      noDataHint: "",
       tableHeader: [
         "申报时间",
         "申报人",
@@ -74,48 +92,59 @@ export default {
         "指导学生姓名",
         "指导学生学号",
         "审核状态",
-        "评论",
+        "备注",
         "相关文件",
       ],
-      tableData: [
-        {
-          id: "1",
-          report_time: "2022.7.3",
-          declarant_name: "hhhhhh",
-          teacher_name: "hhhhhh",
-          author_order: "",
-          type: "BB1",
-          teaching_scores: "*",
-          achievement_name: "",
-          level: "",
-          project_category: "eeeee",
-          project_name: "",
-          award_level: "",
-          award_date: "",
-          project_status: "aaaaaaaa",
-          award_apartment: "",
-          publication_name: "",
-          publication_number: "fffffffff",
-          isbn: "",
-          brief_introduction:
-            "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
-          receiving_honor: "",
-          guiding_student_team: "",
-          guiding_student_name: "",
-          guiding_student_id: "",
-          status: "",
-          remarks: "eee",
-          file_path: "",
-        },
-      ],
+      tableData: [],
     };
   },
   methods: {
     exportFile() {},
+    getTableData() {
+      this.$axios
+        .post(`${this.$domainName}/special/year`, {
+          year: this.yearChosen,
+          page: this.currentPage,
+        })
+        .then((res) => {
+          console.log(res);
+          if (res.data.response.code == 200) {
+            this.dataExists = true;
+            this.tableData = res.data.data.records;
+            this.allPageCount = res.data.data.pages;
+            this.totalItems = res.data.data.total;
+          } else {
+            this.dataExists = false;
+            this.tableData = [];
+            this.allPageCount = 1;
+            this.totalItems = 0;
+            this.noDataHint = `暂无${this.yearChosen}年度的特殊工作量数据！`;
+          }
+        })
+        .catch((err) => {
+          console.log("出错了");
+          this.dataExists = false;
+          this.noDataHint = "获取数据出错！";
+        });
+    },
     yearConfirmed(year) {
       this.yearChosen = year;
+      this.currentPage = 1;
       this.getTableData();
     },
+    pageBefore() {
+      this.currentPage = this.currentPage - 1;
+      this.getTableData();
+    },
+    pageAfter() {
+      this.currentPage = this.currentPage + 1;
+      this.getTableData();
+    },
+  },
+  created() {
+    this.yearChosen = this.$currentYear;
+    this.currentPage = 1;
+    this.getTableData();
   },
 };
 </script>

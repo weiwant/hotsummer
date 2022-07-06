@@ -17,7 +17,6 @@
       <transition>
         <BB4 v-if="render3"></BB4>
       </transition>
-
       <transition>
         <BB5 v-if="render4"></BB5>
       </transition>
@@ -25,7 +24,6 @@
       <transition>
         <BB6 v-if="render5"></BB6>
       </transition>
-
       <transition>
         <BB7 v-if="render6"></BB7>
       </transition>
@@ -52,27 +50,30 @@
       <transition>
         <BB14 v-if="render13"></BB14>
       </transition>
+      <transition>
+        <BB15 v-if="render14"></BB15>
+      </transition>
     </div>
   </div>
 </template>
 
 <script>
-import MenuBar from "./specialWorks/MenuBar.vue";
-import BB1 from "./specialWorks/BB1.vue";
-import BB2 from "./specialWorks/BB2.vue";
-import BB3 from "./specialWorks/BB3.vue";
-import BB4 from "./specialWorks/BB4.vue";
-import BB5 from "./specialWorks/BB5.vue";
-import BB6 from "./specialWorks/BB6.vue";
-import BB7 from "./specialWorks/BB7.vue";
-import BB8 from "./specialWorks/BB8.vue";
-import BB9 from "./specialWorks/BB9.vue";
-import BB10 from "./specialWorks/BB10.vue";
-import BB11 from "./specialWorks/BB11.vue";
-import BB12 from "./specialWorks/BB12.vue";
-import BB13 from "./specialWorks/BB13.vue";
-import BB14 from "./specialWorks/BB14.vue";
-
+import MenuBar from "./MenuBar.vue";
+import BB1 from "./new/BB1.vue";
+import BB2 from "./new/BB2.vue";
+import BB3 from "./new/BB3.vue";
+import BB4 from "./new/BB4.vue";
+import BB5 from "./new/BB5.vue";
+import BB6 from "./new/BB6.vue";
+import BB7 from "./new/BB7.vue";
+import BB8 from "./new/BB8.vue";
+import BB9 from "./new/BB9.vue";
+import BB10 from "./new/BB10.vue";
+import BB11 from "./new/BB11.vue";
+import BB12 from "./new/BB12.vue";
+import BB13 from "./new/BB13.vue";
+import BB14 from "./new/BB14.vue";
+import BB15 from "./new/BB15.vue";
 export default {
   name: "SpecialWorkload",
   components: {
@@ -91,6 +92,7 @@ export default {
     BB12,
     BB13,
     BB14,
+    BB15,
   },
   data() {
     return {
@@ -108,7 +110,7 @@ export default {
       render11: false,
       render12: false,
       render13: false,
-
+      render14: false,
       menuItems: [
         "课程建设BB1",
         "教研项目BB2",
@@ -121,9 +123,10 @@ export default {
         "指导学生竞赛获奖BB9",
         "指导学生科研立项并顺利完成项目BB10",
         "教学兼职BB11",
-        "本科生培养活动BB12",
-        "本科生主考之外的监考计BB13",
-        "其他BB14",
+        "BB12",
+        "本科生培养活动BB13",
+        "本科生主考之外的监考计BB14",
+        "其他BB15",
       ],
     };
   },
@@ -173,6 +176,9 @@ export default {
         case 13:
           this.render13 = true;
           break;
+        case 14:
+          this.render14 = true;
+          break;
       }
     },
     hide(index) {
@@ -220,6 +226,9 @@ export default {
         case 13:
           this.render13 = false;
           break;
+        case 14:
+          this.render14 = false;
+          break;
       }
     },
   },
@@ -241,7 +250,7 @@ export default {
   margin-right: 2vw;
   margin-top: 10px;
   min-height: 200px;
-  width: 500px;
+  width: 600px;
   border: 1px solid rgba(128, 128, 128, 0.301);
   transition: all 0.2s;
 }
@@ -261,7 +270,8 @@ export default {
   border-top-right-radius: 5px;
 }
 /* 历史上报记录 */
-.componentSubsection.category >>> .historyTitle {
+.componentSubsection.category >>> .historyTitle,
+.componentSubsection.category >>> .addNewTitle {
   font-weight: 500;
   font-size: 15px;
   color: rgb(242, 191, 72);
@@ -299,20 +309,38 @@ export default {
   margin-left: 5px;
   margin-right: 18px;
 }
-.componentSubsection.category >>> .addNew td input[type="text"] {
+.componentSubsection.category >>> .addNew .dynamic td label {
+  margin-right: 5px;
+}
+.componentSubsection.category >>> .addNew td input[type="number"],
+.componentSubsection.category >>> .addNew td input[type="text"],
+.componentSubsection.category >>> .addNew td input[type="month"],
+.componentSubsection.category >>> .addNew td input[type="date"],
+.componentSubsection.category >>> .addNew td input[type="textarea"] {
   width: 200px;
   height: 30px;
   border: 1px solid rgb(128, 128, 128);
   border-radius: 5px;
   padding-left: 5px;
 }
+.componentSubsection.category >>> .addNew td input[type="number"] {
+  width: 60px;
+}
+.componentSubsection.category >>> .addNew td input[type="text"] {
+  width: 200px;
+}
+.componentSubsection.category >>> .addNew td input[type="textarea"] {
+  width: 300px;
+  height: 100px;
+}
 .componentSubsection.category >>> .addNew td select {
   height: 30px;
   border: 1px solid gray;
   border-radius: 5px;
 }
-/* 确认按钮 */
-.componentSubsection.category >>> button.complete {
+/* 保存、确认按钮 */
+.componentSubsection.category >>> button.complete,
+.componentSubsection.category >>> button.save {
   position: absolute;
   bottom: 10px;
   right: 15px;
@@ -341,28 +369,6 @@ export default {
   top: 10px;
 }
 .v-leave-active {
-  transition: all 0.2s;
-}
-/*  历史记录显影动画 */
-.componentSubsection.category >>> .history-enter {
-  top: -10px;
-  opacity: 0;
-}
-.componentSubsection.category >>> .history-enter-to {
-  top: 0;
-  opacity: 1;
-}
-.componentSubsection.category >>> .history-enter-active {
-  transition: all 0.2s;
-}
-
-.componentSubsection.category >>> .history-leave {
-  opacity: 1;
-}
-.componentSubsection.category >>> .history-leave-to {
-  opacity: 0;
-}
-.componentSubsection.category >>> .history-leave-active {
   transition: all 0.2s;
 }
 </style>
