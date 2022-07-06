@@ -93,6 +93,7 @@ export default {
         "BA1系数",
         "开课学院",
         "理论课时",
+        "工作性质",
       ],
       workloadTableData: [],
       totalItems: 0,
@@ -108,19 +109,19 @@ export default {
      */
     //获取某学年全部数据
     getTableData() {
+      const formData = new FormData();
+      formData.append("naturalYear", this.yearChosen);
+      formData.append("page", this.currentPage);
+      // console.log(formData.get("page"));
       this.$axios
-        .post(`${this.$domainName}/resource/tableinsemester`, {
-          year: this.yearChosen,
-          pageNumber: this.currentPage,
-        })
+        .post(`${this.$domainName}/total/records/page`, formData)
         .then((res) => {
-          console.log(res);
           //如果有数据
           if (res.data.response.code == 200) {
             this.dataExists = true;
             this.workloadTableData = res.data.data.records;
-            this.allPageCount = res.data.data.pages;
-            this.totalItems = res.data.data.total;
+            this.allPageCount = res.data.data.pageNum;
+            this.totalItems = res.data.data.itemNum;
           }
           //如果没有数据
           else {
@@ -130,24 +131,28 @@ export default {
             this.totalItems = 0;
             this.noDataHint = `暂无&nbsp;&nbsp;${this.yearChosen}&nbsp;&nbsp;年度的数据！`;
           }
+        })
+        .catch((err) => {
+          console.log(err);
+          this.noDataHint = "获取数据出错！";
         });
     },
     //条件搜索
     search() {
       switch (this.searchKeyword) {
         case "上课老师":
+          const formData = new FormData();
+          formData.append("naturalYear", this.yearChosen);
+          formData.append("page", this.currentPage);
+          formData.append("mainTeacherName", this.searchValue);
           this.$axios
-            .post(`${this.$domainName}/search/searchIndeed`, {
-              year: this.yearChosen,
-              teacherName: this.searchValue,
-              pageNumber: this.currentPage,
-            })
+            .post(`${this.$domainName}/total/records/page`, formData)
             .then((res) => {
               if (res.data.response.code == 200) {
                 this.dataExists = true;
-                this.workloadTableData = res.data.data;
-                this.allPageCount = res.data.data.pages;
-                this.totalItems = res.data.data.total;
+                this.workloadTableData = res.data.data.records;
+                this.allPageCount = res.data.data.pageNum;
+                this.totalItems = res.data.data.itemNum;
               } else {
                 this.dataExists = false;
                 this.workloadTableData = [];
@@ -155,6 +160,10 @@ export default {
                 this.totalItems = 0;
                 this.noDataHint = `暂无&nbsp;&nbsp;${this.year}&nbsp;&nbsp;年度，${this.searchKeyword}&nbsp;&nbsp;为&nbsp;&nbsp;${this.searchValue}&nbsp;&nbsp;的数据！`;
               }
+            })
+            .catch((err) => {
+              console.log(err);
+              this.noDataHint = "获取数据出错！";
             });
           break;
         case "教分":
@@ -204,11 +213,12 @@ export default {
     },
     //文件导出(暂时还不考虑在search状态下的导出，只导出全年的)
     exportFile(filename) {
+      const formData = new FormData();
+      formData.append("naturalYear", this.yearChosen);
       this.$axios
-        .post(`${this.$domainName}/resource/tabledownload`, {
-          year: this.yearChosen,
-        })
+        .post(`http://abcd.vaiwan.com/total/records`, formData)
         .then((res) => {
+          console.log(res);
           this.$exportExcelFile(
             res.data.data,
             this.workloadTableHeader,

@@ -1,56 +1,29 @@
 <template>
-  <!-- 
-1. tr是块级元素，不需要</br>再换行了
-2. id在一个document内不可重复
-3. 每一个input的对应文本都要用<label>来指代，最好不要直接字符串
-4. 命名非必要最好不要用拼音
-5. 暂时不加reset了，少写点方法，也怕不小心点到，用户体验不好
-6. input name属性没必要
-7. 一个select选框和一个变量绑定，这个变量的值将会是选中的option的value
-   多个单选框和一个变量绑定，这个变量的值将会是选中的radio的value
-8. selected checked默认选中可以不填
--->
   <div class="componentSubsection category">
     <div class="categoryTitle">课程建设BB1</div>
-    <!-- 历史上报记录 -->
-    <div class="history">
-      <div class="historyTitle">
-        历史
-        <span class="historyDisplayBtn" @click="showHistory">{{
-          historyDisplayBtnText
-        }}</span>
-      </div>
-      <transition name="history">
-        <div class="historyTableWrapper" v-if="historyShown"></div>
-      </transition>
-    </div>
     <!-- 填报与添加区域 -->
     <div class="addNew">
-      <!-- radio -->
+      <!-- 立项时间 -->
+      <tr>
+        <td>立项时间</td>
+        <td><input type="month" /></td>
+      </tr>
+      <!--级别 -->
       <tr>
         <td>级别</td>
         <td>
-          <input type="radio"
-           id="nation" 
-           value="国家级"
-            v-model="awardLevel" />
+          <input type="radio" id="nation" value="国家级" v-model="awardLevel" />
           <label for="nation">国家级</label>
 
-          <input type="radio"
-           id="province" 
-           value="省级" 
-           v-model="awardLevel" />
+          <input type="radio" id="province" value="省级" v-model="awardLevel" />
           <label for="province">省级</label>
 
-          <input type="radio"
-           id="school" 
-           value="校级"
-            v-model="awardLevel" />
+          <input type="radio" id="school" value="校级" v-model="awardLevel" />
           <label for="school">校级</label>
         </td>
       </tr>
 
-      <!-- text -->
+      <!-- 项目名称 -->
       <tr>
         <td>项目名称</td>
         <td>
@@ -62,7 +35,7 @@
         </td>
       </tr>
 
-      <!-- select -->
+      <!-- 课程类别 -->
       <tr>
         <td>课程类别</td>
         <td>
@@ -90,7 +63,7 @@
           </select>
         </td>
       </tr>
-
+      <!-- 进展情况 -->
       <tr>
         <td>进展情况</td>
         <td>
@@ -101,10 +74,7 @@
             v-model="projectStatus"
           />
           <label for="established">立项</label>
-          <input type="radio" 
-          id="done" value="结题" 
-          v-model="projectStatus" 
-          />
+          <input type="radio" id="done" value="结题" v-model="projectStatus" />
           <label for="done">结题</label>
           <input
             type="radio"
@@ -115,61 +85,102 @@
           <label for="doing">建设中</label>
         </td>
       </tr>
-      
-      <!-- file -->
+
+      <!-- 附件 -->
       <tr>
         <td>上传附件</td>
         <td>
-          <input type="file" />
+          <input
+            type="file"
+            ref="file"
+            name="file"
+            @change="getFileData()"
+            multiple="true"
+          />
         </td>
       </tr>
-      
       <!-- 动态增删填报项组件 -->
-      <DynamicCollection @update="changeParticipant"></DynamicCollection>
-
-      <button class="universalBlueBtn complete" @click="commit">
-        提&nbsp;交
-      </button>
+      <DynamicCollection
+        ref="dynamic"
+        @transmit="updateParticipants"
+      ></DynamicCollection>
+      <button class="universalBlueBtn save" @click="save">保&nbsp;存</button>
     </div>
   </div>
 </template>
 
 <script>
-import DynamicCollection from "./DynamicCollection.vue";
+import DynamicCollection from "../sharing/DynamicCollection.vue";
 export default {
-  components: { DynamicCollection },
+  components: { DynamicCollection, History },
   data() {
     return {
-      // 历史上报
-      historyDisplayBtnText: "展开 ",
-      historyShown: false,
-      // 填报数据
+      //填报数据
       awardLevel: "",
       projectStatus: "",
       projectCategory: "",
       projectName: "",
       awardLevel: "",
       participants: [],
+      //封装文件信息
+      uploadFile: [],
     };
   },
   methods: {
-    // 展示历史上报
-    showHistory() {
-      if (!this.historyShown) {
-        this.historyDisplayBtnText = "收起 ";
-        this.historyShown = true;
-      } else {
-        this.historyDisplayBtnText = "展开 ";
-        this.historyShown = false;
-      }
-    },
-    // 动态增删participants
-    changeParticipant(participants) {
+    updateParticipants(participants) {
       this.participants = participants;
-      console.log(this.participants);
     },
-    /*提交上报数据*/
-    commit() {},
+    //点击触发上传方法
+    uploadMaterial() {
+      this.$refs.file.dispatchEvent(new MouseEvent("click"));
+    },
+    //添加文件数据
+    getFileData(file) {
+      var _this = this;
+      const inputFile = this.$refs.file.files[0];
+      this.$data.uploadFile.push(inputFile);
+    },
+    /*保存上报数据*/
+    save() {
+      //点击保存，调用DynamicCollection组件的方法，将其中含有的数据同步至本组件内
+      this.$refs.dynamic.transmitData();
+      console.log(this.participants);
+      var _this = this;
+      const formData = new FormData();
+      console.log("响应");
+
+      var data = JSON.stringify([
+        {
+          awardLevel: this.$data.awardLevel,
+          projectStatus: this.$data.projectStatus,
+          projectCategory: this.$data.projectCategory,
+          projectName: this.$data.projectName,
+        },
+      ]);
+
+      formData.append("data", data);
+
+      for (let i = 0; i < this.$data.uploadFile.length; i++) {
+        formData.append("files", this.$data.uploadFile[i]);
+      }
+      //以下需要修改接口
+      this.$axios
+        .post(`${this.$domainName}/special-workload/upload`, formData, {
+          headers: {
+            "Content-Type": "multipart/form-datas",
+          },
+        })
+        .then((res) => {
+          if (res.data.response.code == 200) {
+            alert("报表文件上传成功！");
+          } else {
+            alert("上传失败！");
+          }
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
+    },
   },
   created() {},
 };
