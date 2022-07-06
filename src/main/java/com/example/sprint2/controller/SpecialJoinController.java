@@ -47,7 +47,7 @@ public class SpecialJoinController {
      * @param specialVo
      * @author hy
      * @description 提交：修改该教师该年度所有已保存的记录状态为已提交
-     * @Receive String year, String teacherName(userName)
+     * @Receive String year, String declarantName(userName)
      * @Return Result ：String
      */
     @RequestMapping(value = "/submit", method = RequestMethod.POST)
