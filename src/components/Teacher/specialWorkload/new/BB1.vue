@@ -112,7 +112,7 @@
 <script>
 import DynamicCollection from "../sharing/DynamicCollection.vue";
 export default {
-  components: { DynamicCollection, History },
+  components: { DynamicCollection },
   data() {
     return {
       //填报数据

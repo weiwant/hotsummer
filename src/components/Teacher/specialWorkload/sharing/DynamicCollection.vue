@@ -18,7 +18,7 @@
           id="manInCharge"
           placeholder="请输入项目负责人姓名"
           v-model="participants[0].name"
-          disabled="isDisabled"
+          :disabled="isDisabled"
         />
       </td>
     </tr>
@@ -34,7 +34,7 @@
               type="text"
               id="name"
               v-model="participants[index].teacherName"
-              disabled="isDisabled"
+              :disabled="isDisabled"
             />
             <label for="order">排序</label>
             <input
@@ -42,13 +42,13 @@
               min="1"
               id="order"
               v-model="participants[index].order"
-              disabled="isDisabled"
+              :disabled="isDisabled"
             />
             <button
               class="addBtn"
               @click="addParticipant"
               v-if="index == 1"
-              disabled="isDisabled"
+              :disabled="isDisabled"
             >
               
             </button>
@@ -56,7 +56,7 @@
               class="deleteBtn"
               @click="deleteParticipant(index)"
               v-if="index != 1"
-              disabled="isDisabled"
+              :disabled="isDisabled"
             >
               
             </button>
