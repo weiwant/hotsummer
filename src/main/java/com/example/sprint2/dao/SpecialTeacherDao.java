@@ -7,6 +7,9 @@ import com.example.sprint2.mybatis.mapper.SpecialTeacherMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * @author:wwq
  * @Date：2022/7/5：15:21
@@ -39,6 +42,24 @@ public class SpecialTeacherDao {
         QueryWrapper<SpecialTeacher> qw=new QueryWrapper<>();
         qw.eq("project_id",projectId);
         specialTeacherMapper.delete(qw);
+    }
+
+    /**
+     * @Author：wwq
+     * @Return：
+     * @Url:
+     * @Description：根据ProjectId查询教师姓名，返回List
+     */
+    public List<String> getTeacherNamesById(Integer projectId){
+        QueryWrapper<SpecialTeacher> qw=new QueryWrapper<>();
+        qw.eq("project_id",projectId);
+        List<SpecialTeacher> teachers=specialTeacherMapper.selectList(qw);
+        List<String> names=new ArrayList<>();
+        for (SpecialTeacher teacher : teachers) {
+            String name=teacher.getTeacherName();
+            names.add(name);
+        }
+        return names;
     }
 
 
