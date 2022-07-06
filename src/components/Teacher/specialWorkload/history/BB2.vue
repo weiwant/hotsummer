@@ -7,19 +7,31 @@
       <tr>
         <td>级别</td>
         <td>
-          <input type="radio" id="nation" value="国家级" v-model="level" />
+          <input type="radio" 
+          id="nation" 
+          value="国家级" 
+          v-model="level"
+          :disabled="!isEditing"/>
           <label for="nation">国家级</label>
+
           <input
             type="radio"
             id="provinciallevel"
             value="省级"
             v-model="level"
+            :disabled="!isEditing"
           />
           <label for="provinciallevel">省级</label>
-          <input type="radio" id="schoollevel" value="校级" v-model="level" />
+
+          <input type="radio"
+           id="schoollevel" 
+           value="校级"
+           v-model="level" 
+           :disabled="!isEditing"/>
           <label for="schoollevel">校级</label>
         </td>
       </tr>
+
       <tr>
         <td>项目名称</td>
         <td>
@@ -27,13 +39,15 @@
             type="text"
             placeholder="请输入所建设项目的名称"
             v-model="projectName"
+            :disabled="!isEditing"
           />
         </td>
       </tr>
+
       <tr>
         <td>项目类别</td>
         <td>
-          <select v-model="projectCategory">
+          <select v-model="projectCategory" :disabled="!isEditing">
             <option value="课程思政示范专业建设项目" selected="selected">
               课程思政示范专业建设项目
             </option>
@@ -45,6 +59,7 @@
           </select>
         </td>
       </tr>
+
       <tr>
         <td>负责人姓名</td>
         <td>
@@ -52,6 +67,7 @@
             type="text"
             placeholder="请输入项目负责人姓名"
             v-model="teacherName"
+            :disabled="!isEditing"
           />
         </td>
       </tr>
@@ -63,15 +79,23 @@
             id="established"
             value="立项"
             v-model="projectStatus"
+            :disabled="!isEditing"
           />
           <label for="established">立项</label>
-          <input type="radio" id="done" value="结题" v-model="projectStatus" />
+
+          <input type="radio" 
+          id="done"
+           value="结题" 
+           v-model="projectStatus" 
+           :disabled="!isEditing"/>
           <label for="done">结题</label>
+
           <input
             type="radio"
             id="doing"
             value="建设中"
             v-model="projectStatus"
+            :disabled="!isEditing"
           />
           <label for="doing">建设中</label>
         </td>

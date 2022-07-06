@@ -23,6 +23,7 @@
             type="text"
             placeholder="请输入教师姓名"
             v-model="teachername"
+            :disabled="!isEditing" 
           />
         </td>
       </tr>

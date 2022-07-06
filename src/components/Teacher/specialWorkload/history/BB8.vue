@@ -13,6 +13,7 @@
             id="independent"
             value="独立指导"
             v-model="category"
+            :disabled="!isEditing"
           />
           <label for="independent">独立指导</label>
 
@@ -21,6 +22,7 @@
             id="cooperation"
             value="与院外合作指导"
             v-model="category"
+            :disabled="!isEditing"
           />
           <label for="cooperation">与院外合作指导</label>
         </td>
@@ -29,7 +31,7 @@
       <tr>
         <td>论文名称</td>
         <td>
-          <input type="text" placeholder="请输入论文名称" v-model="title" />
+          <input type="text" placeholder="请输入论文名称" v-model="title" :disabled="!isEditing" />
         </td>
       </tr>
 
@@ -40,6 +42,7 @@
             type="text"
             placeholder="请输入学生姓名"
             v-model="studnetname"
+            :disabled="!isEditing"
           />
         </td>
       </tr>
@@ -51,6 +54,7 @@
             type="text"
             placeholder="请输入教师姓名"
             v-model="teachername"
+            :disabled="!isEditing"
           />
         </td>
       </tr>

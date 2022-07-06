@@ -7,7 +7,7 @@
       <tr>
         <td>类别</td>
         <td>
-          <select v-model="category">
+          <select v-model="category" :disabled="!isEditing" >
             <option value="卓越班选拔面试">卓越班选拔面试</option>
             <option value="校园开放日咨询">校园开放日咨询</option>
             <option value="本科生分专业宣讲">本科生分专业宣讲</option>
@@ -22,14 +22,20 @@
       <tr>
         <td>时间</td>
         <td>
-          <input type="date" placeholder="请选择时间" v-model="time" />
+          <input type="date"
+           placeholder="请选择时间" 
+           v-model="time" 
+           :disabled="!isEditing" />
         </td>
       </tr>
 
       <tr>
         <td>姓名</td>
         <td>
-          <input type="text" placeholder="请输入姓名" v-model="name" />
+          <input type="text" 
+          placeholder="请输入姓名"
+           v-model="name"
+           :disabled="!isEditing" />
         </td>
       </tr>
 

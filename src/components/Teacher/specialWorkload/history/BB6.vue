@@ -12,13 +12,15 @@
             type="text"
             placeholder="请输入出版书籍的书名"
             v-model="title"
+            :disabled="!isEditing"
           />
         </td>
       </tr>
+
       <tr>
         <td>ISBN</td>
         <td>
-          <input type="text" placeholder="请输入教材的国际标准书号" />
+          <input type="text" placeholder="请输入教材的国际标准书号" :disabled="!isEditing"/>
         </td>
       </tr>
       <tr>
@@ -34,13 +36,13 @@
       <tr>
         <td>出版日期</td>
         <td>
-          <input type="date" v-model="time" />
+          <input type="date" v-model="time" :disabled="!isEditing"/>
         </td>
       </tr>
       <tr>
         <td>教材版次</td>
         <td>
-          <select v-model="edition">
+          <select v-model="edition" :disabled="!isEditing">
             <option value="第一版">第一版</option>
             <option value="第二版">第二版</option>
             <option value="第三版">第三版</option>
@@ -52,7 +54,7 @@
             <option value="第九版">第九版</option>
             <option value="第十版">第十版</option>
           </select>
-          <select v-model="number" style="margin-left: 10px">
+          <select v-model="number" :disabled="isEditing" style="margin-left: 10px">
             <option value="第一次印刷">第一次印刷</option>
             <option value="第二次印刷">第二次印刷</option>
             <option value="第三次印刷">第三次印刷</option>
@@ -79,8 +81,8 @@
       <tr>
         <td style="vertical-align: middle">证明文件</td>
         <td>
-          <input type="file" placeholder="请选择对应封面图片" />
-          <input type="file" placeholder="请选择对应封底图片" />
+          <input type="file" placeholder="请选择对应封面图片" :disabled="!isEditing"/>
+          <input type="file" placeholder="请选择对应封底图片" :disabled="!isEditing"/>
         </td>
       </tr>
       <DynamicCollection

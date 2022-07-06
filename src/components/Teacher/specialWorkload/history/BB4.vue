@@ -8,14 +8,30 @@
       <tr>
         <td>级别</td>
         <td>
-          <input type="radio" id="nation" value="国家级" v-model="awardLevel" />
+          <input type="radio" 
+          id="nation"
+           value="国家级" 
+           v-model="awardLevel"
+           :disabled="!isEditing" />
           <label for="nation">国家级</label>
-          <input type="radio" id="province" value="省级" v-model="awardLevel" />
+
+          <input type="radio"
+           id="province" 
+           value="省级" 
+           v-model="awardLevel" 
+           :disabled="!isEditing "
+           />
           <label for="province">省级</label>
-          <input type="radio" id="school" value="校级" v-model="awardLevel" />
+
+          <input type="radio" 
+          id="school" 
+          value="校级" 
+          v-model="awardLevel" 
+          :disabled="!isEditing"/>
           <label for="school">校级</label>
         </td>
       </tr>
+
       <tr>
         <td>竞赛名称</td>
         <td>
@@ -23,9 +39,11 @@
             type="text"
             placeholder="请输入比赛的名称"
             v-model="competitionname"
+            :disabled="!isEditing"
           />
         </td>
       </tr>
+
       <tr>
         <td>奖项类别</td>
         <td>
@@ -33,15 +51,21 @@
             type="text"
             placeholder="请输入所获奖项目的类别"
             v-model="awardCategory"
+            :disabled="!isEditing"
           />
         </td>
       </tr>
+
       <tr>
         <td>获奖等级</td>
         <td>
-          <input type="text" placeholder="请输入获奖等级" v-model="level" />
+          <input type="text" 
+          placeholder="请输入获奖等级"
+           v-model="level"
+           :disabled="isEditing" />
         </td>
       </tr>
+
       <tr>
         <td>授奖单位</td>
         <td>
@@ -49,15 +73,21 @@
             type="text"
             placeholder="请输入授奖单位"
             v-model="awardingunit"
+            :disabled="isEditing"
           />
         </td>
       </tr>
+
       <tr>
         <td>获奖时间</td>
         <td>
-          <input type="date" placeholder="请选择获奖时间" v-model="time" />
+          <input type="date"
+           placeholder="请选择获奖时间" 
+           v-model="time" 
+           :disabled="!isEditing"/>
         </td>
       </tr>
+
       <tr>
         <td>证明文件</td>
         <td>
@@ -67,6 +97,7 @@
             name="file"
             @change="getFileData()"
             multiple="true"
+            :disabled="!isEditing"
           />
         </td>
       </tr>

@@ -8,14 +8,29 @@
       <tr>
         <td>级别</td>
         <td>
-          <input type="radio" id="authority" value="权威" v-model="level" />
+          <input type="radio" 
+          id="authority"
+           value="权威" 
+           v-model="level" 
+           :disabled="!isEditing"/>
           <label for="authority">权威</label>
-          <input type="radio" id="core" value="核心" v-model="level" />
+
+          <input type="radio" 
+          id="core" 
+          value="核心" 
+          v-model="level" 
+          :disabled="!isEditing"/>
           <label for="core">核心</label>
-          <input type="radio" id="noncore" value="非核心" v-model="level" />
+
+          <input type="radio"
+           id="noncore"
+            value="非核心" 
+            v-model="level"
+            :disabled="!isEditing"/>
           <label for="noncore">非核心</label>
         </td>
       </tr>
+
       <tr>
         <td style="width: 80px">文章名称</td>
         <td>
@@ -23,9 +38,11 @@
             type="text"
             placeholder="请输入文章名称"
             v-model="articlename"
+            :disabled="!isEditing"
           />
         </td>
       </tr>
+
       <tr>
         <td>刊物名称</td>
         <td>
@@ -33,27 +50,34 @@
             type="text"
             placeholder="请输入刊物名称"
             v-model="publicationname"
+            :disabled="!isEditing"
           />
         </td>
       </tr>
       <tr>
         <td>刊物期数</td>
         <td>
-          <input type="month" placeholder="请选择出版月份" v-model="month" />
+          <input type="month" 
+          placeholder="请选择出版月份" 
+          v-model="month" 
+          :disabled="!isEditing"/>
+
           <input
             type="number"
             min="1"
             v-model="stage"
             style="margin-left: 10px"
+            :disabled="!isEditing"
           />&nbsp;期
         </td>
       </tr>
+
       <tr>
         <td style="vertical-align: middle">证明文件</td>
         <td>
-          <input type="file" value="论文封面" />
-          <input type="file" value="论文目录" />
-          <input type="file" value="论文正文" />
+          <input type="file" value="论文封面" :disabled="!isEditing"/>
+          <input type="file" value="论文目录" :disabled="!isEditing"/>
+          <input type="file" value="论文正文" :disabled="!isEditing"/>
         </td>
       </tr>
 

@@ -8,11 +8,25 @@
       <tr>
         <td>级别</td>
         <td>
-          <input type="radio" id="nation" value="国家级" v-model="awardLevel" />
+          <input type="radio" 
+          id="nation" 
+          value="国家级"
+           v-model="awardLevel"
+           :disabled="!isEditing" />
           <label for="nation">国家级</label>
-          <input type="radio" id="province" value="省级" v-model="awardLevel" />
+
+          <input type="radio"
+           id="province" 
+           value="省级"
+            v-model="awardLevel"
+            :disabled="!isEditing" />
           <label for="province">省级</label>
-          <input type="radio" id="school" value="校级" v-model="awardLevel" />
+
+          <input type="radio"
+           id="school" 
+           value="校级"
+            v-model="awardLevel" 
+            :disabled="isEditing"/>
           <label for="school">校级</label>
         </td>
       </tr>
@@ -23,9 +37,11 @@
             type="text"
             placeholder="请输入所获奖项目的名称"
             v-model="awardname"
+            :disabled="!isEditing"
           />
         </td>
       </tr>
+
       <tr>
         <td>奖项类别</td>
         <td>
@@ -33,6 +49,7 @@
             type="text"
             placeholder="请输入所获奖项目的类别"
             v-model="awardCategory"
+            :disabled="!isEditing"
           />
         </td>
       </tr>

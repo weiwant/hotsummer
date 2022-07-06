@@ -12,6 +12,7 @@
             type="textarea"
             placeholder="请输入相关工作量描述"
             v-model="content"
+            :disabled="!isEditing" 
           />
         </td>
       </tr>
@@ -23,6 +24,7 @@
             type="textarea"
             placeholder="请输入教师姓名"
             v-model="teachername"
+            :disabled="!isEditing" 
           />
         </td>
       </tr>
