@@ -126,13 +126,5 @@ public class SpecialJoinDao {
         return submitResult;
     }
 
-    /**
-     * @author hy
-     * @description 管理员：通过动态更新特殊工作量表
-     */
-    /*public String updateManager(SpecialJoinResult specialJoinResult){
-
-    }*/
-
 }
 
