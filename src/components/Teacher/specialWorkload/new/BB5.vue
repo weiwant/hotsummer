@@ -50,11 +50,21 @@
       <tr>
         <td style="vertical-align: middle">证明文件</td>
         <td>
-          <input type="file" value="论文封面" />
-          <input type="file" value="论文目录" />
-          <input type="file" value="论文正文" />
+          <input
+            type="file"
+            ref="file"
+            name="file"
+            @change="getFileData()"
+            multiple="true"
+          />
         </td>
       </tr>
+      <label v-show="isVisible">已上传文件:</label>
+      <div v-show="isVisible"
+        v-for="(fileName, item) in fileNames" :key="item">
+        <label>{{fileName}}</label>
+        <button @click="deleteFile(item)">删除</button>
+      </div>
 
       <DynamicCollection
         ref="dynamic"
@@ -79,15 +89,86 @@ export default {
       month: "",
       stage: "",
       participants: [],
+      //文件列表
+      uploadFile: [],
+      //文件名
+      fileNames: [],
+      isVisible: false
     };
   },
   methods: {
     updateParticipants(participants) {
       this.participants = participants;
     },
+    //点击触发上传方法
+    uploadMaterial() {
+      this.$refs.file.dispatchEvent(new MouseEvent("click"));
+    },
+    //添加文件数据
+    getFileData(file) {
+      var _this = this;
+      this.isVisible = true;
+      const inputFile = this.$refs.file.files[0];
+      this.$data.uploadFile.push(inputFile);
+      this.$data.fileNames.push(inputFile.name);
+    },
+
     save() {
       //点击保存，调用DynamicCollection组件的方法，将其中含有的数据同步至本组件内
       this.$refs.dynamic.transmitData();
+      var _this = this;
+      const formData = new FormData();
+
+      var data = JSON.stringify([
+        {
+          awardLevel: this.$data.awardLevel,
+          competitionname: this.$data.competitionname,
+          awardCategory: this.$data.awardCategory,
+          level: this.$data.level,
+          awardingunit: this.$data.awardingunit,
+          time: this.$data.time,
+        },
+      ]);
+
+      formData.append("data", data);
+
+      for (let i = 0; i < this.$data.uploadFile.length; i++) {
+        formData.append("files", this.$data.uploadFile[i]);
+      }
+
+      console.log(formData.get("data"));
+      console.log(formData.get("files"));
+
+      //以下需要修改接口
+      this.$axios
+        .post(`${this.$domainName}/special-workload/upload`, formData, {
+          headers: {
+            "Content-Type": "multipart/form-datas",
+          },
+        })
+        .then((res) => {
+          if (res.data.response.code == 200) {
+            alert("报表文件上传成功！");
+          } else {
+            alert("上传失败！");
+          }
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
+    },
+    deleteFile(item){
+      var _this = this;
+      // console.log(item);
+      this.$data.uploadFile.splice(item,1);
+      // console.log(this.$data.uploadFile);
+      this.$data.fileNames.splice(item,1);
+      // console.log(this.$data.fileNames);
+      if(this.$data.uploadFile == ""){
+        this.$data.isVisible = false;
+      }else{
+        this.$data.isVisible = true;
+      }
     },
   },
   created() {},
