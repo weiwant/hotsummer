@@ -70,11 +70,11 @@ public class SpecialTeacherDao {
      */
 
     public void markSpecialTeacher(SpecialTeacher specialTeacher) {
-        QueryWrapper<SpecialTeacher> qw= new QueryWrapper<>();
-        qw.eq("project_id",specialTeacher.getProjectId());
-        qw.eq("teacher_name",specialTeacher.getTeacherName());
-        qw.eq("author_order",specialTeacher.getAuthorOrder());
-        qw.eq("type",specialTeacher.getType());
-        specialTeacherMapper.update(specialTeacher,qw);
+        QueryWrapper<SpecialTeacher> qw = new QueryWrapper<>();
+        qw.eq("project_id", specialTeacher.getProjectId());
+        qw.eq("teacher_name", specialTeacher.getTeacherName());
+        qw.eq("author_order", specialTeacher.getAuthorOrder());
+        qw.eq("type", specialTeacher.getType());
+        specialTeacherMapper.update(specialTeacher, qw);
     }
 }

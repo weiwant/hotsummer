@@ -162,10 +162,10 @@ public class SpecialTwiceInsertServiceImpl implements SpecialTwiceInsertService 
      */
     @Override
     public boolean specialMark(SpecialVo specialVo) {
-        boolean flag=true;
-        List<TeacherAndOrder> teachers=specialVo.getSomePeople();
+        boolean flag = true;
+        List<TeacherAndOrder> teachers = specialVo.getSomePeople();
         for (TeacherAndOrder teacher : teachers) {
-            SpecialTeacher specialTeacher=new SpecialTeacher();
+            SpecialTeacher specialTeacher = new SpecialTeacher();
             specialTeacher.setProjectId(specialVo.getId());//项目id
             specialTeacher.setType(specialVo.getType());//BB类型
             specialTeacher.setTeacherName(teacher.getTeacherName());//教师姓名
@@ -175,7 +175,7 @@ public class SpecialTwiceInsertServiceImpl implements SpecialTwiceInsertService 
             specialTeacherDao.markSpecialTeacher(specialTeacher);
         }
 
-        return  flag;
+        return flag;
     }
 
 

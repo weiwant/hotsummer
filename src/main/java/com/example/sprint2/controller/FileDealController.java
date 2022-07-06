@@ -111,7 +111,7 @@ public class FileDealController {
      * @return
      * @throws UnsupportedEncodingException
      */
-    @RequestMapping(value = "/download", method = RequestMethod.GET)
+    @RequestMapping(value = "/download", method = RequestMethod.POST)
     public String downloadFile(@RequestParam int id, HttpServletResponse response) throws UnsupportedEncodingException {
 //        List<String> msg=fileDealService.downloadById(fileUtil.getId(),response);//事实上需要一个fileUtil对象
         List<String> msg = fileDealService.downloadById(id, response);

@@ -37,7 +37,7 @@ public class PaperCoachingController {
         }
     }
 
-    @RequestMapping(value = "/all", method = RequestMethod.GET)
+    @RequestMapping(value = "/all", method = RequestMethod.POST)
     public String showAll() {                                       //不带分页的控制层方法，返回所有数据
         List<PaperCoachingWorkload> list = paperService.selectAll();
         if (list.size() == 0) {
