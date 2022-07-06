@@ -68,7 +68,7 @@ public class SpecialTwiceInsertServiceImpl implements SpecialTwiceInsertService 
         // TODO: 2022/7/5 文件路径
 
         Integer projectId= specialProjectDao.saveSpecialProject(specialProject);
-        fileDealService.setPath(projectId);
+
 
         List<TeacherAndOrder> teachers=specialVo.getSomePeople();
         for (TeacherAndOrder teacher : teachers) {
@@ -82,6 +82,8 @@ public class SpecialTwiceInsertServiceImpl implements SpecialTwiceInsertService 
             flag=specialTeacherDao.saveSpecialTeacher(specialTeacher);
 
         }
+
+        fileDealService.setPath(projectId);
 
 
         return flag;
