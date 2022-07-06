@@ -30,9 +30,36 @@ public class SpecialJoinDao {
     @Autowired
     SpecialProjectMapper specialProjectMapper;
 
+    public List<SpecialJoinResult> selectListByConditions(SpecialJoinResult specialJoinResult) {
+        List<SpecialJoinResult> results = specialJoinMapper.selectJoinList(SpecialJoinResult.class, new MPJLambdaWrapper<SpecialProject>()
+                .selectAll(SpecialProject.class)
+                .select(SpecialTeacher::getTeacherName, SpecialTeacher::getAuthorOrder, SpecialTeacher::getTeachingScores)
+                .innerJoin(SpecialTeacher.class, SpecialTeacher::getProjectId, SpecialProject::getId)
+                .like(specialJoinResult.getYear() != null, SpecialProject::getReportTime, specialJoinResult.getYear())
+                .eq(specialJoinResult.getTeacherName() != null, SpecialTeacher::getTeacherName, specialJoinResult.getTeacherName())
+                .eq(specialJoinResult.getType() != null, SpecialTeacher::getType, specialJoinResult.getType())
+                .eq(specialJoinResult.getStatus() != null, SpecialProject::getStatus, specialJoinResult.getStatus())
+                .eq(specialJoinResult.getDeclarantName() != null, SpecialProject::getDeclarantName, specialJoinResult.getDeclarantName()));
+        results.forEach(specialJoinResult1 -> {
+            String filePath = specialJoinResult1.getFilePath();
+            File fileFolder = new File(filePath);
+            File[] files = fileFolder.listFiles();
+            List<String> fileNames = new ArrayList<>();
+            for (File file : files) {
+                String fileName = file.getName();
+                fileNames.add(fileName);
+            }
+            specialJoinResult1.setFileName(fileNames);
+            for (String name : specialJoinResult1.getFileName()) {
+                System.out.println(name);
+            }
+        });
+        return results;
+    }
+
     /**
      * @author hy
-     * @description 动态查询 所有查询条件封装（连表查询）
+     * @description 动态连表查询 所有查询条件封装 （管理员查询记录）
      */
     public IPage<SpecialJoinResult> selectByConditions(SpecialJoinResult specialJoinResult) {
         IPage<SpecialJoinResult> iPage = specialJoinMapper.selectJoinPage(new Page<>(specialJoinResult.getPageNumber(), 5), SpecialJoinResult.class, new MPJLambdaWrapper<SpecialProject>()
@@ -58,9 +85,6 @@ public class SpecialJoinDao {
                 fileNames.add(fileName);
             }
             specialJoinResult1.setFileName(fileNames);
-            for (String name : specialJoinResult1.getFileName()) {
-                System.out.println(name);
-            }
         }
         iPage.setRecords(list);
         return iPage;
@@ -76,7 +100,7 @@ public class SpecialJoinDao {
                 .innerJoin(SpecialTeacher.class, SpecialTeacher::getProjectId, SpecialProject::getId)
                 .like( SpecialProject::getReportTime, specialJoinResult.getYear())
                 .eq( SpecialProject::getStatus, "已保存")
-                .eq( SpecialProject::getDeclarantName, specialJoinResult.getTeacherName())
+                .eq( SpecialProject::getDeclarantName, specialJoinResult.getDeclarantName())
         );
         String submitResult =null;
         int flag1;
@@ -104,8 +128,11 @@ public class SpecialJoinDao {
 
     /**
      * @author hy
-     * @description 管理员：通过年度、状态等获取特殊工作量申报记录(分页)
+     * @description 管理员：通过动态更新特殊工作量表
      */
+    /*public String updateManager(SpecialJoinResult specialJoinResult){
+
+    }*/
 
 }
 

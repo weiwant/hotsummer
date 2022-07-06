@@ -19,7 +19,7 @@ public class SpecialJoinResult {
      */
     private Integer id;
 
-    @JSONField(serialize = false)
+
     private String year;      //查询年度
 
     /**

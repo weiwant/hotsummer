@@ -126,7 +126,8 @@ public class SpecialVo {
     /**
      * 文件路径
      */
-    private String filePath;
+    //文件名
+    private List<String> fileName;
 
 
     //teacher
@@ -137,5 +138,9 @@ public class SpecialVo {
     private List<TeacherAndOrder> somePeople;
 
     private MultipartFile[] files;
+    //当前页数
+    private Integer pageNumber;
+
+    private String year;
 
 }
