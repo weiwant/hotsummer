@@ -121,12 +121,11 @@ export default {
 
       var data = JSON.stringify([
         {
-          awardLevel: this.$data.awardLevel,
-          competitionname: this.$data.competitionname,
-          awardCategory: this.$data.awardCategory,
           level: this.$data.level,
-          awardingunit: this.$data.awardingunit,
-          time: this.$data.time,
+          achievementName: this.$data.articlename,
+          publicationName: this.$data.publicationname,
+          awardDate: this.$data.month,
+          publicationsNumber: this.$data.stage,
         },
       ]);
 

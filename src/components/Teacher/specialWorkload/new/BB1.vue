@@ -6,7 +6,7 @@
       <!-- 立项时间 -->
       <tr>
         <td>立项时间</td>
-        <td><input type="month" /></td>
+        <td><input type="month" v-model="awardDate"/></td>
       </tr>
       <!--级别 -->
       <tr>
@@ -127,6 +127,7 @@ export default {
       projectCategory: "",
       projectName: "",
       awardLevel: "",
+      awardDate: "",
       participants: [],
       //封装文件信息
       uploadFile: [],
@@ -167,6 +168,7 @@ export default {
           projectStatus: this.$data.projectStatus,
           projectCategory: this.$data.projectCategory,
           projectName: this.$data.projectName,
+          awardDate: this.$data.awardDate
         },
       ]);
 

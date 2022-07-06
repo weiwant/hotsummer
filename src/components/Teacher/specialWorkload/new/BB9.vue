@@ -171,15 +171,17 @@ export default {
       this.$refs.dynamic.transmitData();
       var _this = this;
       const formData = new FormData();
+      var awardLevel = this.$data.level + this.$data.category;
 
       var data = JSON.stringify([
         {
-          awardLevel: this.$data.awardLevel,
-          competitionname: this.$data.competitionname,
-          awardCategory: this.$data.awardCategory,
-          level: this.$data.level,
-          awardingunit: this.$data.awardingunit,
-          time: this.$data.time,
+          projectCategory: this.$data.competitioncategory,
+          projectName: this.$data.competitionname,
+          awardLevel: awardLevel,
+          achievementName: this.$data.workname,
+          guidingStudentTeam: this.$data.teamname,
+          guidingStudentName: this.$data.studentname,
+          declarantName: this.$data.teachername,
         },
       ]);
 

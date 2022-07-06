@@ -17,7 +17,7 @@
       <tr>
         <td>ISBN</td>
         <td>
-          <input type="text" placeholder="请输入教材的国际标准书号" />
+          <input type="text" placeholder="请输入教材的国际标准书号" v-model="isbn"/>
         </td>
       </tr>
       <tr>
@@ -27,6 +27,7 @@
             cols="30"
             rows="10"
             placeholder="请在此输入教材的内容简介"
+            v-model="briefIntroduction"
           ></textarea>
         </td>
       </tr>
@@ -72,6 +73,7 @@
             cols="30"
             rows="10"
             placeholder="请在此填入你所获的荣誉"
+            v-model="receivingHonor"
           ></textarea>
         </td>
       </tr>
@@ -112,9 +114,12 @@ export default {
   data() {
     return {
       title: "",
+      isbn: "",
       edition: "",
       number: "",
-      award: "",
+      briefIntroduction: "",
+      receivingHonor: "",
+
       participants: [],
       //文件列表
       uploadFile: [],
@@ -146,15 +151,15 @@ export default {
       this.$refs.dynamic.transmitData();
       var _this = this;
       const formData = new FormData();
+      var publicationsNumber = this.$data.edition + this.$data.number;
 
       var data = JSON.stringify([
         {
-          awardLevel: this.$data.awardLevel,
-          competitionname: this.$data.competitionname,
-          awardCategory: this.$data.awardCategory,
-          level: this.$data.level,
-          awardingunit: this.$data.awardingunit,
-          time: this.$data.time,
+          achievementName: this.$data.title,
+          isbn: this.$data.isbn,
+          publicationsNumber: publicationsNumber,
+          briefIntroduction: this.$data.briefIntroduction,
+          receivingHonor: this.$data.receivingHonor,
         },
       ]);
 

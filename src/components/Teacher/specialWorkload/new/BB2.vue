@@ -115,10 +115,11 @@ export default {
 
       var data = JSON.stringify([
         {
-          awardLevel: this.$data.awardLevel,
+          level: this.$data.level,
           projectStatus: this.$data.projectStatus,
           projectCategory: this.$data.projectCategory,
           projectName: this.$data.projectName,
+          declarantName: this.$data.teacherName
         },
       ]);
 

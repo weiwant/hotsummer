@@ -137,8 +137,8 @@ export default {
           awardname: this.$data.awardname,
           awardCategory: this.$data.awardCategory,
           level: this.$data.level,
-          Awardingunit: this.$data.Awardingunit,
-          time: this.$data.time,
+          awardApartment: this.$data.Awardingunit,
+          time: this.$data.awardDate,
         },
       ]);
 

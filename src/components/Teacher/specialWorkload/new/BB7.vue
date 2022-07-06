@@ -57,8 +57,8 @@ export default {
       var data = JSON.stringify([
         {
           awardLevel: this.$data.awardLevel,
-          date: this.$data.date,
-          name: this.$data.name,
+          awardDate: this.$data.date,
+          declarantName: this.$data.name,
         },
       ]);
 

@@ -89,6 +89,7 @@ export default {
       level: "",
       honor: "",
       projectname: "",
+      number: "",
       teamname: "",
       studentname: "",
       teachername: "",
@@ -96,7 +97,44 @@ export default {
   },
   methods: {
     save() {
+      //点击保存，调用DynamicCollection组件的方法，将其中含有的数据同步至本组件内
       this.$refs.dynamic.transmitData();
+      var _this = this;
+      const formData = new FormData();
+
+      var data = JSON.stringify([
+        {
+          level: this.$data.level,
+          receivingHonor: this.$data.honor,
+          guidingStudentId: this.$data.number,
+          projectName: this.$data.projectName,
+          guidingStudentTeam: this.$data.teamname,
+          guidingStudentName: this.$data.studentname,
+          declarantName: this.$data.teachername,
+        },
+      ]);
+
+      formData.append("data", data);
+
+      console.log(formData.get("data"));
+
+      //以下需要修改接口
+      this.$axios
+        .post(`${this.$domainName}/special-workload/upload`, formData, {
+          headers: {
+            "Content-Type": "multipart/form-datas",
+          },
+        })
+        .then((res) => {
+          if (res.data.response.code == 200) {
+            alert("报表文件上传成功！");
+          } else {
+            alert("上传失败！");
+          }
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
     },
   },
   created() {},
