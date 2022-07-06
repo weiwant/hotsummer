@@ -13,6 +13,7 @@
             id="independent"
             value="独立指导"
             v-model="category"
+            :disabled="!isEditing"
           />
           <label for="independent">独立指导</label>
 
@@ -21,6 +22,7 @@
             id="cooperation"
             value="与院外合作指导"
             v-model="category"
+            :disabled="!isEditing"
           />
           <label for="cooperation">与院外合作指导</label>
         </td>
@@ -29,7 +31,7 @@
       <tr>
         <td>论文名称</td>
         <td>
-          <input type="text" placeholder="请输入论文名称" v-model="title" />
+          <input type="text" placeholder="请输入论文名称" v-model="title" :disabled="!isEditing" />
         </td>
       </tr>
 
@@ -39,7 +41,8 @@
           <input
             type="text"
             placeholder="请输入学生姓名"
-            v-model="studnetname"
+            v-model="studnetName"
+            :disabled="!isEditing"
           />
         </td>
       </tr>
@@ -50,7 +53,8 @@
           <input
             type="text"
             placeholder="请输入教师姓名"
-            v-model="teachername"
+            v-model="teacherName"
+            :disabled="!isEditing"
           />
         </td>
       </tr>
@@ -90,8 +94,8 @@ export default {
       committed: true,
       category: "",
       title: "",
-      studnetname: "",
-      teachername: "",
+      studnetName: "",
+      teacherName: "",
     };
   },
   props: ["data"],
@@ -109,6 +113,10 @@ export default {
     save() {
       this.isEditing = false;
       this.$refs.dynamic.transmitData();
+       if(this.$data.category==""||this.$data.title==""||this.$data.studnetName==""||this.$data.teacherName==""){
+        alert("数据填报不可为空！！！")
+        return;
+      }
     },
   },
   created() {},
