@@ -126,7 +126,7 @@ public class SpecialTwiceInsertServiceImpl implements SpecialTwiceInsertService 
         specialProject.setGuidingStudentName(specialVo.getGuidingStudentName());//指导学生姓名
         specialProject.setGuidingStudentId(specialVo.getGuidingStudentId());//指导学生学号
 
-        specialProject.setStatus("已保存");//审核状态
+        //specialProject.setStatus("已保存");//审核状态
         specialProject.setRemarks(specialVo.getRemarks());//备注
         // TODO: 2022/7/5 文件路径
 //        fileDealService.setPath(specialVo.getId());
@@ -152,6 +152,30 @@ public class SpecialTwiceInsertServiceImpl implements SpecialTwiceInsertService 
 
         fileDealService.renameFile(specialVo.getId());
         return flag;
+    }
+
+    /**
+     * @Author：wwq
+     * @Return：
+     * @Url:
+     * @Description：管理员打分。
+     */
+    @Override
+    public boolean specialMark(SpecialVo specialVo) {
+        boolean flag=true;
+        List<TeacherAndOrder> teachers=specialVo.getSomePeople();
+        for (TeacherAndOrder teacher : teachers) {
+            SpecialTeacher specialTeacher=new SpecialTeacher();
+            specialTeacher.setProjectId(specialVo.getId());//项目id
+            specialTeacher.setType(specialVo.getType());//BB类型
+            specialTeacher.setTeacherName(teacher.getTeacherName());//教师姓名
+            specialTeacher.setAuthorOrder(teacher.getAuthorOrder());//教师排名
+            specialTeacher.setTeachingScores(teacher.getTeachingScores());//教分
+
+            specialTeacherDao.markSpecialTeacher(specialTeacher);
+        }
+
+        return  flag;
     }
 
 
