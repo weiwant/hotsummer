@@ -37,7 +37,7 @@
           <input
             type="text"
             placeholder="请输入文章名称"
-            v-model="articlename"
+            v-model="articleName"
             :disabled="!isEditing"
           />
         </td>
@@ -49,7 +49,7 @@
           <input
             type="text"
             placeholder="请输入刊物名称"
-            v-model="publicationname"
+            v-model="publicationName"
             :disabled="!isEditing"
           />
         </td>
@@ -121,8 +121,8 @@ export default {
       //提交状态
       commited: true,
       level: "",
-      articlename: "",
-      publicationname: "",
+      articleName: "",
+      publicationName: "",
       month: "",
       stage: "",
       participants: [],
@@ -147,6 +147,10 @@ export default {
       this.isEditing = false;
       //点击保存，调用DynamicCollection组件的方法，将其中含有的数据同步至本组件内
       this.$refs.dynamic.transmitData();
+      if(this.$data.level==""||this.$data.competitionname==""||this.$data.articleName==""||this.$data.publicationName==""||this.$data.month==""||this.$data.stage==""||this.$data.participants==""){
+        alert("数据填报不可为空！！！")
+        return;
+      }
     },
   },
   created() {

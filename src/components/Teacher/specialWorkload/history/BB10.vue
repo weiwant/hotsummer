@@ -54,7 +54,7 @@
           <input
             type="text"
             placeholder="请输入项目名称"
-            v-model="projectname"
+            v-model="projectNname"
             :disabled="!isEditing" 
           />
         </td>
@@ -66,7 +66,7 @@
           <input
             type="text"
             placeholder="请输入学生团队名称"
-            v-model="teamname"
+            v-model="teamName"
             :disabled="!isEditing" 
           />
         </td>
@@ -99,7 +99,7 @@
           <input
             type="text"
             placeholder="请输入指导老师姓名"
-            v-model="teachername"
+            v-model="teacherName"
             :disabled="!isEditing" 
           />
         </td>
@@ -140,10 +140,10 @@ export default {
       committed: true,
       level: "",
       honor: "",
-      projectname: "",
-      teamname: "",
-      studentname: "",
-      teachername: "",
+      projectName: "",
+      teamName: "",
+      studentName: "",
+      teacherName: "",
     };
   },
   props: ["data"],
@@ -161,6 +161,11 @@ export default {
     save() {
       this.isEditing = false;
       this.$refs.dynamic.transmitData();
+      if(this.$data. level==""||this.$data. honor==""||this.$data.projectName==""||this.$data.teamName==""||this.$data. studentName==""||this.$data.teacherName==""){
+        alert("数据填报不可为空！！！")
+        return;
+      }
+
     },
   },
   created() {},

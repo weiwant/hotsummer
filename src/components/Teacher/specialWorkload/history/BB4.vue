@@ -147,7 +147,7 @@ export default {
       competitionname: "",
       awardCategory: "",
       level: "",
-      awardingunit: "",
+      awardingUnit: "",
       time: "",
       participants: [],
       //文件列表
@@ -183,6 +183,10 @@ export default {
       this.isEditing = false;
       //点击保存，调用DynamicCollection组件的方法，将其中含有的数据同步至本组件内
       this.$refs.dynamic.transmitData();
+      if(this.$data.awardLevel==""||this.$data.  competitionname==""||this.$data.awardCategory==""||this.$data.level==""||this.$data.awardingUnit==""||this.$data.time==""||this.$data.participants==""||this.$data.uploadFile==""){
+        alert("数据填报不可为空！！！")
+        return;
+      }
       var _this = this;
       const formData = new FormData();
 

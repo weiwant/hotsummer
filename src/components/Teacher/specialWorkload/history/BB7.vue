@@ -98,6 +98,11 @@ export default {
     save() {
       this.$refs.dynamic.transmitData();
       this.isEditing = false;
+      
+       if(this.$data.awardLevel==""||this.$data.date==""||this.$data.name==""||this.$data.participants==""){
+        alert("数据填报不可为空！！！")
+        return;
+      }
       var _this = this;
       const formData = new FormData();
 

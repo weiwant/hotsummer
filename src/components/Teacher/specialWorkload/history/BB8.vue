@@ -41,7 +41,7 @@
           <input
             type="text"
             placeholder="请输入学生姓名"
-            v-model="studnetname"
+            v-model="studnetName"
             :disabled="!isEditing"
           />
         </td>
@@ -53,7 +53,7 @@
           <input
             type="text"
             placeholder="请输入教师姓名"
-            v-model="teachername"
+            v-model="teacherName"
             :disabled="!isEditing"
           />
         </td>
@@ -94,8 +94,8 @@ export default {
       committed: true,
       category: "",
       title: "",
-      studnetname: "",
-      teachername: "",
+      studnetName: "",
+      teacherName: "",
     };
   },
   props: ["data"],
@@ -113,6 +113,10 @@ export default {
     save() {
       this.isEditing = false;
       this.$refs.dynamic.transmitData();
+       if(this.$data.category==""||this.$data.title==""||this.$data.studnetName==""||this.$data.teacherName==""){
+        alert("数据填报不可为空！！！")
+        return;
+      }
     },
   },
   created() {},

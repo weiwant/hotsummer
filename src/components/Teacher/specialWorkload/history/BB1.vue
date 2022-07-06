@@ -168,7 +168,6 @@ export default {
       projectStatus: "",
       projectCategory: "",
       projectName: "",
-      awardLevel: "",
       participants: [],
       //封装文件信息
       uploadFile: [],
@@ -190,6 +189,7 @@ export default {
     },
     // 编辑
     edit() {
+      
       this.isEditing = true;
     },
     // 提交
@@ -198,9 +198,14 @@ export default {
     },
     // 保存
     save() {
+      
       this.isEditing = false;
       //点击保存，调用DynamicCollection组件的方法，将其中含有的数据同步至本组件内
       this.$refs.dynamic.transmitData();
+      if(this.$data.awardLevel == "" ||this.$data.projectStatus == ""||this.$data.projectCategory==""||this.$data.projectName ==""||this.$data.uploadFile==""){
+        alert("数据填写不可为空！！")
+      
+      };
       console.log(this.participants);
       var _this = this;
       const formData = new FormData();

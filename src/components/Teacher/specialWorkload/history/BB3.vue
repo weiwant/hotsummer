@@ -30,6 +30,7 @@
           <label for="school">校级</label>
         </td>
       </tr>
+
       <tr>
         <td>奖项名称</td>
         <td>
@@ -53,28 +54,32 @@
           />
         </td>
       </tr>
+
       <tr>
         <td>获奖等级</td>
         <td>
           <input type="text" placeholder="请输入获奖等级" v-model="level" />
         </td>
       </tr>
+
       <tr>
         <td>授奖单位</td>
         <td>
           <input
             type="text"
             placeholder="请输入授奖单位"
-            v-model="Awardingunit"
+            v-model="awardingUnit"
           />
         </td>
       </tr>
+      
       <tr>
         <td>获奖时间</td>
         <td>
           <input type="date" placeholder="请输入获奖时间" v-model="time" />
         </td>
       </tr>
+
       <tr>
         <td>证明文件</td>
         <td>
@@ -133,7 +138,7 @@ export default {
       awardname: "",
       awardCategory: "",
       level: "",
-      Awardingunit: "",
+      awardingUnit: "",
       time: "",
       participants: [],
       //文件列表
@@ -169,6 +174,10 @@ export default {
       this.isEditing = false;
       //点击保存，调用DynamicCollection组件的方法，将其中含有的数据同步至本组件内
       this.$refs.dynamic.transmitData();
+       if(this.$data.awardLevel==""||this.$data. awardname==""||this.$data.awardCategory==""||this.$data.level==""||this.$data.awardingUnit==""||this.$data.time==""||this.$data.participants==""||this.$data.uploadFile==""){
+        alert("数据填报不可为空！！！")
+        return;
+      }
       var _this = this;
       const formData = new FormData();
 

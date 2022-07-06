@@ -30,15 +30,18 @@
             cols="30"
             rows="10"
             placeholder="请在此输入教材的内容简介"
+
           ></textarea>
         </td>
       </tr>
+
       <tr>
         <td>出版日期</td>
         <td>
           <input type="date" v-model="time" :disabled="!isEditing"/>
         </td>
       </tr>
+
       <tr>
         <td>教材版次</td>
         <td>
@@ -68,6 +71,7 @@
           </select>
         </td>
       </tr>
+
       <tr>
         <td>所获荣誉</td>
         <td>
@@ -75,9 +79,11 @@
             cols="30"
             rows="10"
             placeholder="请在此填入你所获的荣誉"
+            v-model="award"
           ></textarea>
         </td>
       </tr>
+
       <tr>
         <td style="vertical-align: middle">证明文件</td>
         <td>
@@ -85,6 +91,7 @@
           <input type="file" placeholder="请选择对应封底图片" :disabled="!isEditing"/>
         </td>
       </tr>
+      
       <DynamicCollection
         ref="dynamic"
         @transmit="updateParticipants"
@@ -151,6 +158,10 @@ export default {
       this.isEditing = false;
       //点击保存，调用DynamicCollection组件的方法，将其中含有的数据同步至本组件内
       this.$refs.dynamic.transmitData();
+       if(this.$data.title==""||this.$data.edition==""||this.$data.number==""||this.$data.award==""||this.$data.participants==""){
+        alert("数据填报不可为空！！！")
+        return;
+      }
     },
   },
   created() {

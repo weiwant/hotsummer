@@ -92,6 +92,10 @@ export default {
     save() {
       this.isEditing = false;
       this.$refs.dynamic.transmitData();
+      if(this.$data.category==""||this.$data.time==""||this.$data.name==""){
+        alert("数据填报不可为空！！！")
+        return;
+      }
     },
   },
   created() {},
