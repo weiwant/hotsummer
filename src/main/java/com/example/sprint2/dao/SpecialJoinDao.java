@@ -9,9 +9,7 @@ import com.example.sprint2.mybatis.mapper.SpecialJoinMapper;
 import com.example.sprint2.mybatis.mapper.SpecialProjectMapper;
 import com.github.yulichang.wrapper.MPJLambdaWrapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.context.LifecycleAutoConfiguration;
 import org.springframework.stereotype.Repository;
-import org.springframework.web.bind.annotation.RequestBody;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -98,11 +96,11 @@ public class SpecialJoinDao {
         List<SpecialJoinResult> list = specialJoinMapper.selectJoinList(SpecialJoinResult.class, new MPJLambdaWrapper<SpecialProject>()
                 .select(SpecialProject::getId, SpecialProject::getStatus)
                 .innerJoin(SpecialTeacher.class, SpecialTeacher::getProjectId, SpecialProject::getId)
-                .like( SpecialProject::getReportTime, specialJoinResult.getYear())
-                .eq( SpecialProject::getStatus, "已保存")
-                .eq( SpecialProject::getDeclarantName, specialJoinResult.getDeclarantName())
+                .like(SpecialProject::getReportTime, specialJoinResult.getYear())
+                .eq(SpecialProject::getStatus, "已保存")
+                .eq(SpecialProject::getDeclarantName, specialJoinResult.getDeclarantName())
         );
-        String submitResult =null;
+        String submitResult = null;
         int flag1;
 
         if (list.size() == 0) {
@@ -114,25 +112,19 @@ public class SpecialJoinDao {
                 int id1 = s.getId();
                 specialProject.setId(id1);
                 specialProject.setStatus("已提交");
-                 flag1 = specialProjectMapper.updateById(specialProject);     //反映修改结果
-                 if(flag1==0){flag = false;}
+                flag1 = specialProjectMapper.updateById(specialProject);     //反映修改结果
+                if (flag1 == 0) {
+                    flag = false;
+                }
             }
-            if(flag){
-                submitResult ="提交成功";
-            }else {
-                submitResult="提交失败";
+            if (flag) {
+                submitResult = "提交成功";
+            } else {
+                submitResult = "提交失败";
             }
         }
         return submitResult;
     }
-
-    /**
-     * @author hy
-     * @description 管理员：通过动态更新特殊工作量表
-     */
-    /*public String updateManager(SpecialJoinResult specialJoinResult){
-
-    }*/
 
 }
 
