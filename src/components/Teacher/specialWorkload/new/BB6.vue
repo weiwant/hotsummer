@@ -160,6 +160,7 @@ export default {
           publicationsNumber: publicationsNumber,
           briefIntroduction: this.$data.briefIntroduction,
           receivingHonor: this.$data.receivingHonor,
+          somePeople: this.$data.participants
         },
       ]);
 

@@ -168,7 +168,8 @@ export default {
           projectStatus: this.$data.projectStatus,
           projectCategory: this.$data.projectCategory,
           projectName: this.$data.projectName,
-          awardDate: this.$data.awardDate
+          awardDate: this.$data.awardDate,
+          somePeople: this.$data.participants
         },
       ]);
 

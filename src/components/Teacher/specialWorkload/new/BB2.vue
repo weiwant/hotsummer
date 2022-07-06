@@ -119,7 +119,8 @@ export default {
           projectStatus: this.$data.projectStatus,
           projectCategory: this.$data.projectCategory,
           projectName: this.$data.projectName,
-          declarantName: this.$data.teacherName
+          declarantName: this.$data.teacherName,
+          somePeople: this.$data.participants
         },
       ]);
 

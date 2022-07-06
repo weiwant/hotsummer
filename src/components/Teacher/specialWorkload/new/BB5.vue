@@ -126,6 +126,7 @@ export default {
           publicationName: this.$data.publicationname,
           awardDate: this.$data.month,
           publicationsNumber: this.$data.stage,
+          somePeople: this.$data.participants
         },
       ]);
 

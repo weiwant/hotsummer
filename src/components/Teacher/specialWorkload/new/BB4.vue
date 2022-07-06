@@ -140,6 +140,7 @@ export default {
           level: this.$data.level,
           awardApartment: this.$data.awardingunit,
           awardDate: this.$data.time,
+          somePeople: this.$data.participants
         },
       ]);
 
