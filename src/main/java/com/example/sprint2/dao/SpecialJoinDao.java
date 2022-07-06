@@ -11,7 +11,6 @@ import com.github.yulichang.wrapper.MPJLambdaWrapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.context.LifecycleAutoConfiguration;
 import org.springframework.stereotype.Repository;
-import org.springframework.web.bind.annotation.RequestBody;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -50,9 +49,6 @@ public class SpecialJoinDao {
                 fileNames.add(fileName);
             }
             specialJoinResult1.setFileName(fileNames);
-            for (String name : specialJoinResult1.getFileName()) {
-                System.out.println(name);
-            }
         });
         return results;
     }
@@ -62,7 +58,7 @@ public class SpecialJoinDao {
      * @description 动态连表查询 所有查询条件封装 （管理员查询记录）
      */
     public IPage<SpecialJoinResult> selectByConditions(SpecialJoinResult specialJoinResult) {
-        IPage<SpecialJoinResult> iPage = specialJoinMapper.selectJoinPage(new Page<>(specialJoinResult.getPageNumber(), 5), SpecialJoinResult.class, new MPJLambdaWrapper<SpecialProject>()
+        IPage<SpecialJoinResult> iPage = specialJoinMapper.selectJoinPage(new Page<>(specialJoinResult.getPageNumber(), 20), SpecialJoinResult.class, new MPJLambdaWrapper<SpecialProject>()
                 .selectAll(SpecialProject.class)
                 .select(SpecialTeacher::getTeacherName, SpecialTeacher::getAuthorOrder, SpecialTeacher::getTeachingScores)
                 .innerJoin(SpecialTeacher.class, SpecialTeacher::getProjectId, SpecialProject::getId)
@@ -77,14 +73,16 @@ public class SpecialJoinDao {
         List<SpecialJoinResult> list = iPage.getRecords();
         for (SpecialJoinResult specialJoinResult1 : list) {
             String filePath = specialJoinResult1.getFilePath();
-            File fileFolder = new File(filePath);
-            File[] files = fileFolder.listFiles();
-            List<String> fileNames = new ArrayList<>();
-            for (File file : files) {
-                String fileName = file.getName();
-                fileNames.add(fileName);
+            if(filePath != null){
+                File fileFolder = new File(filePath);
+                File[] files = fileFolder.listFiles();
+                List<String> fileNames = new ArrayList<>();
+                for (File file : files) {
+                    String fileName = file.getName();
+                    fileNames.add(fileName);
+                }
+                specialJoinResult1.setFileName(fileNames);
             }
-            specialJoinResult1.setFileName(fileNames);
         }
         iPage.setRecords(list);
         return iPage;
@@ -126,13 +124,6 @@ public class SpecialJoinDao {
         return submitResult;
     }
 
-    /**
-     * @author hy
-     * @description 管理员：通过动态更新特殊工作量表
-     */
-    /*public String updateManager(SpecialJoinResult specialJoinResult){
-
-    }*/
 
 }
 
