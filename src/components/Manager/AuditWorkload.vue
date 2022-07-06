@@ -102,7 +102,7 @@ export default {
     exportFile() {},
     getTableData() {
       this.$axios
-        .post("http://abcddes.vaiwan.com/special/year", {
+        .post(`${this.$domainName}/special/year`, {
           year: this.yearChosen,
           page: this.currentPage,
         })

@@ -18,6 +18,9 @@
           ><span></span> 上报特殊工作量
         </router-link>
       </li>
+      <li>
+        <router-link to="ViewHistory"><span></span> 历史上报 </router-link>
+      </li>
     </ul>
     <ul class="tool"></ul>
   </div>

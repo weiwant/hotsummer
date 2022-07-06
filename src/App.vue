@@ -127,7 +127,7 @@ input:focus {
 .componentSubtitle {
   margin-top: 3vh;
   margin-bottom: 2vh;
-  width: 40%;
+  width: 45%;
   border-bottom: 1px solid rgba(128, 128, 128, 0.3);
   text-align: left;
   font-size: 20px;

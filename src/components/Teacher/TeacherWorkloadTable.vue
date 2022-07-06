@@ -104,7 +104,7 @@ export default {
       formData.append("page", this.currentPage);
       formData.append("mainTeacherName", this.currentTeacherName);
       this.$axios
-        .post(`http://abcd.vaiwan.com/total/records/page`, formData)
+        .post(`${this.$domainName}/total/records/page`, formData)
         .then((res) => {
           if (res.data.response.code == 200) {
             this.dataExists = true;
@@ -151,11 +151,11 @@ export default {
           filename
         );
       } else {
+        const formData = new FormData();
+        formData.append("naturalYear", this.yearChosen);
+        formData.append("mainTeacherName", this.currentTeacherName);
         this.$axios
-          .post("", {
-            year: this.yearChosen,
-            teacherName: this.currentTeacherName,
-          })
+          .post(`${this.$domainName}/total/records`, formData)
           .then((res) => {
             this.$exportExcelFile(
               res.data.data,

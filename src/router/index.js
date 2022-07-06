@@ -1,7 +1,8 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 const Teacherhome = () => import('../components/Teacher/Teacherhome.vue')
-const SpecialWorkload = () => import('../components/Teacher/SpecialWorkload.vue')
+const ViewHistory = () => import('../components/Teacher/specialWorkload/ViewHistory.vue')
+const UploadSpecialWorkload = () => import('../components/Teacher/specialWorkload/UploadSpecialWorkload.vue')
 const TeacherWorkloadTable = () => import('../components/Teacher/TeacherWorkloadTable.vue')
 const TeacherPersonalInfo = () => import('../components/Teacher/TeacherPersonalInfo.vue')
 const Managerhome = () => import('../components/Manager/Managerhome.vue')
@@ -26,8 +27,9 @@ const routes = [
     children: [
       { path: '', redirect: "PersonalInfo" },
       { path: 'PersonalInfo', component: TeacherPersonalInfo },
-      { path: "SpecialWorkload", component: SpecialWorkload },
       { path: "TeacherWorkloadTable", component: TeacherWorkloadTable },
+      { path: "SpecialWorkload", component: UploadSpecialWorkload },
+      { path: "ViewHistory", component: ViewHistory },
     ]
   },
   {

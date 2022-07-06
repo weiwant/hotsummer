@@ -114,7 +114,7 @@ export default {
       formData.append("page", this.currentPage);
       // console.log(formData.get("page"));
       this.$axios
-        .post(`http://abcd.vaiwan.com/total/records/page`, formData)
+        .post(`${this.$domainName}/total/records/page`, formData)
         .then((res) => {
           //如果有数据
           if (res.data.response.code == 200) {
@@ -146,7 +146,7 @@ export default {
           formData.append("page", this.currentPage);
           formData.append("mainTeacherName", this.searchValue);
           this.$axios
-            .post(`http://abcd.vaiwan.com/total/records/page`, formData)
+            .post(`${this.$domainName}/total/records/page`, formData)
             .then((res) => {
               if (res.data.response.code == 200) {
                 this.dataExists = true;
