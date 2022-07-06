@@ -6,7 +6,7 @@
       <!-- 立项时间 -->
       <tr>
         <td>立项时间</td>
-        <td><input type="month" /></td>
+        <td><input type="month" v-model="awardDate"/></td>
       </tr>
       <!--级别 -->
       <tr>
@@ -99,6 +99,12 @@
           />
         </td>
       </tr>
+      <label v-show="isVisible">已上传文件:</label>
+      <div v-show="isVisible"
+      v-for="(fileName, item) in fileNames" :key="item">
+      <label>{{fileName}}</label>
+      <button @click="deleteFile(item)">删除</button>
+      </div>
       <!-- 动态增删填报项组件 -->
       <DynamicCollection
         ref="dynamic"
@@ -112,7 +118,7 @@
 <script>
 import DynamicCollection from "../sharing/DynamicCollection.vue";
 export default {
-  components: { DynamicCollection },
+  components: { DynamicCollection, History },
   data() {
     return {
       //填报数据
@@ -121,9 +127,13 @@ export default {
       projectCategory: "",
       projectName: "",
       awardLevel: "",
+      awardDate: "",
       participants: [],
       //封装文件信息
       uploadFile: [],
+      //文件名
+      fileNames: [],
+      isVisible: false
     };
   },
   methods: {
@@ -137,8 +147,11 @@ export default {
     //添加文件数据
     getFileData(file) {
       var _this = this;
+      this.isVisible = true;
       const inputFile = this.$refs.file.files[0];
       this.$data.uploadFile.push(inputFile);
+      //console.log(inputFile.name);
+      this.$data.fileNames.push(inputFile.name);
     },
     /*保存上报数据*/
     save() {
@@ -147,7 +160,7 @@ export default {
       console.log(this.participants);
       var _this = this;
       const formData = new FormData();
-      console.log("响应");
+      //console.log("响应");
 
       var data = JSON.stringify([
         {
@@ -155,6 +168,9 @@ export default {
           projectStatus: this.$data.projectStatus,
           projectCategory: this.$data.projectCategory,
           projectName: this.$data.projectName,
+          awardDate: this.$data.awardDate,
+          somePeople: this.$data.participants,
+          type: "BB1"
         },
       ]);
 
@@ -180,6 +196,19 @@ export default {
         .catch(function (error) {
           console.log(error);
         });
+    },
+    deleteFile(item){
+      var _this = this;
+      // console.log(item);
+      this.$data.uploadFile.splice(item,1);
+      // console.log(this.$data.uploadFile);
+      this.$data.fileNames.splice(item,1);
+      // console.log(this.$data.fileNames);
+      if(this.$data.uploadFile == ""){
+        this.$data.isVisible = false;
+      }else{
+        this.$data.isVisible = true;
+      }
     },
   },
   created() {},

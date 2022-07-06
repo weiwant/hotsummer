@@ -8,14 +8,29 @@
       <tr>
         <td>级别</td>
         <td>
-          <input type="radio" id="nation" value="国家级" v-model="awardLevel" />
+          <input type="radio" 
+          id="nation" 
+          value="国家级"
+           v-model="awardLevel"
+           :disabled="!isEditing" />
           <label for="nation">国家级</label>
-          <input type="radio" id="province" value="省级" v-model="awardLevel" />
+
+          <input type="radio"
+           id="province" 
+           value="省级"
+            v-model="awardLevel"
+            :disabled="!isEditing" />
           <label for="province">省级</label>
-          <input type="radio" id="school" value="校级" v-model="awardLevel" />
+
+          <input type="radio"
+           id="school" 
+           value="校级"
+            v-model="awardLevel" 
+            :disabled="isEditing"/>
           <label for="school">校级</label>
         </td>
       </tr>
+
       <tr>
         <td>奖项名称</td>
         <td>
@@ -23,9 +38,11 @@
             type="text"
             placeholder="请输入所获奖项目的名称"
             v-model="awardname"
+            :disabled="!isEditing"
           />
         </td>
       </tr>
+
       <tr>
         <td>奖项类别</td>
         <td>
@@ -33,31 +50,36 @@
             type="text"
             placeholder="请输入所获奖项目的类别"
             v-model="awardCategory"
+            :disabled="!isEditing"
           />
         </td>
       </tr>
+
       <tr>
         <td>获奖等级</td>
         <td>
           <input type="text" placeholder="请输入获奖等级" v-model="level" />
         </td>
       </tr>
+
       <tr>
         <td>授奖单位</td>
         <td>
           <input
             type="text"
             placeholder="请输入授奖单位"
-            v-model="Awardingunit"
+            v-model="awardingUnit"
           />
         </td>
       </tr>
+      
       <tr>
         <td>获奖时间</td>
         <td>
           <input type="date" placeholder="请输入获奖时间" v-model="time" />
         </td>
       </tr>
+
       <tr>
         <td>证明文件</td>
         <td>
@@ -116,7 +138,7 @@ export default {
       awardname: "",
       awardCategory: "",
       level: "",
-      Awardingunit: "",
+      awardingUnit: "",
       time: "",
       participants: [],
       //文件列表
@@ -124,6 +146,17 @@ export default {
     };
   },
   props: ["data"],
+  mounted(){
+    this.$refs.dynamic.changeState(); //默认没有disable，需要调整
+
+    this.$data.awardLevel = this.data.awardLevel;
+    this.$data.awardname = this.data.awardname;
+    this.$data.awardCategory = this.data.awardCategory;
+    this.$data.level = this.data.level;
+    this.$data.awardingUnit = this.data.awardApartment;
+    this.$data.time = this.data.awardDate;
+    this.$data.participants = this.data.somePeople;
+  },
   methods: {
     updateParticipants(participants) {
       this.participants = participants;
@@ -155,6 +188,10 @@ export default {
       this.isEditing = false;
       //点击保存，调用DynamicCollection组件的方法，将其中含有的数据同步至本组件内
       this.$refs.dynamic.transmitData();
+       if(this.$data.awardLevel==""||this.$data. awardname==""||this.$data.awardCategory==""||this.$data.level==""||this.$data.awardingUnit==""||this.$data.time==""||this.$data.participants==""||this.$data.uploadFile==""){
+        alert("数据填报不可为空！！！")
+        return;
+      }
       var _this = this;
       const formData = new FormData();
 
@@ -196,9 +233,6 @@ export default {
           console.log(error);
         });
     },
-  },
-  mounted() {
-    this.$refs.dynamic.changeState(); //默认没有disable，需要调整
   },
 };
 </script>

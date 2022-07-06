@@ -7,19 +7,31 @@
       <!-- 立项时间 -->
       <tr>
         <td>立项时间</td>
-        <td><input type="month" /></td>
+        <td><input type="month" v-model="awardDate"/></td>
       </tr>
       <!--级别 -->
       <tr>
         <td>级别</td>
         <td>
-          <input type="radio" id="nation" value="国家级" v-model="awardLevel" />
+          <input type="radio"
+           id="nation" 
+           value="国家级" 
+           v-model="awardLevel" 
+           :disabled="!isEditing"/>
           <label for="nation">国家级</label>
 
-          <input type="radio" id="province" value="省级" v-model="awardLevel" />
+          <input type="radio" 
+          id="province" 
+          value="省级"
+           v-model="awardLevel"
+           :disabled="!isEditing" />
           <label for="province">省级</label>
 
-          <input type="radio" id="school" value="校级" v-model="awardLevel" />
+          <input type="radio"
+           id="school" 
+           value="校级"
+           v-model="awardLevel" 
+           :disabled="!isEditing"/>
           <label for="school">校级</label>
         </td>
       </tr>
@@ -32,7 +44,7 @@
             type="text"
             placeholder="请输入所建设项目的名称"
             v-model="projectName"
-            disabled="!isEditing"
+            :disabled="!isEditing"
           />
         </td>
       </tr>
@@ -41,7 +53,7 @@
       <tr>
         <td>课程类别</td>
         <td>
-          <select v-model="projectCategory">
+          <select v-model="projectCategory" :disabled="!isEditing">
             <option value="课程建设项目">课程建设项目</option>
             <option value="企业-教育部课程建设项目">
               企业-教育部课程建设项目
@@ -74,19 +86,28 @@
             id="established"
             value="立项"
             v-model="projectStatus"
+            :disabled="!isEditing"
           />
           <label for="established">立项</label>
-          <input type="radio" id="done" value="结题" v-model="projectStatus" />
+
+          <input type="radio" 
+          id="done"
+           value="结题"
+           v-model="projectStatus" 
+           :disabled="!isEditing"/>
           <label for="done">结题</label>
+
           <input
             type="radio"
             id="doing"
             value="建设中"
             v-model="projectStatus"
+            :disabled="!isEditing"
           />
           <label for="doing">建设中</label>
         </td>
       </tr>
+
       <!-- 附件 -->
       <tr>
         <td>上传附件</td>
@@ -97,6 +118,7 @@
             name="file"
             @change="getFileData()"
             multiple="true"
+            :disabled="!isEditing"
           />
         </td>
       </tr>
@@ -146,11 +168,21 @@ export default {
       projectStatus: "",
       projectCategory: "",
       projectName: "",
-      awardLevel: "",
+      awardDate: "",
       participants: [],
       //封装文件信息
       uploadFile: [],
     };
+  },
+  mounted(){
+    this.$refs.dynamic.changeState(); //默认没有disable，需要调整
+
+    this.$data.awardLevel = this.data.awardLevel;
+    this.$data.projectName = this.data.projectName;
+    this.$data.projectCategory = this.data.projectCategory;
+    this.$data.projectStatus = this.data.projectStatus;
+    this.$data.awardDate = this.data.awardDate;
+    this.$data.participants = this.data.somePeople;
   },
   methods: {
     updateParticipants(participants) {
@@ -168,20 +200,23 @@ export default {
     },
     // 编辑
     edit() {
-      this.$refs.dynamic.changeState();
+      
       this.isEditing = true;
     },
     // 提交
     commit() {
-      this.$refs.dynamic.changeState();
       this.isEditing = false;
     },
     // 保存
     save() {
-      this.$refs.dynamic.changeState();
+      
       this.isEditing = false;
       //点击保存，调用DynamicCollection组件的方法，将其中含有的数据同步至本组件内
       this.$refs.dynamic.transmitData();
+      if(this.$data.awardLevel == "" ||this.$data.projectStatus == ""||this.$data.projectCategory==""||this.$data.projectName ==""||this.$data.uploadFile==""){
+        alert("数据填写不可为空！！")
+      
+      };
       console.log(this.participants);
       var _this = this;
       const formData = new FormData();
@@ -219,10 +254,6 @@ export default {
           console.log(error);
         });
     },
-  },
-
-  mounted() {
-    this.$refs.dynamic.changeState(); //默认没有disable，需要调整
   },
 };
 </script>

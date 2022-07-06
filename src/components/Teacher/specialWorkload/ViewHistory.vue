@@ -117,9 +117,25 @@ export default {
     return {
       historyWorkloads: [
         {
+          type: "BB9",
+          id: 23,
+          achievementName: "hhh",
+          awardLevel: "省级二等奖"
+          // participants: [
+          //   {
+          //     teacherName: "",
+          //     order: 0,
+          //   },
+          //   {
+          //     teacherName: "",
+          //     order: "",
+          //   },
+          // ],
+        },
+        {
           type: "BB1",
           id: 23,
-          awardName: "hhh",
+          projectName: "hhh",
           participants: [
             {
               teacherName: "",
@@ -134,22 +150,7 @@ export default {
         {
           type: "BB1",
           id: 23,
-          awardName: "hhh",
-          participants: [
-            {
-              teacherName: "",
-              order: 0,
-            },
-            {
-              teacherName: "",
-              order: "",
-            },
-          ],
-        },
-        {
-          type: "BB1",
-          id: 23,
-          awardName: "hhh",
+          projectName: "hhh",
           participants: [
             {
               teacherName: "",
@@ -164,7 +165,7 @@ export default {
         {
           type: "BB2",
           id: 23,
-          awardName: "hhh",
+          projectName: "hhh",
           participants: [
             {
               teacherName: "",

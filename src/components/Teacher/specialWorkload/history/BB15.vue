@@ -11,6 +11,7 @@
             cols="30"
             rows="10"
             placeholder="请输入工作量相关内容"
+            v-model="content"
           ></textarea>
         </td>
       </tr>
@@ -21,7 +22,8 @@
           <input
             type="text"
             placeholder="请输入教师姓名"
-            v-model="teachername"
+            v-model="teacherName"
+            :disabled="!isEditing" 
           />
         </td>
       </tr>
@@ -59,10 +61,14 @@ export default {
       //提交状态
       committed: true,
       content: "",
-      teachername: "",
+      teacherName: "",
     };
   },
   props: ["data"],
+  mounted(){
+    this.$data.content = this.data.briefIntroduction;
+    this.$data.teacherName = this.data.declarantName;
+  },
   methods: {
     // 编辑
     edit() {
@@ -77,6 +83,10 @@ export default {
     save() {
       this.isEditing = false;
       this.$refs.dynamic.transmitData();
+      if(this.$data.content==""||this.$data.teacherName==""){
+        alert("数据填报不可为空！！！")
+        return;
+      }
     },
   },
   created() {},

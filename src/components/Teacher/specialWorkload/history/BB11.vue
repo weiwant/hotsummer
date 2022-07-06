@@ -12,6 +12,7 @@
             cols="30"
             rows="10"
             placeholder="请输入教学兼职相关内容"
+            v-model="content"
           ></textarea>
         </td>
       </tr>
@@ -23,6 +24,7 @@
             type="text"
             placeholder="请输入教师姓名"
             v-model="teachername"
+            :disabled="!isEditing" 
           />
         </td>
       </tr>
@@ -60,10 +62,14 @@ export default {
       //提交状态
       committed: true,
       content: "",
-      teachername: "",
+      teacherName: "",
     };
   },
   props: ["data"],
+  mounted(){
+    this.$data.content = this.data.briefIntroduction;
+    this.$data.teacherName = this.data.declarantName;
+  },
   methods: {
     showHistory() {
       if (!this.historyShown) {
@@ -87,6 +93,10 @@ export default {
     save() {
       this.isEditing = false;
       this.$refs.dynamic.transmitData();
+      if(this.$data.content==""||this.$data.teacherName==""){
+        alert("数据填报不可为空！！！")
+        return;
+      }
     },
   },
   created() {},

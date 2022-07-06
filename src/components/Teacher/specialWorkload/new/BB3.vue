@@ -69,6 +69,12 @@
           />
         </td>
       </tr>
+      <label v-show="isVisible">已上传文件:</label>
+      <div v-show="isVisible"
+        v-for="(fileName, item) in fileNames" :key="item">
+        <label>{{fileName}}</label>
+        <button @click="deleteFile(item)">删除</button>
+      </div>
 
       <!-- 动态增删填报项组件 -->
       <DynamicCollection
@@ -98,6 +104,9 @@ export default {
       participants: [],
       //文件列表
       uploadFile: [],
+      //文件名
+      fileNames: [],
+      isVisible: false
     };
   },
   methods: {
@@ -111,8 +120,10 @@ export default {
     //添加文件数据
     getFileData(file) {
       var _this = this;
+      this.isVisible = true;
       const inputFile = this.$refs.file.files[0];
       this.$data.uploadFile.push(inputFile);
+      this.$data.fileNames.push(inputFile.name);
     },
     save() {
       //点击保存，调用DynamicCollection组件的方法，将其中含有的数据同步至本组件内
@@ -126,8 +137,10 @@ export default {
           awardname: this.$data.awardname,
           awardCategory: this.$data.awardCategory,
           level: this.$data.level,
-          Awardingunit: this.$data.Awardingunit,
-          time: this.$data.time,
+          awardApartment: this.$data.Awardingunit,
+          time: this.$data.awardDate,
+          somePeople: this.$data.participants,
+          type: "BB3"
         },
       ]);
 
@@ -157,6 +170,19 @@ export default {
         .catch(function (error) {
           console.log(error);
         });
+    },
+    deleteFile(item){
+      var _this = this;
+      // console.log(item);
+      this.$data.uploadFile.splice(item,1);
+      // console.log(this.$data.uploadFile);
+      this.$data.fileNames.splice(item,1);
+      // console.log(this.$data.fileNames);
+      if(this.$data.uploadFile == ""){
+        this.$data.isVisible = false;
+      }else{
+        this.$data.isVisible = true;
+      }
     },
   },
   created() {},
