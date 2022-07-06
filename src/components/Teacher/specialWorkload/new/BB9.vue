@@ -182,6 +182,7 @@ export default {
           guidingStudentTeam: this.$data.teamname,
           guidingStudentName: this.$data.studentname,
           declarantName: this.$data.teachername,
+          type: "BB9"
         },
       ]);
 

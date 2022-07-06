@@ -84,6 +84,11 @@ export default {
     };
   },
   props: ["data"],
+  mounted(){
+    this.$data.awardLevel = this.data.awardLevel;
+    this.$data.date = this.data.awardDate;
+    this.$data.name = this.data.declarantName;
+  },
   methods: {
     // 编辑
     edit() {

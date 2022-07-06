@@ -120,7 +120,8 @@ export default {
           projectCategory: this.$data.projectCategory,
           projectName: this.$data.projectName,
           declarantName: this.$data.teacherName,
-          somePeople: this.$data.participants
+          somePeople: this.$data.participants,
+          type: "BB2"
         },
       ]);
 

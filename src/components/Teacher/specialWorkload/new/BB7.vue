@@ -59,6 +59,7 @@ export default {
           awardLevel: this.$data.awardLevel,
           awardDate: this.$data.date,
           declarantName: this.$data.name,
+          type: "BB7"
         },
       ]);
 

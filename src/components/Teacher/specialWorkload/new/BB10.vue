@@ -42,7 +42,7 @@
           <input
             type="text"
             placeholder="请输入学生团队名称"
-            v-model="teamname"
+            v-model="teamName"
           />
         </td>
       </tr>
@@ -90,7 +90,7 @@ export default {
       honor: "",
       projectname: "",
       number: "",
-      teamname: "",
+      teamName: "",
       studentname: "",
       teachername: "",
     };
@@ -108,9 +108,10 @@ export default {
           receivingHonor: this.$data.honor,
           guidingStudentId: this.$data.number,
           projectName: this.$data.projectName,
-          guidingStudentTeam: this.$data.teamname,
+          guidingStudentTeam: this.$data.teamName,
           guidingStudentName: this.$data.studentname,
           declarantName: this.$data.teachername,
+          type: "BB10"
         },
       ]);
 

@@ -66,6 +66,10 @@ export default {
     };
   },
   props: ["data"],
+  mounted(){
+    this.$data.content = this.data.briefIntroduction;
+    this.$data.teacherName = this.data.declarantName;
+  },
   methods: {
     showHistory() {
       if (!this.historyShown) {

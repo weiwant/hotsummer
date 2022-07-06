@@ -147,6 +147,14 @@ export default {
     };
   },
   props: ["data"],
+  mounted(){
+    this.$data.honor = this.data.receivingHonor;
+    this.$data.projectName = this.data.projectName;
+    this.$data.teacherName = this.data.declarantName;
+    this.$data.level = this.data.level;
+    this.$data.teamName = this.data.guidingStudentTeam;
+    this.$data.studentName = this.data.guidingStudentName;
+  },
   methods: {
     // 编辑
     edit() {

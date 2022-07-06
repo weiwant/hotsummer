@@ -7,7 +7,7 @@
       <!-- 立项时间 -->
       <tr>
         <td>立项时间</td>
-        <td><input type="month" /></td>
+        <td><input type="month" v-model="awardDate"/></td>
       </tr>
       <!--级别 -->
       <tr>
@@ -168,10 +168,21 @@ export default {
       projectStatus: "",
       projectCategory: "",
       projectName: "",
+      awardDate: "",
       participants: [],
       //封装文件信息
       uploadFile: [],
     };
+  },
+  mounted(){
+    this.$refs.dynamic.changeState(); //默认没有disable，需要调整
+
+    this.$data.awardLevel = this.data.awardLevel;
+    this.$data.projectName = this.data.projectName;
+    this.$data.projectCategory = this.data.projectCategory;
+    this.$data.projectStatus = this.data.projectStatus;
+    this.$data.awardDate = this.data.awardDate;
+    this.$data.participants = this.data.somePeople;
   },
   methods: {
     updateParticipants(participants) {
@@ -243,10 +254,6 @@ export default {
           console.log(error);
         });
     },
-  },
-
-  created() {
-    this.$refs.dynamic.changeState(); //默认没有disable，需要调整
   },
 };
 </script>

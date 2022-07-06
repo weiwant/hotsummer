@@ -129,6 +129,16 @@ export default {
     };
   },
   props: ["data"],
+  mounted(){
+    this.$refs.dynamic.changeState(); //默认没有disable，需要调整
+
+    this.$data.level = this.data.level;
+    this.$data.articleName = this.data.achievementName;
+    this.$data.publicationName = this.data.publicationName;
+    this.$data.month = this.data.awardDate;
+    this.$data.stage = this.data.publicationNumber;
+    this.$data.participants = this.data.somePeople;
+  },
   methods: {
     updateParticipants(participants) {
       this.participants = participants;
@@ -155,9 +165,6 @@ export default {
         return;
       }
     },
-  },
-  mounted() {
-    this.$refs.dynamic.changeState(); //默认没有disable，需要调整
   },
 };
 </script>

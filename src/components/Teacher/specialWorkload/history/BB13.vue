@@ -78,6 +78,11 @@ export default {
     };
   },
   props: ["data"],
+  mounted(){
+    this.$data.category = this.data.projectCategory;
+    this.$data.time = this.data.awardDate;
+    this.$data.name = this.data.declarantName;
+  },
   methods: {
     // 编辑
     edit() {

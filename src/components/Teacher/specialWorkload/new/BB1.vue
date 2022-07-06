@@ -169,7 +169,8 @@ export default {
           projectCategory: this.$data.projectCategory,
           projectName: this.$data.projectName,
           awardDate: this.$data.awardDate,
-          somePeople: this.$data.participants
+          somePeople: this.$data.participants,
+          type: "BB1"
         },
       ]);
 

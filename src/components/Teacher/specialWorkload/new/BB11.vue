@@ -21,7 +21,7 @@
           <input
             type="text"
             placeholder="请输入教师姓名"
-            v-model="teachername"
+            v-model="teacherName"
           />
         </td>
       </tr>
@@ -38,7 +38,7 @@ export default {
   data() {
     return {
       content: "",
-      teachername: "",
+      teacherName: "",
     };
   },
   methods: {
@@ -51,7 +51,8 @@ export default {
       var data = JSON.stringify([
         {
           briefIntroduction: this.$data.content,
-          declarantName: this.$data.teachername,
+          declarantName: this.$data.teacherName,
+          type: "BB11"
         },
       ]);
 

@@ -139,7 +139,8 @@ export default {
           level: this.$data.level,
           awardApartment: this.$data.Awardingunit,
           time: this.$data.awardDate,
-          somePeople: this.$data.participants
+          somePeople: this.$data.participants,
+          type: "BB3"
         },
       ]);
 

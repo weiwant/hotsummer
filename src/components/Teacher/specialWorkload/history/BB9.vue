@@ -207,6 +207,20 @@ export default {
     };
   },
   props: ["data"],
+  mounted(){
+    var categoryString = this.data.awardLevel.substring(2,5);
+    var levelString = this.data.awardLevel.substring(0,2);
+    console.log(levelString);
+    console.log(categoryString);
+
+    this.$data.competitioncCategory = this.data.projectCategory;
+    this.$data.competitionName = this.data.projectName;
+    this.$data.teacherName = this.data.declarantName;
+    this.$data.level = levelString;
+    this.$data.category = categoryString;
+    this.$data.workName = this.data.achievementName;
+    this.$data.studentName = this.data.guidingStudentName;
+  },
   methods: {
     // 编辑
     edit() {

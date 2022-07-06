@@ -151,6 +151,16 @@ export default {
     };
   },
   props: ["data"],
+  mounted(){
+    this.$refs.dynamic.changeState(); //默认没有disable，需要调整
+
+    this.$data.level = this.data.level;
+    this.$data.projectName = this.data.projectName;
+    this.$data.projectCategory = this.data.projectCategory;
+    this.$data.teacherName = this.data.declarantName;
+    this.$data.projectStatus = this.data.projectStatus;
+    this.$data.participants = this.data.somePeople;
+  },
   methods: {
     updateParticipants(participants) {
       this.participants = participants;
@@ -209,9 +219,6 @@ export default {
           console.log(error);
         });
     },
-  },
-  mounted() {
-    this.$refs.dynamic.changeState(); //默认没有disable，需要调整
   },
 };
 </script>

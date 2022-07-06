@@ -20,7 +20,7 @@
       <tr>
         <td>ISBN</td>
         <td>
-          <input type="text" placeholder="请输入教材的国际标准书号" :disabled="!isEditing"/>
+          <input type="text" placeholder="请输入教材的国际标准书号" :disabled="!isEditing" v-model="isbn"/>
         </td>
       </tr>
       <tr>
@@ -30,7 +30,7 @@
             cols="30"
             rows="10"
             placeholder="请在此输入教材的内容简介"
-
+            v-model="briefIntroduction"
           ></textarea>
         </td>
       </tr>
@@ -79,7 +79,7 @@
             cols="30"
             rows="10"
             placeholder="请在此填入你所获的荣誉"
-            v-model="award"
+            v-model="receivingHonor"
           ></textarea>
         </td>
       </tr>
@@ -133,13 +133,28 @@ export default {
       //提交状态
       committed: true,
       title: "",
+      isbn: "",
       edition: "",
       number: "",
-      award: "",
+      briefIntroduction: "",
+      receivingHonor: "",
       participants: [],
     };
   },
   props: ["data"],
+  mounted() {
+  this.$refs.dynamic.changeState(); //默认没有disable，需要调整
+
+  var numberString = this.data.publicationsNumber.substring(3,8);
+  var editionString = this.data.publicationsNumber.substring(0,3);
+
+  this.$data.title = this.data.achievementName;
+  this.$data.isbn = this.data.isbn;
+  this.$data.edition = editionString;
+  this.$data.number = numberString;
+  this.$data.receivingHonor = this.data.receivingHonor;
+  this.$data.participants = this.data.somePeople;
+  },
   methods: {
     updateParticipants(participants) {
       this.participants = participants;
@@ -166,9 +181,6 @@ export default {
         return;
       }
     },
-  },
-  mounted() {
-    this.$refs.dynamic.changeState(); //默认没有disable，需要调整
   },
 };
 </script>

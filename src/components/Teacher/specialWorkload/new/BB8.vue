@@ -84,6 +84,7 @@ export default {
           achievementName: this.$data.title,
           guidingStudentName: this.$data.studnetname,
           declarantName: this.$data.teachername,
+          type: "BB8"
         },
       ]);
 

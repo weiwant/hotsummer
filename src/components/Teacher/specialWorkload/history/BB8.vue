@@ -99,6 +99,12 @@ export default {
     };
   },
   props: ["data"],
+  mounted(){
+    this.$data.category = this.data.projectCategory;
+    this.$data.title = this.data.achievementName;
+    this.$data.teacherName = this.data.declarantName;
+    this.$data.studnetName = this.data.guidingStudentName;
+  },
   methods: {
     // 编辑
     edit() {
