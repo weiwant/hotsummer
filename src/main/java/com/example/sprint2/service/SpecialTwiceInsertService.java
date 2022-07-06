@@ -12,4 +12,6 @@ public interface SpecialTwiceInsertService {
     Boolean specialSave(SpecialVo specialVo);
 
     boolean specialUpload(SpecialVo specialVo);
+
+    boolean specialMark(SpecialVo specialVo);
 }
