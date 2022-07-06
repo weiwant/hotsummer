@@ -140,15 +140,18 @@ export default {
     },
     // 编辑
     edit() {
+      this.$refs.dynamic.changeState();
       this.isEditing = true;
     },
     // 提交
     commit() {
+      this.$refs.dynamic.changeState();
       this.isEditing = false;
       this.$refs.dynamic.transmitData();
     },
     // 保存
     save() {
+      this.$refs.dynamic.changeState();
       this.isEditing = false;
       //点击保存，调用DynamicCollection组件的方法，将其中含有的数据同步至本组件内
       this.$refs.dynamic.transmitData();
@@ -194,7 +197,7 @@ export default {
         });
     },
   },
-  created() {
+  mounted() {
     this.$refs.dynamic.changeState(); //默认没有disable，需要调整
   },
 };
