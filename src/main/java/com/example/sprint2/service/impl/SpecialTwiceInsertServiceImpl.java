@@ -6,6 +6,7 @@ import com.example.sprint2.models.pojo.TeacherAndOrder;
 import com.example.sprint2.models.vo.SpecialVo;
 import com.example.sprint2.mybatis.entity.SpecialProject;
 import com.example.sprint2.mybatis.entity.SpecialTeacher;
+import com.example.sprint2.service.FileDealService;
 import com.example.sprint2.service.SpecialTwiceInsertService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -22,6 +23,9 @@ public class SpecialTwiceInsertServiceImpl implements SpecialTwiceInsertService 
     SpecialProjectDao specialProjectDao;
     @Autowired
     SpecialTeacherDao specialTeacherDao;
+
+    @Autowired
+    FileDealService fileDealService;
 
     /**
      * @Author：wwq
@@ -60,9 +64,11 @@ public class SpecialTwiceInsertServiceImpl implements SpecialTwiceInsertService 
 
         specialProject.setStatus("已保存");//审核状态
         specialProject.setRemarks(specialVo.getRemarks());//备注
+
         // TODO: 2022/7/5 文件路径
 
         Integer projectId= specialProjectDao.saveSpecialProject(specialProject);
+
 
         List<TeacherAndOrder> teachers=specialVo.getSomePeople();
         for (TeacherAndOrder teacher : teachers) {
@@ -76,6 +82,8 @@ public class SpecialTwiceInsertServiceImpl implements SpecialTwiceInsertService 
             flag=specialTeacherDao.saveSpecialTeacher(specialTeacher);
 
         }
+
+        fileDealService.setPath(projectId);
 
 
         return flag;
@@ -120,6 +128,8 @@ public class SpecialTwiceInsertServiceImpl implements SpecialTwiceInsertService 
         specialProject.setStatus("已保存");//审核状态
         specialProject.setRemarks(specialVo.getRemarks());//备注
         // TODO: 2022/7/5 文件路径
+        fileDealService.setPath(specialVo.getId());
+//        specialProject.setFilePath(msg);
 
         flag=specialProjectDao.uploadSpecialProject(specialProject);
 
