@@ -29,9 +29,10 @@ public class SpecialJoinServiceImpl implements SpecialJoinService {
     SpecialJoinDao specialJoinDao;
 
     /**
+     * @param specialVo
      * @author hy
      * @description 所有查询条件封装
-     * @param specialVo*/
+     */
     @Override
     public IPage<SpecialVo> selectByConditions(SpecialVo specialVo) throws InvocationTargetException, IllegalAccessException {
         List<SpecialJoinResult> specialJoinResults = new ArrayList<>();
@@ -54,8 +55,7 @@ public class SpecialJoinServiceImpl implements SpecialJoinService {
                         specialJoinResult.setTeachingScores(specialVo.getSomePeople().get(i).getTeachingScores());
                         specialJoinResult.setAuthorOrder(specialVo.getSomePeople().get(i).getAuthorOrder());
                     }
-                }
-                else {
+                } else {
                     for (Method method : resultMethods) {
                         if (method.getName().replace("set", "").equals(voMethod.getName().replace("get", ""))) {
                             method.invoke(specialJoinResult, voMethod.invoke(specialVo));
