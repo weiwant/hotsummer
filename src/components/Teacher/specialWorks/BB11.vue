@@ -29,7 +29,7 @@
           <td>
             <input type="text"
              placeholder="请输入教师姓名"
-             v-model="teacheNname">
+             v-model="teacherName">
           </td>
         </tr>
 
@@ -42,8 +42,6 @@
 </template>
 
 <script>
-import { threadId } from 'worker_threads';
-
 export default {
   data() {
     return {

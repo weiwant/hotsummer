@@ -17,30 +17,36 @@
     <div class="addNew">
 
         <tr>
-        <td>级别:    </td>
+        <td>级别</td>
         <td>
           <input type="radio" 
            id="national"  
            value="国家级" v-model="level">  
-           <label for="nation">国家级</label>
-          <input type="radio"  id="provinciallevel" value="省级 "  v-model="level"> 
+           <label for="national">国家级</label>
+
+          <input type="radio" 
+           id="provinciallevel" 
+           value="省级 "  
+           v-model="level"> 
           <label for="provinciallevel">省级</label>
+
           <input type="radio" 
            id="schoollevel"
             value=" 校级 " v-model="level">
           <label for="schoollevel">校级</label>
         </td>
       </tr>
+
       <tr>
-        <td>项目名称:   </td>
+        <td>项目名称</td>
         <td>
            <input type="text" 
            placeholder="请输入所建设项目的名称"
-           v-model="projrctname">
+           v-model="projectName">
         </td>
       </tr>
       <tr>
-        <td>项目类别:   </td>
+        <td>项目类别</td>
         <td>
            <select v-model="projectCategory">
             <option value="课程思政示范专业建设项目" selected="selected">
@@ -54,15 +60,16 @@
         </td>
       </tr>
       <tr>
-        <td>负责人姓名:   </td>
+        <td>负责人姓名</td>
         <td>
            <input type="text"
             placeholder="请输入项目负责人姓名"
-            v-model="managername">
+            v-model="teacherName">
         </td>
       </tr>
+
       <tr>
-        <td>进展情况:   </td>
+        <td>进展情况</td>
         <td>
           <input
             type="radio"
@@ -71,8 +78,13 @@
             v-model="projectStatus"
           />
           <label for="established">立项</label>
-          <input type="radio" id="done" value="结题" v-model="projectStatus" />
+
+          <input type="radio"
+           id="done" 
+           value="结题"
+            v-model="projectStatus" />
           <label for="done">结题</label>
+
           <input
             type="radio"
             id="doing"
@@ -91,6 +103,7 @@
 </template>
 
 <script>
+import axios from 'axios';
 
 export default {
   
@@ -99,10 +112,10 @@ export default {
       historyDisplayBtnText: "展开 ",
       historyShown: false,
       //填报数据
-      level :"",
-      projrctName:"",
+      level:"",
+      projectName:"",
       projectCategory:"",
-      managerName:"",
+      teacherName:"",
       projectStatus:"",
       
     };
@@ -120,21 +133,41 @@ export default {
    
     /*提交上报数据*/
     commit() {
-      this.$axios.post('url:',{
-        data:[
-          {
-           level: this.level,
-           project_name:this.projrctName,
-           project_category:this.projectCategory,
-           manager_naem:this.managerName,
-           project_status:this.projrctStatus,
+      var _this = this;
+      const formData = new FormData();
 
-          }
-        ]
-      }).then(res=>{
-        console.log(res.data)
-      })
+      var data = JSON.stringify([{
+        awardLevel: this.$data.awardLevel,
+        projectStatus: this.$data.projectStatus,
+        projectCategory: this.$data.projectCategory,
+        projectName: this.$data.projectName
+      }]);
+
+      formData.append("data", data);
+
+      console.log(formData.get("data"));
+      console.log(this.$domainName)
+
+      //以下需要修改接口
+      this.$axios
+        .post(`${this.$domainName}/special-workload/upload`, formData, {
+          
+            headers: {
+              "Content-Type": "multipart/form-datas",
+            },
+          })
+          .then((res) => {
+            if (res.data.response.code == 200) {
+              alert("报表文件上传成功！");
+            } else {
+              alert("上传失败！");
+            }
+          })
+          .catch(function (error) {
+            console.log(error);
+          });
     },
+
   },
   created() {},
 };

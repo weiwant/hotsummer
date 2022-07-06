@@ -64,18 +64,7 @@ export default {
     },
     /*提交上报数据*/
     commit() {
-      this.$axios.post('url:',{
-        data:[
-          {
-          content:this.content,
-          teacher_name:this.teacherName,
-        }
-        ]
-      }).then(res=>{
-        console.log(res.data)
-      })
-
-      }
+    },
    
   },
   created() {},
