@@ -4,7 +4,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.util.List;
@@ -37,13 +36,17 @@ public interface FileDealService {
 
     List<String> uploadFileById(MultipartFile[] files, Integer id) throws IOException;
 
-    Boolean deleteFileByPath( String uri);
+    Boolean deleteFileByPath(String uri);
 
     String downloadByPath(HttpServletResponse response, String path);
 
     List<String> compressedDownloadByYear(String year, HttpServletResponse response) throws Exception;
 
-     void compress(File sourceFile, ZipOutputStream zos, String name,
+    Boolean deleteByFileName(Integer id, String fileName);
+
+    String renameFile(Integer id);
+
+    void compress(File sourceFile, ZipOutputStream zos, String name,
                   boolean KeepDirStructure) throws Exception;
 
     void deleteDir(File src);

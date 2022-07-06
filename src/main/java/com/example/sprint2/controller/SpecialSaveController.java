@@ -33,13 +33,13 @@ public class SpecialSaveController {
      * @Url:/special-workload/save/teacher
      * @Description：教师申报特殊工作量，将记录插入数据库
      */
-    @RequestMapping(value = "/save/teacher",method = RequestMethod.POST)
-    public String saveSpecialWorkload(@Nullable SpecialVo specialVo,@RequestParam("teachers") String teachers, @RequestParam("files") @Nullable MultipartFile[] files) throws IOException {
-        JSONArray jsonArray=JSONArray.parseArray(teachers);
+    @RequestMapping(value = "/save/teacher", method = RequestMethod.POST)
+    public String saveSpecialWorkload(@Nullable SpecialVo specialVo, @RequestParam("teachers") String teachers, @RequestParam("files") @Nullable MultipartFile[] files) throws IOException {
+        JSONArray jsonArray = JSONArray.parseArray(teachers);
         specialVo.setSomePeople(jsonArray.toJavaList(TeacherAndOrder.class));
         specialVo.setFiles(files);
 
-        if(service.specialSave(specialVo)){
+        if (service.specialSave(specialVo)) {
             return new Result(ResponseCode.SUCCESS).toString();
         } else {
             return new Result(ResponseCode.UnknownFailure).toString();
@@ -52,11 +52,11 @@ public class SpecialSaveController {
      * @Url:/special-workload/upload/teacher
      * @Description：教师修改其已保存的工作量。更新数据库
      */
-    @RequestMapping(value = "/upload/teacher",method = RequestMethod.POST)
-    public String uploadSpecialWorkload(@Nullable SpecialVo specialVo,@RequestParam("teachers") String teachers){
-        JSONArray jsonArray=JSONArray.parseArray(teachers);
+    @RequestMapping(value = "/upload/teacher", method = RequestMethod.POST)
+    public String uploadSpecialWorkload(@Nullable SpecialVo specialVo, @RequestParam("teachers") String teachers) {
+        JSONArray jsonArray = JSONArray.parseArray(teachers);
         specialVo.setSomePeople(jsonArray.toJavaList(TeacherAndOrder.class));
-        if(service.specialUpload(specialVo)){
+        if (service.specialUpload(specialVo)) {
             return new Result(ResponseCode.SUCCESS).toString();
         } else {
             return new Result(ResponseCode.UnknownFailure).toString();

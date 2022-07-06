@@ -1,9 +1,7 @@
 package com.example.sprint2.models.pojo;
 
-import com.alibaba.fastjson.annotation.JSONField;
 import lombok.Data;
 
-import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.List;
 

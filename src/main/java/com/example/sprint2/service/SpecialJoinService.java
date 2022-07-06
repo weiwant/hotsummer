@@ -1,7 +1,6 @@
 package com.example.sprint2.service;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.example.sprint2.models.pojo.SpecialJoinResult;
 import com.example.sprint2.models.vo.SpecialVo;
 
 import java.lang.reflect.InvocationTargetException;

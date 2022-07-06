@@ -11,6 +11,7 @@ import com.example.sprint2.service.SpecialTwiceInsertService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.List;
 
 /**
@@ -35,12 +36,12 @@ public class SpecialTwiceInsertServiceImpl implements SpecialTwiceInsertService 
      */
     @Override
     public Boolean specialSave(SpecialVo specialVo) {
-        boolean flag=true;
+        boolean flag = true;
 
-        SpecialProject specialProject=new SpecialProject();//Project实体类。
+        SpecialProject specialProject = new SpecialProject();//Project实体类。
 
         //处理Project
-        specialProject.setReportTime(specialVo.getReportTime());//申报时间
+        specialProject.setReportTime(LocalDate.now());//申报时间
         specialProject.setDeclarantName(specialVo.getDeclarantName());//申报人
 
         specialProject.setType(specialVo.getType());//bb类型-----》Teacher表需要
@@ -67,19 +68,19 @@ public class SpecialTwiceInsertServiceImpl implements SpecialTwiceInsertService 
 
         // TODO: 2022/7/5 文件路径
 
-        Integer projectId= specialProjectDao.saveSpecialProject(specialProject);
+        Integer projectId = specialProjectDao.saveSpecialProject(specialProject);
 
 
-        List<TeacherAndOrder> teachers=specialVo.getSomePeople();
+        List<TeacherAndOrder> teachers = specialVo.getSomePeople();
         for (TeacherAndOrder teacher : teachers) {
-            SpecialTeacher specialTeacher=new SpecialTeacher();//Teacher实体类。
+            SpecialTeacher specialTeacher = new SpecialTeacher();//Teacher实体类。
             specialTeacher.setProjectId(projectId);//项目id
             specialTeacher.setType(specialVo.getType());//bb类型
             specialTeacher.setTeacherName(teacher.getTeacherName());//教师姓名
             specialTeacher.setAuthorOrder(teacher.getAuthorOrder());//排序情况
             // TODO: 2022/7/5 教分
 
-            flag=specialTeacherDao.saveSpecialTeacher(specialTeacher);
+            flag = specialTeacherDao.saveSpecialTeacher(specialTeacher);
 
         }
 
@@ -97,9 +98,9 @@ public class SpecialTwiceInsertServiceImpl implements SpecialTwiceInsertService 
      */
     @Override
     public boolean specialUpload(SpecialVo specialVo) {
-        boolean flag=true;
+        boolean flag = true;
 
-        SpecialProject specialProject=new SpecialProject();//Project实体类。
+        SpecialProject specialProject = new SpecialProject();//Project实体类。
 
         specialProject.setId(specialVo.getId());//项目id
         //处理Project
@@ -128,16 +129,16 @@ public class SpecialTwiceInsertServiceImpl implements SpecialTwiceInsertService 
         specialProject.setStatus("已保存");//审核状态
         specialProject.setRemarks(specialVo.getRemarks());//备注
         // TODO: 2022/7/5 文件路径
-        fileDealService.setPath(specialVo.getId());
+//        fileDealService.setPath(specialVo.getId());
 //        specialProject.setFilePath(msg);
 
-        flag=specialProjectDao.uploadSpecialProject(specialProject);
+        flag = specialProjectDao.uploadSpecialProject(specialProject);
 
 
         //删除ProjectId里的所有教师
         specialTeacherDao.deleteByProjectId(specialVo.getId());
         //重新插入
-        List<TeacherAndOrder> teachers=specialVo.getSomePeople();
+        List<TeacherAndOrder> teachers = specialVo.getSomePeople();
         for (TeacherAndOrder teacher : teachers) {
             SpecialTeacher specialTeacher = new SpecialTeacher();//Teacher实体类。
             specialTeacher.setProjectId(specialVo.getId());//项目id
@@ -149,6 +150,7 @@ public class SpecialTwiceInsertServiceImpl implements SpecialTwiceInsertService 
             specialTeacherDao.saveSpecialTeacher(specialTeacher);
         }
 
+        fileDealService.renameFile(specialVo.getId());
         return flag;
     }
 
