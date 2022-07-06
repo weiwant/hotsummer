@@ -43,13 +43,15 @@ public class SpecialJoinDao {
             File fileFolder = new File(filePath);
             File[] files = fileFolder.listFiles();
             List<String> fileNames = new ArrayList<>();
-            for (File file : files) {
-                String fileName = file.getName();
-                fileNames.add(fileName);
-            }
-            specialJoinResult1.setFileName(fileNames);
-            for (String name : specialJoinResult1.getFileName()) {
-                System.out.println(name);
+            if (files != null) {
+                for (File file : files) {
+                    String fileName = file.getName();
+                    fileNames.add(fileName);
+                }
+                specialJoinResult1.setFileName(fileNames);
+                for (String name : specialJoinResult1.getFileName()) {
+                    System.out.println(name);
+                }
             }
         });
         return results;

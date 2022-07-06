@@ -1,9 +1,12 @@
 package com.example.sprint2.dao;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.example.sprint2.mybatis.entity.UserLogin;
 import com.example.sprint2.mybatis.mapper.UserloginMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+
+import java.util.List;
 
 /**
  * @author hy
@@ -26,6 +29,10 @@ public class UserDao {
             return null;
         }
 
+    }
+
+    public List<UserLogin> selectAll() {
+        return userloginMapper.selectList(new QueryWrapper<>());
     }
 
 
