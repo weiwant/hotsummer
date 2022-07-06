@@ -1,11 +1,17 @@
 package com.example.sprint2.models.vo;
 
+import com.example.sprint2.models.pojo.TeacherAndOrder;
+import lombok.Data;
+import org.springframework.web.multipart.MultipartFile;
+
 import java.time.LocalDate;
+import java.util.List;
 
 /**
  * @author:wwq
  * @Date：2022/7/5：11:57
  */
+@Data
 public class SpecialVo {
     /**
      * 主键
@@ -124,23 +130,12 @@ public class SpecialVo {
 
 
     //teacher
-
-
     /**
-     * 教师姓名
+     * 教师列表。包括教师名，排序和教分。
      */
-    private String teacherName;
 
-    /**
-     * 排序情况/位次
-     */
-    private String authorOrder;
+    private List<TeacherAndOrder> somePeople;
 
-
-    /**
-     * 教分
-     */
-    private Double teachingScores;
-
+    private MultipartFile[] files;
 
 }
