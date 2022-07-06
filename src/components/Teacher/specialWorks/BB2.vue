@@ -150,7 +150,7 @@ export default {
 
       //以下需要修改接口
       this.$axios
-        .post(`${this.$domainName}/special-workload/upload`, formData, {
+        .post(`users/special-workload/upload`, formData, {
           
             headers: {
               "Content-Type": "multipart/form-datas",
