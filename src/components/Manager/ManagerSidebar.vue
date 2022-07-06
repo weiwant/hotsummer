@@ -6,7 +6,7 @@
     <div class="title">管理员界面</div>
     <ul class="mainFunctions">
       <li>
-        <router-link to="personalInfo"> 个人信息</router-link>
+        <router-link to="personalInfo"> 个人主页</router-link>
       </li>
       <li>
         <router-link to="uploadWorkload"> 上传教学工作量 </router-link>

@@ -7,15 +7,16 @@
 <style>
 @font-face {
   font-family: "icomoon";
-  src: url("assets/fonts/icomoon.eot?tyg5tf");
-  src: url("assets/fonts/icomoon.eot?tyg5tf#iefix") format("embedded-opentype"),
-    url("assets/fonts/icomoon.ttf?tyg5tf") format("truetype"),
-    url("assets/fonts/icomoon.woff?tyg5tf") format("woff"),
-    url("assets/fonts/icomoon.svg?tyg5tf#icomoon") format("svg");
+  src: url("assets/fonts/icomoon.eot?acmoqw");
+  src: url("assets/fonts/icomoon.eot?acmoqw#iefix") format("embedded-opentype"),
+    url("assets/fonts/icomoon.ttf?acmoqw") format("truetype"),
+    url("assets/fonts/icomoon.woff?acmoqw") format("woff"),
+    url("assets/fonts/icomoon.svg?acmoqw#icomoon") format("svg");
   font-weight: normal;
   font-style: normal;
   font-display: block;
 }
+
 * {
   margin: 0;
   padding: 0;
@@ -132,6 +133,10 @@ input:focus {
   text-align: left;
   font-size: 20px;
   font-weight: 600;
+}
+/* 工具栏 */
+.toolBar {
+  overflow: hidden;
 }
 /* 处理excel文件的绿色btn*/
 button.workloadFileProcessingBtn {

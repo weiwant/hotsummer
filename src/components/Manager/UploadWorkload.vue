@@ -299,6 +299,7 @@ label {
 }
 .componentSubsection {
   height: 130px;
+  max-width: 700px;
 }
 button.workloadFileProcessingBtn {
   position: absolute;

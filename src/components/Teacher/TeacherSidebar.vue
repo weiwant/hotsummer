@@ -6,7 +6,7 @@
     <div class="title">教师界面</div>
     <ul class="mainFunctions">
       <li>
-        <router-link to="PersonalInfo"><span></span> 个人信息</router-link>
+        <router-link to="PersonalInfo"><span></span> 个人主页</router-link>
       </li>
       <li>
         <router-link to="TeacherWorkloadTable"
@@ -19,7 +19,7 @@
         </router-link>
       </li>
       <li>
-        <router-link to="ViewHistory"><span></span> 历史上报 </router-link>
+        <router-link to="ViewHistory"><span></span> 历史上报 </router-link>
       </li>
     </ul>
     <ul class="tool"></ul>

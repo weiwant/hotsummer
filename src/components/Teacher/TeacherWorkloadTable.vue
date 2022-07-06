@@ -2,17 +2,20 @@
   <div class="componentWrapper">
     <!--component标题-->
     <div class="componentSectionTitle">教学工作量</div>
-    <YearFilter @yearConfirmed="yearConfirmed"></YearFilter>
-    <TableStatisticsBar
-      :allPageCount="allPageCount"
-      :totalItems="totalItems"
-    ></TableStatisticsBar>
-    <DownloadExcelFile
-      :btnText="'导出excel至本地'"
-      :disabled="!dataExists"
-      :defaultFileName="`${yearChosen}年度工作量`"
-      @exportFile="exportFile"
-    ></DownloadExcelFile>
+    <YearFilter
+      :yearChosen="yearChosen"
+      @yearConfirmed="yearConfirmed"
+    ></YearFilter>
+    <TableStatisticsBar :keyValuePairs="keyValuePairs"></TableStatisticsBar>
+    <div class="componentSubsection toolBar">
+      <DownloadExcelFile
+        :btnText="'导出excel至本地'"
+        :disabled="!dataExists"
+        :defaultFileName="`${yearChosen}年度工作量`"
+        @exportFile="exportFile"
+      ></DownloadExcelFile>
+    </div>
+
     <!--数据列表-->
     <PlainTable
       :dataExists="dataExists"
@@ -54,7 +57,7 @@ export default {
       allPageCount: 1,
       currentPage: 1,
       //表格数据
-      yearChosen: "",
+      yearChosen: this.$currentYear,
       workloadTableHeader: [
         "学年",
         "辅助",
@@ -95,6 +98,21 @@ export default {
       dataExists: false, //“暂无数据”提示的显示
       noDataHint: "",
     };
+  },
+  computed: {
+    //展示在统计栏的数据
+    keyValuePairs() {
+      return [
+        {
+          key: "查询结果数",
+          value: this.totalItems,
+        },
+        {
+          key: "总页数",
+          value: this.allPageCount,
+        },
+      ];
+    },
   },
   methods: {
     //根据当前学年和学期获取对应工作量的数据
@@ -168,9 +186,7 @@ export default {
   },
   created() {
     //获取当前老师用户的姓名
-    // this.currentTeacherName = localStorage.getItem("teacherName");
-    this.currentTeacherName = "丁建利";
-    this.yearChosen = this.$currentYear;
+    this.currentTeacherName = localStorage.getItem("teacherName");
     //向后台获取default学年学期数据;
     this.getTableData();
   },

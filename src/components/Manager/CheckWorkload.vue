@@ -3,19 +3,18 @@
     <div class="componentSectionTitle">查看教学工作量</div>
     <FilterWithSearch
       :searchKeywords="searchKeywords"
-      @yearOnly="confirmYear"
-      @yearAndSearchValue="confirmSearchValue"
+      @getData="confirmSearchValue"
     ></FilterWithSearch>
-    <TableStatisticsBar
-      :allPageCount="allPageCount"
-      :totalItems="totalItems"
-    ></TableStatisticsBar>
-    <DownloadExcelFile
-      :btnText="'导出excel至本地'"
-      :disabled="!dataExists"
-      :defaultFileName="`${yearChosen}年度工作量`"
-      @exportFile="exportFile"
-    ></DownloadExcelFile>
+    <TableStatisticsBar :keyValuePairs="keyValuePairs"></TableStatisticsBar>
+    <div class="componentSubsection toolBar">
+      <DownloadExcelFile
+        :btnText="'导出excel至本地'"
+        :disabled="!dataExists"
+        :defaultFileName="`${yearChosen}年度教学工作量`"
+        @exportFile="exportFile"
+      ></DownloadExcelFile>
+    </div>
+
     <!--数据列表-->
     <PlainTable
       :dataExists="dataExists"
@@ -49,12 +48,11 @@ export default {
   },
   data() {
     return {
-      searchKeywords: ["上课老师", "教分"],
-      //当前的状态
-      useSearch: false,
+      //当前查询的状态
+      searchKeywords: ["上课老师"],
       yearChosen: this.$currentYear,
-      currentSearchKeyword: "",
-      currentSearchValue: "",
+      searchKeywordChosen: "",
+      searchValueChosen: "",
       //pagination
       currentPage: 1,
       allPageCount: 1,
@@ -101,18 +99,43 @@ export default {
       noDataHint: "", //“暂无数据”提示
     };
   },
+  computed: {
+    //展示在统计栏的数据
+    keyValuePairs() {
+      return [
+        {
+          key: "查询结果数",
+          value: this.totalItems,
+        },
+        {
+          key: "总页数",
+          value: this.allPageCount,
+        },
+      ];
+    },
+  },
   methods: {
     /*
-     *getTableData()与search()永远不会是事件的第一handler
+     *getTableData()永远不会是事件的第一handler
      *每个事件都有其对应的第一handler，负责将请求参数都配置好后
-     *再调用getTableData()或search()
+     *再调用getTableData()
      */
     //获取某学年全部数据
     getTableData() {
       const formData = new FormData();
       formData.append("naturalYear", this.yearChosen);
       formData.append("page", this.currentPage);
-      // console.log(formData.get("page"));
+      // 如果搜索值不为空
+      if (this.searchValueChosen != "") {
+        switch (this.searchKeywordChosen) {
+          case "上课老师":
+            formData.append("mainTeacherName", this.searchValue);
+            break;
+          case "教分":
+            formData.append("mainTeacherName", this.searchValue);
+            break;
+        }
+      }
       this.$axios
         .post(`${this.$domainName}/total/records/page`, formData)
         .then((res) => {
@@ -129,7 +152,11 @@ export default {
             this.workloadTableData = [];
             this.allPageCount = 1;
             this.totalItems = 0;
-            this.noDataHint = `暂无&nbsp;&nbsp;${this.yearChosen}&nbsp;&nbsp;年度的数据！`;
+            if (this.searchValueChosen == "") {
+              this.noDataHint = `暂无&nbsp;&nbsp;${this.yearChosen}&nbsp;&nbsp;年度的数据！`;
+            } else {
+              this.noDataHint = `暂无&nbsp;&nbsp;${this.yearChosen}&nbsp;&nbsp;年度，${this.searchKeywordChosen}&nbsp;为&nbsp;${this.searchValueChosen}&nbsp;的数据！`;
+            }
           }
         })
         .catch((err) => {
@@ -137,79 +164,24 @@ export default {
           this.noDataHint = "获取数据出错！";
         });
     },
-    //条件搜索
-    search() {
-      switch (this.searchKeyword) {
-        case "上课老师":
-          const formData = new FormData();
-          formData.append("naturalYear", this.yearChosen);
-          formData.append("page", this.currentPage);
-          formData.append("mainTeacherName", this.searchValue);
-          this.$axios
-            .post(`${this.$domainName}/total/records/page`, formData)
-            .then((res) => {
-              if (res.data.response.code == 200) {
-                this.dataExists = true;
-                this.workloadTableData = res.data.data.records;
-                this.allPageCount = res.data.data.pageNum;
-                this.totalItems = res.data.data.itemNum;
-              } else {
-                this.dataExists = false;
-                this.workloadTableData = [];
-                this.allPageCount = 1;
-                this.totalItems = 0;
-                this.noDataHint = `暂无&nbsp;&nbsp;${this.year}&nbsp;&nbsp;年度，${this.searchKeyword}&nbsp;&nbsp;为&nbsp;&nbsp;${this.searchValue}&nbsp;&nbsp;的数据！`;
-              }
-            })
-            .catch((err) => {
-              console.log(err);
-              this.noDataHint = "获取数据出错！";
-            });
-          break;
-        case "教分":
-          console.log(year);
-          console.log(searchKeyword);
-          console.log(searchValue);
-      }
-    },
-
-    //选择了年份并确认
-    confirmYear(year) {
-      //请求数据前设置好参数
-      this.useSearch = false;
-      this.yearChosen = year;
-      this.currentPage = 1;
-      this.getTableData();
-    },
     //选择了年份和搜索条件，并给出了搜索值后确认
     confirmSearchValue(year, searchKeyword, searchValue) {
       //在请求数据前设置好参数
-      this.useSearch = true;
       this.yearChosen = year;
-      this.searchKeyword = searchKeyword;
-      this.searchValue = searchValue;
+      this.searchKeywordChosen = searchKeyword;
+      this.searchValueChosen = searchValue;
       this.currentPage = 1;
-      this.search();
+      this.getTableData;
     },
     //页面切换
     //进行页面切换时，基本的搜索参数没变，只需要调整页数
     pageBefore() {
       this.currentPage = this.currentPage - 1; //由于组件内存在计算属性把关是否前面还存在页面，所以可以直接-1
-      if (this.useSearch) {
-        //在基本表格是通过关键词搜索的情况下得到时
-        this.search();
-      } else {
-        //在基本表格是在单纯年份的条件下得到时
-        this.getTableData();
-      }
+      this.getTableData();
     },
     pageAfter() {
       this.currentPage = this.currentPage + 1;
-      if (this.useSearch) {
-        this.search();
-      } else {
-        this.getTableData();
-      }
+      this.getTableData();
     },
     //文件导出(暂时还不考虑在search状态下的导出，只导出全年的)
     exportFile(filename) {
@@ -229,14 +201,10 @@ export default {
   },
   created() {
     //获取default年度数据;
-    this.useSearch = false;
-    this.yearChosen = this.$currentYear;
-    this.currentPage = 1;
     this.getTableData();
   },
 };
 </script>
 
 <style scoped>
-/* 数据列表 */
 </style>

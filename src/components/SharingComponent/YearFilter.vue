@@ -8,7 +8,7 @@
   <div class="tableFilter">
     <label
       >年份
-      <select v-model="yearChosen" @change="selectYear">
+      <select v-model="yearChosen">
         <option
           v-for="index in 5"
           :key="index"
@@ -27,18 +27,15 @@
 <script>
 export default {
   name: "YearFilter",
+  props: ["yearChosen"],
   data() {
     return {
       currentYear: this.$currentYear,
-      yearChosen: this.$currentYear,
     };
   },
   methods: {
-    selectYear() {
-      this.$emit("yearSelected", this.yearChosen);
-    },
     confirmYear() {
-      this.$emit("yearConfirmed", this.yearChosen);
+      this.$emit("yearConfirmed");
     },
   },
 };

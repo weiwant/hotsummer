@@ -32,6 +32,7 @@
             type="text"
             placeholder="请输入所建设项目的名称"
             v-model="projectName"
+            disabled="!isEditing"
           />
         </td>
       </tr>

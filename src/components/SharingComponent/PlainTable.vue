@@ -30,7 +30,7 @@ export default {
 .tableWrapper {
   position: relative;
   overflow: scroll;
-  height: 62vh;
+  height: 86vh;
   padding-bottom: 15px;
 }
 table.plainDataTable {

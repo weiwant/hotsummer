@@ -1,18 +1,10 @@
 <template>
   <!-- 展示查询结果（表格）的一些统计特性 -->
-  <!-- 接收参数
-      totalItems：查询结果总项目数
-      allPageCount：查询结果总页数
-  -->
   <div class="componentSubsection">
     <ul class="resultStatistics">
-      <li>
-        <div class="name">查询结果数</div>
-        <div class="value">{{ totalItems }}</div>
-      </li>
-      <li>
-        <div class="name">总页数</div>
-        <div class="value">{{ allPageCount }}</div>
+      <li v-for="(item, index) in keyValuePairs" :key="index">
+        <div class="name">{{ item.key }}</div>
+        <div class="value">{{ item.value }}</div>
       </li>
     </ul>
   </div>
@@ -21,7 +13,7 @@
 <script>
 export default {
   name: "TableStatisticsBar",
-  props: ["totalItems", "allPageCount"],
+  props: ["keyValuePairs"],
 };
 </script>
 

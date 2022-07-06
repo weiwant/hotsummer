@@ -1,6 +1,6 @@
 <template>
   <div class="componentWrapper">
-    <div class="componentSectionTitle">个人信息</div>
+    <div class="componentSectionTitle">个人主页</div>
   </div>
 </template>
 

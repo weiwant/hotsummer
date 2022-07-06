@@ -1,9 +1,6 @@
 <template>
   <div class="searchFilter">
-    <YearFilter
-      @yearSelected="selectYear"
-      @yearConfirmed="confirmYearOnly"
-    ></YearFilter>
+    <YearFilter :yearChosen="year" @yearConfirmed="search"></YearFilter>
     <!-- 条件搜索 -->
     <div class="wrapper">
       <select class="search" v-model="searchKeyword" id="">
@@ -22,7 +19,7 @@
         placeholder="查询内容"
         @keyup.enter="search()"
       />
-      <button class="searchBtn universalBlueBtn" @click="search()"></button>
+      <button class="searchBtn universalBlueBtn" @click="search"></button>
     </div>
   </div>
 </template>
@@ -37,26 +34,16 @@ export default {
   props: ["searchKeywords"],
   data() {
     return {
-      year: "",
+      year: this.$currentYear,
       searchKeyword: this.searchKeywords[0],
       searchValue: "",
     };
   },
   methods: {
-    //选择了年份且点击了确认
-    confirmYearOnly(year) {
-      this.year = year;
-      this.$emit("yearOnly", this.year);
-    },
-    //选择了年份但没有点击确认，可能会点击searchBtn，应将year数据暂存
-    selectYear(year) {
-      this.year = year;
-    },
-    //点击了搜索btn后
+    //点击了搜索btn或确定btn
     search() {
-      if (this.searchValue == "") return;
       this.$emit(
-        "yearAndSearchValue",
+        "getData",
         this.year,
         this.searchKeyword,
         this.searchValue.trim()
@@ -77,6 +64,7 @@ export default {
   top: -3px;
   left: 200px;
   padding: 5px 0;
+  width: 300px;
 }
 .wrapper .search {
   height: 30px;

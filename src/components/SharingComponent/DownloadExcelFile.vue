@@ -8,7 +8,7 @@
   <!-- 事件
   @exportFile -> filename(用户输入的文件名)
   -->
-  <div class="componentSubsection toolbar">
+  <div class="excelTool">
     <label class="customFileName"
       >文件名：
       <input type="text" v-model="exportFileName" />
@@ -51,8 +51,8 @@ export default {
 </script>
 
 <style scoped>
-div.componentSubsection.toolbar {
-  text-align: right;
+div.excelTool {
+  width: 600px;
 }
 label.customFileName {
   font-size: 14px;
