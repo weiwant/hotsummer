@@ -68,12 +68,12 @@ public class FileDealController {
 
     }
 
-    @RequestMapping(value = "/delete-by-path",method = RequestMethod.POST)
-    public String deleteById(@RequestParam String uri){
-        if(fileDealService.deleteFileByPath(uri)){
-            return new Result(ResponseCode.SUCCESS,uri).toString();
+    @RequestMapping(value = "/delete-file",method = RequestMethod.POST)
+    public String deleteById(@RequestParam String fileName,@RequestParam Integer id){
+        if(fileDealService.deleteByFileName(id, fileName)){
+            return new Result(ResponseCode.SUCCESS,fileName).toString();
         }
-        else return new Result(ResponseCode.UnknownFailure,uri).toString();
+        else return new Result(ResponseCode.UnknownFailure,fileName).toString();
     }
     //按照返回来的uri下载文件
     @RequestMapping(value = "/download-by-path",method = RequestMethod.POST)

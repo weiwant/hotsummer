@@ -14,6 +14,7 @@ import java.io.*;
 import java.net.URLEncoder;
 import java.nio.charset.Charset;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.*;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
@@ -263,11 +264,10 @@ public class FileDealServiceImpl implements FileDealService {
         }
         String projectPath = System.getProperty("user.dir");//获取根目录
         Calendar calendar=Calendar.getInstance();
+        SimpleDateFormat simpleDateFormat=new SimpleDateFormat();
         //在根目录下新建一个文件夹
-        String yearFileFolderPath = specialProject.getAwardDate();//实际上是getYear
-        if(yearFileFolderPath==null||yearFileFolderPath.equals("")){
-            yearFileFolderPath=String.valueOf(calendar.get(Calendar.YEAR));//如果为空，就默认为当前年份
-        }
+        LocalDate year = specialProject.getReportTime();
+        String yearFileFolderPath= String.valueOf(year.getYear());
         File yearFile =new File(projectPath + "\\"+yearFileFolderPath);
         if(!yearFile.exists()){
             yearFile.mkdirs();//新建文件夹
@@ -280,10 +280,10 @@ public class FileDealServiceImpl implements FileDealService {
         List<String>names=specialTeacherDao.getTeacherNamesById(id);
         String projectName=specialProject.getProjectName();
         for (String name : names) {
-            projectName += name;
+            projectName =projectName+ "-"+name;
         }
-        projectName+=specialProject.getId();
-        String teacherFileFolderPath=typeFileFolderPath+"\\"+projectName;//实际上还需要所有教师的姓名
+        projectName=projectName+"-"+specialProject.getId();
+        String teacherFileFolderPath=typeFileFolderPath+"\\"+projectName;
         File teacherFile=new File(projectPath + "\\"+teacherFileFolderPath);
         if(!teacherFile.exists()){
             teacherFile.mkdirs();
@@ -292,7 +292,6 @@ public class FileDealServiceImpl implements FileDealService {
             return teacherFileFolderPath;//只返回相对路径，到时候需要修改数据库内容
         }
         else return "error2";//设置失败，无法写入数据库
-
     }
     @Override
     public List<String> uploadFileById(MultipartFile[] files,Integer id) throws IOException {
@@ -335,7 +334,6 @@ public class FileDealServiceImpl implements FileDealService {
             return msg;
         }
     }
-
     @Override
     public List<String> getFilePath(Integer id) {
         /**
@@ -368,8 +366,6 @@ public class FileDealServiceImpl implements FileDealService {
         return msg;
 
     }
-
-
     @Override
     public Boolean deleteFileByPath(String uri){
         /**
@@ -388,7 +384,6 @@ public class FileDealServiceImpl implements FileDealService {
 //            return true;
         }
     }
-
     @Override
     public String downloadByPath(HttpServletResponse response, String path) {
         /**
@@ -443,7 +438,6 @@ public class FileDealServiceImpl implements FileDealService {
             }
         return msg;
     }
-
     @Override
     public List<String> compressedDownload(int id, HttpServletResponse response) {
         /**
@@ -535,7 +529,6 @@ public class FileDealServiceImpl implements FileDealService {
         }
         return msg;
     }
-
     @Override
     public List<String> compressedDownloadByYear(String year, HttpServletResponse response) throws Exception {
         /**
@@ -571,7 +564,7 @@ public class FileDealServiceImpl implements FileDealService {
         }
         return msg;
     }
-
+    @Override
     public Boolean deleteByFileName(Integer id,String fileName){
     /**
      * @author 24047
@@ -583,6 +576,49 @@ public class FileDealServiceImpl implements FileDealService {
         SpecialProject specialProject= specialProjectDao.selectSpecialProjectById(id);
         return this.deleteFileByPath(specialProject.getFilePath()+"\\"+fileName);
     }
+    @Override
+    public String renameFile(Integer id){
+        /**
+         * @author 24047
+         * @date 2022/7/6
+         * @param [java.lang.Integer]
+         * @description 根据传入的id修改文件夹名称
+         * @return java.lang.Boolean
+         */
+        SpecialProject specialProject=specialProjectDao.selectSpecialProjectById(id);
+        if(specialProject==null){
+            return "error1";//不存在这条记录
+        }
+
+        String originalFilePath=specialProject.getFilePath();
+        String newFilePath;
+        int index=originalFilePath.lastIndexOf("/");
+        if(index==-1){
+            index=originalFilePath.lastIndexOf("\\");
+        }
+        List<String>names=specialTeacherDao.getTeacherNamesById(id);
+        String projectName=specialProject.getProjectName();
+        for (String name : names) {
+            projectName =projectName+ "-"+name;
+        }
+        projectName=projectName+"-"+specialProject.getId();
+        if(index==-1){
+            //原有的路径仅仅是单个路径
+            newFilePath=projectName;
+//            System.out.println(originalFilePath);
+        }else {
+            newFilePath=originalFilePath.substring(0,index)+"\\"+projectName;
+        }
+        File file=new File(originalFilePath);
+        File newFile=new File(newFilePath);
+        file.renameTo(newFile);
+//        写入数据库
+        if(specialProjectDao.setFilePath(newFilePath,id)){
+            return newFilePath;//只返回相对路径，到时候需要修改数据库内容
+        }
+        else return "error2";
+    }
+
 
     @Override
     public void compress(File sourceFile, ZipOutputStream zos, String name,
@@ -630,7 +666,6 @@ public class FileDealServiceImpl implements FileDealService {
 //            zos.close();
         }
     }
-
     @Override
     public void deleteDir(File src) {
         //先删掉这个文件夹里面所有的内容.
@@ -655,5 +690,4 @@ public class FileDealServiceImpl implements FileDealService {
         //6.参数传递过来的文件夹File对象已经处理完成,最后直接删除这个空文件夹
         src.delete();
     }
-
 }

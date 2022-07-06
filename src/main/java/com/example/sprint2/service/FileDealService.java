@@ -43,7 +43,11 @@ public interface FileDealService {
 
     List<String> compressedDownloadByYear(String year, HttpServletResponse response) throws Exception;
 
-     void compress(File sourceFile, ZipOutputStream zos, String name,
+    Boolean deleteByFileName(Integer id, String fileName);
+
+    String renameFile(Integer id);
+
+    void compress(File sourceFile, ZipOutputStream zos, String name,
                   boolean KeepDirStructure) throws Exception;
 
     void deleteDir(File src);

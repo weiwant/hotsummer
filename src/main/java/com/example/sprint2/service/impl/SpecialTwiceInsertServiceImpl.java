@@ -11,6 +11,10 @@ import com.example.sprint2.service.SpecialTwiceInsertService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -40,7 +44,7 @@ public class SpecialTwiceInsertServiceImpl implements SpecialTwiceInsertService 
         SpecialProject specialProject=new SpecialProject();//Project实体类。
 
         //处理Project
-        specialProject.setReportTime(specialVo.getReportTime());//申报时间
+        specialProject.setReportTime(LocalDate.now());//申报时间
         specialProject.setDeclarantName(specialVo.getDeclarantName());//申报人
 
         specialProject.setType(specialVo.getType());//bb类型-----》Teacher表需要
@@ -128,7 +132,7 @@ public class SpecialTwiceInsertServiceImpl implements SpecialTwiceInsertService 
         specialProject.setStatus("已保存");//审核状态
         specialProject.setRemarks(specialVo.getRemarks());//备注
         // TODO: 2022/7/5 文件路径
-        fileDealService.setPath(specialVo.getId());
+//        fileDealService.setPath(specialVo.getId());
 //        specialProject.setFilePath(msg);
 
         flag=specialProjectDao.uploadSpecialProject(specialProject);
@@ -149,6 +153,7 @@ public class SpecialTwiceInsertServiceImpl implements SpecialTwiceInsertService 
             specialTeacherDao.saveSpecialTeacher(specialTeacher);
         }
 
+        fileDealService.renameFile(specialVo.getId());
         return flag;
     }
 
