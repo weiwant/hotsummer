@@ -1,6 +1,10 @@
 <template>
   <div class="componentWrapper">
     <div class="componentSectionTitle">特殊工作量历史上报</div>
+    <div class="warning">
+      <span class="icon"></span>
+      仅保存未提交的项目，将在<span class="time">2022-12-31</span>日自动提交
+    </div>
     <div v-if="BB1Arr.length > 0">
       <div class="componentSubtitle">课程建设BB1</div>
       <div class="flexBox">
@@ -120,7 +124,7 @@ export default {
           type: "BB9",
           id: 23,
           achievementName: "hhh",
-          awardLevel: "省级二等奖"
+          awardLevel: "省级二等奖",
           // participants: [
           //   {
           //     teacherName: "",
@@ -234,13 +238,24 @@ export default {
 </script>
 
 <style scoped>
+/* ddl提示 */
+.warning {
+  text-align: left;
+}
+.warning span.icon {
+  font-family: "icomoon";
+  font-size: 20px;
+}
+.warning span.time {
+  color: rgb(216, 170, 52);
+  font-weight: 600;
+}
 .flexBox {
   display: flex;
   overflow: scroll;
   padding-top: 25px;
   padding-bottom: 10px;
 }
-
 #contentSectionTitle {
   margin-bottom: 35px;
 }
@@ -272,7 +287,7 @@ export default {
   border-top-right-radius: 5px;
 }
 .componentSubsection.category >>> .categoryTitle.saved {
-  background-color: rgb(224, 187, 87);
+  background-color: rgb(79, 121, 122);
 }
 .componentSubsection.category >>> .categoryTitle.commited {
   background-color: rgb(141, 177, 148);

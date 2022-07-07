@@ -3,8 +3,16 @@
     <div class="componentSectionTitle">审批特殊工作量</div>
     <div class="componentSubtitle">截止时间设置</div>
     <div class="componentSubsection ddl">
-      已将特殊工作量提交截止时间设置为:<span>{{ ddl }}</span>
-      <button class="universalBlueBtn">重&nbsp;置</button>
+      已将特殊工作量提交截止时间设置为:<span v-if="!isEditingDDL">{{
+        ddl
+      }}</span>
+      <input type="date" v-model="ddl" v-if="isEditingDDL" />
+      <button class="universalBlueBtn" v-if="!isEditingDDL" @click="resetDDL">
+        重&nbsp;置
+      </button>
+      <button class="universalBlueBtn" v-if="isEditingDDL" @click="confirmDDL">
+        确&nbsp;认
+      </button>
     </div>
     <div class="componentSubtitle">已提交上报</div>
     <FilterWithSearch
@@ -171,6 +179,7 @@ export default {
     return {
       //上报截止时间
       ddl: "2022-12-31",
+      isEditingDDL: false,
       //当前查询的状态
       searchKeywords: ["教学业绩类型", "申报人", "审核状态"],
       yearChosen: this.$currentYear,
@@ -290,6 +299,13 @@ export default {
     },
   },
   methods: {
+    //DDL
+    resetDDL() {
+      this.isEditingDDL = true;
+    },
+    confirmDDL() {
+      this.isEditingDDL = false;
+    },
     //编辑
     edit(index) {
       // 调整选中的行的样式与状态
@@ -369,8 +385,8 @@ export default {
           }
         })
         .catch((err) => {
-          // this.dataExists = false;
-          this.dataExists = true;
+          this.dataExists = false;
+
           this.noDataHint = "获取数据出错！";
         });
     },
@@ -424,8 +440,9 @@ export default {
   transition: all 0.5s;
 }
 .componentSubsection.ddl {
-  width: 530px;
+  width: 550px;
   font-weight: 500;
+  border-radius: 5px;
 }
 .ddl button {
   margin-left: 50px;
@@ -439,7 +456,10 @@ export default {
   font-weight: 800;
   color: rgb(242, 193, 67);
 }
-
+.ddl input {
+  margin-left: 30px;
+  height: 30px;
+}
 table.specialWorkloadTable {
   width: 4000px;
   border-spacing: 0;
