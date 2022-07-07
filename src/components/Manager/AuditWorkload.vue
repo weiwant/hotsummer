@@ -321,9 +321,63 @@ export default {
         });
     },
     /******下载某年的特殊工作量附件******/
-    downloadSpecialWorkloadFiles() {},
+    downloadSpecialWorkloadFiles() {
+      var _this = this;
+      const formData = new FormData();
+      var year = this.$data.yearChosen;
+
+      formData.append("year", year);
+
+      this.$axios
+      .post('http://abcdf.vaiwan.com/file/download-by-year',formData, {
+          responseType: "blob"})
+      .then((file) => {
+        console.log(file);
+        let content = file.data;
+        // 组装a标签
+        let elink = document.createElement("a");
+        // 设置下载文件名
+        elink.download = this.$data.yearChosen + "年度特殊工作量审批记录.zip";
+        elink.style.display = "none";
+        let blob = new Blob([content], {type: "application/zip"})
+        elink.href = URL.createObjectURL(blob);
+        document.body.appendChild(elink);
+        elink.click();
+        document.body.removeChild(elink);    
+      })
+      .catch(function(error){
+        console.log(error);
+      });
+    },
     /******下载某个项目的特殊工作量附件******/
-    downloadSpecificFile(index) {},
+    downloadSpecificFile(index) {
+      var _this = this;
+      const formData = new FormData();
+      var id = this.$data.tableData[index].id;
+
+      formData.append("id", id);
+
+      this.$axios
+      .post('http://abcdf.vaiwan.com/file/download-package',formData, {
+          responseType: "blob"})
+      .then((file) => {
+        console.log(file);
+        let content = file.data;
+        // 组装a标签
+        let elink = document.createElement("a");
+        // 设置下载文件名
+        elink.download = this.$data.tableData[index].declarantName + this.$data.yearChosen + "年度特殊工作量上报附件.zip";
+        elink.style.display = "none";
+        let blob = new Blob([content], {type: "application/zip"})
+        elink.href = URL.createObjectURL(blob);
+        document.body.appendChild(elink);
+        elink.click();
+        document.body.removeChild(elink);    
+      })
+      .catch(function(error){
+        console.log(error);
+      });
+  },
     //编辑
     edit(index) {
       // 调整选中的行的样式与状态
@@ -383,7 +437,7 @@ export default {
         }
       }
       this.$axios
-        .post(`http://abckds.vaiwan.com/special-join/select`, formData)
+        .post(`http://abcdf.vaiwan.com/special-join/select`, formData)
         .then((res) => {
           console.log(res);
           if (res.data.response.code == 200) {
