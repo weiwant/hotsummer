@@ -30,6 +30,23 @@ public class PaperCoachingDao {
 
     /**
      * @author hy
+     * @Param  String name
+     * @description 获取某个教师的教分总分
+     */
+    public Double getScore(String name){
+        QueryWrapper<PaperCoachingWorkload> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("main_teacher_name",name);
+        List<PaperCoachingWorkload> result = mapper.selectList(queryWrapper);
+        Double total = (double) 0;
+        for (PaperCoachingWorkload p :result){
+            total += p.getFinalTeachingScores();
+        }
+        return total;
+    }
+
+
+    /**
+     * @author hy
      * @description 不分页，查看某自然年的所有记录。
      */
     public List<PaperCoachingWorkload> selectYear(PaperCoachingVo paperCoachingVo) {
