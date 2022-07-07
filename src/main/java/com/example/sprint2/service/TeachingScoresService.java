@@ -13,4 +13,6 @@ import java.util.List;
 public interface TeachingScoresService {
 
     List<TotalStatistics> selectScores(TeachingScoresVo teachingScoresVo);
+
+    boolean insertScores(List<String> teacherNames);
 }

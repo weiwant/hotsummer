@@ -20,13 +20,6 @@ public class TeachingScoresDao {
     @Autowired
     TotalStatisticsMapper mapper;
 
-
-
-
-
-
-
-
     /**
      * @author hy
      * @Receive TeachingSoresVo
@@ -42,5 +35,18 @@ public class TeachingScoresDao {
         return list;
     }
 
+    /**
+     * @Author：wwq
+     * @Return：
+     * @Url:
+     * @Description：将一条教师的教分记录插入数据库
+     */
+    public boolean insertScores(TotalStatistics total){
+        if(mapper.insert(total)==1){
+            return true;
+        } else {
+            return false;
+        }
+    }
 
 }
