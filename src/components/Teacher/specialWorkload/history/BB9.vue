@@ -8,25 +8,31 @@
       <tr>
         <td>竞赛类别</td>
         <td>
-          <input type="radio" 
-          id="A" 
-          value="A" 
-          v-model="competitionCategory" 
-          :disabled="!isEditing"/>
+          <input
+            type="radio"
+            id="A"
+            value="A"
+            v-model="competitionCategory"
+            :disabled="!isEditing"
+          />
           <label for="A">A</label>
 
-          <input type="radio"
-           id="B" 
-           value="B" 
-           v-model="competitionCategory" 
-           :disabled="!isEditing"/>
+          <input
+            type="radio"
+            id="B"
+            value="B"
+            v-model="competitionCategory"
+            :disabled="!isEditing"
+          />
           <label for="B">B</label>
 
-          <input type="radio"
-           id="C" 
-           value="C" 
-           v-model="competitionCategory" 
-           :disabled="!isEditing"/>
+          <input
+            type="radio"
+            id="C"
+            value="C"
+            v-model="competitionCategory"
+            :disabled="!isEditing"
+          />
           <label for="C">C</label>
         </td>
       </tr>
@@ -46,31 +52,34 @@
       <tr>
         <td>竞赛级别</td>
         <td>
-          <input type="radio" 
-          id="international"
-           value="国际" 
-           v-model="level" 
-           :disabled="!isEditing"/>
+          <input
+            type="radio"
+            id="international"
+            value="国际"
+            v-model="level"
+            :disabled="!isEditing"
+          />
           <label for="international">国际</label>
 
-          <input type="radio" 
-          id="national"
-           value="全国"
-            v-model="level" 
-            :disabled="!isEditing"/>
+          <input
+            type="radio"
+            id="national"
+            value="全国"
+            v-model="level"
+            :disabled="!isEditing"
+          />
           <label for="national">全国</label>
 
-          <input type="radio" 
-          id="province"
-           value="省级" 
-           v-model="level"
-           :disabled="!isEditing" />
+          <input
+            type="radio"
+            id="province"
+            value="省级"
+            v-model="level"
+            :disabled="!isEditing"
+          />
           <label for="province">省级</label>
 
-          <input type="radio"
-           id="school"
-            value="校级" 
-            :disabled="!isEditing" />
+          <input type="radio" id="school" value="校级" :disabled="!isEditing" />
           <label for="school">校级</label>
         </td>
       </tr>
@@ -78,32 +87,40 @@
       <tr>
         <td>竞赛等级</td>
         <td>
-          <input type="radio"
-           id="first" 
-           value="一等奖"
+          <input
+            type="radio"
+            id="first"
+            value="一等奖"
             v-model="category"
-            :disabled="!isEditing"  />
+            :disabled="!isEditing"
+          />
           <label for="first">一等奖</label>
 
-          <input type="radio"
-           id="second"
-            value="二等奖" 
+          <input
+            type="radio"
+            id="second"
+            value="二等奖"
             v-model="category"
-            :disabled="!isEditing"  />
+            :disabled="!isEditing"
+          />
           <label for="second">二等奖</label>
 
-          <input type="radio" 
-          id="third" 
-          value="三等奖"
-           v-model="category"
-           :disabled="!isEditing"  />
+          <input
+            type="radio"
+            id="third"
+            value="三等奖"
+            v-model="category"
+            :disabled="!isEditing"
+          />
           <label for="third">三等奖</label>
 
-          <input type="radio"
-           id="others"
+          <input
+            type="radio"
+            id="others"
             value="其他"
-             v-model="category"
-             :disabled="!isEditing"  />
+            v-model="category"
+            :disabled="!isEditing"
+          />
           <label for="others">其他</label>
         </td>
       </tr>
@@ -115,7 +132,7 @@
             type="text"
             placeholder="请输入参赛作品名称"
             v-model="workName"
-            :disabled="!isEditing" 
+            :disabled="!isEditing"
           />
         </td>
       </tr>
@@ -127,7 +144,7 @@
             type="text"
             placeholder="请输入参赛队伍名称"
             v-model="teamName"
-            :disabled="!isEditing" 
+            :disabled="!isEditing"
           />
         </td>
       </tr>
@@ -139,7 +156,7 @@
             type="text"
             placeholder="请输入参赛学生姓名"
             v-model="studentName"
-            :disabled="!isEditing" 
+            :disabled="!isEditing"
           />
         </td>
       </tr>
@@ -151,7 +168,7 @@
             type="text"
             placeholder="请输入指导老师姓名"
             v-model="teacherName"
-            :disabled="!isEditing" 
+            :disabled="!isEditing"
           />
         </td>
       </tr>
@@ -159,7 +176,11 @@
       <tr>
         <td>证明文件</td>
         <td>
-          <input type="file" placeholder="请选择相关文件" :disabled="!isEditing" />
+          <input
+            type="file"
+            placeholder="请选择相关文件"
+            :disabled="!isEditing"
+          />
         </td>
       </tr>
 
@@ -207,11 +228,9 @@ export default {
     };
   },
   props: ["data"],
-  mounted(){
-    var categoryString = this.data.awardLevel.substring(2,5);
-    var levelString = this.data.awardLevel.substring(0,2);
-    console.log(levelString);
-    console.log(categoryString);
+  mounted() {
+    let categoryString = this.data.awardLevel.substring(2, 5);
+    let levelString = this.data.awardLevel.substring(0, 2);
 
     this.$data.competitioncCategory = this.data.projectCategory;
     this.$data.competitionName = this.data.projectName;
@@ -235,9 +254,18 @@ export default {
     save() {
       this.isEditing = false;
       this.$refs.dynamic.transmitData();
-     
-       if(this.$data.competitioncCategory==""||this.$data.competitionName==""||this.$data.level==""||this.$data.category==""||this.$data. workName==""||this.$data.studentName==""||this.$data.teamName==""||this.$data.teacherName==""){
-        alert("数据填报不可为空！！！")
+
+      if (
+        this.$data.competitioncCategory == "" ||
+        this.$data.competitionName == "" ||
+        this.$data.level == "" ||
+        this.$data.category == "" ||
+        this.$data.workName == "" ||
+        this.$data.studentName == "" ||
+        this.$data.teamName == "" ||
+        this.$data.teacherName == ""
+      ) {
+        alert("数据填报不可为空！！！");
         return;
       }
     },

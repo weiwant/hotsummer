@@ -121,7 +121,7 @@ export default {
           projectName: this.$data.projectName,
           declarantName: this.$data.teacherName,
           somePeople: this.$data.participants,
-          type: "BB2"
+          type: "BB2",
         },
       ]);
 

@@ -8,32 +8,40 @@
       <tr>
         <td>项目级别</td>
         <td>
-          <input type="radio" 
-          id="national" 
-          value="国家级" 
-          v-model="level"
-          :disabled="!isEditing"  />
+          <input
+            type="radio"
+            id="national"
+            value="国家级"
+            v-model="level"
+            :disabled="!isEditing"
+          />
           <label for="national">国家级</label>
 
-          <input type="radio" 
-          id="province" 
-          value="省级" 
-          v-model="level" 
-          :disabled="!isEditing" />
+          <input
+            type="radio"
+            id="province"
+            value="省级"
+            v-model="level"
+            :disabled="!isEditing"
+          />
           <label for="province">省级</label>
 
-          <input type="radio"
-           id="school" 
-           value="校级"
+          <input
+            type="radio"
+            id="school"
+            value="校级"
             v-model="level"
-            :disabled="!isEditing"  />
+            :disabled="!isEditing"
+          />
           <label for="school">校级</label>
 
-          <input type="radio"
-           id="college" 
-           value="院级" 
-           v-model="level"
-           :disabled="!isEditing"  />
+          <input
+            type="radio"
+            id="college"
+            value="院级"
+            v-model="level"
+            :disabled="!isEditing"
+          />
           <label for="college">院级</label>
         </td>
       </tr>
@@ -41,10 +49,12 @@
       <tr>
         <td>项目荣誉</td>
         <td>
-          <input type="text"
-           placeholder="请输入项目荣誉"
-            v-model="honor" 
-            :disabled="!isEditing" />
+          <input
+            type="text"
+            placeholder="请输入项目荣誉"
+            v-model="honor"
+            :disabled="!isEditing"
+          />
         </td>
       </tr>
 
@@ -55,7 +65,7 @@
             type="text"
             placeholder="请输入项目名称"
             v-model="projectNname"
-            :disabled="!isEditing" 
+            :disabled="!isEditing"
           />
         </td>
       </tr>
@@ -67,7 +77,7 @@
             type="text"
             placeholder="请输入学生团队名称"
             v-model="teamName"
-            :disabled="!isEditing" 
+            :disabled="!isEditing"
           />
         </td>
       </tr>
@@ -79,7 +89,7 @@
             type="text"
             placeholder="请输入学生姓名"
             v-model="studentname"
-            :disabled="!isEditing" 
+            :disabled="!isEditing"
           />
         </td>
       </tr>
@@ -87,10 +97,12 @@
       <tr>
         <td>学生学号</td>
         <td>
-          <input type="text" 
-          placeholder="请输入学生学号"
-           v-model="number"
-           :disabled="!isEditing"  />
+          <input
+            type="text"
+            placeholder="请输入学生学号"
+            v-model="number"
+            :disabled="!isEditing"
+          />
         </td>
       </tr>
       <tr>
@@ -100,7 +112,7 @@
             type="text"
             placeholder="请输入指导老师姓名"
             v-model="teacherName"
-            :disabled="!isEditing" 
+            :disabled="!isEditing"
           />
         </td>
       </tr>
@@ -147,7 +159,7 @@ export default {
     };
   },
   props: ["data"],
-  mounted(){
+  mounted() {
     this.$data.honor = this.data.receivingHonor;
     this.$data.projectName = this.data.projectName;
     this.$data.teacherName = this.data.declarantName;
@@ -169,11 +181,17 @@ export default {
     save() {
       this.isEditing = false;
       this.$refs.dynamic.transmitData();
-      if(this.$data. level==""||this.$data. honor==""||this.$data.projectName==""||this.$data.teamName==""||this.$data. studentName==""||this.$data.teacherName==""){
-        alert("数据填报不可为空！！！")
+      if (
+        this.$data.level == "" ||
+        this.$data.honor == "" ||
+        this.$data.projectName == "" ||
+        this.$data.teamName == "" ||
+        this.$data.studentName == "" ||
+        this.$data.teacherName == ""
+      ) {
+        alert("数据填报不可为空！！！");
         return;
       }
-
     },
   },
   created() {},

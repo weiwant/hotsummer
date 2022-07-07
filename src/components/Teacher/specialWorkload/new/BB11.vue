@@ -52,7 +52,7 @@ export default {
         {
           briefIntroduction: this.$data.content,
           declarantName: this.$data.teacherName,
-          type: "BB11"
+          type: "BB11",
         },
       ]);
 

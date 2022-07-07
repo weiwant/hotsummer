@@ -60,7 +60,7 @@ export default {
           projectCategory: this.$data.category,
           awardDate: this.$data.time,
           declarantName: this.$data.name,
-          type: "BB13"
+          type: "BB13",
         },
       ]);
 

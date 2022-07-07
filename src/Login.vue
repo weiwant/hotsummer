@@ -52,25 +52,11 @@ export default {
             console.log(response);
             if (response.data.response.code == 200) {
               localStorage.clear();
+              localStorage.setItem("userName", response.data.data.username);
+              localStorage.setItem("userIdentify", response.data.data.identify);
               if (response.data.data.identify == 0) {
-                localStorage.setItem(
-                  "teacherName",
-                  response.data.data.username
-                );
-                localStorage.setItem(
-                  "userIdentify",
-                  response.data.data.identify
-                );
                 self.$router.push("/teacherhome");
               } else {
-                localStorage.setItem(
-                  "managerName",
-                  response.data.data.username
-                );
-                localStorage.setItem(
-                  "userIdentify",
-                  response.data.data.identify
-                );
                 self.$router.push("/managerhome");
               }
             } else {

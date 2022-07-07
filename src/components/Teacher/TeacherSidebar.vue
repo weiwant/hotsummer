@@ -10,7 +10,7 @@
       </li>
       <li>
         <router-link to="TeacherWorkloadTable"
-          ><span></span> 查看教学工作量
+          ><span></span> 总工作量报告
         </router-link>
       </li>
       <li>

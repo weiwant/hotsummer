@@ -1,7 +1,7 @@
 <template>
   <div class="componentWrapper">
     <!--component标题-->
-    <div class="componentSectionTitle">教学工作量</div>
+    <div class="componentSectionTitle">工作量报告</div>
     <YearFilter
       :yearChosen="yearChosen"
       @yearConfirmed="yearConfirmed"
@@ -49,8 +49,6 @@ export default {
   },
   data() {
     return {
-      //当前教师姓名
-      currentTeacherName: "",
       //统计数据
       totalItems: 0,
       //分页
@@ -104,11 +102,15 @@ export default {
     keyValuePairs() {
       return [
         {
-          key: "查询结果数",
+          key: "总教分",
           value: this.totalItems,
         },
         {
-          key: "总页数",
+          key: "教学工作量教分",
+          value: this.allPageCount,
+        },
+        {
+          key: "特殊工作量教分",
           value: this.allPageCount,
         },
       ];
@@ -120,7 +122,7 @@ export default {
       const formData = new FormData();
       formData.append("naturalYear", this.yearChosen);
       formData.append("page", this.currentPage);
-      formData.append("mainTeacherName", this.currentTeacherName);
+      formData.append("mainTeacherName", this.$currentUser);
       this.$axios
         .post(`${this.$domainName}/total/records/page`, formData)
         .then((res) => {
@@ -185,8 +187,6 @@ export default {
     },
   },
   created() {
-    //获取当前老师用户的姓名
-    this.currentTeacherName = localStorage.getItem("teacherName");
     //向后台获取default学年学期数据;
     this.getTableData();
   },

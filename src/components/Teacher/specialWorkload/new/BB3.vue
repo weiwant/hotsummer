@@ -70,9 +70,8 @@
         </td>
       </tr>
       <label v-show="isVisible">已上传文件:</label>
-      <div v-show="isVisible"
-        v-for="(fileName, item) in fileNames" :key="item">
-        <label>{{fileName}}</label>
+      <div v-show="isVisible" v-for="(fileName, item) in fileNames" :key="item">
+        <label>{{ fileName }}</label>
         <button @click="deleteFile(item)">删除</button>
       </div>
 
@@ -106,7 +105,7 @@ export default {
       uploadFile: [],
       //文件名
       fileNames: [],
-      isVisible: false
+      isVisible: false,
     };
   },
   methods: {
@@ -140,7 +139,7 @@ export default {
           awardApartment: this.$data.Awardingunit,
           time: this.$data.awardDate,
           somePeople: this.$data.participants,
-          type: "BB3"
+          type: "BB3",
         },
       ]);
 
@@ -171,16 +170,16 @@ export default {
           console.log(error);
         });
     },
-    deleteFile(item){
+    deleteFile(item) {
       var _this = this;
       // console.log(item);
-      this.$data.uploadFile.splice(item,1);
+      this.$data.uploadFile.splice(item, 1);
       // console.log(this.$data.uploadFile);
-      this.$data.fileNames.splice(item,1);
+      this.$data.fileNames.splice(item, 1);
       // console.log(this.$data.fileNames);
-      if(this.$data.uploadFile == ""){
+      if (this.$data.uploadFile == "") {
         this.$data.isVisible = false;
-      }else{
+      } else {
         this.$data.isVisible = true;
       }
     },

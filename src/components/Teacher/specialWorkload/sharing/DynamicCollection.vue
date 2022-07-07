@@ -49,6 +49,7 @@
               @click="addParticipant"
               v-if="index == 1"
               :disabled="isDisabled"
+              :style="{ color: isDisabled ? 'gray' : 'rgb(84, 160, 87)' }"
             >
               
             </button>
@@ -57,6 +58,7 @@
               @click="deleteParticipant(index)"
               v-if="index != 1"
               :disabled="isDisabled"
+              :style="{ color: isDisabled ? 'gray' : 'rgb(213, 79, 62)' }"
             >
               
             </button>
@@ -70,6 +72,8 @@
 <script>
 export default {
   name: "DynamicCollection",
+  //new组件不需要传props内的data参数,直接使用空的初始值就行
+  props: ["data"], //在history组件使用该组件时，本组件的初始participants值是要让父组件给的，后续提交或保存的数据还是由本组件传给父组件
   data() {
     return {
       isDisabled: false,
@@ -106,6 +110,12 @@ export default {
         this.isDisabled = true;
       }
     },
+  },
+  created() {
+    //获取new组件传递的初始值
+    if (this.data != undefined) {
+      this.participants = this.data;
+    }
   },
 };
 </script>

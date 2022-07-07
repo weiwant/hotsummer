@@ -7,25 +7,31 @@
       <tr>
         <td>级别</td>
         <td>
-          <input type="radio" 
-          id="nation"
-           value="国家级"
-            v-model="awardLevel" 
-            :disabled="!isEditing"/>
+          <input
+            type="radio"
+            id="nation"
+            value="国家级"
+            v-model="awardLevel"
+            :disabled="!isEditing"
+          />
           <label for="nation">国家级</label>
 
-          <input type="radio"
-           id="province" 
-           value="省级"
+          <input
+            type="radio"
+            id="province"
+            value="省级"
             v-model="awardLevel"
-            :disabled="!isEditing" />
+            :disabled="!isEditing"
+          />
           <label for="province">省级</label>
 
-          <input type="radio" 
-          id="school" 
-          value="校级"
-           v-model="awardLevel" 
-           :disabled="!isEditing"/>
+          <input
+            type="radio"
+            id="school"
+            value="校级"
+            v-model="awardLevel"
+            :disabled="!isEditing"
+          />
           <label for="school">校级</label>
         </td>
       </tr>
@@ -33,14 +39,24 @@
       <tr>
         <td>评奖时间</td>
         <td>
-          <input type="date" placeholder="请选择评奖时间" v-model="date" :disabled="!isEditing"/>
+          <input
+            type="date"
+            placeholder="请选择评奖时间"
+            v-model="date"
+            :disabled="!isEditing"
+          />
         </td>
       </tr>
 
       <tr>
         <td>姓名</td>
         <td>
-          <input type="text" placeholder="请输入姓名" v-model="name" :disabled="!isEditing" />
+          <input
+            type="text"
+            placeholder="请输入姓名"
+            v-model="name"
+            :disabled="!isEditing"
+          />
         </td>
       </tr>
 
@@ -84,7 +100,7 @@ export default {
     };
   },
   props: ["data"],
-  mounted(){
+  mounted() {
     this.$data.awardLevel = this.data.awardLevel;
     this.$data.date = this.data.awardDate;
     this.$data.name = this.data.declarantName;
@@ -103,9 +119,14 @@ export default {
     save() {
       this.$refs.dynamic.transmitData();
       this.isEditing = false;
-      
-       if(this.$data.awardLevel==""||this.$data.date==""||this.$data.name==""||this.$data.participants==""){
-        alert("数据填报不可为空！！！")
+
+      if (
+        this.$data.awardLevel == "" ||
+        this.$data.date == "" ||
+        this.$data.name == "" ||
+        this.$data.participants == ""
+      ) {
+        alert("数据填报不可为空！！！");
         return;
       }
       var _this = this;

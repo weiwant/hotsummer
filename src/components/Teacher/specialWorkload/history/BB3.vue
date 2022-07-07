@@ -8,25 +8,31 @@
       <tr>
         <td>级别</td>
         <td>
-          <input type="radio" 
-          id="nation" 
-          value="国家级"
-           v-model="awardLevel"
-           :disabled="!isEditing" />
+          <input
+            type="radio"
+            id="nation"
+            value="国家级"
+            v-model="awardLevel"
+            :disabled="!isEditing"
+          />
           <label for="nation">国家级</label>
 
-          <input type="radio"
-           id="province" 
-           value="省级"
+          <input
+            type="radio"
+            id="province"
+            value="省级"
             v-model="awardLevel"
-            :disabled="!isEditing" />
+            :disabled="!isEditing"
+          />
           <label for="province">省级</label>
 
-          <input type="radio"
-           id="school" 
-           value="校级"
-            v-model="awardLevel" 
-            :disabled="isEditing"/>
+          <input
+            type="radio"
+            id="school"
+            value="校级"
+            v-model="awardLevel"
+            :disabled="isEditing"
+          />
           <label for="school">校级</label>
         </td>
       </tr>
@@ -72,7 +78,7 @@
           />
         </td>
       </tr>
-      
+
       <tr>
         <td>获奖时间</td>
         <td>
@@ -97,6 +103,7 @@
       <DynamicCollection
         ref="dynamic"
         @transmit="updateParticipants"
+        :data="participants"
       ></DynamicCollection>
       <button
         class="universalBlueBtn complete commit"
@@ -146,9 +153,12 @@ export default {
     };
   },
   props: ["data"],
-  mounted(){
-    this.$refs.dynamic.changeState(); //默认没有disable，需要调整
-
+  created() {
+    if ((this.data.status = "已提交")) {
+      this.committed = true;
+    } else {
+      this.committed = false;
+    }
     this.$data.awardLevel = this.data.awardLevel;
     this.$data.awardname = this.data.awardname;
     this.$data.awardCategory = this.data.awardCategory;
@@ -156,6 +166,9 @@ export default {
     this.$data.awardingUnit = this.data.awardApartment;
     this.$data.time = this.data.awardDate;
     this.$data.participants = this.data.somePeople;
+  },
+  mounted() {
+    this.$refs.dynamic.changeState(); //默认没有disable，需要调整
   },
   methods: {
     updateParticipants(participants) {
@@ -188,8 +201,17 @@ export default {
       this.isEditing = false;
       //点击保存，调用DynamicCollection组件的方法，将其中含有的数据同步至本组件内
       this.$refs.dynamic.transmitData();
-       if(this.$data.awardLevel==""||this.$data. awardname==""||this.$data.awardCategory==""||this.$data.level==""||this.$data.awardingUnit==""||this.$data.time==""||this.$data.participants==""||this.$data.uploadFile==""){
-        alert("数据填报不可为空！！！")
+      if (
+        this.$data.awardLevel == "" ||
+        this.$data.awardname == "" ||
+        this.$data.awardCategory == "" ||
+        this.$data.level == "" ||
+        this.$data.awardingUnit == "" ||
+        this.$data.time == "" ||
+        this.$data.participants == "" ||
+        this.$data.uploadFile == ""
+      ) {
+        alert("数据填报不可为空！！！");
         return;
       }
       var _this = this;

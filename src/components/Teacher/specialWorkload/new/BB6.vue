@@ -17,7 +17,11 @@
       <tr>
         <td>ISBN</td>
         <td>
-          <input type="text" placeholder="请输入教材的国际标准书号" v-model="isbn"/>
+          <input
+            type="text"
+            placeholder="请输入教材的国际标准书号"
+            v-model="isbn"
+          />
         </td>
       </tr>
       <tr>
@@ -90,9 +94,8 @@
         </td>
       </tr>
       <label v-show="isVisible">已上传文件:</label>
-      <div v-show="isVisible"
-        v-for="(fileName, item) in fileNames" :key="item">
-        <label>{{fileName}}</label>
+      <div v-show="isVisible" v-for="(fileName, item) in fileNames" :key="item">
+        <label>{{ fileName }}</label>
         <button @click="deleteFile(item)">删除</button>
       </div>
       <DynamicCollection
@@ -125,7 +128,7 @@ export default {
       uploadFile: [],
       //文件名
       fileNames: [],
-      isVisible: false
+      isVisible: false,
     };
   },
   methods: {
@@ -161,7 +164,7 @@ export default {
           briefIntroduction: this.$data.briefIntroduction,
           receivingHonor: this.$data.receivingHonor,
           somePeople: this.$data.participants,
-          type: "BB6"
+          type: "BB6",
         },
       ]);
 
@@ -192,16 +195,16 @@ export default {
           console.log(error);
         });
     },
-    deleteFile(item){
+    deleteFile(item) {
       var _this = this;
       // console.log(item);
-      this.$data.uploadFile.splice(item,1);
+      this.$data.uploadFile.splice(item, 1);
       // console.log(this.$data.uploadFile);
-      this.$data.fileNames.splice(item,1);
+      this.$data.fileNames.splice(item, 1);
       // console.log(this.$data.fileNames);
-      if(this.$data.uploadFile == ""){
+      if (this.$data.uploadFile == "") {
         this.$data.isVisible = false;
-      }else{
+      } else {
         this.$data.isVisible = true;
       }
     },

@@ -31,7 +31,12 @@
       <tr>
         <td>论文名称</td>
         <td>
-          <input type="text" placeholder="请输入论文名称" v-model="title" :disabled="!isEditing" />
+          <input
+            type="text"
+            placeholder="请输入论文名称"
+            v-model="title"
+            :disabled="!isEditing"
+          />
         </td>
       </tr>
 
@@ -99,7 +104,7 @@ export default {
     };
   },
   props: ["data"],
-  mounted(){
+  mounted() {
     this.$data.category = this.data.projectCategory;
     this.$data.title = this.data.achievementName;
     this.$data.teacherName = this.data.declarantName;
@@ -119,8 +124,13 @@ export default {
     save() {
       this.isEditing = false;
       this.$refs.dynamic.transmitData();
-       if(this.$data.category==""||this.$data.title==""||this.$data.studnetName==""||this.$data.teacherName==""){
-        alert("数据填报不可为空！！！")
+      if (
+        this.$data.category == "" ||
+        this.$data.title == "" ||
+        this.$data.studnetName == "" ||
+        this.$data.teacherName == ""
+      ) {
+        alert("数据填报不可为空！！！");
         return;
       }
     },

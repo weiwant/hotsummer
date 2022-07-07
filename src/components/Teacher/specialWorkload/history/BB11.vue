@@ -24,7 +24,7 @@
             type="text"
             placeholder="请输入教师姓名"
             v-model="teachername"
-            :disabled="!isEditing" 
+            :disabled="!isEditing"
           />
         </td>
       </tr>
@@ -66,7 +66,7 @@ export default {
     };
   },
   props: ["data"],
-  mounted(){
+  mounted() {
     this.$data.content = this.data.briefIntroduction;
     this.$data.teacherName = this.data.declarantName;
   },
@@ -93,8 +93,8 @@ export default {
     save() {
       this.isEditing = false;
       this.$refs.dynamic.transmitData();
-      if(this.$data.content==""||this.$data.teacherName==""){
-        alert("数据填报不可为空！！！")
+      if (this.$data.content == "" || this.$data.teacherName == "") {
+        alert("数据填报不可为空！！！");
         return;
       }
     },

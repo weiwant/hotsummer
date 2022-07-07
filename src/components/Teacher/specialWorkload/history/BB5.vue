@@ -8,25 +8,31 @@
       <tr>
         <td>级别</td>
         <td>
-          <input type="radio" 
-          id="authority"
-           value="权威" 
-           v-model="level" 
-           :disabled="!isEditing"/>
+          <input
+            type="radio"
+            id="authority"
+            value="权威"
+            v-model="level"
+            :disabled="!isEditing"
+          />
           <label for="authority">权威</label>
 
-          <input type="radio" 
-          id="core" 
-          value="核心" 
-          v-model="level" 
-          :disabled="!isEditing"/>
+          <input
+            type="radio"
+            id="core"
+            value="核心"
+            v-model="level"
+            :disabled="!isEditing"
+          />
           <label for="core">核心</label>
 
-          <input type="radio"
-           id="noncore"
-            value="非核心" 
+          <input
+            type="radio"
+            id="noncore"
+            value="非核心"
             v-model="level"
-            :disabled="!isEditing"/>
+            :disabled="!isEditing"
+          />
           <label for="noncore">非核心</label>
         </td>
       </tr>
@@ -57,10 +63,12 @@
       <tr>
         <td>刊物期数</td>
         <td>
-          <input type="month" 
-          placeholder="请选择出版月份" 
-          v-model="month" 
-          :disabled="!isEditing"/>
+          <input
+            type="month"
+            placeholder="请选择出版月份"
+            v-model="month"
+            :disabled="!isEditing"
+          />
 
           <input
             type="number"
@@ -75,15 +83,16 @@
       <tr>
         <td style="vertical-align: middle">证明文件</td>
         <td>
-          <input type="file" value="论文封面" :disabled="!isEditing"/>
-          <input type="file" value="论文目录" :disabled="!isEditing"/>
-          <input type="file" value="论文正文" :disabled="!isEditing"/>
+          <input type="file" value="论文封面" :disabled="!isEditing" />
+          <input type="file" value="论文目录" :disabled="!isEditing" />
+          <input type="file" value="论文正文" :disabled="!isEditing" />
         </td>
       </tr>
 
       <DynamicCollection
         ref="dynamic"
         @transmit="updateParticipants"
+        :data="participants"
       ></DynamicCollection>
       <button
         class="universalBlueBtn complete commit"
@@ -129,15 +138,21 @@ export default {
     };
   },
   props: ["data"],
-  mounted(){
-    this.$refs.dynamic.changeState(); //默认没有disable，需要调整
-
+  created() {
+    if ((this.data.status = "已提交")) {
+      this.committed = true;
+    } else {
+      this.committed = false;
+    }
     this.$data.level = this.data.level;
     this.$data.articleName = this.data.achievementName;
     this.$data.publicationName = this.data.publicationName;
     this.$data.month = this.data.awardDate;
     this.$data.stage = this.data.publicationNumber;
     this.$data.participants = this.data.somePeople;
+  },
+  mounted() {
+    this.$refs.dynamic.changeState(); //默认没有disable，需要调整
   },
   methods: {
     updateParticipants(participants) {
@@ -160,8 +175,16 @@ export default {
       this.isEditing = false;
       //点击保存，调用DynamicCollection组件的方法，将其中含有的数据同步至本组件内
       this.$refs.dynamic.transmitData();
-      if(this.$data.level==""||this.$data.competitionname==""||this.$data.articleName==""||this.$data.publicationName==""||this.$data.month==""||this.$data.stage==""||this.$data.participants==""){
-        alert("数据填报不可为空！！！")
+      if (
+        this.$data.level == "" ||
+        this.$data.competitionname == "" ||
+        this.$data.articleName == "" ||
+        this.$data.publicationName == "" ||
+        this.$data.month == "" ||
+        this.$data.stage == "" ||
+        this.$data.participants == ""
+      ) {
+        alert("数据填报不可为空！！！");
         return;
       }
     },

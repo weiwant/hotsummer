@@ -3,7 +3,8 @@
     <div class="componentSectionTitle">特殊工作量历史上报</div>
     <div class="warning">
       <span class="icon"></span>
-      仅保存未提交的项目，将在<span class="time">2022-12-31</span>日自动提交
+      仅保存未提交的项目，将在<span class="time">{{ ddl }}</span
+      >日自动提交
     </div>
     <div v-if="BB1Arr.length > 0">
       <div class="componentSubtitle">课程建设BB1</div>
@@ -119,69 +120,8 @@ export default {
   },
   data() {
     return {
-      historyWorkloads: [
-        {
-          type: "BB9",
-          id: 23,
-          achievementName: "hhh",
-          awardLevel: "省级二等奖",
-          // participants: [
-          //   {
-          //     teacherName: "",
-          //     order: 0,
-          //   },
-          //   {
-          //     teacherName: "",
-          //     order: "",
-          //   },
-          // ],
-        },
-        {
-          type: "BB1",
-          id: 23,
-          projectName: "hhh",
-          participants: [
-            {
-              teacherName: "",
-              order: 0,
-            },
-            {
-              teacherName: "",
-              order: "",
-            },
-          ],
-        },
-        {
-          type: "BB1",
-          id: 23,
-          projectName: "hhh",
-          participants: [
-            {
-              teacherName: "",
-              order: 0,
-            },
-            {
-              teacherName: "",
-              order: "",
-            },
-          ],
-        },
-        {
-          type: "BB2",
-          id: 23,
-          projectName: "hhh",
-          participants: [
-            {
-              teacherName: "",
-              order: 0,
-            },
-            {
-              teacherName: "",
-              order: "",
-            },
-          ],
-        },
-      ],
+      historyWorkloads: [],
+      ddl: "",
     };
   },
   computed: {
@@ -232,7 +172,23 @@ export default {
     },
   },
   created() {
+    //获取ddl
+    const formData = new FormData();
+    formData.append("year", this.$currentYear);
+    this.$axios
+      .post("http://abcd.vaiwan.com/deadline/get", formData)
+      .then((res) => {
+        this.ddl = res.data.data;
+      });
     //获取当前老师，所申报的所有特殊工作量historyWorkloads[]
+    const formData2 = new FormData();
+    formData2.append("year", this.$currentYear);
+    formData2.append("declarantName", this.$currentUser);
+    this.$axios
+      .post("http://abckds.vaiwan.com/special-join/select/teacher", formData2)
+      .then((res) => {
+        this.historyWorkloads = res.data.data;
+      });
   },
 };
 </script>

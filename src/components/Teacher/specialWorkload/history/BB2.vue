@@ -7,11 +7,13 @@
       <tr>
         <td>级别</td>
         <td>
-          <input type="radio" 
-          id="nation" 
-          value="国家级" 
-          v-model="level"
-          :disabled="!isEditing"/>
+          <input
+            type="radio"
+            id="nation"
+            value="国家级"
+            v-model="level"
+            :disabled="!isEditing"
+          />
           <label for="nation">国家级</label>
 
           <input
@@ -23,11 +25,13 @@
           />
           <label for="provinciallevel">省级</label>
 
-          <input type="radio"
-           id="schoollevel" 
-           value="校级"
-           v-model="level" 
-           :disabled="!isEditing"/>
+          <input
+            type="radio"
+            id="schoollevel"
+            value="校级"
+            v-model="level"
+            :disabled="!isEditing"
+          />
           <label for="schoollevel">校级</label>
         </td>
       </tr>
@@ -83,11 +87,13 @@
           />
           <label for="established">立项</label>
 
-          <input type="radio" 
-          id="done"
-           value="结题" 
-           v-model="projectStatus" 
-           :disabled="!isEditing"/>
+          <input
+            type="radio"
+            id="done"
+            value="结题"
+            v-model="projectStatus"
+            :disabled="!isEditing"
+          />
           <label for="done">结题</label>
 
           <input
@@ -105,6 +111,7 @@
       <DynamicCollection
         ref="dynamic"
         @transmit="updateParticipants"
+        :data="participants"
       ></DynamicCollection>
       <button
         class="universalBlueBtn complete commit"
@@ -151,15 +158,21 @@ export default {
     };
   },
   props: ["data"],
-  mounted(){
-    this.$refs.dynamic.changeState(); //默认没有disable，需要调整
-
+  created() {
+    if ((this.data.status = "已提交")) {
+      this.committed = true;
+    } else {
+      this.committed = false;
+    }
     this.$data.level = this.data.level;
     this.$data.projectName = this.data.projectName;
     this.$data.projectCategory = this.data.projectCategory;
     this.$data.teacherName = this.data.declarantName;
     this.$data.projectStatus = this.data.projectStatus;
     this.$data.participants = this.data.somePeople;
+  },
+  mounted() {
+    this.$refs.dynamic.changeState(); //默认没有disable，需要调整,而调整需要在dynamic组件的created之后，故放置在本组件的mounted中
   },
   methods: {
     updateParticipants(participants) {
@@ -182,8 +195,14 @@ export default {
       this.isEditing = false;
       //点击保存，调用DynamicCollection组件的方法，将其中含有的数据同步至本组件内
       this.$refs.dynamic.transmitData();
-      if(this.$data.level==""||this.$data.projectName==""||this.$data.projectCategory==""||this.$data.projectStatus==""||this.$data.teacherName==""){
-        alert("数据填报不可为空！！！")
+      if (
+        this.$data.level == "" ||
+        this.$data.projectName == "" ||
+        this.$data.projectCategory == "" ||
+        this.$data.projectStatus == "" ||
+        this.$data.teacherName == ""
+      ) {
+        alert("数据填报不可为空！！！");
       }
       var _this = this;
       const formData = new FormData();
