@@ -161,8 +161,10 @@ export default {
     },
     // 提交
     commit() {
+       
       this.isEditing = false;
       this.$refs.dynamic.transmitData();
+
     },
     // 保存
     save() {

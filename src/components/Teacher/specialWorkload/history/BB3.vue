@@ -72,7 +72,7 @@
           />
         </td>
       </tr>
-      
+
       <tr>
         <td>获奖时间</td>
         <td>
@@ -135,7 +135,7 @@ export default {
       committed: true,
       //填报数据
       awardLevel: "",
-      awardname: "",
+      awardName: "",
       awardCategory: "",
       level: "",
       awardingUnit: "",
@@ -168,6 +168,7 @@ export default {
     commit() {
       this.isEditing = false;
       this.$refs.dynamic.transmitData();
+
     },
     // 保存
     save() {
@@ -184,10 +185,10 @@ export default {
       var data = JSON.stringify([
         {
           awardLevel: this.$data.awardLevel,
-          awardname: this.$data.awardname,
+          awardName: this.$data.awardName,
           awardCategory: this.$data.awardCategory,
           level: this.$data.level,
-          Awardingunit: this.$data.Awardingunit,
+          awardingUnit: this.$data.awardingUnit,
           time: this.$data.time,
         },
       ]);
