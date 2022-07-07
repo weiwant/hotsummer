@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.lang.reflect.InvocationTargetException;
+import java.util.List;
 
 /**
  * @author hy
@@ -33,13 +34,30 @@ public class SpecialJoinController {
      * @Receive String year, String teacherName(userName),String status,String,String type,String declarantName
      * @Return Result ：String
      */
-    @RequestMapping(value = "/select", method = RequestMethod.POST)             //分页 动态条件 连表查询
-    public String selectByConditions(@RequestBody SpecialVo specialVo) throws InvocationTargetException, IllegalAccessException {
+    @RequestMapping(value = "/select", method = RequestMethod.POST)             //分页 动态条件 连表查询(FormData)
+    public String selectByConditions(SpecialVo specialVo) throws InvocationTargetException, IllegalAccessException {
         IPage<SpecialVo> iPage = service.selectByConditions(specialVo);
         if (iPage.getTotal() == 0) {
             return new Result(ResponseCode.NoContentFailure).toString();
         } else {
             return new Result(ResponseCode.SUCCESS, iPage).toString();
+        }
+    }
+
+    /**
+     * @param specialVo
+     * @author hy
+     * @description 不分页 教师端动态连表查询
+     * @Receive String year, String teacherName(userName),String status,String,String type,String declarantName
+     * @Return Result ：String
+     */
+    @RequestMapping(value = "/select/teacher", method = RequestMethod.POST)
+    public String selectBySingleConditions(SpecialVo specialVo) throws InvocationTargetException, IllegalAccessException {
+        List<SpecialVo> list = service.selectListByConditions(specialVo);
+        if (list.size() == 0) {
+            return new Result(ResponseCode.NoContentFailure).toString();
+        } else {
+            return new Result(ResponseCode.SUCCESS, list).toString();
         }
     }
 

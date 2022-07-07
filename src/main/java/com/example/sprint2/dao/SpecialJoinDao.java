@@ -35,7 +35,7 @@ public class SpecialJoinDao {
                 .innerJoin(SpecialTeacher.class, SpecialTeacher::getProjectId, SpecialProject::getId)
                 .like(specialJoinResult.getYear() != null, SpecialProject::getReportTime, specialJoinResult.getYear())
                 .eq(specialJoinResult.getTeacherName() != null, SpecialTeacher::getTeacherName, specialJoinResult.getTeacherName())
-                .eq(specialJoinResult.getType() != null, SpecialTeacher::getType, specialJoinResult.getType())
+                .eq(specialJoinResult.getType() != null, SpecialProject::getType, specialJoinResult.getType())
                 .eq(specialJoinResult.getStatus() != null, SpecialProject::getStatus, specialJoinResult.getStatus())
                 .eq(specialJoinResult.getDeclarantName() != null, SpecialProject::getDeclarantName, specialJoinResult.getDeclarantName()));
         results.forEach(specialJoinResult1 -> {
@@ -68,7 +68,7 @@ public class SpecialJoinDao {
                 .innerJoin(SpecialTeacher.class, SpecialTeacher::getProjectId, SpecialProject::getId)
                 .like(specialJoinResult.getYear() != null, SpecialProject::getReportTime, specialJoinResult.getYear())
                 .eq(specialJoinResult.getTeacherName() != null, SpecialTeacher::getTeacherName, specialJoinResult.getTeacherName())
-                .eq(specialJoinResult.getType() != null, SpecialTeacher::getType, specialJoinResult.getType())
+                .eq(specialJoinResult.getType() != null, SpecialProject::getType, specialJoinResult.getType())
                 .eq(specialJoinResult.getStatus() != null, SpecialProject::getStatus, specialJoinResult.getStatus())
                 .eq(specialJoinResult.getDeclarantName() != null, SpecialProject::getDeclarantName, specialJoinResult.getDeclarantName())
 
@@ -127,6 +127,8 @@ public class SpecialJoinDao {
         }
         return submitResult;
     }
+
+
 
 }
 

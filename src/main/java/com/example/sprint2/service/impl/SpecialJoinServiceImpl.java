@@ -129,4 +129,73 @@ public class SpecialJoinServiceImpl implements SpecialJoinService {
         return r;
     }
 
+    @Override
+    public List<SpecialVo> selectListByConditions(SpecialVo specialVo)throws InvocationTargetException, IllegalAccessException{
+        List<SpecialJoinResult> specialJoinResults = new ArrayList<>();
+        List<Method> methods = Arrays.stream(SpecialVo.class.getDeclaredMethods()).filter(method -> method.getName().contains("get"))
+                .filter(method -> !method.getName().equals("getFiles"))
+                .collect(Collectors.toList());
+        List<Method> resultMethods = Arrays.stream(SpecialJoinResult.class.getDeclaredMethods()).filter(method -> method.getName().contains("set"))
+                .filter(method -> !method.getName().equals("setFilePath"))
+                .collect(Collectors.toList());
+        for (int i = 0; i < (specialVo.getSomePeople() != null ? specialVo.getSomePeople().size() : 1); i++) {
+            specialJoinResults.add(new SpecialJoinResult());
+        }
+        for (int i = 0; i < (specialVo.getSomePeople() != null ? specialVo.getSomePeople().size() : 1); i++) {
+            SpecialJoinResult specialJoinResult = specialJoinResults.get(i);
+            for (Method voMethod : methods) {
+                voMethod.setAccessible(true);
+                if (voMethod.getName().equals("getSomePeople")) {
+                    if (specialVo.getSomePeople() != null) {
+                        specialJoinResult.setTeacherName(specialVo.getSomePeople().get(i).getTeacherName());
+                        specialJoinResult.setTeachingScores(specialVo.getSomePeople().get(i).getTeachingScores());
+                        specialJoinResult.setAuthorOrder(specialVo.getSomePeople().get(i).getAuthorOrder());
+                    }
+                } else {
+                    for (Method method : resultMethods) {
+                        if (method.getName().replace("set", "").equals(voMethod.getName().replace("get", ""))) {
+                            method.invoke(specialJoinResult, voMethod.invoke(specialVo));
+                        }
+                    }
+                }
+            }
+        }
+        List<SpecialJoinResult> specialJoinResultList = new ArrayList<>();
+        for (SpecialJoinResult specialJoinResult : specialJoinResults) {
+            List<SpecialJoinResult> list = specialJoinDao.selectListByConditions(specialJoinResult);
+            specialJoinResultList.addAll(list);
+        }
+        List<SpecialVo> specialVoList = new ArrayList<>();
+        List<Method> methods1 = Arrays.stream(SpecialVo.class.getDeclaredMethods()).filter(method -> method.getName().contains("set"))
+                .filter(method -> !method.getName().equals("setFiles") && !method.getName().equals("setSomePeople"))
+                .collect(Collectors.toList());
+        List<Method> resultMethods1 = Arrays.stream(SpecialJoinResult.class.getDeclaredMethods()).filter(method -> method.getName().contains("get"))
+                .filter(method -> !method.getName().equals("getYear") && !method.getName().equals("getFilePath"))
+                .collect(Collectors.toList());
+        while (!specialJoinResultList.isEmpty()) {
+            List<SpecialJoinResult> joinResultList = specialJoinResultList.stream().filter(specialJoinResult -> specialJoinResult.getId().equals(specialJoinResultList.get(0).getId())).collect(Collectors.toList());
+            SpecialVo specialVo1 = new SpecialVo();
+            List<TeacherAndOrder> teacherAndOrders = new ArrayList<>();
+            for (SpecialJoinResult specialJoinResult : joinResultList) {
+                TeacherAndOrder teacherAndOrder = new TeacherAndOrder();
+                teacherAndOrder.setAuthorOrder(specialJoinResult.getAuthorOrder());
+                teacherAndOrder.setTeacherName(specialJoinResult.getTeacherName());
+                teacherAndOrder.setTeachingScores(specialJoinResult.getTeachingScores());
+                teacherAndOrders.add(teacherAndOrder);
+            }
+            specialVo1.setSomePeople(teacherAndOrders);
+            for (Method method : methods1) {
+                method.setAccessible(true);
+                for (Method method1 : resultMethods1) {
+                    method1.setAccessible(true);
+                    if (method.getName().replace("set", "").equals(method1.getName().replace("get", ""))) {
+                        method.invoke(specialVo1, method1.invoke(joinResultList.get(0)));
+                    }
+                }
+            }
+            specialVoList.add(specialVo1);
+            specialJoinResultList.removeAll(joinResultList);
+        }
+        return specialVoList;
+    }
 }

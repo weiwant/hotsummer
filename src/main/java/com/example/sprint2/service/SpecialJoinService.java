@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.example.sprint2.models.vo.SpecialVo;
 
 import java.lang.reflect.InvocationTargetException;
+import java.util.List;
 
 /**
  * @author hy
@@ -17,4 +18,6 @@ public interface SpecialJoinService {
     public IPage<SpecialVo> selectByConditions(SpecialVo specialVo) throws InvocationTargetException, IllegalAccessException;
 
     public String setSubmit(SpecialVo specialVo) throws InvocationTargetException, IllegalAccessException;
+
+    public List<SpecialVo> selectListByConditions(SpecialVo specialVo) throws InvocationTargetException, IllegalAccessException;
 }
