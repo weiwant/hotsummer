@@ -38,7 +38,7 @@
           <input
             type="text"
             placeholder="请输入比赛的名称"
-            v-model="competitionname"
+            v-model="competitioNname"
             :disabled="!isEditing"
           />
         </td>
@@ -144,7 +144,7 @@ export default {
       committed: true,
       //填报数据
       awardLevel: "",
-      competitionname: "",
+      competitionName: "",
       awardCategory: "",
       level: "",
       awardingUnit: "",
