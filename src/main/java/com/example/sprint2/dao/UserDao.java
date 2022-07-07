@@ -6,6 +6,7 @@ import com.example.sprint2.mybatis.mapper.UserloginMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -33,6 +34,22 @@ public class UserDao {
 
     public List<UserLogin> selectAll() {
         return userloginMapper.selectList(new QueryWrapper<>());
+    }
+
+    public List<String> getList(){
+        List<String> nameList = new ArrayList<>();
+        QueryWrapper<UserLogin> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("identify",0);
+        List<UserLogin> list= userloginMapper.selectList(queryWrapper);
+        String name =null;
+        for (UserLogin userLogin:list){
+            name = userLogin.getUsername();
+            nameList.add(name);
+        }
+        for (String name1:nameList){
+            System.out.println(name1);
+        }
+        return  nameList;
     }
 
 
