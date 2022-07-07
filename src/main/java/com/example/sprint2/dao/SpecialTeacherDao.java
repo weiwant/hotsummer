@@ -7,7 +7,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author:wwq
@@ -76,5 +78,24 @@ public class SpecialTeacherDao {
         qw.eq("author_order", specialTeacher.getAuthorOrder());
         qw.eq("type", specialTeacher.getType());
         specialTeacherMapper.update(specialTeacher, qw);
+    }
+
+    /**
+     * @Author：wwq
+     * @Return：
+     * @Url:
+     * @Description：根据教师姓名查询各BB类教分，以map形式返回。<类型,分数>
+     */
+    public Map<String,Double> getSpecialScores(String teacherName){
+        QueryWrapper<SpecialTeacher> qw = new QueryWrapper<>();
+        qw.select("type,sum(teaching_scores) as teaching_scores");
+        qw.eq("teacher_name",teacherName);
+        qw.groupBy("type");
+        List<SpecialTeacher> teachers=specialTeacherMapper.selectList(qw);
+        Map<String,Double> scores=new HashMap<>();
+        for (SpecialTeacher teacher : teachers) {
+            scores.put(teacher.getType(),teacher.getTeachingScores());
+        }
+        return scores;
     }
 }

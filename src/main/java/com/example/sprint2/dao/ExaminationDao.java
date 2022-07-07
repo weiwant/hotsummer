@@ -99,4 +99,21 @@ public class ExaminationDao {
         queryWrapper.isNotNull("examination_work_id");
         totalTableMapper.delete(queryWrapper);
     }
+
+    /**
+     * @Author：wwq
+     * @Return：
+     * @Url:
+     * @Description：根据教师姓名，获取其考务总教分
+     */
+    public Double getExaminationScore(String teacherName){
+        QueryWrapper<ExaminationWorkload> qw=new QueryWrapper<>();
+        qw.eq("main_teacher_name",teacherName);//对应教师姓名
+        List<ExaminationWorkload> teachers=examinationWorkloadMapper.selectList(qw);
+        Double examinationScore=new Double(0);
+        for (ExaminationWorkload teacher : teachers) {
+            examinationScore+=teacher.getFinalTeachingScores();
+        }
+        return examinationScore;
+    }
 }

@@ -130,4 +130,22 @@ public class TeachingWorkloadStatisticsDao {
         IPage<TeachingWorkloadStatistics> teachIPage = teachingWorkloadStatisticsMapper.selectPage(teachPage, wrapper);
         return teachIPage;
     }
+
+    /**
+     * @Author：wwq
+     * @Return：
+     * @Url:
+     * @Description：根据教师姓名获取总教学工作量教分
+     */
+
+    public Double getTeachingScore(String teacherName){
+        QueryWrapper<TeachingWorkloadStatistics> qw=new QueryWrapper<>();
+        qw.eq("main_teacher_name",teacherName);
+        List<TeachingWorkloadStatistics> teachers=teachingWorkloadStatisticsMapper.selectList(qw);
+        Double teachingScore=new Double(0);
+        for (TeachingWorkloadStatistics teacher : teachers) {
+            teachingScore+=teacher.getFinalTeachingScores();
+        }
+        return teachingScore;
+    }
 }
