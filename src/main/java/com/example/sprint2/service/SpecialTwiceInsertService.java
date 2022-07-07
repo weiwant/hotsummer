@@ -2,6 +2,8 @@ package com.example.sprint2.service;
 
 import com.example.sprint2.models.vo.SpecialVo;
 
+import java.io.IOException;
+
 /**
  * @author:wwq
  * @Date：2022/7/5：15:57
@@ -9,7 +11,7 @@ import com.example.sprint2.models.vo.SpecialVo;
 public interface SpecialTwiceInsertService {
     Boolean specialSave(SpecialVo specialVo);
 
-    boolean specialUpload(SpecialVo specialVo);
+    boolean specialUpload(SpecialVo specialVo) throws IOException;
 
     boolean specialMark(SpecialVo specialVo);
 }

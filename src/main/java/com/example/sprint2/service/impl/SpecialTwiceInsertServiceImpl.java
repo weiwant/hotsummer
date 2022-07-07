@@ -11,6 +11,7 @@ import com.example.sprint2.service.SpecialTwiceInsertService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.io.IOException;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -97,7 +98,7 @@ public class SpecialTwiceInsertServiceImpl implements SpecialTwiceInsertService 
      * @Description：特殊工作量更新。根据项目id，更新Project表和Teacher表（有可能有插入操作）。
      */
     @Override
-    public boolean specialUpload(SpecialVo specialVo) {
+    public boolean specialUpload(SpecialVo specialVo) throws IOException {
         boolean flag = true;
 
         SpecialProject specialProject = new SpecialProject();//Project实体类。
@@ -151,6 +152,7 @@ public class SpecialTwiceInsertServiceImpl implements SpecialTwiceInsertService 
         }
 
         fileDealService.renameFile(specialVo.getId());
+        fileDealService.uploadFileById(specialVo.getFiles(), specialVo.getId());
         return flag;
     }
 
