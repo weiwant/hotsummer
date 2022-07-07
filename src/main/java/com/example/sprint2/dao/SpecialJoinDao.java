@@ -50,7 +50,6 @@ public class SpecialJoinDao {
                 }
                 specialJoinResult1.setFileName(fileNames);
                 for (String name : specialJoinResult1.getFileName()) {
-                    System.out.println(name);
                 }
             }
         });

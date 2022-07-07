@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 
 import java.io.IOException;
 import java.time.LocalDate;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -127,7 +128,7 @@ public class SpecialTwiceInsertServiceImpl implements SpecialTwiceInsertService 
         specialProject.setGuidingStudentName(specialVo.getGuidingStudentName());//指导学生姓名
         specialProject.setGuidingStudentId(specialVo.getGuidingStudentId());//指导学生学号
 
-        //specialProject.setStatus("已保存");//审核状态
+        specialProject.setStatus(specialVo.getStatus());//审核状态
         specialProject.setRemarks(specialVo.getRemarks());//备注
         // TODO: 2022/7/5 文件路径
 //        fileDealService.setPath(specialVo.getId());
@@ -152,7 +153,9 @@ public class SpecialTwiceInsertServiceImpl implements SpecialTwiceInsertService 
         }
 
         fileDealService.renameFile(specialVo.getId());
-        fileDealService.uploadFileById(specialVo.getFiles(), specialVo.getId());
+        if (specialVo.getFiles() != null) {
+            fileDealService.uploadFileById(specialVo.getFiles(), specialVo.getId());
+        }
         return flag;
     }
 
