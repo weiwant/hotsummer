@@ -11,7 +11,8 @@ Vue.use(ElementUI);
 Vue.prototype.$axios = axios;
 Vue.prototype.$domainName = "http://abcd.vaiwan.com"  //axios请求域名
 Vue.prototype.$currentYear = (new Date()).getFullYear()  //当前的年份
-Vue.prototype.$currentUser = localStorage.getItem("userName"); //当前用户的姓名
+// Vue.prototype.$currentUser = localStorage.getItem("userName"); //当前用户的姓名
+Vue.prototype.$currentUser = "丁建利"
 //下载excel文件方法
 Vue.prototype.$exportExcelFile = (dataToBeExported, header, filename) => {
   import("xlsx").then((XLSX) => {

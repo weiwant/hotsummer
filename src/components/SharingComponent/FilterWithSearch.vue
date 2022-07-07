@@ -1,6 +1,9 @@
 <template>
   <div class="searchFilter">
-    <YearFilter :yearChosen="year" @yearConfirmed="search"></YearFilter>
+    <YearFilter
+      @yearConfirmed="search"
+      @yearSelected="yearSelected"
+    ></YearFilter>
     <!-- 条件搜索 -->
     <div class="wrapper">
       <select class="search" v-model="searchKeyword" id="">
@@ -34,17 +37,22 @@ export default {
   props: ["searchKeywords"],
   data() {
     return {
-      year: this.$currentYear,
+      yearChosen: this.$currentYear,
       searchKeyword: this.searchKeywords[0],
       searchValue: "",
     };
   },
   methods: {
+    //搜索关键字和搜索值是本组件内就有的，关键是获取选择的年份：
+    //大家都初始年份值都是相同的，每次yearfilter组件的selecte值发生了改变，都会触发事件传递到本组件中
+    yearSelected(year) {
+      this.yearChosen = year;
+    },
     //点击了搜索btn或确定btn
     search() {
       this.$emit(
         "getData",
-        this.year,
+        this.yearChosen,
         this.searchKeyword,
         this.searchValue.trim()
       );

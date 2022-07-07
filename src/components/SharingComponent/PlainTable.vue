@@ -6,13 +6,20 @@
       <thead v-if="dataExists">
         <tr>
           <th v-for="(item, index) in tableHeader" :key="index">
-            {{ item }}
+            {{ item.key }}
           </th>
         </tr>
       </thead>
       <tbody>
-        <tr class="tableDataLine" v-for="item in tableData" :key="item.id">
-          <td v-for="(value, index) in item" :key="index">{{ value }}</td>
+        <tr
+          class="tableDataLine"
+          v-for="(object, index) in tableData"
+          :key="index"
+        >
+          <!-- 按照tableHeader的顺序遍历对象 -->
+          <td v-for="(item, index) in tableHeader" :key="index">
+            {{ object[item.value] }}
+          </td>
         </tr>
       </tbody>
     </table>
@@ -30,7 +37,7 @@ export default {
 .tableWrapper {
   position: relative;
   overflow: scroll;
-  height: 86vh;
+  max-height: 86vh;
   padding-bottom: 15px;
 }
 table.plainDataTable {

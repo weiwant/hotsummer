@@ -2,99 +2,278 @@
   <div class="componentWrapper">
     <!--component标题-->
     <div class="componentSectionTitle">工作量报告</div>
-    <YearFilter
-      :yearChosen="yearChosen"
-      @yearConfirmed="yearConfirmed"
-    ></YearFilter>
+    <YearFilter @yearConfirmed="yearConfirmed"></YearFilter>
     <TableStatisticsBar :keyValuePairs="keyValuePairs"></TableStatisticsBar>
-    <div class="componentSubsection toolBar">
-      <DownloadExcelFile
-        :btnText="'导出excel至本地'"
-        :disabled="!dataExists"
-        :defaultFileName="`${yearChosen}年度工作量`"
-        @exportFile="exportFile"
-      ></DownloadExcelFile>
-    </div>
-
+    <!-- 教学工作量详情 -->
+    <div class="componentSubtitle">教学工作量详情</div>
     <!--数据列表-->
     <PlainTable
-      :dataExists="dataExists"
-      :tableData="workloadTableData"
-      :tableHeader="workloadTableHeader"
-      :noDataHint="noDataHint"
+      :dataExists="dataExists_teaching"
+      :tableData="teachingWorkloadTableData"
+      :tableHeader="teachingWorkloadTableHeader"
+      :noDataHint="noDataHint_teaching"
     ></PlainTable>
-    <Pagination
-      :currentPage="currentPage"
-      :allPageCount="allPageCount"
-      @pageBefore="pageBefore"
-      @pageAfter="pageAfter"
-    ></Pagination>
+    <!-- 特殊工作量详情 -->
+    <div class="componentSubtitle">特殊工作量详情</div>
+    <PlainTable
+      :dataExists="dataExists_special"
+      :tableData="specialWorkloadTableData"
+      :tableHeader="specialWorkloadTableHeader"
+      :noDataHint="noDataHint_special"
+    ></PlainTable>
   </div>
 </template>
 
 <script>
 import TableStatisticsBar from "../SharingComponent/TableStatisticsBar.vue";
-import DownloadExcelFile from "../SharingComponent/DownloadExcelFile.vue";
 import YearFilter from "../SharingComponent/YearFilter.vue";
-import Pagination from "../SharingComponent/Pagination.vue";
 import PlainTable from "../SharingComponent/PlainTable.vue";
 export default {
   name: "TeacherWorkloadTable",
   components: {
     TableStatisticsBar,
-    DownloadExcelFile,
     YearFilter,
     PlainTable,
-    Pagination,
+  },
+  computed: {
+    totalScore() {
+      return this.teachingScore + this.specialScore;
+    },
   },
   data() {
     return {
       //统计数据
-      totalItems: 0,
+      teachingScore: "",
+      specialScore: "",
       //分页
-      allPageCount: 1,
       currentPage: 1,
       //表格数据
       yearChosen: this.$currentYear,
-      workloadTableHeader: [
-        "学年",
-        "辅助",
-        "计算用学时",
-        "课程性质解释",
-        "计算机用时",
-        "课程名称",
-        "课程性质",
-        "课程号",
-        "学分",
-        "折扣",
-        "实验安排",
-        "实验课时",
-        "教分",
-        "合课单位",
-        "实验室核对结果",
-        "上课教师名字",
-        "教师职称",
-        "专业",
-        "折扣前BA1系数",
-        "原始教分",
-        "其他教师名",
-        "计划学院",
-        "实践课时",
-        "备注",
-        "学期",
-        "是否为特殊班级",
-        "是否全英教学",
-        "上课人数",
-        "年级",
-        "教学班",
-        "BA1系数",
-        "开课学院",
-        "理论课时",
-        "工作性质",
+      // 教学工作量数据(字段按照老师习惯的顺序排序)
+      teachingWorkloadTableHeader: [
+        {
+          key: "工作量性质",
+          value: "workloadNature",
+        },
+        {
+          key: "学年",
+          value: "academicYear",
+        },
+        {
+          key: "学期",
+          value: "semester",
+        },
+        {
+          key: "课程号",
+          value: "courseNumber",
+        },
+        {
+          key: "课程名称",
+          value: "courseName",
+        },
+        {
+          key: "教学班",
+          value: "teachingClass",
+        },
+        // {
+        //   key: "开课学院",
+        //   value: "teachingSchool",
+        // },
+        // {
+        //   key: "计划学院",
+        //   value: "teachingSchool",
+        // },
+        {
+          key: "学分",
+          value: "credit",
+        },
+        {
+          key: "课程性质",
+          value: "courseNature",
+        },
+        {
+          key: "年级",
+          value: "studentGrade",
+        },
+        {
+          key: "专业",
+          value: "major",
+        },
+        // {
+        //   key: "上课老师",
+        //   value: "mainTeacherName",
+        // },
+        // {
+        //   key: "职称",
+        //   value: "mainTeacherTitle",
+        // },
+        {
+          key: "上课人数",
+          value: "studentAmount",
+        },
+        {
+          key: "理论课时",
+          value: "theoreticalClassHours",
+        },
+        {
+          key: "上机课时",
+          value: "computerClassHours",
+        },
+        {
+          key: "实验课时",
+          value: "experimentalClassHours",
+        },
+        {
+          key: "实践课时",
+          value: "practicalClassHours",
+        },
+        {
+          key: "计算用课时",
+          value: "calculatingClassHours",
+        },
+        {
+          key: "合课单位",
+          value: "jointDepartment",
+        },
+        // {
+        //   key: "备注",
+        //   value: "remarks",
+        // },
+        {
+          key: "实验安排",
+          value: "experimentArrangement",
+        },
+        {
+          key: "其它教师",
+          value: "otherTeacherName",
+        },
+        {
+          key: "教分（BA1/3/15）原始分",
+          value: "originalTeachingScores",
+        },
+        {
+          key: "BA1系数",
+          value: "teachingCoefficient",
+        },
+        {
+          key: "教分（BA1/3/15）",
+          value: "finalTeachingScores",
+        },
+        // {
+        //   key: "辅助",
+        //   value: "assistant",
+        // },
+        {
+          key: "课程性质说明",
+          value: "classNatureExplanation",
+        },
+        {
+          key: "是否卓工或弘毅",
+          value: "specialClassRemarks",
+        },
+        {
+          key: "是否全英文",
+          value: "specialLanguageRemarks",
+        },
+        {
+          key: "是否卓工或弘毅",
+          value: "specialClassRemarks",
+        },
+        {
+          key: "是否打折",
+          value: "discount",
+        },
+        {
+          key: "未打折前",
+          value: "noDiscountTeachingCoefficient",
+        },
+        // {
+        //   key: "实验室核对结果",
+        //   value: "laboratoryVerificationResults",
+        // },
       ],
-      workloadTableData: [],
-      dataExists: false, //“暂无数据”提示的显示
-      noDataHint: "",
+      teachingWorkloadTableData: [],
+      dataExists_teaching: false,
+      noDataHint_teaching: "",
+      //特殊工作量数据
+      specialWorkloadTableHeader: [
+        {
+          key: "申报人",
+          value: "declarantName",
+        },
+        {
+          key: "申报时间",
+          value: "reportTime",
+        },
+        {
+          key: "教学业绩类型",
+          value: "projectCategory",
+        },
+        {
+          key: "成果/作品/参赛项目/参评项目/论文/专著名称",
+          value: "achievementName",
+        },
+        {
+          key: "级别",
+          value: "awardLevel",
+        },
+        {
+          key: "课程/项目/奖项/竞赛/论文指导类别",
+          value: "projectCategory",
+        },
+        {
+          key: "课程/项目/奖项/竞赛详细名称",
+          value: "projectName",
+        },
+        {
+          key: "获奖等级",
+          value: "awardLevel",
+        },
+        {
+          key: "获奖/获评/出版日期",
+          value: "awardDate",
+        },
+        {
+          key: "项目进展",
+          value: "projectStatus",
+        },
+        {
+          key: "授奖单位",
+          value: "awardApartment",
+        },
+        {
+          key: "刊物/出版社名称",
+          value: "publicationName",
+        },
+        {
+          key: "刊物期数/出版版次",
+          value: "publicationsNumber",
+        },
+        {
+          key: "ISBN号",
+          value: "isbn",
+        },
+        {
+          key: "所获荣誉",
+          value: "receivingHonor",
+        },
+        {
+          key: "指导学生团队名",
+          value: "guidingStudentTeam",
+        },
+        {
+          key: "指导学生姓名",
+          value: "guidingStudentName",
+        },
+        //从participants中提取出来的属于这个老师的教分数据
+        {
+          key: "教分",
+          value: "theScore",
+        },
+      ],
+      specialWorkloadTableData: [],
+      dataExists_special: false,
+      noDataHint_special: "",
     };
   },
   computed: {
@@ -103,92 +282,98 @@ export default {
       return [
         {
           key: "总教分",
-          value: this.totalItems,
+          value: this.totalScore,
         },
         {
           key: "教学工作量教分",
-          value: this.allPageCount,
+          value: this.teachingScore,
         },
         {
           key: "特殊工作量教分",
-          value: this.allPageCount,
+          value: this.specialScore,
         },
       ];
     },
   },
   methods: {
-    //根据当前学年和学期获取对应工作量的数据
-    getTableData() {
+    //获取当前教师用户的教学工作量
+    getTeachingData() {
       const formData = new FormData();
-      formData.append("naturalYear", this.yearChosen);
-      formData.append("page", this.currentPage);
       formData.append("mainTeacherName", this.$currentUser);
+      formData.append("naturalYear", this.yearChosen);
       this.$axios
-        .post(`${this.$domainName}/total/records/page`, formData)
+        .post(`http://abcd.vaiwan.com/total/records`, formData)
         .then((res) => {
+          console.log(res);
           if (res.data.response.code == 200) {
-            this.dataExists = true;
-            this.workloadTableData = res.data.data.records;
-            this.allPageCount = res.data.data.pageNum;
-            this.totalItems = res.data.data.itemNum;
+            this.dataExists_teaching = true;
+            this.teachingWorkloadTableData = res.data.data;
           } else {
-            this.dataExists = false;
-            this.workloadTableData = [];
-            this.allPageCount = 1;
-            this.totalItems = 0;
-            this.noDataHint = `暂无${this.yearChosen}年度的数据！`;
+            this.dataExists_teaching = false;
+            this.teachingWorkloadTableData = [];
+            this.noDataHint_teaching = `暂无${this.yearChosen}年度的教学工作量数据！`;
           }
         })
         .catch((err) => {
-          console.log(err);
-          this.noDataHint = "获取数据出错！";
+          this.dataExists_teaching = false;
+          this.teachingWorkloadTableData = [];
+          this.noDataHint_teaching = "获取数据出错！";
+        });
+      //计算教学总教分
+      this.teachingWorkloadTableData.forEach((item) => {
+        this.teachingScore = this.teachingScore + item[finalTeachingScores];
+      });
+    },
+    //获取当前教师用户的特殊工作量
+    getSpecialData() {
+      const formData = new FormData();
+      formData.append("year", this.yearChosen);
+      formData.append("teacherName", this.$currentUser);
+      this.$axios
+        .post(`http://abkkds.vaiwan.com/special-join/select/teacher`, formData)
+        .then((res) => {
+          if (res.data.response.code == 200) {
+            this.dataExists_special = true;
+            this.specialWorkloadTableData = res.data.data; //获取特殊工作量对象
+            this.specialWorkloadTableData.forEach((item) => {
+              //遍历每个数据对象的somePeople属性，找到当前用户在本项目内对应的教分
+              for (object of item.somePeople) {
+                if (object.teacherName == this.$currentUser) {
+                  item[theScore] = object.score;
+                  this.specialScore = this.specialScore + object.score;
+                  break;
+                }
+              }
+            });
+          } else {
+            this.dataExists_special = false;
+            this.specialWorkloadTableData = [];
+            this.noDataHint_special = `暂无${this.yearChosen}年度的特殊工作量教分审核数据！`;
+          }
+        })
+        .catch((err) => {
+          this.dataExists_special = false;
+          this.specialWorkloadTableData = [];
+          this.noDataHint_special = "获取数据出错！";
         });
     },
     yearConfirmed(year) {
       this.yearChosen = year;
-      this.getTableData();
-    },
-    pageBefore() {
-      this.currentPage = this.currentPage + 1;
-      this.getTableData();
-    },
-    pageAfter() {
-      this.currentPage = this.currentPage + 1;
-      this.getTableData();
-    },
-    pageBefore() {
-      this.currentPage = this.currentPage - 1;
-      this.getTableData();
-    },
-    exportFile(filename) {
-      //老师的数据一般都不多，由于是按照每40项1页来做的
-      //所以如果总长不超过40，就证明前端已经有所有要导出excel的数据了，可以直接导出
-      //反之就需要再向后端请求所有数据
-      if (this.workloadTableData.length <= 40) {
-        this.$exportExcelFile(
-          this.workloadTableData,
-          this.workloadTableHeader,
-          filename
-        );
-      } else {
-        const formData = new FormData();
-        formData.append("naturalYear", this.yearChosen);
-        formData.append("mainTeacherName", this.currentTeacherName);
-        this.$axios
-          .post(`${this.$domainName}/total/records`, formData)
-          .then((res) => {
-            this.$exportExcelFile(
-              res.data.data,
-              this.workloadTableHeader,
-              filename
-            );
-          });
-      }
+      console.log(this.yearChosen);
+      this.getTeachingData();
     },
   },
   created() {
+    this.$axios
+      .post("http://abcs.vaiwan.com/scores/calculate", {
+        year: this.$currentYear,
+      })
+      .then((res) => {
+        console.log(res);
+      });
     //向后台获取default学年学期数据;
-    this.getTableData();
+    this.getTeachingData();
+    this.getSpecialData();
   },
 };
 </script>
