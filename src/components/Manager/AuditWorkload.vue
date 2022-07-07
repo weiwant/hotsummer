@@ -29,10 +29,16 @@
       ></DownloadExcelFile>
       <!-- 批量下载申报项目文件 -->
       <div class="auditDownloadTool">
-        <button class="workloadFileProcessingBtn"> 批量下载审核附件</button>
+        <button
+          class="workloadFileProcessingBtn"
+          :disabled="!dataExists"
+          @click="downloadSpecialWorkloadFiles"
+          :class="{ disabled: !dataExists }"
+        >
+           批量下载审核附件
+        </button>
       </div>
     </div>
-
     <div class="tableWrapper">
       <div class="noDataHint" v-if="!dataExists">{{ noDataHint }}</div>
       <table class="specialWorkloadTable">
@@ -84,7 +90,7 @@
             </td>
             <!-- 文件下载 -->
             <td style="text-align: center; padding: 30px 5px">
-              <button class="file" @click="downloadFile(index)">
+              <button class="file" @click="downloadSpecificFile(index)">
                 下载附件
               </button>
             </td>
@@ -178,10 +184,10 @@ export default {
   data() {
     return {
       //上报截止时间
-      ddl: "2022-12-31",
+      ddl: "",
       isEditingDDL: false,
       //当前查询的状态
-      searchKeywords: ["教学业绩类型", "申报人", "审核状态"],
+      searchKeywords: ["教学业绩类型", "申报人"],
       yearChosen: this.$currentYear,
       searchKeywordChosen: "",
       searchValueChosen: "",
@@ -305,7 +311,19 @@ export default {
     },
     confirmDDL() {
       this.isEditingDDL = false;
+      const formData = new FormData();
+      formData.append("year", this.$currentYear);
+      formData.append("date", this.ddl);
+      this.$axios
+        .post("http://abcd.vaiwan.com/deadline/set", formData)
+        .then((res) => {
+          console.log(res);
+        });
     },
+    /******下载某年的特殊工作量附件******/
+    downloadSpecialWorkloadFiles() {},
+    /******下载某个项目的特殊工作量附件******/
+    downloadSpecificFile(index) {},
     //编辑
     edit(index) {
       // 调整选中的行的样式与状态
@@ -337,6 +355,7 @@ export default {
       document.querySelector(
         `table tr:nth-child(${index + 1}) #save`
       ).style.display = "none";
+      this.tableData[index].status = "已审核"; //修改审核状态
       //向后端同步数据
       this.$axios
         .post(
@@ -356,15 +375,15 @@ export default {
       if (this.searchValueChosen != "") {
         switch (this.searchKeywordChosen) {
           case "教学业绩类型":
-            formData.append("type", this.searchValue);
+            formData.append("type", this.searchValueChosen);
             break;
           case "申报人":
-            formData.append("declarantName", this.searchValue);
+            formData.append("declarantName", this.searchValueChosen);
             break;
         }
       }
       this.$axios
-        .post(`http://abwjkds.vaiwan.com/special-join/select`, formData)
+        .post(`http://abckds.vaiwan.com/special-join/select`, formData)
         .then((res) => {
           console.log(res);
           if (res.data.response.code == 200) {
@@ -378,9 +397,9 @@ export default {
             this.allPageCount = 1;
             this.totalItems = 0;
             if (this.searchValueChosen == "") {
-              this.noDataHint = `暂无&nbsp;&nbsp;${this.yearChosen}&nbsp;&nbsp;年度的数据！`;
+              this.noDataHint = `暂无${this.yearChosen}年度的数据！`;
             } else {
-              this.noDataHint = `暂无&nbsp;&nbsp;${this.yearChosen}&nbsp;&nbsp;年度，${this.searchKeywordChosen}&nbsp;为&nbsp;${this.searchValueChosen}&nbsp;的数据！`;
+              this.noDataHint = `暂无${this.yearChosen}年度，${this.searchKeywordChosen}为${this.searchValueChosen}的数据！`;
             }
           }
         })
@@ -424,9 +443,18 @@ export default {
     },
   },
   created() {
+    //获取当年数据
     this.yearChosen = this.$currentYear;
     this.currentPage = 1;
     this.getTableData();
+    //获取ddl
+    const formData = new FormData();
+    formData.append("year", this.$currentYear);
+    this.$axios
+      .post("http://abcd.vaiwan.com/deadline/get", formData)
+      .then((res) => {
+        this.ddl = res.data.data;
+      });
   },
 };
 </script>
