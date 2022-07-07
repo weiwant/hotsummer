@@ -182,10 +182,12 @@ export default {
       });
     //获取当前老师，所申报的所有特殊工作量historyWorkloads[]
     const formData2 = new FormData();
-    formData2.append("year", this.$currentYear);
-    formData2.append("declarantName", this.$currentUser);
+    // formData2.append("year", this.$currentYear);
+    // formData2.append("declarantName", this.$currentUser);
+    formData2.append("year", 2022);
+    formData2.append("declarantName", "丁建利");
     this.$axios
-      .post("http://abckds.vaiwan.com/special-join/select/teacher", formData2)
+      .post("http://abkkds.vaiwan.com/special-join/select/teacher", formData2)
       .then((res) => {
         this.historyWorkloads = res.data.data;
       });

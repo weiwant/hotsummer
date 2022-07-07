@@ -17,7 +17,7 @@
           type="text"
           id="manInCharge"
           placeholder="请输入项目负责人姓名"
-          v-model="participants[0].name"
+          v-model="participants[0].teacherName"
           :disabled="isDisabled"
         />
       </td>
@@ -41,7 +41,7 @@
               type="number"
               min="1"
               id="order"
-              v-model="participants[index].order"
+              v-model="participants[index].authorOrder"
               :disabled="isDisabled"
             />
             <button
@@ -80,11 +80,11 @@ export default {
       participants: [
         {
           teacherName: "",
-          order: 0,
+          authorOrder: 0,
         },
         {
           teacherName: "",
-          order: "",
+          authorOrder: "",
         },
       ],
     };

@@ -126,45 +126,60 @@ export default {
     },
 
     save() {
+      var _this = this;
+      this.$refs.dynamic.changeState();
+      this.isEditing = false;
       //点击保存，调用DynamicCollection组件的方法，将其中含有的数据同步至本组件内
       this.$refs.dynamic.transmitData();
-      var _this = this;
+      if (
+        this.$data.awardLevel == "" ||
+        this.$data.competitionname == "" ||
+        this.$data.awardCategory == "" ||
+        this.$data.level == "" ||
+        this.$data.awardingUnit == "" ||
+        this.$data.time == "" ||
+        this.$data.participants == "" ||
+        this.$data.uploadFile == ""
+      ) {
+        alert("数据填报不可为空！！！");
+        return;
+      }
       const formData = new FormData();
 
-      var data = JSON.stringify([
-        {
+      var specialVo = {
           awardLevel: this.$data.awardLevel,
           projectName: this.$data.competitionname,
           projectCategory: this.$data.awardCategory,
           level: this.$data.level,
           awardApartment: this.$data.awardingunit,
           awardDate: this.$data.time,
-          somePeople: this.$data.participants,
+          declarantName: this.$currentUser,
           type: "BB4",
-        },
-      ]);
+          id: this.data.id,
+        }
+      for (const key in specialVo) {
+        formData.append(key,specialVo[key]);
+      }
 
-      formData.append("data", data);
+      formData.append("teachers", JSON.stringify(this.$data.participants));
+      formData.append("specialVo",specialVo);
+      console.log(formData.get(""));
 
       for (let i = 0; i < this.$data.uploadFile.length; i++) {
         formData.append("files", this.$data.uploadFile[i]);
       }
-
-      console.log(formData.get("data"));
-      console.log(formData.get("files"));
-
       //以下需要修改接口
       this.$axios
-        .post(`${this.$domainName}/special-workload/upload`, formData, {
+        .post('http://abkkds.vaiwan.com/special-workload/save/teacher', formData, {
           headers: {
             "Content-Type": "multipart/form-datas",
           },
         })
         .then((res) => {
           if (res.data.response.code == 200) {
-            alert("报表文件上传成功！");
+            alert("保存申报成功！");
           } else {
-            alert("上传失败！");
+            alert("保存申报失败！");
           }
         })
         .catch(function (error) {

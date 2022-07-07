@@ -99,11 +99,13 @@
           />
         </td>
       </tr>
+
       <label v-show="isVisible">已上传文件:</label>
       <div v-show="isVisible" v-for="(fileName, item) in fileNames" :key="item">
         <label>{{ fileName }}</label>
         <button @click="deleteFile(item)">删除</button>
       </div>
+
       <!-- 动态增删填报项组件 -->
       <DynamicCollection
         ref="dynamic"
@@ -121,7 +123,6 @@ export default {
   data() {
     return {
       //填报数据
-      awardLevel: "",
       projectStatus: "",
       projectCategory: "",
       projectName: "",
@@ -154,42 +155,48 @@ export default {
     },
     /*保存上报数据*/
     save() {
+      this.$refs.dynamic.changeState();
+      this.isEditing = false;
       //点击保存，调用DynamicCollection组件的方法，将其中含有的数据同步至本组件内
       this.$refs.dynamic.transmitData();
-      console.log(this.participants);
+      // console.log(this.participants);
       var _this = this;
       const formData = new FormData();
-      //console.log("响应");
+      // console.log("响应");
 
-      var data = JSON.stringify([
-        {
+      var specialVo = {
           awardLevel: this.$data.awardLevel,
           projectStatus: this.$data.projectStatus,
           projectCategory: this.$data.projectCategory,
           projectName: this.$data.projectName,
           awardDate: this.$data.awardDate,
-          somePeople: this.$data.participants,
+          declarantName: this.$currentUser,
           type: "BB1",
-        },
-      ]);
+          id: this.data.id,
+        }
+      for (const key in specialVo) {
+        formData.append(key,specialVo[key]);
+      }
 
-      formData.append("data", data);
+      formData.append("teachers", JSON.stringify(this.$data.participants));
+      formData.append("specialVo",specialVo);
+      console.log(formData.get(""));
 
       for (let i = 0; i < this.$data.uploadFile.length; i++) {
         formData.append("files", this.$data.uploadFile[i]);
       }
       //以下需要修改接口
       this.$axios
-        .post(`${this.$domainName}/special-workload/upload`, formData, {
+        .post('http://abkkds.vaiwan.com/special-workload/save/teacher', formData, {
           headers: {
             "Content-Type": "multipart/form-datas",
           },
         })
         .then((res) => {
           if (res.data.response.code == 200) {
-            alert("报表文件上传成功！");
+            alert("保存申报成功！");
           } else {
-            alert("上传失败！");
+            alert("保存申报失败！");
           }
         })
         .catch(function (error) {

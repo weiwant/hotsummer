@@ -38,39 +38,45 @@ export default {
     return {
       content: "",
       teachername: "",
+      participants: [],
     };
   },
   methods: {
     save() {
+      this.$refs.dynamic.changeState();
+      this.isEditing = false;
       //点击保存，调用DynamicCollection组件的方法，将其中含有的数据同步至本组件内
       this.$refs.dynamic.transmitData();
+      // console.log(this.participants);
       var _this = this;
       const formData = new FormData();
+      // console.log("响应");
 
-      var data = JSON.stringify([
-        {
+      var specialVo = {
           briefIntroduction: this.$data.content,
-          declarantName: this.$data.teachername,
+          declarantName: this.$currentUser,
           type: "BB14",
-        },
-      ]);
+          id: this.data.id,
+        }
+      for (const key in specialVo) {
+        formData.append(key,specialVo[key]);
+      }
 
-      formData.append("data", data);
-
-      console.log(formData.get("data"));
+      formData.append("teachers", JSON.stringify(this.$data.participants));
+      formData.append("specialVo",specialVo);
 
       //以下需要修改接口
       this.$axios
-        .post(`${this.$domainName}/special-workload/upload`, formData, {
+        .post('http://abkkds.vaiwan.com/special-workload/save/teacher', formData, {
           headers: {
             "Content-Type": "multipart/form-datas",
           },
         })
         .then((res) => {
           if (res.data.response.code == 200) {
-            alert("报表文件上传成功！");
+            alert("提交申报成功！");
           } else {
-            alert("上传失败！");
+            alert("提交申报失败！");
           }
         })
         .catch(function (error) {
