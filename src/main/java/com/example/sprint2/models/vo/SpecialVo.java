@@ -1,5 +1,6 @@
 package com.example.sprint2.models.vo;
 
+import com.alibaba.fastjson.annotation.JSONField;
 import com.example.sprint2.models.pojo.TeacherAndOrder;
 import lombok.Data;
 import org.springframework.web.multipart.MultipartFile;
@@ -136,6 +137,24 @@ public class SpecialVo {
      */
 
     private List<TeacherAndOrder> somePeople;
+    /**
+     * 教师姓名
+     */
+    @JSONField(serialize = false)
+    private String teacherName;
+
+    /**
+     * 排序情况/位次
+     */
+    @JSONField(serialize = false)
+    private String authorOrder;
+
+
+    /**
+     * 教分
+     */
+    @JSONField(serialize = false)
+    private Double teachingScores;
 
     private MultipartFile[] files;
     //当前页数
