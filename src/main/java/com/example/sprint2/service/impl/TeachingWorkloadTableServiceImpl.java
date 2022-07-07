@@ -8,6 +8,8 @@ import com.example.sprint2.service.TeachingWorkloadTableService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 /**
  * @author 24047
  * @date 2022/6/29
@@ -42,6 +44,11 @@ public class TeachingWorkloadTableServiceImpl implements TeachingWorkloadTableSe
     @Override
     public IPage<TeachingWorkloadStatistics> searchByMajorInPage(TeachingWorkloadVo teachingWorkloadVo) {
         return teachingWorkloadStatisticsDao.selectByMajorInPage(teachingWorkloadVo.getNaturalYear(), teachingWorkloadVo.getMajor(), teachingWorkloadVo.getPageNumber(), teachingWorkloadVo.getPageSize());
+    }
+
+    @Override
+    public List<TeachingWorkloadStatistics> selectByTeacher(TeachingWorkloadVo teachingWorkloadVo){
+        return teachingWorkloadStatisticsDao.selectByTeacher(teachingWorkloadVo.getNaturalYear(),teachingWorkloadVo.getTeacherName());
     }
 }
 

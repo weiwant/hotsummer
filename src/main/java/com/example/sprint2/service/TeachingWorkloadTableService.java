@@ -4,6 +4,8 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.example.sprint2.models.vo.TeachingWorkloadVo;
 import com.example.sprint2.mybatis.entity.TeachingWorkloadStatistics;
 
+import java.util.List;
+
 /**
  * @author 24047
  * @date 2022/6/29
@@ -19,5 +21,7 @@ public interface TeachingWorkloadTableService {
     IPage<TeachingWorkloadStatistics> searchByStudentGradeInPage(TeachingWorkloadVo teachingWorkloadVo);
 
     IPage<TeachingWorkloadStatistics> searchByMajorInPage(TeachingWorkloadVo teachingWorkloadVo);
+
+    List<TeachingWorkloadStatistics> selectByTeacher(TeachingWorkloadVo teachingWorkloadVo);
 
 }

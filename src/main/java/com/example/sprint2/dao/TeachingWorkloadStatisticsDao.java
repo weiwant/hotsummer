@@ -148,4 +148,14 @@ public class TeachingWorkloadStatisticsDao {
         }
         return teachingScore;
     }
+
+
+    //教师端查看 不分页
+    public List<TeachingWorkloadStatistics> selectByTeacher(String naturalYear,String teacherName){
+        QueryWrapper<TeachingWorkloadStatistics> wrapper = new QueryWrapper<>();
+        wrapper.eq("natural_year", naturalYear);
+        wrapper.eq("main_teacher_name", teacherName);
+        List<TeachingWorkloadStatistics> list = teachingWorkloadStatisticsMapper.selectList(wrapper);
+        return list;
+    }
 }

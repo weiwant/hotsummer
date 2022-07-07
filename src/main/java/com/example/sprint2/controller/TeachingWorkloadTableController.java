@@ -12,13 +12,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
+
 /**
  * @author 24047
  * @date 2022/6/29
  */
 
 @RestController
-@RequestMapping("/manager/teaching-workload")
+@RequestMapping("/teaching-workload")
 public class TeachingWorkloadTableController {
     @Autowired
     TeachingWorkloadTableService teachingWorkloadTableService;
@@ -115,6 +117,16 @@ public class TeachingWorkloadTableController {
             return new Result(ResponseCode.NoContentFailure).toString();
         } else {
             return new Result(ResponseCode.SUCCESS, workloadPage).toString();
+        }
+    }
+
+    @RequestMapping(value = "teacher",method = RequestMethod.POST)
+    public String selectByTeacher(@RequestBody TeachingWorkloadVo teachingWorkloadVo){
+        List<TeachingWorkloadStatistics> list = teachingWorkloadTableService.selectByTeacher(teachingWorkloadVo);
+        if (list.size() ==0){
+            return new Result(ResponseCode.NoContentFailure).toString();
+        } else {
+            return new Result(ResponseCode.SUCCESS, list).toString();
         }
     }
 }
