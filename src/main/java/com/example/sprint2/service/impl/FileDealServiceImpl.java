@@ -13,12 +13,11 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.*;
 import java.net.URLEncoder;
 import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 
@@ -128,7 +127,7 @@ public class FileDealServiceImpl implements FileDealService {
          * @description 根据文件名和绝对路径即可下载
          * @return java.lang.String
          */
-        String msg = new String();
+        String msg = "";
         if (fileName != null) {
             FileInputStream is = null;
             BufferedInputStream bs = null;
@@ -144,7 +143,7 @@ public class FileDealServiceImpl implements FileDealService {
                     bs = new BufferedInputStream(is);
                     os = response.getOutputStream();
                     byte[] buffer = new byte[1024];
-                    int len = 0;
+                    int len;
                     while ((len = bs.read(buffer)) != -1) {
                         os.write(buffer, 0, len);
                     }
@@ -274,11 +273,11 @@ public class FileDealServiceImpl implements FileDealService {
             yearFile.mkdirs();
         }
         List<String> names = specialTeacherDao.getTeacherNamesById(id);
-        String projectName = specialProject.getProjectName();
+        StringBuilder projectName = new StringBuilder(specialProject.getProjectName());
         for (String name : names) {
-            projectName = projectName + "-" + name;
+            projectName.append("-").append(name);
         }
-        projectName = projectName + "-" + specialProject.getId();
+        projectName.append("-").append(specialProject.getId());
         String teacherFileFolderPath = typeFileFolderPath + "\\" + projectName;
         File teacherFile = new File(projectPath + "\\" + teacherFileFolderPath);
         if (!teacherFile.exists()) {
@@ -354,11 +353,16 @@ public class FileDealServiceImpl implements FileDealService {
             return msg;
         }
         File[] files = fileFolder.listFiles();//进一步具体到各个文件
-        for (File item : files) {
-            msg.add(comparativeFilePath + "/" + item.getName());
-//            msg.add(item.getPath());//返回绝对路径
+        if (files != null) {
+            for (File item : files) {
+                msg.add(comparativeFilePath + "\\" + item.getName());
+    //            msg.add(item.getPath());//返回绝对路径
 
-//            实际上还需要做一些处理
+    //            实际上还需要做一些处理
+            }
+        }else{
+            msg.add("error3");
+            return msg;
         }
         return msg;
 
@@ -391,7 +395,7 @@ public class FileDealServiceImpl implements FileDealService {
          * @description 根据文件名和绝对路径即可下载单个文件
          * @return java.lang.String
          */
-        String msg = new String();
+        String msg = "";
         FileInputStream is = null;
         BufferedInputStream bs = null;
         OutputStream os = null;
@@ -401,12 +405,13 @@ public class FileDealServiceImpl implements FileDealService {
                 //设置Headers
                 response.setHeader("Content-Type", "application/octet-stream");
                 //设置下载的文件的名称-该方式已解决中文乱码问题
-                response.setHeader("Content-Disposition", "attachment;filename=" + new String(file.getName().getBytes("gb2312"), "ISO8859-1"));
+                String filename=new String(file.getName().getBytes("gb2312"),"ISO8859-1");
+                response.setHeader("Content-Disposition", "attachment;filename=" + filename);
                 is = new FileInputStream(file);
                 bs = new BufferedInputStream(is);
                 os = response.getOutputStream();
                 byte[] buffer = new byte[1024];
-                int len = 0;
+                int len;
                 while ((len = bs.read(buffer)) != -1) {
                     os.write(buffer, 0, len);
                 }
@@ -462,7 +467,10 @@ public class FileDealServiceImpl implements FileDealService {
             return msg;
         }
         File[] files = fileFolder.listFiles();
-        String[] names = new String[files.length];
+        String[] names = new String[0];
+        if (files != null) {
+            names = new String[files.length];
+        }
         //伪造文件所在路径数组
         String[] paths = new String[files.length];
         for (int i = 0; i < files.length; i++) {
@@ -487,7 +495,7 @@ public class FileDealServiceImpl implements FileDealService {
         File zipFile = new File(strZipPath);
         try {
             //构造最终压缩包的输出流
-            zipStream = new ZipOutputStream(new FileOutputStream(zipFile));
+            zipStream = new ZipOutputStream(Files.newOutputStream(zipFile.toPath()));
             for (int i = 0; i < paths.length; i++) {
                 //解码获取真实路径与文件名
                 String realFileName = java.net.URLDecoder.decode(names[i], "UTF-8");
@@ -498,7 +506,7 @@ public class FileDealServiceImpl implements FileDealService {
                     ZipEntry zipEntry = new ZipEntry(realFileName);//在压缩目录中文件的名字
                     zipStream.putNextEntry(zipEntry);//定位该压缩条目位置，开始写入文件到压缩包中
                     bufferStream = new BufferedInputStream(zipSource, 1024 * 10);
-                    int read = 0;
+                    int read;
                     byte[] buf = new byte[1024 * 10];
                     while ((read = bufferStream.read(buf, 0, 1024 * 10)) != -1) {
                         zipStream.write(buf, 0, read);
@@ -549,7 +557,9 @@ public class FileDealServiceImpl implements FileDealService {
         }
         String zipFileName = comparativeFilePath + ".zip";//2022.zip
 //        String zipPath = "D:\\myTest\\test2"+".zip";//
-        String zipPath = projectPath + "\\" + zipFileName;
+        String zipPath = projectPath + "\\" + zipFileName;//....../2022.zip
+        File file=new File(zipPath);//
+        file.createNewFile();
         FileOutputStream fos = new FileOutputStream(zipPath);//必须是真实存在的zip文件作为输出文件
         ZipOutputStream zos = new ZipOutputStream(fos);//将压缩文件输入到这个文件中
 
@@ -557,6 +567,8 @@ public class FileDealServiceImpl implements FileDealService {
         File zipFile = new File(zipPath);
         if (zipFile.exists()) {
             msg.add(zipPath);
+            zos.flush();
+            zos.close();
             fos.close();
             msg.add(this.downloadByPath(response, zipPath));//将这个压缩包以单文件的形式发送
 //            我发现完全无法把它删除，实在是太困难了。只能在另外的进程里把它删除。
@@ -599,21 +611,23 @@ public class FileDealServiceImpl implements FileDealService {
             index = originalFilePath.lastIndexOf("\\");
         }
         List<String> names = specialTeacherDao.getTeacherNamesById(id);
-        String projectName = specialProject.getProjectName();
+        StringBuilder projectName = Optional.ofNullable(specialProject.getProjectName()).map(StringBuilder::new).orElse(null);
         for (String name : names) {
-            projectName = projectName + "-" + name;
+            projectName = (projectName == null ? new StringBuilder("null") : projectName).append("-").append(name);
         }
-        projectName = projectName + "-" + specialProject.getId();
+        projectName = (projectName == null ? new StringBuilder("null") : projectName).append("-").append(specialProject.getId());
         if (index == -1) {
             //原有的路径仅仅是单个路径
-            newFilePath = projectName;
+            newFilePath = projectName.toString();
 //            System.out.println(originalFilePath);
         } else {
             newFilePath = originalFilePath.substring(0, index) + "\\" + projectName;
         }
         File file = new File(originalFilePath);
         File newFile = new File(newFilePath);
-        file.renameTo(newFile);
+        if(!file.renameTo(newFile)){
+            return "error3";
+        }
 //        写入数据库
         if (specialProjectDao.setFilePath(newFilePath, id)) {
             return newFilePath;//只返回相对路径，到时候需要修改数据库内容
