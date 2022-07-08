@@ -1,5 +1,7 @@
 package com.example.sprint2.controller;
 
+import cn.hutool.extra.spring.SpringUtil;
+import com.example.sprint2.models.abc.Token;
 import com.example.sprint2.models.enumerate.impl.ResponseCode;
 import com.example.sprint2.models.vo.LoginVo;
 import com.example.sprint2.service.impl.LoginServiceImpl;
@@ -9,6 +11,11 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.Calendar;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * @author hy
@@ -20,6 +27,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class UserLoginController {
     @Autowired
     private LoginServiceImpl login;
+    private final Token factory = SpringUtil.getBean("tokenType");
 
     @RequestMapping(value = "/login", method = RequestMethod.POST)
     public String checkPsw(@RequestBody LoginVo loginVo) {
@@ -30,6 +38,12 @@ public class UserLoginController {
                 LoginVo loginVo1 = new LoginVo();
                 loginVo1.setIdentify(login.selectIdentify(loginVo));
                 loginVo1.setUsername(loginVo.getUsername());
+                Map<String, Object> payload = new HashMap<>();
+                payload.put("identity", loginVo1.getIdentify());
+                Calendar calendar = Calendar.getInstance();
+                calendar.setTime(new Date());
+                calendar.add(Calendar.HOUR, 2);
+                loginVo1.setToken(factory.createToken(null, payload, calendar.getTime()));
                 return new Result(ResponseCode.SUCCESS, loginVo1).toString();
             } else {
                 return new Result(ResponseCode.LoginFailure).toString();

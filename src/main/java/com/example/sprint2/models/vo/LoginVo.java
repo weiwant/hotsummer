@@ -9,6 +9,7 @@ public class LoginVo {
     private String username;
     private String password;
     private int indentify;
+    private String token;
 
 
     public String getPassword() {
@@ -33,5 +34,13 @@ public class LoginVo {
 
     public void setUsername(String username) {
         this.username = username;
+    }
+
+    public void setToken(String token) {
+        this.token = token;
+    }
+
+    public String getToken() {
+        return this.token;
     }
 }
