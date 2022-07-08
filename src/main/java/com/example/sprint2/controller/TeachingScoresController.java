@@ -28,15 +28,14 @@ public class TeachingScoresController {
     TeachingScoresService service;
 
 
-
     /**
      * @author hy
-     * @Receive  TeachingSoresVo
+     * @Receive TeachingSoresVo
      * @Param String teacherName，String year
      * @description 查询教分总记录
      */
-    @RequestMapping(value = "/select",method = RequestMethod.POST)
-    public String selectScores(@RequestBody TeachingScoresVo teachingScoresVo){
+    @RequestMapping(value = "/select", method = RequestMethod.POST)
+    public String selectScores(@RequestBody TeachingScoresVo teachingScoresVo) {
         List<TotalStatistics> list = service.selectScores(teachingScoresVo);
         if (list.size() == 0) {
             return new Result(ResponseCode.NoContentFailure).toString();
@@ -51,10 +50,10 @@ public class TeachingScoresController {
      * @Url:
      * @Description：总教分插入
      */
-    @RequestMapping(value = "calculate",method = RequestMethod.POST)
-    public String calculateScores(@RequestBody TeachingScoresVo teachingScoresVo){
+    @RequestMapping(value = "calculate", method = RequestMethod.POST)
+    public String calculateScores(@RequestBody TeachingScoresVo teachingScoresVo) {
 
-        IPage<TotalStatistics> iPage=service.insertScores(teachingScoresVo);
+        IPage<TotalStatistics> iPage = service.insertScores(teachingScoresVo);
         if (iPage.getTotal() == 0) {
             return new Result(ResponseCode.NoContentFailure).toString();
         } else {

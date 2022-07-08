@@ -26,14 +26,14 @@ public class TeachingScoresDao {
      * @author hy
      * @Receive TeachingSoresVo
      * @Param String teacherName，String year
-     * @description  查询教分总记录
+     * @description 查询教分总记录
      */
 
-    public List<TotalStatistics> selectScores(TeachingScoresVo teachingScoresVo){
+    public List<TotalStatistics> selectScores(TeachingScoresVo teachingScoresVo) {
         QueryWrapper<TotalStatistics> queryWrapper = new QueryWrapper<>();
-        queryWrapper.eq(teachingScoresVo.getTeacherName()!=null,"teacher_name", teachingScoresVo.getTeacherName());
-        queryWrapper.eq(teachingScoresVo.getYear()!=null,"year", teachingScoresVo.getYear());
-        List<TotalStatistics> list= mapper.selectList(queryWrapper);
+        queryWrapper.eq(teachingScoresVo.getTeacherName() != null, "teacher_name", teachingScoresVo.getTeacherName());
+        queryWrapper.eq(teachingScoresVo.getYear() != null, "year", teachingScoresVo.getYear());
+        List<TotalStatistics> list = mapper.selectList(queryWrapper);
         return list;
     }
 
@@ -43,8 +43,8 @@ public class TeachingScoresDao {
      * @Url:
      * @Description：将一条教师的教分记录插入数据库。当年的记录先删除，再插入。
      */
-    public boolean insertScores(TotalStatistics total){
-        if(mapper.insert(total)==1){
+    public boolean insertScores(TotalStatistics total) {
+        if (mapper.insert(total) == 1) {
             return true;
         } else {
             return false;
@@ -53,12 +53,12 @@ public class TeachingScoresDao {
 
     }
 
-    public IPage<TotalStatistics> select(TeachingScoresVo teachingScoresVo){
-        QueryWrapper<TotalStatistics> queryWrapper =new QueryWrapper<>();
-        queryWrapper.eq("year",teachingScoresVo.getYear());
-        queryWrapper.eq(teachingScoresVo.getTeacherName()!=null,"teacher_name",teachingScoresVo.getTeacherName());
-        Page<TotalStatistics> page = new Page<>(teachingScoresVo.getPageNumber(),20);
-        IPage<TotalStatistics> iPage = mapper.selectPage(page,queryWrapper);
+    public IPage<TotalStatistics> select(TeachingScoresVo teachingScoresVo) {
+        QueryWrapper<TotalStatistics> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("year", teachingScoresVo.getYear());
+        queryWrapper.eq(teachingScoresVo.getTeacherName() != null, "teacher_name", teachingScoresVo.getTeacherName());
+        Page<TotalStatistics> page = new Page<>(teachingScoresVo.getPageNumber(), 20);
+        IPage<TotalStatistics> iPage = mapper.selectPage(page, queryWrapper);
         return iPage;
     }
 

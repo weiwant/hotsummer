@@ -13,7 +13,6 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.*;
 import java.net.URLEncoder;
 import java.nio.charset.Charset;
-import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
@@ -356,11 +355,11 @@ public class FileDealServiceImpl implements FileDealService {
         if (files != null) {
             for (File item : files) {
                 msg.add(comparativeFilePath + "\\" + item.getName());
-    //            msg.add(item.getPath());//返回绝对路径
+                //            msg.add(item.getPath());//返回绝对路径
 
-    //            实际上还需要做一些处理
+                //            实际上还需要做一些处理
             }
-        }else{
+        } else {
             msg.add("error3");
             return msg;
         }
@@ -405,7 +404,7 @@ public class FileDealServiceImpl implements FileDealService {
                 //设置Headers
                 response.setHeader("Content-Type", "application/octet-stream");
                 //设置下载的文件的名称-该方式已解决中文乱码问题
-                String filename=new String(file.getName().getBytes("gb2312"),"ISO8859-1");
+                String filename = new String(file.getName().getBytes("gb2312"), "ISO8859-1");
                 response.setHeader("Content-Disposition", "attachment;filename=" + filename);
                 is = new FileInputStream(file);
                 bs = new BufferedInputStream(is);
@@ -558,7 +557,7 @@ public class FileDealServiceImpl implements FileDealService {
         String zipFileName = comparativeFilePath + ".zip";//2022.zip
 //        String zipPath = "D:\\myTest\\test2"+".zip";//
         String zipPath = projectPath + "\\" + zipFileName;//....../2022.zip
-        File file=new File(zipPath);//
+        File file = new File(zipPath);//
         file.createNewFile();
         FileOutputStream fos = new FileOutputStream(zipPath);//必须是真实存在的zip文件作为输出文件
         ZipOutputStream zos = new ZipOutputStream(fos);//将压缩文件输入到这个文件中
@@ -625,7 +624,7 @@ public class FileDealServiceImpl implements FileDealService {
         }
         File file = new File(originalFilePath);
         File newFile = new File(newFilePath);
-        if(!file.renameTo(newFile)){
+        if (!file.renameTo(newFile)) {
             return "error3";
         }
 //        写入数据库

@@ -36,17 +36,17 @@ public class UserDao {
         return userloginMapper.selectList(new QueryWrapper<>());
     }
 
-    public List<String> getList(){
+    public List<String> getList() {
         List<String> nameList = new ArrayList<>();
         QueryWrapper<UserLogin> queryWrapper = new QueryWrapper<>();
-        queryWrapper.eq("identify",0);
-        List<UserLogin> list= userloginMapper.selectList(queryWrapper);
-        String name =null;
-        for (UserLogin userLogin:list){
+        queryWrapper.eq("identify", 0);
+        List<UserLogin> list = userloginMapper.selectList(queryWrapper);
+        String name = null;
+        for (UserLogin userLogin : list) {
             name = userLogin.getUsername();
             nameList.add(name);
         }
-        return  nameList;
+        return nameList;
     }
 
 

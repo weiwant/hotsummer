@@ -12,7 +12,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Nullable;
 import java.io.IOException;
-import java.util.List;
 
 /**
  * @author:wwq
@@ -52,9 +51,9 @@ public class SpecialSaveController {
      * @Description：教师修改其已保存的工作量。更新数据库。根据项目id
      */
     @RequestMapping(value = "/update/teacher", method = RequestMethod.POST)
-    public String uploadSpecialWorkload(@Nullable SpecialVo specialVo,@RequestParam("teachers") @Nullable String teachers) throws IOException {
-        if(teachers!=null){
-            JSONArray jsonArray=JSONArray.parseArray(teachers);
+    public String uploadSpecialWorkload(@Nullable SpecialVo specialVo, @RequestParam("teachers") @Nullable String teachers) throws IOException {
+        if (teachers != null) {
+            JSONArray jsonArray = JSONArray.parseArray(teachers);
             specialVo.setSomePeople(jsonArray.toJavaList(TeacherAndOrder.class));
         }
         if (service.specialUpload(specialVo)) {

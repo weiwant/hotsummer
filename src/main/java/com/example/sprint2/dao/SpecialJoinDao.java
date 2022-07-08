@@ -100,7 +100,7 @@ public class SpecialJoinDao {
                 .like(SpecialProject::getReportTime, specialJoinResult.getYear())
                 .eq(SpecialProject::getStatus, "已保存")
                 .eq(SpecialProject::getDeclarantName, specialJoinResult.getDeclarantName())
-                .eq(SpecialTeacher::getTeacherName,specialJoinResult.getTeacherName())
+                .eq(SpecialTeacher::getTeacherName, specialJoinResult.getTeacherName())
         );
         String submitResult = null;
         int flag1;
@@ -127,7 +127,6 @@ public class SpecialJoinDao {
         }
         return submitResult;
     }
-
 
 
 }

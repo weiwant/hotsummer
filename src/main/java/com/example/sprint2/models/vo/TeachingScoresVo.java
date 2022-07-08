@@ -1,6 +1,5 @@
 package com.example.sprint2.models.vo;
 
-import com.baomidou.mybatisplus.annotation.TableField;
 import lombok.Data;
 
 /**
