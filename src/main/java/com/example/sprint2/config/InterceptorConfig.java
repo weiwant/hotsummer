@@ -19,6 +19,12 @@ public class InterceptorConfig implements WebMvcConfigurer {
                 //拦截路径
                 .addPathPatterns("/**")
                 //开放路径
+                .excludePathPatterns("/css/**")
+                .excludePathPatterns("/fonts/**")
+                .excludePathPatterns("/img/**")
+                .excludePathPatterns("/js/**")
+                .excludePathPatterns("/")
+                .excludePathPatterns("/favicon.ico")
                 .excludePathPatterns("/error")
                 .excludePathPatterns("/users/login");
     }
