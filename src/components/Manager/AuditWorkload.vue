@@ -428,6 +428,7 @@ export default {
       const formData = new FormData();
       formData.append("year", this.yearChosen);
       formData.append("pageNumber", this.currentPage);
+      formData.append("statusList", JSON.stringify(["已提交", "已审核"]));
       // 如果搜索值不为空
       if (this.searchValueChosen != "") {
         switch (this.searchKeywordChosen) {
@@ -487,6 +488,9 @@ export default {
     exportFile(filename) {
       //统计数据表头
       const tableHeader = [
+        "BA1",
+        "BA2",
+        "BA3",
         "BB1",
         "BB2",
         "BB3",
@@ -502,19 +506,18 @@ export default {
         "BB13",
         "BB14",
         "BB15",
-        "BA1",
-        "BA3",
-        "BA15",
-        "总教分",
         "教师姓名",
+        "总教分",
       ];
       const formData = new FormData();
-      formData.append("naturalYear", this.yearChosen);
+
       this.$axios
-        .post(`${this.$domainName}/total/records`, formData)
+        .post(`${this.$domainName}/scores/calculate`, {
+          year: this.yearChosen,
+        })
         .then((res) => {
           console.log(res);
-          this.$exportExcelFile(res.data.data, tableHeader, filename);
+          this.$exportExcelFile(res.data.data.records, tableHeader, filename);
         });
     },
   },

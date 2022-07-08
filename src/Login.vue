@@ -35,7 +35,6 @@ export default {
   },
   methods: {
     login() {
-      console.log(this.$domainName);
       const self = this;
       if (this.$data.username == "" || this.$data.password == "") {
         alert("账号或密码不能为空！");

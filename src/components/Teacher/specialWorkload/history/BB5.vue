@@ -216,14 +216,19 @@ export default {
     getFileData(file) {
       this.$data.isVisible = true;
       const inputFile = this.$refs.file.files[0];
+      var flag = true;
       for (let i = 0; i++; i < this.$data.fileNames.length) {
         if (this.$data.fileNames[i] == inputFile.name) {
           alert("请勿上传同名文件！");
+          flag = false;
         } else {
-          this.$data.uploadFile.push(inputFile);
-          this.$data.fileNames.push(inputFile.name);
-          this.$data.thisFiles.push(inputFile.name);
+          flag = true;
         }
+      }
+      if (flag) {
+        this.$data.uploadFile.push(inputFile);
+        this.$data.fileNames.push(inputFile.name);
+        this.$data.thisFiles.push(inputFile.name);
       }
     },
     // 编辑
@@ -269,6 +274,7 @@ export default {
         })
         .then((res) => {
           if (res.data.response.code == 200) {
+            this.committed = true; //按道理应该重新请求，但是暂时直接改状态吧
             alert("提交申报成功！");
           } else {
             alert("提交申报失败！");

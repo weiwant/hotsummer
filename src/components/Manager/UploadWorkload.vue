@@ -194,7 +194,6 @@ export default {
     //上传文件，自然学年
     uploadFile(file, a) {
       const formData = new FormData();
-      var _this = this;
       //课程工作量上传
       if (a == 1) {
         formData.append("naturalYear", this.$data.yearForClassWorkloadTable);
@@ -208,7 +207,6 @@ export default {
           .then((res) => {
             if (res.data.response.code == 200) {
               alert("报表文件上传成功！");
-              console.log(response);
             } else {
               alert("上传失败！");
             }
@@ -233,7 +231,6 @@ export default {
           .then((res) => {
             if (res.data.response.code == 200) {
               alert("报表文件上传成功！");
-              console.log(response);
             } else {
               alert("上传失败！");
             }

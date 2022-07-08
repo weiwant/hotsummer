@@ -65,17 +65,6 @@
       </tr>
 
       <tr>
-        <td>负责人姓名</td>
-        <td>
-          <input
-            type="text"
-            placeholder="请输入项目负责人姓名"
-            v-model="teacherName"
-            :disabled="!isEditing"
-          />
-        </td>
-      </tr>
-      <tr>
         <td>进展情况</td>
         <td>
           <input
@@ -152,7 +141,6 @@ export default {
       level: "",
       projectName: "",
       projectCategory: "",
-      teacherName: "",
       projectStatus: "",
       participants: [],
     };
@@ -167,7 +155,6 @@ export default {
     this.$data.level = this.data.level;
     this.$data.projectName = this.data.projectName;
     this.$data.projectCategory = this.data.projectCategory;
-    this.$data.teacherName = this.data.declarantName;
     this.$data.projectStatus = this.data.projectStatus;
     this.$data.participants = this.data.somePeople;
   },
@@ -191,7 +178,7 @@ export default {
       this.$refs.dynamic.transmitData();
       const formData = new FormData();
 
-      var specialVo = {
+      let specialVo = {
         level: this.$data.level,
         projectStatus: this.$data.projectStatus,
         projectCategory: this.$data.projectCategory,
@@ -217,6 +204,7 @@ export default {
         })
         .then((res) => {
           if (res.data.response.code == 200) {
+            this.committed = true; //按道理应该重新请求，但是暂时直接改状态吧
             alert("提交申报成功！");
           } else {
             alert("提交申报失败！");
@@ -233,7 +221,7 @@ export default {
       //点击保存，调用DynamicCollection组件的方法，将其中含有的数据同步至本组件内
       this.$refs.dynamic.transmitData();
       const formData = new FormData();
-      var specialVo = {
+      let specialVo = {
         level: this.$data.level,
         projectStatus: this.$data.projectStatus,
         projectCategory: this.$data.projectCategory,

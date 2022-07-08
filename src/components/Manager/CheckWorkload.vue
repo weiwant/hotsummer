@@ -240,7 +240,7 @@ export default {
       if (this.searchValueChosen != "") {
         switch (this.searchKeywordChosen) {
           case "上课老师":
-            formData.append("mainTeacherName", this.searchValue);
+            formData.append("mainTeacherName", this.searchValueChosen);
             break;
           // case "教分":
           //   formData.append("mainTeacherName", this.searchValue);
@@ -282,7 +282,7 @@ export default {
       this.searchKeywordChosen = searchKeyword;
       this.searchValueChosen = searchValue;
       this.currentPage = 1;
-      this.getTableData;
+      this.getTableData();
     },
     //页面切换
     //进行页面切换时，基本的搜索参数没变，只需要调整页数

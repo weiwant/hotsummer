@@ -225,14 +225,19 @@ export default {
     getFileData(file) {
       this.$data.isVisible = true;
       const inputFile = this.$refs.file.files[0];
+      var flag = true;
       for (let i = 0; i++; i < this.$data.fileNames.length) {
         if (this.$data.fileNames[i] == inputFile.name) {
           alert("请勿上传同名文件！");
+          flag = false;
         } else {
-          this.$data.uploadFile.push(inputFile);
-          this.$data.fileNames.push(inputFile.name);
-          this.$data.thisFiles.push(inputFile.name);
+          flag = true;
         }
+      }
+      if (flag) {
+        this.$data.uploadFile.push(inputFile);
+        this.$data.fileNames.push(inputFile.name);
+        this.$data.thisFiles.push(inputFile.name);
       }
     },
     // 编辑
@@ -246,11 +251,8 @@ export default {
       this.isEditing = false;
       //点击保存，调用DynamicCollection组件的方法，将其中含有的数据同步至本组件内
       this.$refs.dynamic.transmitData();
-      // console.log(this.participants);
-      var _this = this;
       const formData = new FormData();
-      // console.log("响应");
-      var specialVo = {
+      let specialVo = {
         awardLevel: this.$data.awardLevel,
         projectStatus: this.$data.projectStatus,
         projectCategory: this.$data.projectCategory,
@@ -280,6 +282,7 @@ export default {
         })
         .then((res) => {
           if (res.data.response.code == 200) {
+            this.committed = true; //按道理应该重新请求，但是暂时直接改状态吧
             alert("提交申报成功！");
           } else {
             alert("提交申报失败！");
@@ -296,7 +299,7 @@ export default {
       this.$refs.dynamic.transmitData();
       const formData = new FormData();
 
-      var specialVo = {
+      let specialVo = {
         awardLevel: this.$data.awardLevel,
         projectStatus: this.$data.projectStatus,
         projectCategory: this.$data.projectCategory,
@@ -335,7 +338,7 @@ export default {
         });
     },
     howDeleteFile(item) {
-      var hasUpload = true;
+      let hasUpload = true;
       for (let i = 0; i++; i <= this.$data.thisFiles.length) {
         if (this.$data.thisFiles[i] == this.$data.fileNames[item]) {
           //前端列表中存在该文件，说明文件没有上传过，本地删除
@@ -353,8 +356,8 @@ export default {
     deleteFile(item) {
       const formData = new FormData();
 
-      var fileName = this.$data.fileNames[item];
-      var id = this.data.id;
+      let fileName = this.$data.fileNames[item];
+      let id = this.data.id;
 
       formData.append("fileName", fileName);
       formData.append("id", id);

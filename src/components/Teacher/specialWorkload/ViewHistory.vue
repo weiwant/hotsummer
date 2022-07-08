@@ -186,6 +186,10 @@ export default {
     const formData2 = new FormData();
     formData2.append("year", this.$currentYear);
     formData2.append("declarantName", this.$currentUser);
+    formData2.append(
+      "statusList",
+      JSON.stringify(["已提交", "已审核", "已保存"])
+    );
     this.$axios
       .post(`${this.$domainName}/special-join/select/teacher`, formData2)
       .then((res) => {
