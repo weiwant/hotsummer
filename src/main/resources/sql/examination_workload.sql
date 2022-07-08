@@ -1,16 +1,16 @@
 /*
 Navicat MySQL Data Transfer
 
-Source Server         : linkWithHotsummer
+Source Server         : link
 Source Server Version : 80011
 Source Host           : localhost:3306
-Source Database       : demo
+Source Database       : hot_summer
 
 Target Server Type    : MYSQL
 Target Server Version : 80011
 File Encoding         : 65001
 
-Date: 2022-06-29 15:57:34
+Date: 2022-07-08 22:34:16
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -32,11 +32,4 @@ CREATE TABLE `examination_workload` (
   `natural_year` varchar(255) DEFAULT NULL COMMENT '自然年',
   `workload_attribute` varchar(255) DEFAULT NULL COMMENT '工作性质',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
-
--- ----------------------------
--- Records of examination_workload
--- ----------------------------
-INSERT INTO `examination_workload` VALUES ('1', '2019-2020', '3', '组合数学', '李', '4', '36', '2', '72', '2020', '考务');
-INSERT INTO `examination_workload` VALUES ('2', '2019-2020', '3', 'web应用开发', '李', '4', '42', '1', '42', '2020', '考务');
-INSERT INTO `examination_workload` VALUES ('3', '2019-2020', '2', 'web应用开发', '黄', '5', '54', '1', '54', '2020', '考务');
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;

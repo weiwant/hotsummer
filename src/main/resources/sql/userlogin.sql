@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 80011
 File Encoding         : 65001
 
-Date: 2022-06-30 10:14:46
+Date: 2022-07-08 22:38:49
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -29,9 +29,6 @@ CREATE TABLE `userlogin` (
 -- ----------------------------
 -- Records of userlogin
 -- ----------------------------
-INSERT INTO `userlogin` VALUES ('123', '123', '1');
-INSERT INTO `userlogin` VALUES ('456', '456', '2');
-INSERT INTO `userlogin` VALUES ('789', '789', '3');
 INSERT INTO `userlogin` VALUES ('丁建利', '123456', '0');
 INSERT INTO `userlogin` VALUES ('丁立新', '123456', '0');
 INSERT INTO `userlogin` VALUES ('何国良', '123456', '0');
@@ -63,3 +60,6 @@ INSERT INTO `userlogin` VALUES ('徐武平', '123456', '0');
 INSERT INTO `userlogin` VALUES ('怀念', '123456', '0');
 INSERT INTO `userlogin` VALUES ('文卫东', '123456', '0');
 INSERT INTO `userlogin` VALUES ('方颖', '123456', '0');
+INSERT INTO `userlogin` VALUES ('李老师', '123', '1');
+INSERT INTO `userlogin` VALUES ('王老师', '456', '2');
+INSERT INTO `userlogin` VALUES ('赵老师', '789', '3');

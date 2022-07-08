@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 80011
 File Encoding         : 65001
 
-Date: 2022-07-08 10:01:15
+Date: 2022-07-08 22:36:20
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -41,11 +41,5 @@ CREATE TABLE `total_statistics` (
   `bb14` double DEFAULT NULL,
   `bb15` double DEFAULT NULL,
   `total` double DEFAULT NULL,
-  KEY `teacher_foreignkey` (`teacher_name`) USING BTREE,
-  CONSTRAINT `teacher_foreignkey` FOREIGN KEY (`teacher_name`) REFERENCES `userlogin` (`username`) ON DELETE CASCADE ON UPDATE CASCADE
+  KEY `teacher_foreignkey` (`teacher_name`) USING BTREE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
-
--- ----------------------------
--- Records of total_statistics
--- ----------------------------
-INSERT INTO `total_statistics` VALUES (null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
