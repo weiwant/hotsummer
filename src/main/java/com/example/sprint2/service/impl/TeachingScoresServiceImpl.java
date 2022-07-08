@@ -9,9 +9,14 @@ import com.example.sprint2.service.TeachingScoresService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.lang.reflect.Field;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 /**
  * @author hy
@@ -55,7 +60,7 @@ public class TeachingScoresServiceImpl implements TeachingScoresService {
      * @Description：从4个表查询所有教师教分，并汇总到总教分表。
      */
     @Override
-    public IPage<TotalStatistics> insertScores(TeachingScoresVo teachingScoresVo) {
+    public IPage<TotalStatistics> insertScores(TeachingScoresVo teachingScoresVo) throws IllegalAccessException {
         List<String> teacherNames = userDao.getList();
         boolean flag = true;
         TotalStatistics statistics = new TotalStatistics();
@@ -67,21 +72,21 @@ public class TeachingScoresServiceImpl implements TeachingScoresService {
             statistics.setBa2(paperCoachingDao.getScore(teacherName));//BA2
             statistics.setBa3(examinationDao.getExaminationScore(teacherName)); //BA3
             BBScores = specialTeacherDao.getSpecialScores(teacherName);//BB类
-            statistics.setBb1(BBScores.get("BB1"));
-            statistics.setBb2(BBScores.get("BB2"));
-            statistics.setBb3(BBScores.get("BB3"));
-            statistics.setBb4(BBScores.get("BB4"));
-            statistics.setBb5(BBScores.get("BB5"));
-            statistics.setBb6(BBScores.get("BB6"));
-            statistics.setBb7(BBScores.get("BB7"));
-            statistics.setBb8(BBScores.get("BB8"));
-            statistics.setBb9(BBScores.get("BB9"));
-            statistics.setBb10(BBScores.get("BB10"));
-            statistics.setBb11(BBScores.get("BB11"));
-            statistics.setBb12(BBScores.get("BB12"));
-            statistics.setBb13(BBScores.get("BB13"));
-            statistics.setBb14(BBScores.get("BB14"));
-            statistics.setBb15(BBScores.get("BB15"));
+            statistics.setBb1(BBScores.get("BB1") != null ? BBScores.get("BB1") : new Double(0));
+            statistics.setBb2(BBScores.get("BB2") != null ? BBScores.get("BB2") : new Double(0));
+            statistics.setBb3(BBScores.get("BB3") != null ? BBScores.get("BB3") : new Double(0));
+            statistics.setBb4(BBScores.get("BB4") != null ? BBScores.get("BB4") : new Double(0));
+            statistics.setBb5(BBScores.get("BB5") != null ? BBScores.get("BB5") : new Double(0));
+            statistics.setBb6(BBScores.get("BB6") != null ? BBScores.get("BB6") : new Double(0));
+            statistics.setBb7(BBScores.get("BB7") != null ? BBScores.get("BB7") : new Double(0));
+            statistics.setBb8(BBScores.get("BB8") != null ? BBScores.get("BB8") : new Double(0));
+            statistics.setBb9(BBScores.get("BB9") != null ? BBScores.get("BB9") : new Double(0));
+            statistics.setBb10(BBScores.get("BB10") != null ? BBScores.get("BB10") : new Double(0));
+            statistics.setBb11(BBScores.get("BB11") != null ? BBScores.get("BB11") : new Double(0));
+            statistics.setBb12(BBScores.get("BB12") != null ? BBScores.get("BB12") : new Double(0));
+            statistics.setBb13(BBScores.get("BB13") != null ? BBScores.get("BB13") : new Double(0));
+            statistics.setBb14(BBScores.get("BB14") != null ? BBScores.get("BB14") : new Double(0));
+            statistics.setBb15(BBScores.get("BB15") != null ? BBScores.get("BB15") : new Double(0));
             Double total = new Double(0);
             total = (statistics.getBa1() != null ? statistics.getBa1() : 0)
                     + (statistics.getBa2() != null ? statistics.getBa2() : 0) + (statistics.getBa3() != null ? statistics.getBa3() : 0)
@@ -98,6 +103,13 @@ public class TeachingScoresServiceImpl implements TeachingScoresService {
         }
 
         IPage<TotalStatistics> totalStatisticsIPage = teachingScoresDao.select(teachingScoresVo);
+        List<Field> fields = Arrays.stream(TotalStatistics.class.getDeclaredFields()).filter(field -> field.getType() == Double.class).collect(Collectors.toList());
+        for (TotalStatistics totalStatistics : totalStatisticsIPage.getRecords()) {
+            for (Field field : fields) {
+                field.setAccessible(true);
+                field.set(totalStatistics, BigDecimal.valueOf((Double) field.get(totalStatistics)).setScale(2, RoundingMode.HALF_UP).doubleValue());
+            }
+        }
         return totalStatisticsIPage;
 
     }

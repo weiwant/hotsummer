@@ -34,7 +34,7 @@ public class SpecialJoinServiceImpl implements SpecialJoinService {
      * @description 所有查询条件封装
      */
     @Override
-    public IPage<SpecialVo> selectByConditions(SpecialVo specialVo) throws InvocationTargetException, IllegalAccessException {
+    public IPage<SpecialVo> selectByConditions(SpecialVo specialVo, List<String> strings) throws InvocationTargetException, IllegalAccessException {
         List<SpecialJoinResult> specialJoinResults = new ArrayList<>();
         List<Method> methods = Arrays.stream(SpecialVo.class.getDeclaredMethods()).filter(method -> method.getName().contains("get"))
                 .filter(method -> !method.getName().equals("getFiles"))
@@ -77,7 +77,7 @@ public class SpecialJoinServiceImpl implements SpecialJoinService {
         }
         List<SpecialJoinResult> specialJoinResultList = new ArrayList<>();
         for (SpecialJoinResult specialJoinResult : specialJoinResults) {
-            List<SpecialJoinResult> list = specialJoinDao.selectListByConditions(specialJoinResult);
+            List<SpecialJoinResult> list = specialJoinDao.selectListByConditions(specialJoinResult, strings);
             specialJoinResultList.addAll(list);
         }
         List<SpecialVo> specialVoList = new ArrayList<>();
@@ -141,7 +141,7 @@ public class SpecialJoinServiceImpl implements SpecialJoinService {
     }
 
     @Override
-    public List<SpecialVo> selectListByConditions(SpecialVo specialVo) throws InvocationTargetException, IllegalAccessException {
+    public List<SpecialVo> selectListByConditions(SpecialVo specialVo, List<String> strings) throws InvocationTargetException, IllegalAccessException {
         List<SpecialJoinResult> specialJoinResults = new ArrayList<>();
         List<Method> methods = Arrays.stream(SpecialVo.class.getDeclaredMethods()).filter(method -> method.getName().contains("get"))
                 .filter(method -> !method.getName().equals("getFiles"))
@@ -184,7 +184,7 @@ public class SpecialJoinServiceImpl implements SpecialJoinService {
         }
         List<SpecialJoinResult> specialJoinResultList = new ArrayList<>();
         for (SpecialJoinResult specialJoinResult : specialJoinResults) {
-            List<SpecialJoinResult> list = specialJoinDao.selectListByConditions(specialJoinResult);
+            List<SpecialJoinResult> list = specialJoinDao.selectListByConditions(specialJoinResult, strings);
             specialJoinResultList.addAll(list);
         }
         List<SpecialVo> specialVoList = new ArrayList<>();

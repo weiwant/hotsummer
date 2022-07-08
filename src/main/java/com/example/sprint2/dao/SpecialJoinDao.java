@@ -14,6 +14,7 @@ import org.springframework.stereotype.Repository;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * @author hy
@@ -28,7 +29,7 @@ public class SpecialJoinDao {
     @Autowired
     SpecialProjectMapper specialProjectMapper;
 
-    public List<SpecialJoinResult> selectListByConditions(SpecialJoinResult specialJoinResult) {
+    public List<SpecialJoinResult> selectListByConditions(SpecialJoinResult specialJoinResult, List<String> strings) {
         List<SpecialJoinResult> results = specialJoinMapper.selectJoinList(SpecialJoinResult.class, new MPJLambdaWrapper<SpecialProject>()
                 .selectAll(SpecialProject.class)
                 .select(SpecialTeacher::getTeacherName, SpecialTeacher::getAuthorOrder, SpecialTeacher::getTeachingScores)
@@ -39,21 +40,26 @@ public class SpecialJoinDao {
                 .eq(specialJoinResult.getStatus() != null, SpecialProject::getStatus, specialJoinResult.getStatus())
                 .eq(specialJoinResult.getDeclarantName() != null, SpecialProject::getDeclarantName, specialJoinResult.getDeclarantName()));
         results.forEach(specialJoinResult1 -> {
-            String filePath = specialJoinResult1.getFilePath();
-            File fileFolder = new File(filePath);
-            File[] files = fileFolder.listFiles();
-            List<String> fileNames = new ArrayList<>();
-            if (files != null) {
-                for (File file : files) {
-                    String fileName = file.getName();
-                    fileNames.add(fileName);
-                }
-                specialJoinResult1.setFileName(fileNames);
-                for (String name : specialJoinResult1.getFileName()) {
+            if (specialJoinResult1.getFilePath() != null) {
+                String filePath = specialJoinResult1.getFilePath();
+                File fileFolder = new File(filePath);
+                File[] files = fileFolder.listFiles();
+                List<String> fileNames = new ArrayList<>();
+                if (files != null) {
+                    for (File file : files) {
+                        String fileName = file.getName();
+                        fileNames.add(fileName);
+                    }
+                    specialJoinResult1.setFileName(fileNames);
+                    for (String name : specialJoinResult1.getFileName()) {
+                    }
                 }
             }
         });
-        return results;
+        if (strings == null || strings.isEmpty()) {
+            return results;
+        }
+        return results.stream().filter(specialJoinResult1 -> strings.contains(specialJoinResult1.getStatus())).collect(Collectors.toList());
     }
 
     /**
@@ -75,15 +81,17 @@ public class SpecialJoinDao {
         //获取文件路径下所有附件的文件名，放进List并赋值给返回对象
         List<SpecialJoinResult> list = iPage.getRecords();
         for (SpecialJoinResult specialJoinResult1 : list) {
-            String filePath = specialJoinResult1.getFilePath();
-            File fileFolder = new File(filePath);
-            File[] files = fileFolder.listFiles();
-            List<String> fileNames = new ArrayList<>();
-            for (File file : files) {
-                String fileName = file.getName();
-                fileNames.add(fileName);
+            if (specialJoinResult1.getFilePath() != null) {
+                String filePath = specialJoinResult1.getFilePath();
+                File fileFolder = new File(filePath);
+                File[] files = fileFolder.listFiles();
+                List<String> fileNames = new ArrayList<>();
+                for (File file : files) {
+                    String fileName = file.getName();
+                    fileNames.add(fileName);
+                }
+                specialJoinResult1.setFileName(fileNames);
             }
-            specialJoinResult1.setFileName(fileNames);
         }
         iPage.setRecords(list);
         return iPage;

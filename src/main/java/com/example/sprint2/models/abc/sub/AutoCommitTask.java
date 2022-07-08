@@ -59,7 +59,7 @@ public class AutoCommitTask extends Task {
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(new Date());
         specialJoinResult.setYear(String.valueOf(calendar.get(Calendar.YEAR)));
-        List<SpecialJoinResult> specialJoinResults = specialJoinDao.selectListByConditions(specialJoinResult);
+        List<SpecialJoinResult> specialJoinResults = specialJoinDao.selectListByConditions(specialJoinResult, null);
         SpecialProject specialProject = new SpecialProject();
         specialProject.setStatus(StatusCode.COMMITTED.getMsg());
         for (SpecialJoinResult result : specialJoinResults) {

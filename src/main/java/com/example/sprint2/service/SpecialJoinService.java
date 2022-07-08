@@ -15,9 +15,9 @@ import java.util.List;
 public interface SpecialJoinService {
 
 
-    public IPage<SpecialVo> selectByConditions(SpecialVo specialVo) throws InvocationTargetException, IllegalAccessException;
+    public IPage<SpecialVo> selectByConditions(SpecialVo specialVo, List<String> strings) throws InvocationTargetException, IllegalAccessException;
 
     public String setSubmit(SpecialVo specialVo) throws InvocationTargetException, IllegalAccessException;
 
-    public List<SpecialVo> selectListByConditions(SpecialVo specialVo) throws InvocationTargetException, IllegalAccessException;
+    public List<SpecialVo> selectListByConditions(SpecialVo specialVo, List<String> strings) throws InvocationTargetException, IllegalAccessException;
 }

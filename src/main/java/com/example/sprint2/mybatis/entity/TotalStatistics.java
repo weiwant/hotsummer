@@ -1,5 +1,6 @@
 package com.example.sprint2.mybatis.entity;
 
+import com.alibaba.fastjson.annotation.JSONField;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Getter;
@@ -25,6 +26,7 @@ public class TotalStatistics implements Serializable {
     @TableField("teacher_name")
     private String teacherName;
 
+    @JSONField(serialize = false)
     @TableField("year")
     private String year;
 

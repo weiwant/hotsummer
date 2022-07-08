@@ -8,7 +8,6 @@ import com.example.sprint2.service.SpecialTwiceInsertService;
 import com.example.sprint2.utils.Result;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Nullable;
 import java.io.IOException;
@@ -32,7 +31,7 @@ public class SpecialSaveController {
      */
     @RequestMapping(value = "/save/teacher", method = RequestMethod.POST)
     public String saveSpecialWorkload(@Nullable SpecialVo specialVo, @RequestParam("teachers") @Nullable String teachers) throws IOException {
-        if(teachers!=null) {
+        if (teachers != null) {
             JSONArray jsonArray = JSONArray.parseArray(teachers);
             specialVo.setSomePeople(jsonArray.toJavaList(TeacherAndOrder.class));
             //specialVo.setFiles(files);
@@ -56,7 +55,7 @@ public class SpecialSaveController {
             JSONArray jsonArray = JSONArray.parseArray(teachers);
             specialVo.setSomePeople(jsonArray.toJavaList(TeacherAndOrder.class));
         }
-        if (service.specialUpload(specialVo)) {
+        if (service.specialUpload(specialVo, true)) {
             return new Result(ResponseCode.SUCCESS).toString();
         } else {
             return new Result(ResponseCode.UnknownFailure).toString();
@@ -70,7 +69,7 @@ public class SpecialSaveController {
      * @Description：管理员对特殊工作量打教分。
      */
     @RequestMapping(value = "mark", method = RequestMethod.POST)
-    public String markSpecialWorkload(@RequestBody SpecialVo specialVo) {
+    public String markSpecialWorkload(@RequestBody SpecialVo specialVo) throws IOException {
         if (service.specialMark(specialVo)) {
             return new Result(ResponseCode.SUCCESS).toString();
         } else {

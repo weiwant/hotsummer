@@ -1,5 +1,6 @@
 package com.example.sprint2.controller;
 
+import com.alibaba.fastjson.JSONArray;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.example.sprint2.models.enumerate.impl.ResponseCode;
 import com.example.sprint2.models.vo.SpecialVo;
@@ -35,8 +36,9 @@ public class SpecialJoinController {
      * @Return Result ：String
      */
     @RequestMapping(value = "/select", method = RequestMethod.POST)             //分页 动态条件 连表查询(FormData)
-    public String selectByConditions(SpecialVo specialVo) throws InvocationTargetException, IllegalAccessException {
-        IPage<SpecialVo> iPage = service.selectByConditions(specialVo);
+    public String selectByConditions(SpecialVo specialVo, String statusList) throws InvocationTargetException, IllegalAccessException {
+        List<String> strings = JSONArray.parseArray(statusList).toJavaList(String.class);
+        IPage<SpecialVo> iPage = service.selectByConditions(specialVo, strings);
         if (iPage.getTotal() == 0) {
             return new Result(ResponseCode.NoContentFailure).toString();
         } else {
@@ -52,8 +54,9 @@ public class SpecialJoinController {
      * @Return Result ：String
      */
     @RequestMapping(value = "/select/teacher", method = RequestMethod.POST)
-    public String selectBySingleConditions(SpecialVo specialVo) throws InvocationTargetException, IllegalAccessException {
-        List<SpecialVo> list = service.selectListByConditions(specialVo);
+    public String selectBySingleConditions(SpecialVo specialVo, String statusList) throws InvocationTargetException, IllegalAccessException {
+        List<String> strings = JSONArray.parseArray(statusList).toJavaList(String.class);
+        List<SpecialVo> list = service.selectListByConditions(specialVo, strings);
         if (list.size() == 0) {
             return new Result(ResponseCode.NoContentFailure).toString();
         } else {

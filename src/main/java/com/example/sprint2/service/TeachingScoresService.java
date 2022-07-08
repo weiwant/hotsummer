@@ -15,5 +15,5 @@ public interface TeachingScoresService {
 
     List<TotalStatistics> selectScores(TeachingScoresVo teachingScoresVo);
 
-    IPage<TotalStatistics> insertScores(TeachingScoresVo teachingScoresVo);
+    IPage<TotalStatistics> insertScores(TeachingScoresVo teachingScoresVo) throws IllegalAccessException;
 }

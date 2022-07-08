@@ -272,7 +272,7 @@ public class FileDealServiceImpl implements FileDealService {
             yearFile.mkdirs();
         }
         List<String> names = specialTeacherDao.getTeacherNamesById(id);
-        StringBuilder projectName = new StringBuilder(specialProject.getProjectName());
+        StringBuilder projectName = new StringBuilder(specialProject.getProjectName() != null ? specialProject.getProjectName() : specialProject.getAchievementName());
         for (String name : names) {
             projectName.append("-").append(name);
         }
@@ -603,34 +603,39 @@ public class FileDealServiceImpl implements FileDealService {
             return "error1";//不存在这条记录
         }
 
-        String originalFilePath = specialProject.getFilePath();
-        String newFilePath;
-        int index = originalFilePath.lastIndexOf("/");
-        if (index == -1) {
-            index = originalFilePath.lastIndexOf("\\");
-        }
-        List<String> names = specialTeacherDao.getTeacherNamesById(id);
-        StringBuilder projectName = Optional.ofNullable(specialProject.getProjectName()).map(StringBuilder::new).orElse(null);
-        for (String name : names) {
-            projectName = (projectName == null ? new StringBuilder("null") : projectName).append("-").append(name);
-        }
-        projectName = (projectName == null ? new StringBuilder("null") : projectName).append("-").append(specialProject.getId());
-        if (index == -1) {
-            //原有的路径仅仅是单个路径
-            newFilePath = projectName.toString();
+        if (specialProject.getFilePath() != null) {
+            String originalFilePath = specialProject.getFilePath();
+            String newFilePath;
+            int index = originalFilePath.lastIndexOf("/");
+            if (index == -1) {
+                index = originalFilePath.lastIndexOf("\\");
+            }
+
+            List<String> names = specialTeacherDao.getTeacherNamesById(id);
+            StringBuilder projectName = Optional.ofNullable(specialProject.getProjectName()).map(StringBuilder::new).orElse(null);
+            for (String name : names) {
+                projectName = (projectName == null ? new StringBuilder("null") : projectName).append("-").append(name);
+            }
+            projectName = (projectName == null ? new StringBuilder("null") : projectName).append("-").append(specialProject.getId());
+            if (index == -1) {
+                //原有的路径仅仅是单个路径
+                newFilePath = projectName.toString();
 //            System.out.println(originalFilePath);
-        } else {
-            newFilePath = originalFilePath.substring(0, index) + "\\" + projectName;
-        }
-        File file = new File(originalFilePath);
-        File newFile = new File(newFilePath);
-        if (!file.renameTo(newFile)) {
-            return "error3";
-        }
+            } else {
+                newFilePath = originalFilePath.substring(0, index) + "\\" + projectName;
+            }
+            File file = new File(originalFilePath);
+            File newFile = new File(newFilePath);
+            if (!file.renameTo(newFile)) {
+                return "error3";
+            }
 //        写入数据库
-        if (specialProjectDao.setFilePath(newFilePath, id)) {
-            return newFilePath;//只返回相对路径，到时候需要修改数据库内容
-        } else return "error2";
+            if (specialProjectDao.setFilePath(newFilePath, id)) {
+                return newFilePath;//只返回相对路径，到时候需要修改数据库内容
+            } else return "error2";
+        } else {
+            return null;
+        }
     }
 
 

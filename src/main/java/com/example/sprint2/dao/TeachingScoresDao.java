@@ -44,11 +44,21 @@ public class TeachingScoresDao {
      * @Description：将一条教师的教分记录插入数据库。当年的记录先删除，再插入。
      */
     public boolean insertScores(TotalStatistics total) {
-        if (mapper.insert(total) == 1) {
-            return true;
-        } else {
-            return false;
+        QueryWrapper<TotalStatistics> wrapper = new QueryWrapper<>();
+        wrapper.eq("teacher_name", total.getTeacherName());
+        wrapper.eq("year", total.getYear());
+        try {
+            if (mapper.selectList(wrapper).isEmpty()) {
+                mapper.insert(total);
+                return true;
+            } else {
+                mapper.update(total, wrapper);
+                return true;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
+        return false;
 
 
     }

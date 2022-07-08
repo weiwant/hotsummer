@@ -19,7 +19,7 @@ import java.io.Serializable;
  * @author 24047
  * @since 2022-07-01
  */
-//@StartRow()
+@StartRow(2)
 @Getter
 @Setter
 @TableName("examination_workload")

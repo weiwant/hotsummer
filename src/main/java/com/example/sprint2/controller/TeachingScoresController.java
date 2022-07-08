@@ -51,7 +51,7 @@ public class TeachingScoresController {
      * @Description：总教分插入
      */
     @RequestMapping(value = "calculate", method = RequestMethod.POST)
-    public String calculateScores(@RequestBody TeachingScoresVo teachingScoresVo) {
+    public String calculateScores(@RequestBody TeachingScoresVo teachingScoresVo) throws IllegalAccessException {
 
         IPage<TotalStatistics> iPage = service.insertScores(teachingScoresVo);
         if (iPage.getTotal() == 0) {

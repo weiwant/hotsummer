@@ -19,7 +19,7 @@ import java.io.Serializable;
  * @author 24047
  * @since 2022-07-01
  */
-@StartRow(3)
+@StartRow(2)
 @Getter
 @Setter
 @TableName("teaching_workload_statistics")
