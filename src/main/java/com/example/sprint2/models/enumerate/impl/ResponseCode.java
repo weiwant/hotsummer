@@ -17,7 +17,9 @@ public enum ResponseCode implements CustomResponse {
     LoginFailure(605, "用户名或密码错误"),
     NoContentFailure(204, "无内容"),
     UnknownFailure(900, "未知错误"),
-    SubmitFailure(500, "提交失败");
+    SubmitFailure(500, "提交失败"),
+    AuthenticationDenied(401, "身份认证错误"),
+    PermissionDenied(403, "权限错误");
 
     @JSONField(name = "code")
     private final Integer responseCode;
