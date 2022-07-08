@@ -31,7 +31,7 @@
           <input
             type="text"
             placeholder="请输入项目名称"
-            v-model="projectname"
+            v-model="projectName"
           />
         </td>
       </tr>
@@ -53,7 +53,7 @@
           <input
             type="text"
             placeholder="请输入学生姓名"
-            v-model="studentname"
+            v-model="studentName"
           />
         </td>
       </tr>
@@ -70,7 +70,7 @@
           <input
             type="text"
             placeholder="请输入指导老师姓名"
-            v-model="teachername"
+            v-model="teacherName"
           />
         </td>
       </tr>
@@ -88,49 +88,51 @@ export default {
     return {
       level: "",
       honor: "",
-      projectname: "",
+      projectName: "",
       number: "",
       teamName: "",
-      studentname: "",
-      teachername: "",
+      studentName: "",
+      teacherName: "",
+      participants: [],
     };
   },
   methods: {
     save() {
-      //点击保存，调用DynamicCollection组件的方法，将其中含有的数据同步至本组件内
-      this.$refs.dynamic.transmitData();
-      var _this = this;
+      this.isEditing = false;
       const formData = new FormData();
+      this.participants.push({
+        teacherName: this.teacherName,
+        authorOrder: 0,
+      });
+      var specialVo = {
+        level: this.$data.level,
+        receivingHonor: this.$data.honor,
+        guidingStudentId: this.$data.number,
+        projectName: this.$data.projectName,
+        guidingStudentTeam: this.$data.teamName,
+        guidingStudentName: this.$data.studentName,
+        declarantName: this.$currentUser,
+        type: "BB10",
+      };
+      for (const key in specialVo) {
+        formData.append(key, specialVo[key]);
+      }
 
-      var data = JSON.stringify([
-        {
-          level: this.$data.level,
-          receivingHonor: this.$data.honor,
-          guidingStudentId: this.$data.number,
-          projectName: this.$data.projectName,
-          guidingStudentTeam: this.$data.teamName,
-          guidingStudentName: this.$data.studentname,
-          declarantName: this.$data.teachername,
-          type: "BB10",
-        },
-      ]);
-
-      formData.append("data", data);
-
-      console.log(formData.get("data"));
+      formData.append("teachers", JSON.stringify(this.$data.participants));
+      formData.append("specialVo", specialVo);
 
       //以下需要修改接口
       this.$axios
-        .post(`${this.$domainName}/special-workload/upload`, formData, {
+        .post(`${this.$domainName}/special-workload/save/teacher`, formData, {
           headers: {
             "Content-Type": "multipart/form-datas",
           },
         })
         .then((res) => {
           if (res.data.response.code == 200) {
-            alert("报表文件上传成功！");
+            alert("提交申报成功！");
           } else {
-            alert("上传失败！");
+            alert("提交申报失败！");
           }
         })
         .catch(function (error) {

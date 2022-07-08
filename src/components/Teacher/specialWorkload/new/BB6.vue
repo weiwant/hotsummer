@@ -116,13 +116,13 @@ export default {
   components: { DynamicCollection },
   data() {
     return {
+      time: "",
       title: "",
       isbn: "",
       edition: "",
       number: "",
       briefIntroduction: "",
       receivingHonor: "",
-
       participants: [],
       //文件列表
       uploadFile: [],
@@ -142,53 +142,50 @@ export default {
     },
     //添加文件数据
     getFileData(file) {
-      var _this = this;
       this.isVisible = true;
       const inputFile = this.$refs.file.files[0];
       this.$data.uploadFile.push(inputFile);
       this.$data.fileNames.push(inputFile.name);
     },
-
+    //保存
     save() {
+      this.isEditing = false;
       //点击保存，调用DynamicCollection组件的方法，将其中含有的数据同步至本组件内
       this.$refs.dynamic.transmitData();
-      var _this = this;
       const formData = new FormData();
-      var publicationsNumber = this.$data.edition + this.$data.number;
+      const publicationsNumber = this.edition + this.number;
+      var specialVo = {
+        awardDate: this.$data.time,
+        achievementName: this.$data.title,
+        isbn: this.$data.isbn,
+        publicationsNumber: publicationsNumber,
+        briefIntroduction: this.$data.briefIntroduction,
+        receivingHonor: this.$data.receivingHonor,
+        declarantName: this.$currentUser,
+        type: "BB6",
+      };
+      for (const key in specialVo) {
+        formData.append(key, specialVo[key]);
+      }
 
-      var data = JSON.stringify([
-        {
-          achievementName: this.$data.title,
-          isbn: this.$data.isbn,
-          publicationsNumber: publicationsNumber,
-          briefIntroduction: this.$data.briefIntroduction,
-          receivingHonor: this.$data.receivingHonor,
-          somePeople: this.$data.participants,
-          type: "BB6",
-        },
-      ]);
-
-      formData.append("data", data);
+      formData.append("teachers", JSON.stringify(this.$data.participants));
+      formData.append("specialVo", specialVo);
 
       for (let i = 0; i < this.$data.uploadFile.length; i++) {
         formData.append("files", this.$data.uploadFile[i]);
       }
-
-      console.log(formData.get("data"));
-      console.log(formData.get("files"));
-
       //以下需要修改接口
       this.$axios
-        .post(`${this.$domainName}/special-workload/upload`, formData, {
+        .post(`${this.$domainName}/special-workload/save/teacher`, formData, {
           headers: {
             "Content-Type": "multipart/form-datas",
           },
         })
         .then((res) => {
           if (res.data.response.code == 200) {
-            alert("报表文件上传成功！");
+            alert("保存申报成功！");
           } else {
-            alert("上传失败！");
+            alert("保存申报失败！");
           }
         })
         .catch(function (error) {

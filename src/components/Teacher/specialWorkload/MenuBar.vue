@@ -29,8 +29,6 @@ export default {
           .querySelector(`.menuBar ul li:nth-child(${index + 1})`)
           .classList.add("chosen");
         this.chosen[index] = true;
-        console.log("发送");
-        console.log(index);
         this.$emit("show", index);
       } else {
         document

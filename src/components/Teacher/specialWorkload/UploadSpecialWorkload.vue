@@ -20,14 +20,12 @@
       <transition>
         <BB5 v-if="render4"></BB5>
       </transition>
-
       <transition>
         <BB6 v-if="render5"></BB6>
       </transition>
       <transition>
         <BB7 v-if="render6"></BB7>
       </transition>
-
       <transition>
         <BB8 v-if="render7"></BB8>
       </transition>
@@ -132,7 +130,6 @@ export default {
   },
   methods: {
     show(index) {
-      console.log(index);
       switch (index) {
         case 0:
           this.render0 = true;
@@ -182,7 +179,6 @@ export default {
       }
     },
     hide(index) {
-      console.log(index);
       switch (index) {
         case 0:
           this.render0 = false;

@@ -28,7 +28,7 @@
       <tr>
         <td>姓名</td>
         <td>
-          <input type="text" placeholder="请输入姓名" v-model="name" />
+          <input type="text" placeholder="请输入姓名" v-model="teacherName" />
         </td>
       </tr>
 
@@ -45,41 +45,43 @@ export default {
     return {
       category: "",
       time: "",
-      name: "",
+      teacherName: "",
+      participants: [],
     };
   },
   methods: {
     save() {
-      //点击保存，调用DynamicCollection组件的方法，将其中含有的数据同步至本组件内
-      this.$refs.dynamic.transmitData();
-      var _this = this;
+      this.isEditing = false;
       const formData = new FormData();
+      this.participants.push({
+        teacherName: this.teacherName,
+        authorOrder: 0,
+      });
+      var specialVo = {
+        projectCategory: this.$data.category,
+        awardDate: this.$data.time,
+        declarantName: this.$currentUser,
+        type: "BB13",
+      };
+      for (const key in specialVo) {
+        formData.append(key, specialVo[key]);
+      }
 
-      var data = JSON.stringify([
-        {
-          projectCategory: this.$data.category,
-          awardDate: this.$data.time,
-          declarantName: this.$data.name,
-          type: "BB13",
-        },
-      ]);
-
-      formData.append("data", data);
-
-      console.log(formData.get("data"));
+      formData.append("teachers", JSON.stringify(this.$data.participants));
+      formData.append("specialVo", specialVo);
 
       //以下需要修改接口
       this.$axios
-        .post(`${this.$domainName}/special-workload/upload`, formData, {
+        .post(`${this.$domainName}/special-workload/save/teacher`, formData, {
           headers: {
             "Content-Type": "multipart/form-datas",
           },
         })
         .then((res) => {
           if (res.data.response.code == 200) {
-            alert("报表文件上传成功！");
+            alert("提交申报成功！");
           } else {
-            alert("上传失败！");
+            alert("提交申报失败！");
           }
         })
         .catch(function (error) {

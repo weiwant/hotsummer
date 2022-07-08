@@ -49,11 +49,11 @@ export default {
           })
           .then((response) => {
             //成功时返回名字和身份
-            console.log(response);
             if (response.data.response.code == 200) {
               localStorage.clear();
               localStorage.setItem("userName", response.data.data.username);
               localStorage.setItem("userIdentify", response.data.data.identify);
+              console.log("登陆");
               if (response.data.data.identify == 0) {
                 self.$router.push("/teacherhome");
               } else {

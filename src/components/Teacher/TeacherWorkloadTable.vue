@@ -330,7 +330,7 @@ export default {
       formData.append("year", this.yearChosen);
       formData.append("teacherName", this.$currentUser);
       this.$axios
-        .post(`http://abkkds.vaiwan.com/special-join/select/teacher`, formData)
+        .post(`${this.$domainName}/special-join/select/teacher`, formData)
         .then((res) => {
           if (res.data.response.code == 200) {
             this.dataExists_special = true;
@@ -365,7 +365,7 @@ export default {
   },
   created() {
     this.$axios
-      .post("http://abcs.vaiwan.com/scores/calculate", {
+      .post(`${this.$domainName}/scores/calculate`, {
         year: this.$currentYear,
       })
       .then((res) => {

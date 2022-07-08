@@ -66,10 +66,16 @@ export default {
     };
   },
   props: ["data"],
-  mounted() {
+  created() {
+    if (this.data.status == "已提交") {
+      this.committed = true;
+    } else {
+      this.committed = false;
+    }
     this.$data.content = this.data.briefIntroduction;
-    this.$data.teacherName = this.data.declarantName;
+    this.$data.teacherName = this.data.somePeople[0].teacherName;
   },
+
   methods: {
     // 编辑
     edit() {
@@ -78,19 +84,91 @@ export default {
     // 提交
     commit() {
       this.isEditing = false;
-      this.$refs.dynamic.transmitData();
+      const formData = new FormData();
+      let specialVo = {
+        briefIntroduction: this.$data.content,
+        declarantName: this.$currentUser,
+        type: "BB12",
+        id: this.data.id,
+        status: "已提交",
+      };
+      for (const key in specialVo) {
+        formData.append(key, specialVo[key]);
+      }
+
+      formData.append(
+        "teachers",
+        JSON.stringify([
+          {
+            teacherName: this.teacherName,
+            authorOrder: 0,
+          },
+        ])
+      );
+      formData.append("specialVo", specialVo);
+
+      //以下需要修改接口
+      this.$axios
+        .post(`${this.$domainName}/special-workload/update/teacher`, formData, {
+          headers: {
+            "Content-Type": "multipart/form-datas",
+          },
+        })
+        .then((res) => {
+          if (res.data.response.code == 200) {
+            alert("提交申报成功！");
+          } else {
+            alert("提交申报失败！");
+          }
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
     },
     // 保存
     save() {
       this.isEditing = false;
-      this.$refs.dynamic.transmitData();
-      if (this.$data.content == "" || this.$data.teacherName == "") {
-        alert("数据填报不可为空！！！");
-        return;
+      const formData = new FormData();
+      let specialVo = {
+        briefIntroduction: this.$data.content,
+        declarantName: this.$currentUser,
+        type: "BB12",
+        id: this.data.id,
+      };
+      for (const key in specialVo) {
+        formData.append(key, specialVo[key]);
       }
+
+      formData.append(
+        "teachers",
+        JSON.stringify([
+          {
+            teacherName: this.teacherName,
+            authorOrder: 0,
+          },
+        ])
+      );
+      formData.append("specialVo", specialVo);
+
+      //以下需要修改接口
+      this.$axios
+        .post(`${this.$domainName}/special-workload/update/teacher`, formData, {
+          headers: {
+            "Content-Type": "multipart/form-datas",
+          },
+        })
+        .then((res) => {
+          if (res.data.response.code == 200) {
+            alert("提交申报成功！");
+          } else {
+            alert("提交申报失败！");
+          }
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
     },
   },
-  created() {},
 };
 </script>
 

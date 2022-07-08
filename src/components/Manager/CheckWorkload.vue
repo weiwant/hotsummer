@@ -242,9 +242,9 @@ export default {
           case "上课老师":
             formData.append("mainTeacherName", this.searchValue);
             break;
-          case "教分":
-            formData.append("mainTeacherName", this.searchValue);
-            break;
+          // case "教分":
+          //   formData.append("mainTeacherName", this.searchValue);
+          //   break;
         }
       }
       this.$axios
@@ -298,13 +298,44 @@ export default {
     exportFile(filename) {
       const formData = new FormData();
       formData.append("naturalYear", this.yearChosen);
-      //获取中文表头
-      let tableHeader = [];
-      this.teachingWorkloadTableHeader.forEach((item) => {
-        tableHeader.push(item.key);
-      });
+      //中文表头
+      const tableHeader = [
+        "学年",
+        "辅助",
+        "计算用学时",
+        "课程性质解释",
+        "计算机用时",
+        "课程名称",
+        "课程性质",
+        "课程号",
+        "学分",
+        "折扣",
+        "实验安排",
+        "实验课时",
+        "教分",
+        "合课单位",
+        "实验室核对结果",
+        "上课教师名字",
+        "教师职称",
+        "专业",
+        "折扣前BA1系数",
+        "原始教分",
+        "其他教师名",
+        "计划学院",
+        "实践课时",
+        "备注",
+        "学期",
+        "是否为特殊班级",
+        "是否全英教学",
+        "上课人数",
+        "年级",
+        "教学班",
+        "BA1系数",
+        "开课学院",
+        "理论课时",
+      ];
       this.$axios
-        .post(`http://abcd.vaiwan.com/total/records`, formData)
+        .post(`${this.$domainName}/total/records`, formData)
         .then((res) => {
           console.log(res);
           this.$exportExcelFile(res.data.data, tableHeader, filename);

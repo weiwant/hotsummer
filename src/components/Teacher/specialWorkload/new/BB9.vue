@@ -7,13 +7,13 @@
       <tr>
         <td>竞赛类别</td>
         <td>
-          <input type="radio" id="A" value="A" v-model="competitioncategory" />
+          <input type="radio" id="A" value="A" v-model="competitionCategory" />
           <label for="A">A</label>
 
-          <input type="radio" id="B" value="B" v-model="competitioncategory" />
+          <input type="radio" id="B" value="B" v-model="competitionCategory" />
           <label for="B">B</label>
 
-          <input type="radio" id="C" value="C" v-model="competitioncategory" />
+          <input type="radio" id="C" value="C" v-model="competitionCategory" />
           <label for="C">C</label>
         </td>
       </tr>
@@ -24,7 +24,7 @@
           <input
             type="text"
             placeholder="请输入竞赛名称"
-            v-model="competitionname"
+            v-model="competitionName"
           />
         </td>
       </tr>
@@ -69,7 +69,7 @@
           <input
             type="text"
             placeholder="请输入参赛作品名称"
-            v-model="workname"
+            v-model="workName"
           />
         </td>
       </tr>
@@ -80,7 +80,7 @@
           <input
             type="text"
             placeholder="请输入参赛队伍名称"
-            v-model="teamname"
+            v-model="teamName"
           />
         </td>
       </tr>
@@ -91,7 +91,7 @@
           <input
             type="text"
             placeholder="请输入参赛学生姓名"
-            v-model="studentname"
+            v-model="studentName"
           />
         </td>
       </tr>
@@ -102,7 +102,7 @@
           <input
             type="text"
             placeholder="请输入指导老师姓名"
-            v-model="teachername"
+            v-model="teacherName"
           />
         </td>
       </tr>
@@ -136,19 +136,20 @@
 export default {
   data() {
     return {
-      competitioncategory: "",
-      competitionname: "",
+      competitionCategory: "",
+      competitionName: "",
       level: "",
       category: "",
-      workname: "",
-      teamname: "",
-      studentname: "",
-      teachername: "",
+      workName: "",
+      teamName: "",
+      studentName: "",
+      teacherName: "",
       //文件列表
       uploadFile: [],
       //文件名
       fileNames: [],
       isVisible: false,
+      participants: [],
     };
   },
   methods: {
@@ -158,7 +159,6 @@ export default {
     },
     //添加文件数据
     getFileData(file) {
-      var _this = this;
       this.isVisible = true;
       const inputFile = this.$refs.file.files[0];
       this.$data.uploadFile.push(inputFile);
@@ -166,46 +166,45 @@ export default {
     },
 
     save() {
-      //点击保存，调用DynamicCollection组件的方法，将其中含有的数据同步至本组件内
-      this.$refs.dynamic.transmitData();
-      var _this = this;
+      this.isEditing = false;
       const formData = new FormData();
-      var awardLevel = this.$data.level + this.$data.category;
+      this.participants.push({
+        teacherName: this.teacherName,
+        authorOrder: 0,
+      });
+      const awardLevel = this.level + this.category;
+      var specialVo = {
+        projectCategory: this.$data.competitionCategory,
+        projectName: this.$data.competitionName,
+        awardLevel: awardLevel,
+        achievementName: this.$data.workName,
+        guidingStudentTeam: this.$data.teamName,
+        guidingStudentName: this.$data.studentName,
+        declarantName: this.$currentUser,
+        type: "BB9",
+      };
+      for (const key in specialVo) {
+        formData.append(key, specialVo[key]);
+      }
 
-      var data = JSON.stringify([
-        {
-          projectCategory: this.$data.competitioncategory,
-          projectName: this.$data.competitionname,
-          awardLevel: awardLevel,
-          achievementName: this.$data.workname,
-          guidingStudentTeam: this.$data.teamname,
-          guidingStudentName: this.$data.studentname,
-          declarantName: this.$data.teachername,
-          type: "BB9",
-        },
-      ]);
-
-      formData.append("data", data);
+      formData.append("teachers", JSON.stringify(this.$data.participants));
+      formData.append("specialVo", specialVo);
 
       for (let i = 0; i < this.$data.uploadFile.length; i++) {
         formData.append("files", this.$data.uploadFile[i]);
       }
-
-      console.log(formData.get("data"));
-      console.log(formData.get("files"));
-
       //以下需要修改接口
       this.$axios
-        .post(`${this.$domainName}/special-workload/upload`, formData, {
+        .post(`${this.$domainName}/special-workload/save/teacher`, formData, {
           headers: {
             "Content-Type": "multipart/form-datas",
           },
         })
         .then((res) => {
           if (res.data.response.code == 200) {
-            alert("报表文件上传成功！");
+            alert("保存申报成功！");
           } else {
-            alert("上传失败！");
+            alert("保存申报失败！");
           }
         })
         .catch(function (error) {

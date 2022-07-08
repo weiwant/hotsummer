@@ -221,7 +221,7 @@ export default {
         "相关文件",
         "审核",
       ],
-      //iterable的字段，顺序是按照tableHeader来的，一些需要特殊处理的字段不在其中
+      //iterable的字段，顺序是按照tableHeader来的（除了“序号”，序号是v-for迭代时候的index+1），一些需要特殊处理的字段不在其中
       readonly: ["status", "declarantName", "reportTime"],
       editable: [
         "type",
@@ -315,15 +315,72 @@ export default {
       formData.append("year", this.$currentYear);
       formData.append("date", this.ddl);
       this.$axios
-        .post("http://abcd.vaiwan.com/deadline/set", formData)
+        .post(`${this.$domainName}/deadline/set`, formData)
         .then((res) => {
           console.log(res);
         });
     },
     /******下载某年的特殊工作量附件******/
-    downloadSpecialWorkloadFiles() {},
+    downloadSpecialWorkloadFiles() {
+      const formData = new FormData();
+      var year = this.$data.yearChosen;
+
+      formData.append("year", year);
+
+      this.$axios
+        .post(`${this.$domainName}/file/download-by-year`, formData, {
+          responseType: "blob",
+        })
+        .then((file) => {
+          let content = file.data;
+          // 组装a标签
+          let elink = document.createElement("a");
+          // 设置下载文件名
+          elink.download = this.$data.yearChosen + "年度特殊工作量审批记录.zip";
+          elink.style.display = "none";
+          let blob = new Blob([content], { type: "application/zip" });
+          elink.href = URL.createObjectURL(blob);
+          document.body.appendChild(elink);
+          elink.click();
+          document.body.removeChild(elink);
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
+    },
     /******下载某个项目的特殊工作量附件******/
-    downloadSpecificFile(index) {},
+    downloadSpecificFile(index) {
+      var _this = this;
+      const formData = new FormData();
+      var id = this.$data.tableData[index].id;
+
+      formData.append("id", id);
+
+      this.$axios
+        .post(`${this.$domainName}/file/download-package`, formData, {
+          responseType: "blob",
+        })
+        .then((file) => {
+          console.log(file);
+          let content = file.data;
+          // 组装a标签
+          let elink = document.createElement("a");
+          // 设置下载文件名
+          elink.download =
+            this.$data.tableData[index].declarantName +
+            this.$data.yearChosen +
+            "年度特殊工作量上报附件.zip";
+          elink.style.display = "none";
+          let blob = new Blob([content], { type: "application/zip" });
+          elink.href = URL.createObjectURL(blob);
+          document.body.appendChild(elink);
+          elink.click();
+          document.body.removeChild(elink);
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
+    },
     //编辑
     edit(index) {
       // 调整选中的行的样式与状态
@@ -359,7 +416,7 @@ export default {
       //向后端同步数据
       this.$axios
         .post(
-          "http://abcs.vaiwan.com/special-workload/mark",
+          `${this.$domainName}/special-workload/mark`,
           this.tableData[index]
         )
         .then((res) => {
@@ -383,7 +440,7 @@ export default {
         }
       }
       this.$axios
-        .post(`http://abckds.vaiwan.com/special-join/select`, formData)
+        .post(`${this.$domainName}/special-join/select`, formData)
         .then((res) => {
           console.log(res);
           if (res.data.response.code == 200) {
@@ -428,17 +485,36 @@ export default {
     },
     //导出Excel文件
     exportFile(filename) {
+      //统计数据表头
+      const tableHeader = [
+        "BB1",
+        "BB2",
+        "BB3",
+        "BB4",
+        "BB5",
+        "BB6",
+        "BB7",
+        "BB8",
+        "BB9",
+        "BB10",
+        "BB11",
+        "BB12",
+        "BB13",
+        "BB14",
+        "BB15",
+        "BA1",
+        "BA3",
+        "BA15",
+        "总教分",
+        "教师姓名",
+      ];
       const formData = new FormData();
       formData.append("naturalYear", this.yearChosen);
       this.$axios
-        .post(`http://abcd.vaiwan.com/total/records`, formData)
+        .post(`${this.$domainName}/total/records`, formData)
         .then((res) => {
           console.log(res);
-          this.$exportExcelFile(
-            res.data.data,
-            this.workloadTableHeader,
-            filename
-          );
+          this.$exportExcelFile(res.data.data, tableHeader, filename);
         });
     },
   },
@@ -451,7 +527,7 @@ export default {
     const formData = new FormData();
     formData.append("year", this.$currentYear);
     this.$axios
-      .post("http://abcd.vaiwan.com/deadline/get", formData)
+      .post(`${this.$domainName}/deadline/get`, formData)
       .then((res) => {
         this.ddl = res.data.data;
       });

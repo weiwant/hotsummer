@@ -176,7 +176,7 @@ export default {
     const formData = new FormData();
     formData.append("year", this.$currentYear);
     this.$axios
-      .post("http://abcd.vaiwan.com/deadline/get", formData)
+      .post(`${this.$domainName}/deadline/get`, formData)
       .then((res) => {
         this.ddl = res.data.data;
       });
@@ -185,9 +185,10 @@ export default {
     formData2.append("year", this.$currentYear);
     formData2.append("declarantName", this.$currentUser);
     this.$axios
-      .post("http://abckds.vaiwan.com/special-join/select/teacher", formData2)
+      .post(`${this.$domainName}/special-join/select/teacher`, formData2)
       .then((res) => {
         this.historyWorkloads = res.data.data;
+        console.log(this.historyWorkloads);
       });
   },
 };

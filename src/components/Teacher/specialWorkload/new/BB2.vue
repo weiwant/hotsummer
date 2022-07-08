@@ -45,16 +45,6 @@
         </td>
       </tr>
       <tr>
-        <td>负责人姓名</td>
-        <td>
-          <input
-            type="text"
-            placeholder="请输入项目负责人姓名"
-            v-model="teacherName"
-          />
-        </td>
-      </tr>
-      <tr>
         <td>进展情况</td>
         <td>
           <input
@@ -110,37 +100,35 @@ export default {
     save() {
       //点击保存，调用DynamicCollection组件的方法，将其中含有的数据同步至本组件内
       this.$refs.dynamic.transmitData();
-      var _this = this;
       const formData = new FormData();
 
-      var data = JSON.stringify([
-        {
-          level: this.$data.level,
-          projectStatus: this.$data.projectStatus,
-          projectCategory: this.$data.projectCategory,
-          projectName: this.$data.projectName,
-          declarantName: this.$data.teacherName,
-          somePeople: this.$data.participants,
-          type: "BB2",
-        },
-      ]);
+      var specialVo = {
+        level: this.$data.level,
+        projectStatus: this.$data.projectStatus,
+        projectCategory: this.$data.projectCategory,
+        projectName: this.$data.projectName,
+        declarantName: this.$currentUser,
+        type: "BB2",
+      };
+      for (const key in specialVo) {
+        formData.append(key, specialVo[key]);
+      }
 
-      formData.append("data", data);
-
-      console.log(formData.get("data"));
+      formData.append("teachers", JSON.stringify(this.$data.participants));
+      formData.append("specialVo", specialVo);
 
       //以下需要修改接口
       this.$axios
-        .post(`${this.$domainName}/special-workload/upload`, formData, {
+        .post(`${this.$domainName}/special-workload/save/teacher`, formData, {
           headers: {
             "Content-Type": "multipart/form-datas",
           },
         })
         .then((res) => {
           if (res.data.response.code == 200) {
-            alert("报表文件上传成功！");
+            alert("保存申报成功！");
           } else {
-            alert("上传失败！");
+            alert("保存申报失败！");
           }
         })
         .catch(function (error) {

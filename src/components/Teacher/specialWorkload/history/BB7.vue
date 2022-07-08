@@ -54,7 +54,7 @@
           <input
             type="text"
             placeholder="请输入姓名"
-            v-model="name"
+            v-model="teacherName"
             :disabled="!isEditing"
           />
         </td>
@@ -96,14 +96,21 @@ export default {
       //填报数据
       awardLevel: "",
       date: "",
-      name: "",
+      teacherName: "",
     };
   },
   props: ["data"],
-  mounted() {
+
+  created() {
+    if (this.data.status == "已提交") {
+      this.committed = true;
+    } else {
+      this.committed = false;
+    }
     this.$data.awardLevel = this.data.awardLevel;
     this.$data.date = this.data.awardDate;
-    this.$data.name = this.data.declarantName;
+    this.$data.teacherName = this.data.somePeople[0].teacherName;
+    this.$data.participants = this.data.somePeople;
   },
   methods: {
     // 编辑
@@ -113,49 +120,88 @@ export default {
     // 提交
     commit() {
       this.isEditing = false;
-      this.$refs.dynamic.transmitData();
-    },
-    // 保存
-    save() {
-      this.$refs.dynamic.transmitData();
-      this.isEditing = false;
-
-      if (
-        this.$data.awardLevel == "" ||
-        this.$data.date == "" ||
-        this.$data.name == "" ||
-        this.$data.participants == ""
-      ) {
-        alert("数据填报不可为空！！！");
-        return;
-      }
-      var _this = this;
       const formData = new FormData();
 
-      var data = JSON.stringify([
-        {
-          awardLevel: this.$data.awardLevel,
-          date: this.$data.date,
-          name: this.$data.name,
-        },
-      ]);
+      var specialVo = {
+        awardLevel: this.$data.awardLevel,
+        awardDate: this.$data.date,
+        declarantName: this.$currentUser,
+        type: "BB7",
+        id: this.data.id,
+        status: "已提交",
+      };
+      for (const key in specialVo) {
+        formData.append(key, specialVo[key]);
+      }
 
-      formData.append("data", data);
-
-      console.log(formData.get("data"));
+      formData.append(
+        "teachers",
+        JSON.stringify([
+          {
+            teacherName: this.teacherName,
+            authorOrder: 0,
+          },
+        ])
+      );
+      formData.append("specialVo", specialVo);
 
       //以下需要修改接口
       this.$axios
-        .post(`${this.$domainName}/special-workload/upload`, formData, {
+        .post(`${this.$domainName}/special-workload/update/teacher`, formData, {
           headers: {
             "Content-Type": "multipart/form-datas",
           },
         })
         .then((res) => {
           if (res.data.response.code == 200) {
-            alert("报表文件上传成功！");
+            alert("提交申报成功！");
           } else {
-            alert("上传失败！");
+            alert("提交申报失败！");
+          }
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
+    },
+    // 保存
+    save() {
+      this.isEditing = false;
+      const formData = new FormData();
+
+      var specialVo = {
+        awardLevel: this.$data.awardLevel,
+        awardDate: this.$data.date,
+        declarantName: this.$currentUser,
+        type: "BB7",
+        id: this.data.id,
+      };
+      for (const key in specialVo) {
+        formData.append(key, specialVo[key]);
+      }
+
+      formData.append(
+        "teachers",
+        JSON.stringify([
+          {
+            teacherName: this.teacherName,
+            authorOrder: 0,
+          },
+        ])
+      );
+      formData.append("specialVo", specialVo);
+
+      //以下需要修改接口
+      this.$axios
+        .post(`${this.$domainName}/special-workload/update/teacher`, formData, {
+          headers: {
+            "Content-Type": "multipart/form-datas",
+          },
+        })
+        .then((res) => {
+          if (res.data.response.code == 200) {
+            alert("提交申报成功！");
+          } else {
+            alert("提交申报失败！");
           }
         })
         .catch(function (error) {
@@ -163,7 +209,6 @@ export default {
         });
     },
   },
-  created() {},
 };
 </script>
 

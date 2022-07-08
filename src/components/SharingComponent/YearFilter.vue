@@ -18,7 +18,7 @@
         </option>
       </select>
     </label>
-    <button class="universalBlueBtn confirmYearBtn" @click="confirmYear()">
+    <button class="universalBlueBtn confirmYearBtn" @click="confirmYear">
       确&nbsp;认
     </button>
   </div>

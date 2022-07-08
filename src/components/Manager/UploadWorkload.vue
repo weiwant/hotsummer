@@ -2,8 +2,10 @@
   <div class="componentWrapper">
     <div class="componentSectionTitle">上传教学工作量</div>
     <!-- part1 -->
-    <div class="componentSubtitle" v-if="managerType == 1">课程工作量</div>
-    <div class="componentSubsection" v-if="managerType == 1">
+    <div class="componentSubtitle" v-if="this.$currentIdentity == 1">
+      课程工作量
+    </div>
+    <div class="componentSubsection" v-if="this.$currentIdentity == 1">
       <!-- 年份选择 -->
       <label
         >年份:&nbsp;
@@ -28,8 +30,10 @@
       </button>
     </div>
     <!-- part2 -->
-    <div class="componentSubtitle" v-if="managerType != 3">考务工作量</div>
-    <div class="componentSubsection" v-if="managerType != 3">
+    <div class="componentSubtitle" v-if="this.$currentIdentity != 3">
+      考务工作量
+    </div>
+    <div class="componentSubsection" v-if="this.$currentIdentity != 3">
       <!-- 年份选择 -->
       <label
         >年份:&nbsp;
@@ -54,8 +58,10 @@
       </button>
     </div>
     <!-- part3 -->
-    <div class="componentSubtitle" v-if="managerType != 2">论文工作量</div>
-    <div class="componentSubsection" v-if="managerType != 2">
+    <div class="componentSubtitle" v-if="this.$currentIdentity != 2">
+      论文工作量
+    </div>
+    <div class="componentSubsection" v-if="this.$currentIdentity != 2">
       <!-- 年份选择 -->
       <label
         >年份:&nbsp;
@@ -87,7 +93,6 @@ export default {
   name: "UploadWorkload",
   data() {
     return {
-      managerType: 1, //管理员身份
       currentYear: this.$currentYear,
       yearForClassWorkloadTable: this.$currentYear,
       yearForExaminationWorkloadTable: this.$currentYear,
@@ -95,6 +100,7 @@ export default {
       classWorkloadTableTemplate: [
         {
           学年: "",
+          学期: "",
           辅助: "",
           计算用学时: "",
           课程性质解释: "",
@@ -279,7 +285,7 @@ export default {
             fileName = "监考工作量（模版）";
             break;
           case 3:
-            data = XLSX.utils.json_to_sheet(this.xxWorkloadTableTemplate);
+            data = XLSX.utils.json_to_sheet(this.paperWorkloadTableTemplate);
             fileName = "论文工作量（模版）";
             break;
         }
@@ -289,7 +295,6 @@ export default {
       });
     },
   },
-  created() {},
 };
 </script>
 
