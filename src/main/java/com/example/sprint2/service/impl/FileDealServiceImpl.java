@@ -178,7 +178,7 @@ public class FileDealServiceImpl implements FileDealService {
     public List<String> downloadById(int id, HttpServletResponse response) throws UnsupportedEncodingException {
 //        String projectPath = "D:\\myTest";//实际上是System.getProperty("user.dir")
         String projectPath = System.getProperty("user.dir");
-        String fileFolderPath = projectPath + "\\" + specialProjectDao.selectFilePath(id);
+        String fileFolderPath = projectPath + "/" + specialProjectDao.selectFilePath(id);
         //实际上fileFolderPath还需要加上根目录路径
         File fileFolder = new File(fileFolderPath);
         File[] files = fileFolder.listFiles();
@@ -207,7 +207,7 @@ public class FileDealServiceImpl implements FileDealService {
 //            String projectPath = "D:\\myTest";//实际上是System.getProperty("user.dir")
             String projectPath = System.getProperty("user.dir");
             String comparativeFilePath = this.setPathInt();//在这里设置文件路径,应该和
-            String filePath = projectPath + "\\" + comparativeFilePath;
+            String filePath = projectPath + "/" + comparativeFilePath;
             msg.add(comparativeFilePath);
             File file = new File(filePath);
             if (!file.exists()) {
@@ -217,7 +217,7 @@ public class FileDealServiceImpl implements FileDealService {
             for (MultipartFile multipartFile : files) {
                 if (!multipartFile.isEmpty()) {
                     String originalFilename = multipartFile.getOriginalFilename();
-                    multipartFile.transferTo(new File(filePath + "\\" + originalFilename));
+                    multipartFile.transferTo(new File(filePath + "/" + originalFilename));
                     msg.add(multipartFile.getOriginalFilename() + "上传成功\n");
                 }
             }
@@ -262,12 +262,12 @@ public class FileDealServiceImpl implements FileDealService {
         //在根目录下新建一个文件夹
         LocalDate year = specialProject.getReportTime();
         String yearFileFolderPath = String.valueOf(year.getYear());
-        File yearFile = new File(projectPath + "\\" + yearFileFolderPath);
+        File yearFile = new File(projectPath + "/" + yearFileFolderPath);
         if (!yearFile.exists()) {
             yearFile.mkdirs();//新建文件夹
         }
-        String typeFileFolderPath = yearFileFolderPath + "\\" + specialProject.getType();
-        File typeFile = new File(projectPath + "\\" + typeFileFolderPath);
+        String typeFileFolderPath = yearFileFolderPath + "/" + specialProject.getType();
+        File typeFile = new File(projectPath + "/" + typeFileFolderPath);
         if (!typeFile.exists()) {
             yearFile.mkdirs();
         }
@@ -277,8 +277,8 @@ public class FileDealServiceImpl implements FileDealService {
             projectName.append("-").append(name);
         }
         projectName.append("-").append(specialProject.getId());
-        String teacherFileFolderPath = typeFileFolderPath + "\\" + projectName;
-        File teacherFile = new File(projectPath + "\\" + teacherFileFolderPath);
+        String teacherFileFolderPath = typeFileFolderPath + "/" + projectName;
+        File teacherFile = new File(projectPath + "/" + teacherFileFolderPath);
         if (!teacherFile.exists()) {
             teacherFile.mkdirs();
         }
@@ -308,7 +308,7 @@ public class FileDealServiceImpl implements FileDealService {
                 msg.add("error2");//数据库中不存在文件夹记录，请先保存
                 return msg;
             }
-            String filePath = projectPath + "\\" + comparativeFilePath;
+            String filePath = projectPath + "/" + comparativeFilePath;
             msg.add(comparativeFilePath);
             File file = new File(filePath);
             if (!file.exists()) {
@@ -318,7 +318,7 @@ public class FileDealServiceImpl implements FileDealService {
             for (MultipartFile multipartFile : files) {
                 if (!multipartFile.isEmpty()) {
                     String originalFilename = multipartFile.getOriginalFilename();
-                    multipartFile.transferTo(new File(filePath + "\\" + originalFilename));
+                    multipartFile.transferTo(new File(filePath + "/" + originalFilename));
                     msg.add(multipartFile.getOriginalFilename());//上传成功
                 }
             }
@@ -345,7 +345,7 @@ public class FileDealServiceImpl implements FileDealService {
             msg.add("error1");//没有相对路径就返回称没有附件
             return msg;
         }
-        String fileFolderPath = projectPath + "\\" + specialProjectDao.selectFilePath(id);//具体到文件夹
+        String fileFolderPath = projectPath + "/" + specialProjectDao.selectFilePath(id);//具体到文件夹
         File fileFolder = new File(fileFolderPath);
         if (!fileFolder.exists()) {
             msg.add("error2");//文件不存在！请检查数据库或者文件地址
@@ -354,7 +354,7 @@ public class FileDealServiceImpl implements FileDealService {
         File[] files = fileFolder.listFiles();//进一步具体到各个文件
         if (files != null) {
             for (File item : files) {
-                msg.add(comparativeFilePath + "\\" + item.getName());
+                msg.add(comparativeFilePath + "/" + item.getName());
                 //            msg.add(item.getPath());//返回绝对路径
 
                 //            实际上还需要做一些处理
@@ -458,7 +458,7 @@ public class FileDealServiceImpl implements FileDealService {
             msg.add("error1");
             return msg;
         }
-        String fileFolderPath = projectPath + "\\" + specialProjectDao.selectFilePath(id);
+        String fileFolderPath = projectPath + "/" + specialProjectDao.selectFilePath(id);
         //实际上fileFolderPath还需要加上根目录路径
         File fileFolder = new File(fileFolderPath);
         if (!fileFolder.exists()) {
@@ -479,7 +479,7 @@ public class FileDealServiceImpl implements FileDealService {
         String test = comparativeFilePath.replace('\\', '-');
         String secondTest = test.replace('/', '-');
         String zipFileName = secondTest + ".zip";//这里实际上需要用自然年+BB类别+教师名+成果名
-        String strZipPath = fileFolderPath + "\\" + zipFileName;
+        String strZipPath = fileFolderPath + "/" + zipFileName;
 /*
         if(!new File(zipFileName).exists()){
             msg.add("error3");
@@ -548,7 +548,7 @@ public class FileDealServiceImpl implements FileDealService {
         String projectPath = System.getProperty("user.dir");
         String comparativeFilePath = year;
         List<String> msg = new ArrayList<>();
-        String fileFolderPath = projectPath + "\\" + comparativeFilePath;//找到这个文件夹
+        String fileFolderPath = projectPath + "/" + comparativeFilePath;//找到这个文件夹
         File fileFolder = new File(fileFolderPath);//找到这个文件夹
         if (!fileFolder.exists() || !fileFolder.isDirectory()) {
             msg.add("error1");//文件夹不存在，请检查数据库或者服务器文件系统
@@ -556,7 +556,7 @@ public class FileDealServiceImpl implements FileDealService {
         }
         String zipFileName = comparativeFilePath + ".zip";//2022.zip
 //        String zipPath = "D:\\myTest\\test2"+".zip";//
-        String zipPath = projectPath + "\\" + zipFileName;//....../2022.zip
+        String zipPath = projectPath + "/" + zipFileName;//....../2022.zip
         File file = new File(zipPath);//
         file.createNewFile();
         FileOutputStream fos = new FileOutputStream(zipPath);//必须是真实存在的zip文件作为输出文件
@@ -586,7 +586,7 @@ public class FileDealServiceImpl implements FileDealService {
          * @return java.lang.Boolean
          */
         SpecialProject specialProject = specialProjectDao.selectSpecialProjectById(id);
-        return this.deleteFileByPath(specialProject.getFilePath() + "\\" + fileName);
+        return this.deleteFileByPath(specialProject.getFilePath() + "/" + fileName);
     }
 
     @Override
@@ -608,7 +608,7 @@ public class FileDealServiceImpl implements FileDealService {
             String newFilePath;
             int index = originalFilePath.lastIndexOf("/");
             if (index == -1) {
-                index = originalFilePath.lastIndexOf("\\");
+                index = originalFilePath.lastIndexOf("/");
             }
 
             List<String> names = specialTeacherDao.getTeacherNamesById(id);
@@ -622,7 +622,7 @@ public class FileDealServiceImpl implements FileDealService {
                 newFilePath = projectName.toString();
 //            System.out.println(originalFilePath);
             } else {
-                newFilePath = originalFilePath.substring(0, index) + "\\" + projectName;
+                newFilePath = originalFilePath.substring(0, index) + "/" + projectName;
             }
             File file = new File(originalFilePath);
             File newFile = new File(newFilePath);
