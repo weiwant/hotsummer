@@ -1,5 +1,6 @@
 package com.example.sprint2.service;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.example.sprint2.models.vo.TeachingScoresVo;
 import com.example.sprint2.mybatis.entity.TotalStatistics;
 
@@ -14,5 +15,5 @@ public interface TeachingScoresService {
 
     List<TotalStatistics> selectScores(TeachingScoresVo teachingScoresVo);
 
-    boolean insertScores(List<String> teacherNames);
+    IPage<TotalStatistics> insertScores(TeachingScoresVo teachingScoresVo);
 }

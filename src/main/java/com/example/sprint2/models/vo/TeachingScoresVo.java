@@ -15,4 +15,6 @@ public class TeachingScoresVo {
 
     private String year;
 
+    private int pageNumber;
+
 }

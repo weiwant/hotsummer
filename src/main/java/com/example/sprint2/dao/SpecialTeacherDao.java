@@ -92,7 +92,7 @@ public class SpecialTeacherDao {
         qw.eq("teacher_name",teacherName);
         qw.groupBy("type");
         List<SpecialTeacher> teachers=specialTeacherMapper.selectList(qw);
-        Map<String,Double> scores=new HashMap<>();
+        Map<String, Double> scores=new HashMap<>();
         for (SpecialTeacher teacher : teachers) {
             scores.put(teacher.getType(),teacher.getTeachingScores());
         }
