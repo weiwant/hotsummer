@@ -54,6 +54,7 @@ public class JwtInterceptorConfig implements HandlerInterceptor {
                 }
                 if (!identityCodeSet.isEmpty() && !identityCodeSet.contains(tokenFactory.getPayload(token).get("identity"))) {
                     response.setCharacterEncoding("UTF-8");
+                    response.setContentType("application/json;charset=utf-8");
                     response.getWriter().print(new Result(ResponseCode.PermissionDenied));
                     return false;
                 }
@@ -63,6 +64,7 @@ public class JwtInterceptorConfig implements HandlerInterceptor {
             e.printStackTrace();
         }
         response.setCharacterEncoding("UTF-8");
+        response.setContentType("application/json;charset=utf-8");
         response.getWriter().print(new Result(ResponseCode.AuthenticationDenied));
         return false;
     }
