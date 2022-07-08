@@ -141,7 +141,7 @@ public class SpecialJoinServiceImpl implements SpecialJoinService {
     }
 
     @Override
-    public List<SpecialVo> selectListByConditions(SpecialVo specialVo)throws InvocationTargetException, IllegalAccessException{
+    public List<SpecialVo> selectListByConditions(SpecialVo specialVo) throws InvocationTargetException, IllegalAccessException {
         List<SpecialJoinResult> specialJoinResults = new ArrayList<>();
         List<Method> methods = Arrays.stream(SpecialVo.class.getDeclaredMethods()).filter(method -> method.getName().contains("get"))
                 .filter(method -> !method.getName().equals("getFiles"))

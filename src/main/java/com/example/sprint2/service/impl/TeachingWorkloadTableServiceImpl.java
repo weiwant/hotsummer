@@ -47,8 +47,8 @@ public class TeachingWorkloadTableServiceImpl implements TeachingWorkloadTableSe
     }
 
     @Override
-    public List<TeachingWorkloadStatistics> selectByTeacher(TeachingWorkloadVo teachingWorkloadVo){
-        return teachingWorkloadStatisticsDao.selectByTeacher(teachingWorkloadVo.getNaturalYear(),teachingWorkloadVo.getTeacherName());
+    public List<TeachingWorkloadStatistics> selectByTeacher(TeachingWorkloadVo teachingWorkloadVo) {
+        return teachingWorkloadStatisticsDao.selectByTeacher(teachingWorkloadVo.getNaturalYear(), teachingWorkloadVo.getTeacherName());
     }
 }
 

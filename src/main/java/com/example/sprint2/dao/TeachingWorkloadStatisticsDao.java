@@ -138,20 +138,20 @@ public class TeachingWorkloadStatisticsDao {
      * @Description：根据教师姓名获取总教学工作量教分
      */
 
-    public Double getTeachingScore(String teacherName){
-        QueryWrapper<TeachingWorkloadStatistics> qw=new QueryWrapper<>();
-        qw.eq("main_teacher_name",teacherName);
-        List<TeachingWorkloadStatistics> teachers=teachingWorkloadStatisticsMapper.selectList(qw);
-        Double teachingScore=new Double(0);
+    public Double getTeachingScore(String teacherName) {
+        QueryWrapper<TeachingWorkloadStatistics> qw = new QueryWrapper<>();
+        qw.eq("main_teacher_name", teacherName);
+        List<TeachingWorkloadStatistics> teachers = teachingWorkloadStatisticsMapper.selectList(qw);
+        Double teachingScore = new Double(0);
         for (TeachingWorkloadStatistics teacher : teachers) {
-            teachingScore+=teacher.getFinalTeachingScores();
+            teachingScore += teacher.getFinalTeachingScores();
         }
         return teachingScore;
     }
 
 
     //教师端查看 不分页
-    public List<TeachingWorkloadStatistics> selectByTeacher(String naturalYear,String teacherName){
+    public List<TeachingWorkloadStatistics> selectByTeacher(String naturalYear, String teacherName) {
         QueryWrapper<TeachingWorkloadStatistics> wrapper = new QueryWrapper<>();
         wrapper.eq("natural_year", naturalYear);
         wrapper.eq("main_teacher_name", teacherName);

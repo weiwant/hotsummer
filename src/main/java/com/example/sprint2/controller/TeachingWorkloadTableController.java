@@ -120,10 +120,10 @@ public class TeachingWorkloadTableController {
         }
     }
 
-    @RequestMapping(value = "teacher",method = RequestMethod.POST)
-    public String selectByTeacher(@RequestBody TeachingWorkloadVo teachingWorkloadVo){
+    @RequestMapping(value = "teacher", method = RequestMethod.POST)
+    public String selectByTeacher(@RequestBody TeachingWorkloadVo teachingWorkloadVo) {
         List<TeachingWorkloadStatistics> list = teachingWorkloadTableService.selectByTeacher(teachingWorkloadVo);
-        if (list.size() ==0){
+        if (list.size() == 0) {
             return new Result(ResponseCode.NoContentFailure).toString();
         } else {
             return new Result(ResponseCode.SUCCESS, list).toString();
