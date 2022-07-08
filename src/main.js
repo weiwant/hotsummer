@@ -9,7 +9,7 @@ import axios from 'axios'
 Vue.config.productionTip = false
 Vue.use(ElementUI);
 Vue.prototype.$axios = axios;
-Vue.prototype.$domainName = "http://abcd.vaiwan.com"  //axios请求域名
+Vue.prototype.$domainName = "http://121.40.218.45:8080"  //axios请求域名
 Vue.prototype.$currentYear = (new Date()).getFullYear()  //当前的年份
 //当前用户的身份一定要延迟到home界面的created处获取，main.js会在login.vue之前执行
 Vue.prototype.$getUser = () => {
