@@ -43,7 +43,7 @@
           <input
             type="text"
             placeholder="请输入比赛的名称"
-            v-model="competitionname"
+            v-model="competitionName"
             :disabled="!isEditing"
           />
         </td>
@@ -55,7 +55,7 @@
           <input
             type="text"
             placeholder="请输入所获奖项目的类别"
-            v-model="awardCategory"
+            v-model="projectCategory"
             :disabled="!isEditing"
           />
         </td>
@@ -68,7 +68,7 @@
             type="text"
             placeholder="请输入获奖等级"
             v-model="level"
-            :disabled="isEditing"
+            :disabled="!isEditing"
           />
         </td>
       </tr>
@@ -79,8 +79,8 @@
           <input
             type="text"
             placeholder="请输入授奖单位"
-            v-model="awardingunit"
-            :disabled="isEditing"
+            v-model="awardApartment"
+            :disabled="!isEditing"
           />
         </td>
       </tr>
@@ -111,10 +111,27 @@
         </td>
       </tr>
 
-      <label v-show="isVisible">已上传文件:</label>
-      <div v-show="isVisible" v-for="(fileName, item) in fileNames" :key="item">
+      <label v-show="isVisible" style="font-size: 12px">已上传文件:</label>
+      <div
+        v-show="isVisible"
+        v-for="(fileName, item) in fileNames"
+        :key="item"
+        style="font-size: 10px"
+      >
         <label>{{ fileName }}</label>
-        <button @click="howDeleteFile(item)" disabled="canDelete">删除</button>
+        <button
+          @click="deleteFile(item)"
+          :disabled="!isEditing"
+          style="
+            margin-left: 5px;
+            border: 0;
+            font-family: 'icomoon';
+            color: gray;
+            vertical-align: text-bottom;
+          "
+        >
+          
+        </button>
       </div>
 
       <DynamicCollection
@@ -160,10 +177,10 @@ export default {
       committed: true,
       //填报数据
       awardLevel: "",
-      competitionname: "",
-      awardCategory: "",
+      competitionName: "",
+      projectCategory: "",
       level: "",
-      awardingUnit: "",
+      awardApartment: "",
       time: "",
       participants: [],
       //封装文件信息
@@ -179,18 +196,25 @@ export default {
   },
   props: ["data"],
   created() {
+    console.log(this.data);
     if (this.data.status == "已提交") {
       this.committed = true;
     } else {
       this.committed = false;
     }
     this.$data.awardLevel = this.data.awardLevel;
-    this.$data.competitionname = this.data.projectName;
-    this.$data.awardCategory = this.data.awardCategory;
+    this.$data.competitionName = this.data.projectName;
+    this.$data.projectCategory = this.data.projectCategory;
     this.$data.level = this.data.level;
-    this.$data.awardingunit = this.data.awardApartment;
-    this.$data.time = this.data.awardDate;
+    this.$data.awardApartment = this.data.awardApartment;
+    this.$data.time = this.data.reportTime;
     this.$data.participants = this.data.somePeople;
+    this.$data.fileNames = this.data.fileName;
+    if (this.fileNames == "") {
+      this.isVisible = false;
+    } else {
+      this.isVisible = true;
+    }
   },
   mounted() {
     this.$refs.dynamic.changeState(); //默认没有disable，需要调整
@@ -238,10 +262,10 @@ export default {
 
       var specialVo = {
         awardLevel: this.$data.awardLevel,
-        projectName: this.$data.competitionname,
-        projectCategory: this.$data.awardCategory,
+        projectName: this.$data.competitionName,
+        projectCategory: this.$data.projectCategory,
         level: this.$data.level,
-        awardApartment: this.$data.awardingunit,
+        awardApartment: this.$data.awardApartment,
         awardDate: this.$data.time,
         declarantName: this.$currentUser,
         type: "BB4",

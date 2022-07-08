@@ -173,6 +173,8 @@ export default {
   },
   created() {
     //获取ddl
+    console.log("created");
+    console.log(this.$currentUser);
     const formData = new FormData();
     formData.append("year", this.$currentYear);
     this.$axios

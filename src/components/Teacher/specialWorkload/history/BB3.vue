@@ -31,7 +31,7 @@
             id="school"
             value="校级"
             v-model="awardLevel"
-            :disabled="isEditing"
+            :disabled="!isEditing"
           />
           <label for="school">校级</label>
         </td>
@@ -43,7 +43,7 @@
           <input
             type="text"
             placeholder="请输入所获奖项目的名称"
-            v-model="awardname"
+            v-model="awardName"
             :disabled="!isEditing"
           />
         </td>
@@ -64,7 +64,12 @@
       <tr>
         <td>获奖等级</td>
         <td>
-          <input type="text" placeholder="请输入获奖等级" v-model="level" />
+          <input
+            type="text"
+            placeholder="请输入获奖等级"
+            v-model="level"
+            :disabled="!isEditing"
+          />
         </td>
       </tr>
 
@@ -75,6 +80,7 @@
             type="text"
             placeholder="请输入授奖单位"
             v-model="awardingUnit"
+            :disabled="!isEditing"
           />
         </td>
       </tr>
@@ -82,7 +88,12 @@
       <tr>
         <td>获奖时间</td>
         <td>
-          <input type="date" placeholder="请输入获奖时间" v-model="time" />
+          <input
+            type="date"
+            placeholder="请输入获奖时间"
+            v-model="time"
+            :disabled="!isEditing"
+          />
         </td>
       </tr>
 
@@ -95,14 +106,32 @@
             name="file"
             @change="getFileData()"
             multiple="true"
+            :disabled="!isEditing"
           />
         </td>
       </tr>
 
-      <label v-show="isVisible">已上传文件:</label>
-      <div v-show="isVisible" v-for="(fileName, item) in fileNames" :key="item">
+      <label v-show="isVisible" style="font-size: 12px">已上传文件:</label>
+      <div
+        v-show="isVisible"
+        v-for="(fileName, item) in fileNames"
+        :key="item"
+        style="font-size: 10px"
+      >
         <label>{{ fileName }}</label>
-        <button @click="deleteFile(item)" disabled="canDelete">删除</button>
+        <button
+          @click="deleteFile(item)"
+          :disabled="!isEditing"
+          style="
+            margin-left: 5px;
+            border: 0;
+            font-family: 'icomoon';
+            color: gray;
+            vertical-align: text-bottom;
+          "
+        >
+          
+        </button>
       </div>
 
       <!-- 动态增删填报项组件 -->
@@ -148,7 +177,7 @@ export default {
       committed: true,
       //填报数据
       awardLevel: "",
-      awardname: "",
+      awardName: "",
       awardCategory: "",
       level: "",
       awardingUnit: "",
@@ -165,6 +194,7 @@ export default {
   },
   props: ["data"],
   created() {
+    console.log(this.data);
     if (this.data.status == "已提交") {
       this.$data.canDelete = true;
       this.committed = true;
@@ -172,12 +202,18 @@ export default {
       this.committed = false;
     }
     this.$data.awardLevel = this.data.awardLevel;
-    this.$data.awardname = this.data.awardname;
-    this.$data.awardCategory = this.data.awardCategory;
+    this.$data.awardName = this.data.projectName;
+    this.$data.awardCategory = this.data.projectCategory;
     this.$data.level = this.data.level;
     this.$data.awardingUnit = this.data.awardApartment;
-    this.$data.time = this.data.awardDate;
+    this.$data.time = this.data.reportTime;
     this.$data.participants = this.data.somePeople;
+    this.$data.fileNames = this.data.fileName;
+    if (this.fileNames == "") {
+      this.isVisible = false;
+    } else {
+      this.isVisible = true;
+    }
   },
   mounted() {
     this.$refs.dynamic.changeState(); //默认没有disable，需要调整

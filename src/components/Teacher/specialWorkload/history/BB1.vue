@@ -7,7 +7,9 @@
       <!-- 立项时间 -->
       <tr>
         <td>立项时间</td>
-        <td><input type="month" v-model="awardDate" /></td>
+        <td>
+          <input type="month" v-model="awardDate" :disabled="!isEditing" />
+        </td>
       </tr>
       <!--级别 -->
       <tr>
@@ -19,13 +21,26 @@
             value="国家级"
             :selected="awardLevel == '国家级'"
             v-model="awardLevel"
+            :disabled="!isEditing"
           />
           <label for="nation">国家级</label>
 
-          <input type="radio" id="province" value="省级" v-model="awardLevel" />
+          <input
+            type="radio"
+            id="province"
+            value="省级"
+            v-model="awardLevel"
+            :disabled="!isEditing"
+          />
           <label for="province">省级</label>
 
-          <input type="radio" id="school" value="校级" v-model="awardLevel" />
+          <input
+            type="radio"
+            id="school"
+            value="校级"
+            v-model="awardLevel"
+            :disabled="!isEditing"
+          />
           <label for="school">校级</label>
         </td>
       </tr>
@@ -47,7 +62,7 @@
       <tr>
         <td>课程类别</td>
         <td>
-          <select v-model="projectCategory">
+          <select v-model="projectCategory" :disabled="!isEditing">
             <option value="课程建设项目">课程建设项目</option>
             <option value="企业-教育部课程建设项目">
               企业-教育部课程建设项目
@@ -80,9 +95,16 @@
             id="established"
             value="立项"
             v-model="projectStatus"
+            :disabled="!isEditing"
           />
           <label for="established">立项</label>
-          <input type="radio" id="done" value="结题" v-model="projectStatus" />
+          <input
+            type="radio"
+            id="done"
+            value="结题"
+            v-model="projectStatus"
+            :disabled="!isEditing"
+          />
           <label for="done">结题</label>
           <input
             type="radio"
@@ -103,14 +125,32 @@
             name="file"
             @change="getFileData()"
             multiple="true"
+            :disabled="!isEditing"
           />
         </td>
       </tr>
 
-      <label v-show="isVisible">已上传文件:</label>
-      <div v-show="isVisible" v-for="(fileName, item) in fileNames" :key="item">
+      <label v-show="isVisible" style="font-size: 12px">已上传文件:</label>
+      <div
+        v-show="isVisible"
+        v-for="(fileName, item) in fileNames"
+        :key="item"
+        style="font-size: 10px"
+      >
         <label>{{ fileName }}</label>
-        <button @click="howDeleteFile(item)" disabled="canDelete">删除</button>
+        <button
+          @click="deleteFile(item)"
+          :disabled="!isEditing"
+          style="
+            margin-left: 5px;
+            border: 0;
+            font-family: 'icomoon';
+            color: gray;
+            vertical-align: text-bottom;
+          "
+        >
+          
+        </button>
       </div>
 
       <!-- 动态增删填报项组件 -->
@@ -349,6 +389,11 @@ export default {
     this.$data.awardDate = this.data.awardDate;
     this.$data.participants = this.data.somePeople;
     this.$data.fileNames = this.data.fileName;
+    if (this.$data.fileNames == "") {
+      this.isVisible = false;
+    } else {
+      this.isVisible = true;
+    }
   },
   mounted() {
     this.$refs.dynamic.changeState(); //默认没有disable，需要调整

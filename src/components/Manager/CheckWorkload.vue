@@ -19,8 +19,8 @@
     <PlainTable
       :dataExists="dataExists"
       :noDataHint="noDataHint"
-      :tableData="workloadTableData"
-      :tableHeader="workloadTableHeader"
+      :tableData="teachingWorkloadTableData"
+      :tableHeader="teachingWorkloadTableHeader"
     ></PlainTable>
     <Pagination
       :currentPage="currentPage"

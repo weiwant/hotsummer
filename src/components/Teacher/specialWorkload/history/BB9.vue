@@ -187,10 +187,27 @@
         </td>
       </tr>
 
-      <label v-show="isVisible">已上传文件:</label>
-      <div v-show="isVisible" v-for="(fileName, item) in fileNames" :key="item">
+      <label v-show="isVisible" style="font-size: 12px">已上传文件:</label>
+      <div
+        v-show="isVisible"
+        v-for="(fileName, item) in fileNames"
+        :key="item"
+        style="font-size: 10px"
+      >
         <label>{{ fileName }}</label>
-        <button @click="howDeleteFile(item)" disabled="canDelete">删除</button>
+        <button
+          @click="deleteFile(item)"
+          :disabled="!isEditing"
+          style="
+            margin-left: 5px;
+            border: 0;
+            font-family: 'icomoon';
+            color: gray;
+            vertical-align: text-bottom;
+          "
+        >
+          
+        </button>
       </div>
 
       <button
@@ -265,6 +282,12 @@ export default {
     this.$data.workName = this.data.achievementName;
     this.$data.studentName = this.data.guidingStudentName;
     this.$data.teamName = this.data.teamName;
+    this.$data.fileNames = this.data.fileName;
+    if (this.fileNames == "") {
+      this.isVisible = false;
+    } else {
+      this.isVisible = true;
+    }
   },
   mounted() {
     //文件列表是否可见

@@ -108,10 +108,27 @@
           />
         </td>
       </tr>
-      <label v-show="isVisible">已上传文件:</label>
-      <div v-show="isVisible" v-for="(fileName, item) in fileNames" :key="item">
+      <label v-show="isVisible" style="font-size: 12px">已上传文件:</label>
+      <div
+        v-show="isVisible"
+        v-for="(fileName, item) in fileNames"
+        :key="item"
+        style="font-size: 10px"
+      >
         <label>{{ fileName }}</label>
-        <button @click="deleteFile(item)">删除</button>
+        <button
+          @click="deleteFile(item)"
+          :disabled="!isEditing"
+          style="
+            margin-left: 5px;
+            border: 0;
+            font-family: 'icomoon';
+            color: gray;
+            vertical-align: text-bottom;
+          "
+        >
+          
+        </button>
       </div>
 
       <DynamicCollection
@@ -191,6 +208,13 @@ export default {
     this.$data.receivingHonor = this.data.receivingHonor;
     this.$data.participants = this.data.somePeople;
     this.$data.briefIntroduction = this.data.briefIntroduction;
+    this.$data.fileNames = this.data.fileName;
+    this.$data.time = this.data.awardDate;
+    if (this.fileNames == "") {
+      this.isVisible = false;
+    } else {
+      this.isVisible = true;
+    }
   },
   mounted() {
     this.$refs.dynamic.changeState(); //默认没有disable，需要调整
@@ -236,12 +260,13 @@ export default {
       this.$refs.dynamic.transmitData();
       const formData = new FormData();
       const publicationsNumber = this.edition + this.number;
-      var specialVo = {
+      let specialVo = {
         achievementName: this.$data.title,
         isbn: this.$data.isbn,
         publicationsNumber: publicationsNumber,
         briefIntroduction: this.$data.briefIntroduction,
         receivingHonor: this.$data.receivingHonor,
+        awardDate: this.$data.time,
         declarantName: this.$currentUser,
         type: "BB6",
         id: this.data.id,

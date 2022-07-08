@@ -132,7 +132,7 @@ export default {
       var specialVo = {
         awardLevel: this.$data.awardLevel,
         projectName: this.$data.awardname,
-        awardCategory: this.$data.awardCategory,
+        projectCategory: this.$data.awardCategory,
         level: this.$data.level,
         awardApartment: this.$data.Awardingunit,
         time: this.$data.awardDate,
