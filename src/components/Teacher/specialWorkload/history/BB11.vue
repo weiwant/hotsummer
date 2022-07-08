@@ -117,6 +117,7 @@ export default {
         })
         .then((res) => {
           if (res.data.response.code == 200) {
+            this.committed = true; //按道理应该重新请求，但是暂时直接改状态吧
             alert("提交申报成功！");
           } else {
             alert("提交申报失败！");

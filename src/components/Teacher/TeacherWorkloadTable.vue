@@ -35,16 +35,11 @@ export default {
     YearFilter,
     PlainTable,
   },
-  computed: {
-    totalScore() {
-      return this.teachingScore + this.specialScore;
-    },
-  },
   data() {
     return {
       //统计数据
-      teachingScore: "",
-      specialScore: "",
+      teachingScore: 0,
+      specialScore: 0,
       //分页
       currentPage: 1,
       //表格数据
@@ -206,6 +201,10 @@ export default {
           value: "reportTime",
         },
         {
+          key: "状态",
+          value: "status",
+        },
+        {
           key: "教学业绩类型",
           value: "projectCategory",
         },
@@ -294,6 +293,9 @@ export default {
         },
       ];
     },
+    totalScore() {
+      return this.teachingScore + this.specialScore;
+    },
   },
   methods: {
     //获取当前教师用户的教学工作量
@@ -302,45 +304,51 @@ export default {
       formData.append("mainTeacherName", this.$currentUser);
       formData.append("naturalYear", this.yearChosen);
       this.$axios
-        .post(`http://abcd.vaiwan.com/total/records`, formData)
+        .post(`${this.$domainName}/total/records`, formData)
         .then((res) => {
           console.log(res);
           if (res.data.response.code == 200) {
             this.dataExists_teaching = true;
             this.teachingWorkloadTableData = res.data.data;
+            //计算教学总教分
+            this.teachingWorkloadTableData.forEach((item) => {
+              this.teachingScore =
+                this.teachingScore + item["finalTeachingScores"];
+            });
           } else {
             this.dataExists_teaching = false;
             this.teachingWorkloadTableData = [];
+            this.teachingScore = 0;
             this.noDataHint_teaching = `暂无${this.yearChosen}年度的教学工作量数据！`;
           }
         })
         .catch((err) => {
+          console.log(err);
           this.dataExists_teaching = false;
           this.teachingWorkloadTableData = [];
+          this.teachingScore = 0;
           this.noDataHint_teaching = "获取数据出错！";
         });
-      //计算教学总教分
-      this.teachingWorkloadTableData.forEach((item) => {
-        this.teachingScore = this.teachingScore + item[finalTeachingScores];
-      });
     },
     //获取当前教师用户的特殊工作量
     getSpecialData() {
       const formData = new FormData();
       formData.append("year", this.yearChosen);
       formData.append("teacherName", this.$currentUser);
+      formData.append("statusList", JSON.stringify(["已审核"]));
       this.$axios
         .post(`${this.$domainName}/special-join/select/teacher`, formData)
         .then((res) => {
+          console.log(res);
           if (res.data.response.code == 200) {
             this.dataExists_special = true;
             this.specialWorkloadTableData = res.data.data; //获取特殊工作量对象
             this.specialWorkloadTableData.forEach((item) => {
               //遍历每个数据对象的somePeople属性，找到当前用户在本项目内对应的教分
-              for (object of item.somePeople) {
+              for (let object of item.somePeople) {
                 if (object.teacherName == this.$currentUser) {
-                  item[theScore] = object.score;
-                  this.specialScore = this.specialScore + object.score;
+                  item["theScore"] = object.score;
+                  this.specialScore = this.specialScore + object.teachingScores;
                   break;
                 }
               }
@@ -348,10 +356,13 @@ export default {
           } else {
             this.dataExists_special = false;
             this.specialWorkloadTableData = [];
+            this.specialScore = 0;
             this.noDataHint_special = `暂无${this.yearChosen}年度的特殊工作量教分审核数据！`;
           }
         })
         .catch((err) => {
+          console.log(err);
+          this.specialScore = 0;
           this.dataExists_special = false;
           this.specialWorkloadTableData = [];
           this.noDataHint_special = "获取数据出错！";
@@ -364,13 +375,6 @@ export default {
     },
   },
   created() {
-    this.$axios
-      .post(`${this.$domainName}/scores/calculate`, {
-        year: this.$currentYear,
-      })
-      .then((res) => {
-        console.log(res);
-      });
     //向后台获取default学年学期数据;
     this.getTeachingData();
     this.getSpecialData();

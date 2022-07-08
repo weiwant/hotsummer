@@ -35,7 +35,6 @@ export default {
   },
   methods: {
     login() {
-      console.log(this.$domainName);
       const self = this;
       if (this.$data.username == "" || this.$data.password == "") {
         alert("账号或密码不能为空！");
@@ -53,7 +52,6 @@ export default {
               localStorage.clear();
               localStorage.setItem("userName", response.data.data.username);
               localStorage.setItem("userIdentify", response.data.data.identify);
-              console.log("登陆");
               if (response.data.data.identify == 0) {
                 self.$router.push("/teacherhome");
               } else {
