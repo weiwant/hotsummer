@@ -32,11 +32,12 @@ public class SpecialSaveController {
      * @Description：教师申报特殊工作量，将记录插入数据库
      */
     @RequestMapping(value = "/save/teacher", method = RequestMethod.POST)
-    public String saveSpecialWorkload(@Nullable SpecialVo specialVo, @RequestParam("teachers") @Nullable String teachers, @RequestParam("files") @Nullable MultipartFile[] files) throws IOException {
-        JSONArray jsonArray = JSONArray.parseArray(teachers);
-        specialVo.setSomePeople(jsonArray.toJavaList(TeacherAndOrder.class));
-        specialVo.setFiles(files);
-
+    public String saveSpecialWorkload(@Nullable SpecialVo specialVo, @RequestParam("teachers") @Nullable String teachers) throws IOException {
+        if(teachers!=null) {
+            JSONArray jsonArray = JSONArray.parseArray(teachers);
+            specialVo.setSomePeople(jsonArray.toJavaList(TeacherAndOrder.class));
+            //specialVo.setFiles(files);
+        }
         if (service.specialSave(specialVo)) {
             return new Result(ResponseCode.SUCCESS).toString();
         } else {
