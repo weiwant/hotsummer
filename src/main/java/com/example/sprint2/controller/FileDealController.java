@@ -62,13 +62,15 @@ public class FileDealController {
     @RequestMapping(value = "/get-file-path", method = RequestMethod.POST)
     public String getFilePath(@RequestParam Integer id) {
         List<String> msg = fileDealService.getFilePath(id);
-        if (msg.get(0).equals("error1")) {
-            return new Result(ResponseCode.UnknownFailure, "没有附件").toString();
-        } else if (msg.get(0).equals("error2")) {
-            return new Result(ResponseCode.UnknownFailure, "文件不存在！请检查数据库或者文件地址").toString();
-        } else if(msg.get(0).equals("error3")){
-            return new Result(ResponseCode.UnknownFailure, "文件夹中没有文件").toString();
-        } return new Result(ResponseCode.SUCCESS, msg).toString();
+        switch (msg.get(0)) {
+            case "error1":
+                return new Result(ResponseCode.UnknownFailure, "没有附件").toString();
+            case "error2":
+                return new Result(ResponseCode.UnknownFailure, "文件不存在！请检查数据库或者文件地址").toString();
+            case "error3":
+                return new Result(ResponseCode.UnknownFailure, "文件夹中没有文件").toString();
+        }
+        return new Result(ResponseCode.SUCCESS, msg).toString();
 
     }
 
