@@ -63,6 +63,17 @@ public class SpecialJoinServiceImpl implements SpecialJoinService {
                     }
                 }
             }
+            if (specialVo.getSomePeople() == null) {
+                if (specialVo.getTeacherName() != null) {
+                    specialJoinResult.setTeacherName(specialVo.getTeacherName());
+                }
+                if (specialVo.getTeachingScores() != null) {
+                    specialJoinResult.setTeachingScores(specialVo.getTeachingScores());
+                }
+                if (specialVo.getAuthorOrder() != null) {
+                    specialJoinResult.setAuthorOrder(specialVo.getAuthorOrder());
+                }
+            }
         }
         List<SpecialJoinResult> specialJoinResultList = new ArrayList<>();
         for (SpecialJoinResult specialJoinResult : specialJoinResults) {
@@ -157,6 +168,17 @@ public class SpecialJoinServiceImpl implements SpecialJoinService {
                             method.invoke(specialJoinResult, voMethod.invoke(specialVo));
                         }
                     }
+                }
+            }
+            if (specialVo.getSomePeople() == null) {
+                if (specialVo.getTeacherName() != null) {
+                    specialJoinResult.setTeacherName(specialVo.getTeacherName());
+                }
+                if (specialVo.getTeachingScores() != null) {
+                    specialJoinResult.setTeachingScores(specialVo.getTeachingScores());
+                }
+                if (specialVo.getAuthorOrder() != null) {
+                    specialJoinResult.setAuthorOrder(specialVo.getAuthorOrder());
                 }
             }
         }

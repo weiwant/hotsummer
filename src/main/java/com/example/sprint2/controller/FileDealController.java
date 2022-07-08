@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * @author 24047
@@ -47,12 +48,13 @@ public class FileDealController {
     @RequestMapping(value = "/upload-by-id", method = RequestMethod.POST)
     public String uploadById(@RequestParam Integer id, @RequestPart("files") MultipartFile[] files) throws IOException {
         List<String> msg = fileDealService.uploadFileById(files, id);
-        if (msg.get(0).equals("error1")) {
-            return new Result(ResponseCode.UnknownFailure, "数据库中不存在此记录或者不存在文件夹，请先保存").toString();
-        } else if (msg.get(0).equals("error2")) {
-            return new Result(ResponseCode.UnknownFailure, "数据库中不存在文件夹记录，请先保存").toString();
-        } else if (msg.get(0).equals("error3")) {
-            return new Result(ResponseCode.UnknownFailure, "error3：未选择文件，请重新上传").toString();
+        switch (msg.get(0)) {
+            case "error1":
+                return new Result(ResponseCode.UnknownFailure, "数据库中不存在此记录或者不存在文件夹，请先保存").toString();
+            case "error2":
+                return new Result(ResponseCode.UnknownFailure, "数据库中不存在文件夹记录，请先保存").toString();
+            case "error3":
+                return new Result(ResponseCode.UnknownFailure, "error3：未选择文件，请重新上传").toString();
         }
         return new Result(ResponseCode.SUCCESS, msg).toString();
     }
@@ -60,11 +62,15 @@ public class FileDealController {
     @RequestMapping(value = "/get-file-path", method = RequestMethod.POST)
     public String getFilePath(@RequestParam Integer id) {
         List<String> msg = fileDealService.getFilePath(id);
-        if (msg.get(0).equals("error1")) {
-            return new Result(ResponseCode.UnknownFailure, "没有附件").toString();
-        } else if (msg.get(0).equals("error2")) {
-            return new Result(ResponseCode.UnknownFailure, "文件不存在！请检查数据库或者文件地址").toString();
-        } else return new Result(ResponseCode.SUCCESS, msg).toString();
+        switch (msg.get(0)) {
+            case "error1":
+                return new Result(ResponseCode.UnknownFailure, "没有附件").toString();
+            case "error2":
+                return new Result(ResponseCode.UnknownFailure, "文件不存在！请检查数据库或者文件地址").toString();
+            case "error3":
+                return new Result(ResponseCode.UnknownFailure, "文件夹中没有文件").toString();
+        }
+        return new Result(ResponseCode.SUCCESS, msg).toString();
 
     }
 
@@ -77,7 +83,7 @@ public class FileDealController {
 
     //按照返回来的uri下载文件
     @RequestMapping(value = "/download-by-path", method = RequestMethod.POST)
-    public String downloadByPath(@RequestParam String uri, HttpServletResponse response) throws IOException {
+    public String downloadByPath(@RequestParam String uri, HttpServletResponse response) {
         String msg = fileDealService.downloadByPath(response, uri);
         if (msg.equals("true")) {
             return new Result(ResponseCode.SUCCESS, "文件下载成功").toString();
@@ -93,6 +99,7 @@ public class FileDealController {
 
     //    批量下载某一年，打包为一个压缩包
     @RequestMapping(value = "/download-by-year", method = RequestMethod.POST)
+    @ResponseBody
     public String downloadByYear(@RequestParam String year, HttpServletResponse response) throws Exception {
         List<String> msg = fileDealService.compressedDownloadByYear(year, response);
         if (msg.get(0).equals("error1")) {
@@ -101,6 +108,8 @@ public class FileDealController {
 //        System.out.println(fileDealService.deleteFileByPath(msg.get(0)));
         return new Result(ResponseCode.SUCCESS, msg).toString();
     }
+
+
 
 
     /**
@@ -122,7 +131,7 @@ public class FileDealController {
     @PostMapping("/upload")
     public String upload(@RequestPart(value = "files") MultipartFile[] files) throws IOException {
         List<String> msg = fileDealService.uploadFile(files);
-        if (msg.get(0) == "没有上传文件") {
+        if (Objects.equals(msg.get(0), "没有上传文件")) {
             return new Result(ResponseCode.UnknownFailure, msg).toString();
         }
         return new Result(ResponseCode.SUCCESS, msg).toString();
