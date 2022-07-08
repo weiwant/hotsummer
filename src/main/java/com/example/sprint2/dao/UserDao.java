@@ -46,9 +46,6 @@ public class UserDao {
             name = userLogin.getUsername();
             nameList.add(name);
         }
-        for (String name1:nameList){
-            System.out.println(name1);
-        }
         return  nameList;
     }
 

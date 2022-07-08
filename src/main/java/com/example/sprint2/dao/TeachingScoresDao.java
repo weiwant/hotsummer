@@ -1,6 +1,8 @@
 package com.example.sprint2.dao;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.example.sprint2.models.vo.TeachingScoresVo;
 import com.example.sprint2.mybatis.entity.TotalStatistics;
 import com.example.sprint2.mybatis.mapper.TotalStatisticsMapper;
@@ -39,7 +41,7 @@ public class TeachingScoresDao {
      * @Author：wwq
      * @Return：
      * @Url:
-     * @Description：将一条教师的教分记录插入数据库
+     * @Description：将一条教师的教分记录插入数据库。当年的记录先删除，再插入。
      */
     public boolean insertScores(TotalStatistics total){
         if(mapper.insert(total)==1){
@@ -47,6 +49,17 @@ public class TeachingScoresDao {
         } else {
             return false;
         }
+
+
+    }
+
+    public IPage<TotalStatistics> select(TeachingScoresVo teachingScoresVo){
+        QueryWrapper<TotalStatistics> queryWrapper =new QueryWrapper<>();
+        queryWrapper.eq("year",teachingScoresVo.getYear());
+        queryWrapper.eq(teachingScoresVo.getTeacherName()!=null,"teacher_name",teachingScoresVo.getTeacherName());
+        Page<TotalStatistics> page = new Page<>(teachingScoresVo.getPageNumber(),20);
+        IPage<TotalStatistics> iPage = mapper.selectPage(page,queryWrapper);
+        return iPage;
     }
 
 }

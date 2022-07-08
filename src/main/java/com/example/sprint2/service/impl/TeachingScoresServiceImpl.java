@@ -1,10 +1,16 @@
 package com.example.sprint2.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.example.sprint2.dao.*;
 import com.example.sprint2.models.vo.TeachingScoresVo;
 import com.example.sprint2.mybatis.entity.SpecialTeacher;
 import com.example.sprint2.mybatis.entity.TotalStatistics;
+import com.example.sprint2.mybatis.mapper.TotalStatisticsMapper;
 import com.example.sprint2.service.TeachingScoresService;
+import org.apache.poi.ss.formula.functions.T;
+import org.checkerframework.checker.units.qual.A;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -19,6 +25,12 @@ import java.util.Map;
  */
 @Service
 public class TeachingScoresServiceImpl implements TeachingScoresService {
+
+    @Autowired
+    UserDao userDao;//获取用户列表
+
+    @Autowired
+    TotalStatisticsMapper totalStatisticsMapper;
 
     @Autowired
     TeachingScoresDao teachingScoresDao;//总教分记录表
@@ -41,12 +53,21 @@ public class TeachingScoresServiceImpl implements TeachingScoresService {
         return list;
     }
 
+    /**
+     * @Author：wwq
+     * @Return：
+     * @Url:
+     * @Description：从4个表查询所有教师教分，并汇总到总教分表。
+     */
     @Override
-    public boolean insertScores(List<String> teacherNames){
+    public IPage<TotalStatistics> insertScores(TeachingScoresVo teachingScoresVo){
+        List<String> teacherNames=userDao.getList();
         boolean flag=true;
         TotalStatistics statistics=new TotalStatistics();
         Map<String,Double> BBScores=new HashMap<>();
         for (String teacherName : teacherNames) {
+            statistics.setTeacherName(teacherName);
+            statistics.setYear(teachingScoresVo.getYear());//年份
             statistics.setBa1(teachingWorkloadStatisticsDao.getTeachingScore(teacherName));//BA1
             statistics.setBa2(paperCoachingDao.getScore(teacherName));//BA2
             statistics.setBa3(examinationDao.getExaminationScore(teacherName)); //BA3
@@ -66,9 +87,24 @@ public class TeachingScoresServiceImpl implements TeachingScoresService {
             statistics.setBb13(BBScores.get("BB13"));
             statistics.setBb14(BBScores.get("BB14"));
             statistics.setBb15(BBScores.get("BB15"));
+            Double total=new Double(0);
+            total=(statistics.getBa1()!=null?statistics.getBa1():0)
+                    +(statistics.getBa2()!=null?statistics.getBa2():0)+(statistics.getBa3()!=null?statistics.getBa3():0)
+                    +(statistics.getBb1()!=null?statistics.getBb1():0)+(statistics.getBb2()!=null?statistics.getBb2():0)
+                    +(statistics.getBb3()!=null?statistics.getBb3():0)+(statistics.getBb4()!=null?statistics.getBb4():0)
+                    +(statistics.getBb5()!=null?statistics.getBb5():0)+(statistics.getBb6()!=null?statistics.getBb6():0)
+                    +(statistics.getBb7()!=null?statistics.getBb7():0)+(statistics.getBb8()!=null?statistics.getBb8():0)
+                    +(statistics.getBb9()!=null?statistics.getBb9():0)+(statistics.getBb10()!=null?statistics.getBb10():0)
+                    +(statistics.getBb11()!=null?statistics.getBb11():0)+(statistics.getBb12()!=null?statistics.getBb12():0)
+                    +(statistics.getBb13()!=null?statistics.getBb13():0)+(statistics.getBb14()!=null?statistics.getBb14():0)
+                    +(statistics.getBb15()!=null?statistics.getBb15():0);
+            statistics.setTotal(total);
             flag=teachingScoresDao.insertScores(statistics);
         }
-        return flag;
+
+        IPage<TotalStatistics> totalStatisticsIPage=teachingScoresDao.select(teachingScoresVo);
+        return totalStatisticsIPage;
+
     }
 
 }

@@ -1,5 +1,6 @@
 package com.example.sprint2.controller;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.example.sprint2.models.enumerate.impl.ResponseCode;
 import com.example.sprint2.models.vo.TeachingScoresVo;
 import com.example.sprint2.mybatis.entity.TotalStatistics;
@@ -41,6 +42,23 @@ public class TeachingScoresController {
             return new Result(ResponseCode.NoContentFailure).toString();
         } else {
             return new Result(ResponseCode.SUCCESS, list).toString();
+        }
+    }
+
+    /**
+     * @Author：wwq
+     * @Return：
+     * @Url:
+     * @Description：总教分插入
+     */
+    @RequestMapping(value = "calculate",method = RequestMethod.POST)
+    public String calculateScores(@RequestBody TeachingScoresVo teachingScoresVo){
+
+        IPage<TotalStatistics> iPage=service.insertScores(teachingScoresVo);
+        if (iPage.getTotal() == 0) {
+            return new Result(ResponseCode.NoContentFailure).toString();
+        } else {
+            return new Result(ResponseCode.SUCCESS, iPage).toString();
         }
     }
 
