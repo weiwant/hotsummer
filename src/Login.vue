@@ -49,9 +49,13 @@ export default {
           .then((response) => {
             //成功时返回名字和身份
             if (response.data.response.code == 200) {
+              alert("登陆成功！")
               localStorage.clear();
               localStorage.setItem("userName", response.data.data.username);
               localStorage.setItem("userIdentify", response.data.data.identify);
+              localStorage.setItem("token", response.data.data.token);
+              // console.log(response);
+              // console.log(localStorage.getItem("token"));
               if (response.data.data.identify == 0) {
                 self.$router.push("/teacherhome");
               } else {
