@@ -25,7 +25,7 @@
     <!-- 新增参与人 -->
     <tr>
       <td style="vertical-align: middle">参与人</td>
-      <!-- v-for一个数字，从1开始， -->
+      <!-- v-for一个数字会从1开始 -->
       <td>
         <ul>
           <li v-for="index in participants.length - 1" :key="index">
