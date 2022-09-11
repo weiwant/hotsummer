@@ -35,27 +35,22 @@ export default {
   },
   methods: {
     login() {
-      const self = this;
-      if (this.$data.username == "" || this.$data.password == "") {
+      if (this.$data.username === "" || this.$data.password === "") {
         alert("账号或密码不能为空！");
       } else {
-        //向后端提交数据
-        //需要url
         this.$axios
-          .post(`${this.$domainName}/users/login`, {
+          .post(`/users/login`, {
             username: this.$data.username,
             password: this.$data.password,
           })
           .then((response) => {
             //成功时返回名字和身份
             if (response.data.response.code == 200) {
-              alert("登陆成功！")
+              alert("登陆成功！");
               localStorage.clear();
               localStorage.setItem("userName", response.data.data.username);
               localStorage.setItem("userIdentify", response.data.data.identify);
               localStorage.setItem("token", response.data.data.token);
-              // console.log(response);
-              // console.log(localStorage.getItem("token"));
               if (response.data.data.identify == 0) {
                 self.$router.push("/teacherhome");
               } else {

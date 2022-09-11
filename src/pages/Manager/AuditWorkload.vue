@@ -169,10 +169,10 @@
 </template>
 
 <script>
-import FilterWithSearch from "../SharingComponent/FilterWithSearch.vue";
-import TableStatisticsBar from "../SharingComponent/TableStatisticsBar.vue";
-import DownloadExcelFile from "../SharingComponent/DownloadExcelFile.vue";
-import Pagination from "../SharingComponent/Pagination.vue";
+import FilterWithSearch from "../../components/FilterWithSearch.vue";
+import TableStatisticsBar from "../../components/TableStatisticsBar.vue";
+import DownloadExcelFile from "../../components/DownloadExcelFile.vue";
+import Pagination from "../../components/Pagination.vue";
 export default {
   name: "AuditWorkload",
   components: {

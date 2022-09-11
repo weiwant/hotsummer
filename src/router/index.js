@@ -1,15 +1,15 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-const Teacherhome = () => import('../components/Teacher/Teacherhome.vue')
-const ViewHistory = () => import('../components/Teacher/specialWorkload/ViewHistory.vue')
-const UploadSpecialWorkload = () => import('../components/Teacher/specialWorkload/UploadSpecialWorkload.vue')
-const TeacherWorkloadTable = () => import('../components/Teacher/TeacherWorkloadTable.vue')
-const TeacherPersonalInfo = () => import('../components/Teacher/TeacherPersonalInfo.vue')
-const Managerhome = () => import('../components/Manager/Managerhome.vue')
-const ManagerPersonalInfo = () => import('../components/Manager/ManagerPersonalInfo.vue')
-const CheckWorkload = () => import('../components/Manager/CheckWorkload.vue')
-const UploadWorkload = () => import('../components/Manager/UploadWorkload.vue')
-const AuditWorkload = () => import('../components/Manager/AuditWorkload.vue')
+const Teacherhome = () => import('../pages/Teacher/Teacherhome.vue')
+const ViewHistory = () => import('../pages/Teacher/specialWorkload/ViewHistory.vue')
+const UploadSpecialWorkload = () => import('../pages/Teacher/specialWorkload/UploadSpecialWorkload.vue')
+const TeacherWorkloadTable = () => import('../pages/Teacher/TeacherWorkloadTable.vue')
+const TeacherPersonalInfo = () => import('../pages/Teacher/TeacherPersonalInfo.vue')
+const Managerhome = () => import('../pages/Manager/Managerhome.vue')
+const ManagerPersonalInfo = () => import('../pages/Manager/ManagerPersonalInfo.vue')
+const CheckWorkload = () => import('../pages/Manager/CheckWorkload.vue')
+const UploadWorkload = () => import('../pages/Manager/UploadWorkload.vue')
+const AuditWorkload = () => import('../pages/Manager/AuditWorkload.vue')
 const Login = () => import('../Login.vue')
 
 Vue.use(VueRouter)
@@ -18,8 +18,8 @@ const routes = [
   {
     path: '/',
     name: 'Login',
-    component: Login
-    // redirect: '/teacherhome/SpecialWorkload'
+    // component: Login
+    redirect: '/managerhome'
   },
   {
     path: '/teacherhome',

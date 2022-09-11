@@ -25,9 +25,9 @@
 </template>
 
 <script>
-import TableStatisticsBar from "../SharingComponent/TableStatisticsBar.vue";
-import YearFilter from "../SharingComponent/YearFilter.vue";
-import PlainTable from "../SharingComponent/PlainTable.vue";
+import TableStatisticsBar from "../../components/TableStatisticsBar.vue";
+import YearFilter from "../../components/YearFilter.vue";
+import PlainTable from "../../components/PlainTable.vue";
 export default {
   name: "TeacherWorkloadTable",
   components: {

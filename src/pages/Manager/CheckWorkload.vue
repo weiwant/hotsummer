@@ -33,11 +33,11 @@
 </template>
 
 <script>
-import TableStatisticsBar from "../SharingComponent/TableStatisticsBar.vue";
-import DownloadExcelFile from "../SharingComponent/DownloadExcelFile.vue";
-import FilterWithSearch from "../SharingComponent/FilterWithSearch.vue";
-import Pagination from "../SharingComponent/Pagination.vue";
-import PlainTable from "../SharingComponent/PlainTable.vue";
+import TableStatisticsBar from "../../components/TableStatisticsBar.vue";
+import DownloadExcelFile from "../../components/DownloadExcelFile.vue";
+import FilterWithSearch from "../../components/FilterWithSearch.vue";
+import Pagination from "../../components/Pagination.vue";
+import PlainTable from "../../components/PlainTable.vue";
 export default {
   name: "CheckWorkload",
   components: {
