@@ -10,16 +10,17 @@
     <div class="center">
       <div class="background1"></div>
       <div class="background2"></div>
-
-      <div class="login">
-        <span>登&nbsp;&nbsp;录</span><br />
-        <label for="account">账号&nbsp;</label>
-        <input type="text" id="account" v-model="username" required />
-        <br />
-        <label for="password">密码&nbsp;</label>
-        <input type="password" id="password" v-model="password" required />
-        <br />
-        <input type="submit" value="确 定  " @click="login" />
+      <div class="form">
+        <div class="form-title">登&nbsp;&nbsp;&nbsp;录</div>
+        <div class="form-item">
+          <label>账号</label>
+          <input type="text" v-model="username" />
+        </div>
+        <div class="form-item">
+          <label>密码</label>
+          <input type="text" v-model="password" />
+        </div>
+        <div class="form-submit"><span>确</span><span>认</span></div>
       </div>
     </div>
   </div>
@@ -76,35 +77,34 @@ export default {
   box-sizing: border-box;
   overflow: hidden;
   background-color: rgb(251, 251, 251);
-  font-family: "SimSun";
 }
 
 header img.schoolLogo {
   position: absolute;
   top: 5px;
   left: 20px;
-  width: 200px;
+  width: 110px;
 }
 header .title {
   position: absolute;
+  margin-left: 50%;
+  transform: translateX(-50%);
   color: white;
   font-size: 32px;
   font-weight: 600;
   top: 2vh;
 }
-div {
+.center {
+  position: relative;
   margin-left: 50%;
   transform: translateX(-50%);
-}
-.center {
   margin-top: 17vh;
 }
-
 .background1 {
   position: absolute;
   z-index: -2;
   top: 220px;
-  left: 130px;
+  left: 230px;
   width: 300px;
   height: 300px;
   border-radius: 50%;
@@ -115,11 +115,10 @@ div {
     rgb(83, 132, 91, 0.6)
   );
 }
-
 .background2 {
   position: absolute;
   top: -70px;
-  left: -180px;
+  left: -100px;
   z-index: -2;
   width: 400px;
   height: 400px;
@@ -132,8 +131,10 @@ div {
   );
 }
 
-.login {
-  position: absolute;
+.form {
+  margin-left: 50%;
+  transform: translateX(-50%);
+  padding: 10%;
   padding-top: 5%;
   width: 350px;
   height: 420px;
@@ -142,51 +143,47 @@ div {
   background-color: rgba(128, 128, 128, 0.178);
   text-align: center;
   box-shadow: 0 5px 10px rgba(0, 0, 0, 0.247);
-  text-shadow: 1px 2px 5px rgba(0, 0, 0, 0.096);
 }
-
-.login span {
-  font-size: 250%;
+.form-title {
+  margin-bottom: 60px;
+  font-size: 30px;
   font-weight: 500;
-  color: rgba(51, 52, 51, 0.9);
+  color: rgb(47, 60, 50);
 }
 
-.login label {
-  font-size: 120%;
-  font-weight: 400;
-  color: rgba(51, 52, 51, 0.9);
+.form-item {
+  width: 100%;
+  margin-bottom: 20px;
+  color: rgb(47, 60, 50);
 }
-
-.login input {
-  margin-top: 15%;
-  margin-bottom: 5%;
-  border-radius: 30px;
+.form-item label {
+  display: block;
+  text-align: left;
+  font-size: 13px;
+  font-weight: 500;
+}
+.form-item input {
   padding-left: 10px;
-  width: 65%;
-  height: 35px;
+  width: 100%;
+  height: 38px;
   border: 0;
-  outline: 0;
-  font-size: 120%;
-  color: rgba(51, 52, 51, 0.9);
+  border-radius: 10px;
+  font-size: 18px;
 }
-
-.login input[type="submit"] {
-  margin-top: 8%;
-  width: 70px;
-  height: 70px;
-  border-radius: 50px;
-  border: 3px solid rgba(255, 255, 255, 0.356);
-  outline: 0;
-  background-color: rgba(255, 255, 255, 0);
-  font-size: 120%;
-  font-weight: 500;
+.form-submit {
+  display: flex;
+  justify-content: space-evenly;
+  padding: 5px 0;
+  margin-top: 40px;
+  background-color: rgb(44, 64, 44);
+  border-radius: 10px;
   color: whitesmoke;
+  font-size: 20px;
+  font-weight: 500;
   cursor: pointer;
 }
-
-.login input[type="submit"]:hover {
-  background-color: rgba(83, 81, 81, 0.486);
-  color: white;
+.form-submit:hover {
+  background-color: rgb(34, 46, 34);
 }
 @media screen and (max-width: 800px) {
   header .title {
