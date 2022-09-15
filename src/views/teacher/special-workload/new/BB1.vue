@@ -111,7 +111,7 @@
         ref="dynamic"
         @transmit="updateParticipants"
       ></DynamicCollection>
-      <button class="button-blue save" @click="save">保&nbsp;存</button>
+      <button class="blue save" @click="save">保&nbsp;存</button>
     </div>
   </div>
 </template>

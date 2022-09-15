@@ -2,8 +2,7 @@
   <div class="app-right-wrapper">
     <!--component标题-->
     <div class="app-right-title">工作量报告</div>
-    <YearFilter @yearConfirmed="yearConfirmed"></YearFilter>
-    <TableStatisticsBar :keyValuePairs="keyValuePairs"></TableStatisticsBar>
+    <YearFilter />
     <!-- 教学工作量详情 -->
     <div class="app-section-title">教学工作量详情</div>
     <!--数据列表-->
@@ -25,13 +24,11 @@
 </template>
 
 <script>
-import TableStatisticsBar from "../../components/TableStatisticsBar.vue";
-import YearFilter from "../../components/YearFilter.vue";
+import YearFilter from "../../components/TableFilter.vue";
 import PlainTable from "../../components/PlainTable.vue";
 export default {
   name: "TeacherWorkloadTable",
   components: {
-    TableStatisticsBar,
     YearFilter,
     PlainTable,
   },

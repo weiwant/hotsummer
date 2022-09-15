@@ -31,7 +31,7 @@
         </td>
       </tr>
 
-      <button class="button-blue complete" @click="save">保&nbsp;存</button>
+      <button class="blue complete" @click="save">保&nbsp;存</button>
     </div>
   </div>
 </template>

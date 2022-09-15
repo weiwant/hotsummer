@@ -11,6 +11,7 @@ import './plugins'
 
 import 'normalize.css/normalize.css'
 import './style/index.css'
+import './style/transition.css'
 
 Vue.config.productionTip = false
 

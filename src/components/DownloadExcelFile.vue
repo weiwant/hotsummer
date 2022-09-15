@@ -17,7 +17,7 @@
       >（ 默认为：{{ defaultFileName }}）</span
     >
     <button
-      class="button-file"
+      class="white"
       @click="exportFile()"
       :disabled="disabled"
       :class="{ disabled: disabled }"

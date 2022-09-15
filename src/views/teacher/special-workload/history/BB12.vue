@@ -28,22 +28,18 @@
           />
         </td>
       </tr>
-      <button
-        class="button-blue complete commit"
-        @click="commit"
-        v-if="!committed"
-      >
+      <button class="blue complete commit" @click="commit" v-if="!committed">
         提&nbsp;交
       </button>
       <button
-        class="button-blue complete notCommit"
+        class="blue complete notCommit"
         @click="save"
         v-if="isEditing && !committed"
       >
         保&nbsp;存
       </button>
       <button
-        class="button-blue complete notCommit"
+        class="blue complete notCommit"
         @click="edit"
         v-if="!isEditing && !committed"
       >

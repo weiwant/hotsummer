@@ -7,19 +7,15 @@
         ddl
       }}</span>
       <input type="date" v-model="ddl" v-if="isEditingDDL" />
-      <button class="button-blue" v-if="!isEditingDDL" @click="resetDDL">
+      <button class="blue" v-if="!isEditingDDL" @click="resetDDL">
         重&nbsp;置
       </button>
-      <button class="button-blue" v-if="isEditingDDL" @click="confirmDDL">
+      <button class="blue" v-if="isEditingDDL" @click="confirmDDL">
         确&nbsp;认
       </button>
     </div>
     <div class="app-section-title">已提交上报</div>
-    <FilterWithSearch
-      :searchKeywords="searchKeywords"
-      @getData="confirmSearchValue"
-    ></FilterWithSearch>
-    <TableStatisticsBar :keyValuePairs="keyValuePairs"></TableStatisticsBar>
+    <YearFilter />
     <div class="app-section toolbar">
       <DownloadExcelFile
         :btnText="'导出excel至本地'"
@@ -30,7 +26,7 @@
       <!-- 批量下载申报项目文件 -->
       <div class="auditDownloadTool">
         <button
-          class="button-file"
+          class="white"
           :disabled="!dataExists"
           @click="downloadSpecialWorkloadFiles"
           :class="{ disabled: !dataExists }"
@@ -90,7 +86,7 @@
             </td>
             <!-- 文件下载 -->
             <td style="text-align: center; padding: 30px 5px">
-              <button class="file" @click="downloadSpecificFile(index)">
+              <button class="white" @click="downloadSpecificFile(index)">
                 下载附件
               </button>
             </td>
@@ -139,12 +135,12 @@
             </td>
             <!-- 编辑保存控件 -->
             <td>
-              <button @click="edit(index)" class="button-blue edit" id="edit">
+              <button @click="edit(index)" class="blue edit" id="edit">
                 编&nbsp;辑
               </button>
               <button
                 @click="save(index)"
-                class="button-blue edit"
+                class="blue edit"
                 id="save"
                 style="display: none"
               >
@@ -165,17 +161,15 @@
 </template>
 
 <script>
-import FilterWithSearch from "../../components/FilterWithSearch.vue";
-import TableStatisticsBar from "../../components/TableStatisticsBar.vue";
+import YearFilter from "../../components/TableFilter.vue";
 import DownloadExcelFile from "../../components/DownloadExcelFile.vue";
 import Pagination from "../../components/Pagination.vue";
 export default {
   name: "AuditWorkload",
   components: {
-    FilterWithSearch,
-    TableStatisticsBar,
     DownloadExcelFile,
     Pagination,
+    YearFilter,
   },
   data() {
     return {
