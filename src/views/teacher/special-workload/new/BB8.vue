@@ -1,5 +1,5 @@
 <template>
-  <div class="componentSubsection category">
+  <div class="app-section category">
     <div class="categoryTitle">指导优秀毕业论文BB8</div>
 
     <!-- 填报与添加区域 -->
@@ -54,9 +54,7 @@
         </td>
       </tr>
 
-      <button class="universalBlueBtn complete" @click="save">
-        保&nbsp;存
-      </button>
+      <button class="button-blue complete" @click="save">保&nbsp;存</button>
     </div>
   </div>
 </template>

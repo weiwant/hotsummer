@@ -22,7 +22,7 @@
         placeholder="查询内容"
         @keyup.enter="search()"
       />
-      <button class="searchBtn universalBlueBtn" @click="search"></button>
+      <button class="searchBtn button-blue" @click="search"></button>
     </div>
   </div>
 </template>

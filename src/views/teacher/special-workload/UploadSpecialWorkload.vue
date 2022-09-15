@@ -1,9 +1,9 @@
 <template>
-  <div class="componentWrapper">
-    <div class="componentSectionTitle">特殊工作量上报</div>
-    <div class="componentSubtitle">类型选择</div>
+  <div class="app-right-wrapper">
+    <div class="app-right-title">特殊工作量上报</div>
+    <div class="app-section-title">类型选择</div>
     <MenuBar :menuItems="menuItems" @show="show" @hide="hide"></MenuBar>
-    <div class="componentSubtitle" id="contentSectionTitle">内容填报</div>
+    <div class="app-section-title" id="contentSectionTitle">内容填报</div>
     <div class="flexBox">
       <transition>
         <BB1 v-if="render0"></BB1>
@@ -251,7 +251,7 @@ export default {
   transition: all 0.2s;
 }
 /* 标题 */
-.componentSubsection.category >>> .categoryTitle {
+.app-section.category >>> .categoryTitle {
   display: inline-block;
   position: absolute;
   top: -35px;
@@ -266,23 +266,23 @@ export default {
   border-top-right-radius: 5px;
 }
 /* 历史上报记录 */
-.componentSubsection.category >>> .historyTitle,
-.componentSubsection.category >>> .addNewTitle {
+.app-section.category >>> .historyTitle,
+.app-section.category >>> .addNewTitle {
   font-weight: 500;
   font-size: 15px;
   color: rgb(242, 191, 72);
 }
-.componentSubsection.category >>> .historyTitle span.historyDisplayBtn {
+.app-section.category >>> .historyTitle span.historyDisplayBtn {
   margin-left: 10px;
   font-family: "icomoon";
   font-size: 14px;
   color: rgba(128, 128, 128, 0.733);
   cursor: pointer;
 }
-.componentSubsection.category >>> .historyTitle span.historyDisplayBtn:hover {
+.app-section.category >>> .historyTitle span.historyDisplayBtn:hover {
   color: rgba(48, 60, 78, 0.774);
 }
-.componentSubsection.category >>> .historyTableWrapper {
+.app-section.category >>> .historyTableWrapper {
   position: relative;
   border-radius: 3px;
   height: 100px;
@@ -290,53 +290,53 @@ export default {
 }
 
 /* 填报与添加区域 */
-.componentSubsection.category >>> .addNew td {
+.app-section.category >>> .addNew td {
   padding-top: 10px;
   font-size: 15px;
 }
-.componentSubsection.category >>> .addNew tr > td:nth-child(1) {
+.app-section.category >>> .addNew tr > td:nth-child(1) {
   font-weight: 500;
   border-bottom: 4px solid rgba(128, 128, 128, 0.116);
 }
-.componentSubsection.category >>> .addNew tr > td:nth-child(2) {
+.app-section.category >>> .addNew tr > td:nth-child(2) {
   padding-left: 15px;
 }
-.componentSubsection.category >>> .addNew td label {
+.app-section.category >>> .addNew td label {
   margin-left: 5px;
   margin-right: 18px;
 }
-.componentSubsection.category >>> .addNew .dynamic td label {
+.app-section.category >>> .addNew .dynamic td label {
   margin-right: 5px;
 }
-.componentSubsection.category >>> .addNew td input[type="number"],
-.componentSubsection.category >>> .addNew td input[type="text"],
-.componentSubsection.category >>> .addNew td input[type="month"],
-.componentSubsection.category >>> .addNew td input[type="date"],
-.componentSubsection.category >>> .addNew td input[type="textarea"] {
+.app-section.category >>> .addNew td input[type="number"],
+.app-section.category >>> .addNew td input[type="text"],
+.app-section.category >>> .addNew td input[type="month"],
+.app-section.category >>> .addNew td input[type="date"],
+.app-section.category >>> .addNew td input[type="textarea"] {
   width: 200px;
   height: 30px;
   border: 1px solid rgb(128, 128, 128);
   border-radius: 5px;
   padding-left: 5px;
 }
-.componentSubsection.category >>> .addNew td input[type="number"] {
+.app-section.category >>> .addNew td input[type="number"] {
   width: 60px;
 }
-.componentSubsection.category >>> .addNew td input[type="text"] {
+.app-section.category >>> .addNew td input[type="text"] {
   width: 200px;
 }
-.componentSubsection.category >>> .addNew td input[type="textarea"] {
+.app-section.category >>> .addNew td input[type="textarea"] {
   width: 300px;
   height: 100px;
 }
-.componentSubsection.category >>> .addNew td select {
+.app-section.category >>> .addNew td select {
   height: 30px;
   border: 1px solid gray;
   border-radius: 5px;
 }
 /* 保存、确认按钮 */
-.componentSubsection.category >>> button.complete,
-.componentSubsection.category >>> button.save {
+.app-section.category >>> button.complete,
+.app-section.category >>> button.save {
   position: absolute;
   bottom: 10px;
   right: 15px;

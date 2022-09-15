@@ -1,5 +1,5 @@
 <template>
-  <div class="componentSubsection category">
+  <div class="app-section category">
     <div class="categoryTitle">课程建设BB1</div>
     <!-- 填报与添加区域 -->
     <div class="addNew">
@@ -111,7 +111,7 @@
         ref="dynamic"
         @transmit="updateParticipants"
       ></DynamicCollection>
-      <button class="universalBlueBtn save" @click="save">保&nbsp;存</button>
+      <button class="button-blue save" @click="save">保&nbsp;存</button>
     </div>
   </div>
 </template>

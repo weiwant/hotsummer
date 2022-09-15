@@ -1,11 +1,11 @@
 <template>
-  <div class="componentWrapper">
+  <div class="app-right-wrapper">
     <!--component标题-->
-    <div class="componentSectionTitle">工作量报告</div>
+    <div class="app-right-title">工作量报告</div>
     <YearFilter @yearConfirmed="yearConfirmed"></YearFilter>
     <TableStatisticsBar :keyValuePairs="keyValuePairs"></TableStatisticsBar>
     <!-- 教学工作量详情 -->
-    <div class="componentSubtitle">教学工作量详情</div>
+    <div class="app-section-title">教学工作量详情</div>
     <!--数据列表-->
     <PlainTable
       :dataExists="dataExists_teaching"
@@ -14,7 +14,7 @@
       :noDataHint="noDataHint_teaching"
     ></PlainTable>
     <!-- 特殊工作量详情 -->
-    <div class="componentSubtitle">特殊工作量详情</div>
+    <div class="app-section-title">特殊工作量详情</div>
     <PlainTable
       :dataExists="dataExists_special"
       :tableData="specialWorkloadTableData"

@@ -1,18 +1,23 @@
 import Vue from 'vue'
+
+
 import App from './App.vue'
 import axios from 'axios'
 import router from './router'
 import store from './store'
+
+
 import './plugins'
 
-
+import 'normalize.css/normalize.css'
+import './style/index.css'
 
 Vue.config.productionTip = false
 
 
 Vue.prototype.$axios = axios;
-Vue.prototype.$domainName = "http://121.40.218.45:8080";
-Vue.prototype.$axios.defaults.baseURL = "http://121.40.218.45:8080"
+Vue.prototype.$domainName = "http://116.205.224.180:8080";
+Vue.prototype.$axios.defaults.baseURL = "http://116.205.224.180:8080"
 Vue.prototype.$currentYear = (new Date()).getFullYear()  //当前的年份
 
 

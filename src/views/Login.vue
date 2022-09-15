@@ -92,7 +92,7 @@ header .title {
   color: white;
   font-size: 32px;
   font-weight: 600;
-  top: 2vh;
+  top: 3vh;
 }
 .center {
   position: relative;
@@ -173,7 +173,7 @@ header .title {
 .form-submit {
   display: flex;
   justify-content: space-evenly;
-  padding: 5px 0;
+  padding: 8px 0;
   margin-top: 40px;
   background-color: rgb(44, 64, 44);
   border-radius: 10px;

@@ -1,10 +1,10 @@
 <template>
-  <div id="sideBar">
-    <div class="schoolLogo">
+  <div id="sidebar">
+    <div class="sidebar-logo">
       <img src="../../assets/schoolImg/schoolLogo.png" alt="" />
     </div>
-    <div class="title">教师界面</div>
-    <ul class="mainFunctions">
+    <div class="sidebar-title">教师界面</div>
+    <ul class="sidebar-body">
       <li>
         <router-link to="PersonalInfo"><span></span> 个人主页</router-link>
       </li>
@@ -22,7 +22,6 @@
         <router-link to="ViewHistory"><span></span> 历史上报 </router-link>
       </li>
     </ul>
-    <ul class="tool"></ul>
   </div>
 </template>
 

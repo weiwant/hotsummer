@@ -1,12 +1,12 @@
 <template>
-  <div class="componentWrapper">
-    <div class="componentSectionTitle">查看教学工作量</div>
+  <div class="app-right-wrapper">
+    <div class="app-right-title">查看教学工作量</div>
     <FilterWithSearch
       :searchKeywords="searchKeywords"
       @getData="confirmSearchValue"
     ></FilterWithSearch>
     <TableStatisticsBar :keyValuePairs="keyValuePairs"></TableStatisticsBar>
-    <div class="componentSubsection toolBar">
+    <div class="app-section toolbar">
       <DownloadExcelFile
         :btnText="'导出excel至本地'"
         :disabled="!dataExists"

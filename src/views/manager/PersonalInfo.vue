@@ -1,6 +1,6 @@
 <template>
-  <div class="componentWrapper">
-    <div class="componentSectionTitle">个人主页</div>
+  <div class="app-right-wrapper">
+    <div class="app-right-title">个人主页</div>
     <div class="haha">
       <span class="icon"></span>
       <div class="hint"></div>

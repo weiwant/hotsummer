@@ -1,26 +1,26 @@
 <template>
-  <div class="componentWrapper">
-    <div class="componentSectionTitle">审批特殊工作量</div>
-    <div class="componentSubtitle">截止时间设置</div>
-    <div class="componentSubsection ddl">
+  <div class="app-right-wrapper">
+    <div class="app-right-title">审批特殊工作量</div>
+    <div class="app-section-title">截止时间设置</div>
+    <div class="app-section ddl">
       已将特殊工作量提交截止时间设置为:<span v-if="!isEditingDDL">{{
         ddl
       }}</span>
       <input type="date" v-model="ddl" v-if="isEditingDDL" />
-      <button class="universalBlueBtn" v-if="!isEditingDDL" @click="resetDDL">
+      <button class="button-blue" v-if="!isEditingDDL" @click="resetDDL">
         重&nbsp;置
       </button>
-      <button class="universalBlueBtn" v-if="isEditingDDL" @click="confirmDDL">
+      <button class="button-blue" v-if="isEditingDDL" @click="confirmDDL">
         确&nbsp;认
       </button>
     </div>
-    <div class="componentSubtitle">已提交上报</div>
+    <div class="app-section-title">已提交上报</div>
     <FilterWithSearch
       :searchKeywords="searchKeywords"
       @getData="confirmSearchValue"
     ></FilterWithSearch>
     <TableStatisticsBar :keyValuePairs="keyValuePairs"></TableStatisticsBar>
-    <div class="componentSubsection toolBar">
+    <div class="app-section toolbar">
       <DownloadExcelFile
         :btnText="'导出excel至本地'"
         :disabled="!dataExists"
@@ -30,7 +30,7 @@
       <!-- 批量下载申报项目文件 -->
       <div class="auditDownloadTool">
         <button
-          class="workloadFileProcessingBtn"
+          class="button-file"
           :disabled="!dataExists"
           @click="downloadSpecialWorkloadFiles"
           :class="{ disabled: !dataExists }"
@@ -139,16 +139,12 @@
             </td>
             <!-- 编辑保存控件 -->
             <td>
-              <button
-                @click="edit(index)"
-                class="universalBlueBtn edit"
-                id="edit"
-              >
+              <button @click="edit(index)" class="button-blue edit" id="edit">
                 编&nbsp;辑
               </button>
               <button
                 @click="save(index)"
-                class="universalBlueBtn edit"
+                class="button-blue edit"
                 id="save"
                 style="display: none"
               >
@@ -539,6 +535,10 @@ export default {
 </script>
 
 <style scoped>
+/* 工具栏 */
+.toolbar {
+  overflow: hidden;
+}
 .tableWrapper {
   position: relative;
   overflow: scroll;
@@ -546,16 +546,13 @@ export default {
   padding-bottom: 15px;
   transition: all 0.5s;
 }
-.componentSubsection.ddl {
+.app-section.ddl {
   width: 550px;
   font-weight: 500;
   border-radius: 5px;
 }
 .ddl button {
   margin-left: 50px;
-  width: 50px;
-  height: 25px;
-  border: 1px solid rgba(128, 128, 128, 0.555);
 }
 .ddl span {
   margin-left: 20px;

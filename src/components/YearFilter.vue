@@ -18,7 +18,7 @@
         </option>
       </select>
     </label>
-    <button class="universalBlueBtn confirmYearBtn" @click="confirmYear">
+    <button class="button-blue confirmYearBtn" @click="confirmYear">
       确&nbsp;认
     </button>
   </div>
@@ -60,9 +60,6 @@ export default {
 
 .tableFilter .confirmYearBtn {
   margin-left: 25px;
-  width: 50px;
-  height: 25px;
-  border: 1px solid rgba(128, 128, 128, 0.555);
 }
 </style>
 

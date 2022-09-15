@@ -1,5 +1,5 @@
 <template>
-  <div class="componentSubsection category">
+  <div class="app-section category">
     <div class="categoryTitle">指导学生竞赛获奖BB9</div>
 
     <!-- 填报与添加区域 -->
@@ -125,9 +125,7 @@
         <button @click="deleteFile(item)">删除</button>
       </div>
 
-      <button class="universalBlueBtn complete" @click="save">
-        保&nbsp;存
-      </button>
+      <button class="button-blue complete" @click="save">保&nbsp;存</button>
     </div>
   </div>
 </template>

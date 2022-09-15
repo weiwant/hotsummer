@@ -1,6 +1,6 @@
 <template>
   <!-- 展示查询结果（表格）的一些统计特性 -->
-  <div class="componentSubsection">
+  <div class="app-section">
     <ul class="resultStatistics">
       <li v-for="(item, index) in keyValuePairs" :key="index">
         <div class="name">{{ item.key }}</div>

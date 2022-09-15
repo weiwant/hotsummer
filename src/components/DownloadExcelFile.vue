@@ -17,7 +17,7 @@
       >（ 默认为：{{ defaultFileName }}）</span
     >
     <button
-      class="workloadFileProcessingBtn"
+      class="button-file"
       @click="exportFile()"
       :disabled="disabled"
       :class="{ disabled: disabled }"

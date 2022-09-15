@@ -1,11 +1,11 @@
 <template>
-  <div class="componentWrapper">
-    <div class="componentSectionTitle">上传教学工作量</div>
+  <div class="app-right-wrapper">
+    <div class="app-right-title">上传教学工作量</div>
     <!-- part1 -->
-    <div class="componentSubtitle" v-if="this.$currentIdentity == 1">
+    <div class="app-section-title" v-if="this.$currentIdentity == 1">
       课程工作量
     </div>
-    <div class="componentSubsection" v-if="this.$currentIdentity == 1">
+    <div class="app-section" v-if="this.$currentIdentity == 1">
       <!-- 年份选择 -->
       <label
         >年份:&nbsp;
@@ -25,15 +25,15 @@
         accept=".xls,.xlsx"
       ></el-input>
       <!-- 模版下载 -->
-      <button class="workloadFileProcessingBtn" @click="downloadTemplate(1)">
+      <button class="button-file" @click="downloadTemplate(1)">
          模版下载
       </button>
     </div>
     <!-- part2 -->
-    <div class="componentSubtitle" v-if="this.$currentIdentity != 3">
+    <div class="app-section-title" v-if="this.$currentIdentity != 3">
       考务工作量
     </div>
-    <div class="componentSubsection" v-if="this.$currentIdentity != 3">
+    <div class="app-section" v-if="this.$currentIdentity != 3">
       <!-- 年份选择 -->
       <label
         >年份:&nbsp;
@@ -53,15 +53,15 @@
         accept=".xls,.xlsx"
       ></el-input>
       <!-- 模版下载 -->
-      <button class="workloadFileProcessingBtn" @click="downloadTemplate(2)">
+      <button class="button-file" @click="downloadTemplate(2)">
          模版下载
       </button>
     </div>
     <!-- part3 -->
-    <div class="componentSubtitle" v-if="this.$currentIdentity != 2">
+    <div class="app-section-title" v-if="this.$currentIdentity != 2">
       论文工作量
     </div>
-    <div class="componentSubsection" v-if="this.$currentIdentity != 2">
+    <div class="app-section" v-if="this.$currentIdentity != 2">
       <!-- 年份选择 -->
       <label
         >年份:&nbsp;
@@ -81,7 +81,7 @@
         accept=".xls,.xlsx"
       ></el-input>
       <!-- 模版下载 -->
-      <button class="workloadFileProcessingBtn" @click="downloadTemplate(3)">
+      <button class="button-file" @click="downloadTemplate(3)">
          模版下载
       </button>
     </div>
@@ -299,17 +299,22 @@ export default {
 label {
   font-size: 14px;
 }
-.componentSubsection {
+.app-section {
   height: 130px;
   max-width: 700px;
 }
-button.workloadFileProcessingBtn {
+button.button-file {
   position: absolute;
   right: 15px;
   bottom: 10px;
 }
 /******管理员文件上传部分的e-input控件样式******/
 .el-input >>> input.el-input__inner {
+  border: 0px;
+  padding: 0;
+}
+/******管理员文件上传部分的e-input控件样式******/
+.app-section .el-input input.el-input__inner {
   border: 0px;
   padding: 0;
 }

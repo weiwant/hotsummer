@@ -1,97 +1,97 @@
 <template>
-  <div class="componentWrapper">
-    <div class="componentSectionTitle">特殊工作量历史上报</div>
+  <div class="app-right-wrapper">
+    <div class="app-right-title">特殊工作量历史上报</div>
     <div class="warning">
       <span class="icon"></span>
       仅保存未提交的项目，将在<span class="time">{{ ddl }}</span
       >日自动提交
     </div>
     <div v-if="BB1Arr.length > 0">
-      <div class="componentSubtitle">课程建设BB1</div>
+      <div class="app-section-title">课程建设BB1</div>
       <div class="flexBox">
         <BB1 v-for="(item, index) in BB1Arr" :data="item" :key="index" />
       </div>
     </div>
     <div v-if="BB2Arr.length > 0">
-      <div class="componentSubtitle">教研项目BB2</div>
+      <div class="app-section-title">教研项目BB2</div>
       <div class="flexBox">
         <BB2 v-for="(item, index) in BB2Arr" :data="item" :key="index" />
       </div>
     </div>
     <div v-if="BB3Arr.length > 0">
-      <div class="componentSubtitle">教学成果奖BB3</div>
+      <div class="app-section-title">教学成果奖BB3</div>
       <div class="flexBox">
         <BB3 v-for="(item, index) in BB3Arr" :data="item" :key="index" />
       </div>
     </div>
     <div v-if="BB4Arr.length > 0">
-      <div class="componentSubtitle">教学竞赛奖励BB4</div>
+      <div class="app-section-title">教学竞赛奖励BB4</div>
       <div class="flexBox">
         <BB4 v-for="(item, index) in BB4Arr" :data="item" :key="index" />
       </div>
     </div>
     <div v-if="BB5Arr.length > 0">
-      <div class="componentSubtitle">发表教学研究论文BB5</div>
+      <div class="app-section-title">发表教学研究论文BB5</div>
       <div class="flexBox">
         <BB5 v-for="(item, index) in BB5Arr" :data="item" :key="index" />
       </div>
     </div>
     <div v-if="BB6Arr.length > 0">
-      <div class="componentSubtitle">出版教材BB6</div>
+      <div class="app-section-title">出版教材BB6</div>
       <div class="flexBox">
         <BB6 v-for="(item, index) in BB6Arr" :data="item" :key="index" />
       </div>
     </div>
     <div v-if="BB7Arr.length > 0">
-      <div class="componentSubtitle">教学名师BB7</div>
+      <div class="app-section-title">教学名师BB7</div>
       <div class="flexBox">
         <BB7 v-for="(item, index) in BB7Arr" :data="item" :key="index" />
       </div>
     </div>
     <div v-if="BB8Arr.length > 0">
-      <div class="componentSubtitle">指导优秀毕业论文BB8</div>
+      <div class="app-section-title">指导优秀毕业论文BB8</div>
       <div class="flexBox">
         <BB8 v-for="(item, index) in BB8Arr" :data="item" :key="index" />
       </div>
     </div>
     <div v-if="BB9Arr.length > 0">
-      <div class="componentSubtitle">指导学生竞赛获奖BB9</div>
+      <div class="app-section-title">指导学生竞赛获奖BB9</div>
       <div class="flexBox">
         <BB9 v-for="(item, index) in BB9Arr" :data="item" :key="index" />
       </div>
     </div>
     <div v-if="BB10Arr.length > 0">
-      <div class="componentSubtitle">指导学生科研立项并顺利完成项目BB10</div>
+      <div class="app-section-title">指导学生科研立项并顺利完成项目BB10</div>
       <div class="flexBox">
         <BB10 v-for="(item, index) in BB10Arr" :data="item" :key="index" />
       </div>
     </div>
     <div v-if="BB11Arr.length > 0">
-      <div class="componentSubtitle">教学兼职BB11</div>
+      <div class="app-section-title">教学兼职BB11</div>
       <div class="flexBox">
         <BB11 v-for="(item, index) in BB11Arr" :data="item" :key="index" />
       </div>
     </div>
     <div v-if="BB12Arr.length > 0">
-      <div class="componentSubtitle">未知BB12</div>
+      <div class="app-section-title">未知BB12</div>
       <div class="flexBox">
         <BB12 v-for="(item, index) in BB12Arr" :data="item" :key="index" />
       </div>
     </div>
     <div v-if="BB13Arr.length > 0">
-      <div class="componentSubtitle">本科生培养活动BB13</div>
+      <div class="app-section-title">本科生培养活动BB13</div>
       <div class="flexBox">
         <BB13 v-for="(item, index) in BB13Arr" :data="item" :key="index" />
       </div>
     </div>
     <div v-if="BB14Arr.length > 0">
-      <div class="componentSubtitle">本科生主考之外的监考计BB14</div>
+      <div class="app-section-title">本科生主考之外的监考计BB14</div>
       <div class="flexBox">
         <BB14 v-for="(item, index) in BB14Arr" :data="item" :key="index" />
       </div>
     </div>
     <div v-if="BB15Arr.length > 0">
-      <div class="componentSubtitle">其他BB15</div>
+      <div class="app-section-title">其他BB15</div>
       <div class="flexBox">
         <BB15 v-for="(item, index) in BB15Arr" :data="item" :key="index" />
       </div>
@@ -235,7 +235,7 @@ export default {
   transition: all 0.2s;
 }
 /* 标题 */
-.componentSubsection.category >>> .categoryTitle {
+.app-section.category >>> .categoryTitle {
   display: inline-block;
   position: absolute;
   top: -35px;
@@ -249,72 +249,72 @@ export default {
   border-top-left-radius: 5px;
   border-top-right-radius: 5px;
 }
-.componentSubsection.category >>> .categoryTitle.saved {
+.app-section.category >>> .categoryTitle.saved {
   background-color: rgb(79, 121, 122);
 }
-.componentSubsection.category >>> .categoryTitle.commited {
+.app-section.category >>> .categoryTitle.commited {
   background-color: rgb(141, 177, 148);
 }
 
 /* 填报与添加区域 */
-.componentSubsection.category >>> .addNew td {
+.app-section.category >>> .addNew td {
   padding-top: 10px;
   font-size: 15px;
 }
-.componentSubsection.category >>> .addNew tr > td:nth-child(1) {
+.app-section.category >>> .addNew tr > td:nth-child(1) {
   font-weight: 500;
   border-bottom: 4px solid rgba(128, 128, 128, 0.116);
 }
-.componentSubsection.category >>> .addNew tr > td:nth-child(2) {
+.app-section.category >>> .addNew tr > td:nth-child(2) {
   padding-left: 15px;
 }
-.componentSubsection.category >>> .addNew td label {
+.app-section.category >>> .addNew td label {
   margin-left: 5px;
   margin-right: 18px;
 }
-.componentSubsection.category >>> .addNew .dynamic td label {
+.app-section.category >>> .addNew .dynamic td label {
   margin-right: 5px;
 }
-.componentSubsection.category >>> .addNew td input[type="number"],
-.componentSubsection.category >>> .addNew td input[type="text"],
-.componentSubsection.category >>> .addNew td input[type="month"],
-.componentSubsection.category >>> .addNew td input[type="date"],
-.componentSubsection.category >>> .addNew td input[type="textarea"] {
+.app-section.category >>> .addNew td input[type="number"],
+.app-section.category >>> .addNew td input[type="text"],
+.app-section.category >>> .addNew td input[type="month"],
+.app-section.category >>> .addNew td input[type="date"],
+.app-section.category >>> .addNew td input[type="textarea"] {
   width: 200px;
   height: 30px;
   border: 1px solid rgb(128, 128, 128);
   border-radius: 5px;
   padding-left: 5px;
 }
-.componentSubsection.category >>> .addNew td input[type="number"] {
+.app-section.category >>> .addNew td input[type="number"] {
   width: 60px;
 }
-.componentSubsection.category >>> .addNew td input[type="text"] {
+.app-section.category >>> .addNew td input[type="text"] {
   width: 200px;
 }
-.componentSubsection.category >>> .addNew td input[type="textarea"] {
+.app-section.category >>> .addNew td input[type="textarea"] {
   width: 300px;
   height: 100px;
 }
-.componentSubsection.category >>> .addNew td select {
+.app-section.category >>> .addNew td select {
   height: 30px;
   border: 1px solid gray;
   border-radius: 5px;
 }
 /* 保存、确认按钮 */
 
-.componentSubsection.category >>> button.complete {
+.app-section.category >>> button.complete {
   position: absolute;
   bottom: 10px;
   padding: 5px;
   border-radius: 8px;
   border: 1px solid rgba(128, 128, 128, 0.555);
 }
-.componentSubsection.category >>> button.complete.notCommit {
+.app-section.category >>> button.complete.notCommit {
   right: 15px;
 }
 
-.componentSubsection.category >>> button.commit.complete {
+.app-section.category >>> button.commit.complete {
   left: 15px;
 }
 /*收集框显隐动画 */

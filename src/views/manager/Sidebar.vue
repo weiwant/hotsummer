@@ -1,10 +1,10 @@
 <template>
-  <div id="sideBar">
-    <div class="schoolLogo">
+  <div id="sidebar">
+    <div class="sidebar-logo">
       <img src="../../assets/schoolImg/schoolLogo.png" alt="" />
     </div>
-    <div class="title">管理员界面</div>
-    <ul class="mainFunctions">
+    <div class="sidebar-title">管理员界面</div>
+    <ul class="sidebar-body">
       <li>
         <router-link to="PersonalInfo"> 个人主页</router-link>
       </li>
@@ -18,7 +18,6 @@
         <router-link to="AuditWorkload"> 审批特殊工作量</router-link>
       </li>
     </ul>
-    <ul class="tool"></ul>
   </div>
 </template>
 
