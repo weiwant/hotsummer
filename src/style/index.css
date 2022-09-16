@@ -1,10 +1,10 @@
 @font-face {
   font-family: 'icomoon';
-  src:  url('fonts/icomoon.eot?u2qgsf');
-  src:  url('fonts/icomoon.eot?u2qgsf#iefix') format('embedded-opentype'),
-    url('fonts/icomoon.ttf?u2qgsf') format('truetype'),
-    url('fonts/icomoon.woff?u2qgsf') format('woff'),
-    url('fonts/icomoon.svg?u2qgsf#icomoon') format('svg');
+  src:  url('fonts/icomoon.eot?uisvp3');
+  src:  url('fonts/icomoon.eot?uisvp3#iefix') format('embedded-opentype'),
+    url('fonts/icomoon.ttf?uisvp3') format('truetype'),
+    url('fonts/icomoon.woff?uisvp3') format('woff'),
+    url('fonts/icomoon.svg?uisvp3#icomoon') format('svg');
   font-weight: normal;
   font-style: normal;
   font-display: block;
@@ -22,14 +22,13 @@
     color: #2c3e50;
   }
 
-a {
-    text-decoration: none;
-  }
-
+a{
+  text-decoration: none;
+}
 
 input:focus {
     outline: none;
-  }
+}
 
 /*侧边栏*/
 #sidebar {
@@ -126,32 +125,4 @@ input:focus {
     font-size: 18px;
     font-weight: 600;
   }
-  /* 处理excel文件的绿色btn*/
-  button.white {
-    padding: 9px;
-    border: 1px solid #dddfe5;
-    border-radius: 5px;
-    background-color: rgb(255, 254, 254);
-    font: 500 14px 'icomoon' ;
-    color: rgb(51, 114, 96);
-    cursor: pointer;
-  }
-  button.white:hover {
-    background-color: rgba(209, 207, 207, 0.479);
-  }
-  button.white.disabled {
-    background-color: rgba(209, 207, 207, 0.479);
-  }
-  /*处理非文件操作的蓝色btn样式*/
-  button.green {
-    padding:9px;
-    border: 1px solid #dddfe5;
-    border-radius: 5px;
-    font:  500 14px 'icomoon' ;
-    color: #fff;
-    background-color: #6a7f75;
-    cursor: pointer;
-  }
-  button.green:hover {
-    background-color: #8a9992;
-  }
+ 

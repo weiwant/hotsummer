@@ -4,15 +4,14 @@
       <!-- 年份 -->
       <div class="table-filter-item">
         <label>年份</label>
-        <el-select v-model="yearChosen" placeholder="请选择查询年份">
-          <el-option
-            v-for="item in options_year"
-            :key="item.value"
-            :label="item.label"
-            :value="item.value"
-          >
-          </el-option>
-        </el-select>
+        <el-date-picker
+          v-model="yearChosen"
+          type="year"
+          placeholder="选择自然年份"
+          value-format="yyyy"
+          :editable="false"
+        >
+        </el-date-picker>
       </div>
       <!-- 筛选条件选择 -->
       <div class="table-filter-item nolabel">
@@ -23,22 +22,26 @@
         >
           &nbsp;添加筛选条件
         </button>
-        <!-- 主体Body -->
+        <!-- Body -->
         <transition name="fade">
           <div class="filter-select-wrapper" v-if="showFilterSelectBody">
             <!-- 类型选择 -->
             <div class="filter-select-section">
               <div class="filter-select-section-title">字段</div>
               <el-select
-                v-model="filterTypeChosen"
+                v-model="filterIndexChosen"
                 placeholder="请选择筛选字段"
               >
                 <el-option
-                  v-for="item in options_filterType"
-                  :key="item.value"
-                  :label="item.label"
-                  :value="item.value"
-                  :disabled="item.disabled"
+                  v-for="(item, index) in filters"
+                  :key="item.type_filter"
+                  :label="item.type_filter"
+                  :value="index"
+                  :disabled="
+                    filterAdded.findIndex(
+                      (el) => el.type === item.type_filter
+                    ) !== -1
+                  "
                 >
                 </el-option>
               </el-select>
@@ -53,13 +56,13 @@
               <el-select
                 v-model="filterValue"
                 placeholder="请选择"
-                v-if="filterTypeChosen === 'workloadNature'"
+                v-if="filters[filterIndexChosen].type_input === 'select'"
               >
                 <el-option
-                  v-for="item in options_filterValue"
-                  :key="item.value"
-                  :label="item.label"
-                  :value="item.value"
+                  v-for="item in filters[filterIndexChosen].options"
+                  :key="item"
+                  :label="item"
+                  :value="item"
                 >
                 </el-option>
               </el-select>
@@ -67,7 +70,7 @@
               <el-input
                 v-model="filterValue"
                 placeholder="请输入内容"
-                v-if="filterTypeChosen === 'courseName'"
+                v-if="filters[filterIndexChosen].type_input === 'text'"
               ></el-input>
             </div>
             <!-- 添加button -->
@@ -83,11 +86,18 @@
       </div>
     </div>
     <!-- 已添加的查询条件 -->
-    <div class="table-filter-section added" v-if="filterAdded.length !== 0">
+    <div class="table-filter-section added">
+      <button
+        class="transparent_red"
+        :disabled="filterAdded.length <= 0"
+        @click="clearAdded"
+      >
+        
+      </button>
       <div
         class="filter-added-item"
         v-for="(item, index) in filterAdded"
-        :key="item.value"
+        :key="item.filter_type"
       >
         {{ item.value }}
         <span class="delete" @click="deleteFilter(index)"></span>
@@ -98,57 +108,39 @@
 
 <script>
 export default {
+  props: {
+    filters: {
+      //table中可用于条件筛选的字段
+      type: Array,
+      required: true,
+    },
+  },
   data() {
     return {
       // 年份选择
-      yearChosen: this.$currentYear,
-      options_year: [],
+      yearChosen: `${this.$currentYear}`,
       // 添加过滤器
       showFilterSelectBody: false,
-      options_filterType: [
-        {
-          label: "工作量性质",
-          value: "workloadNature",
-          disabled: false,
-        },
-        {
-          label: "课程名称",
-          value: "courseName",
-          disabled: false,
-        },
-      ],
-      filterTypeChosen: "",
+      filterIndexChosen: "",
       filterValue: "",
       // 已添加的过滤器
       filterAdded: [],
     };
   },
   computed: {
-    options_filterValue() {
-      switch (this.filterTypeChosen) {
-        case "workloadNature":
-          return [
-            {
-              label: "教学工作量",
-              value: "教学工作量",
-            },
-            {
-              label: "监考工作量",
-              value: "监考工作量",
-            },
-            {
-              label: "论文工作量",
-              value: "论文工作量",
-            },
-          ];
-        default:
-          return [];
+    filterTypeChosen() {
+      if (
+        typeof this.filterIndexChosen !== "number" ||
+        this.filterIndexChosen < 0
+      ) {
+        return "";
       }
+      return this.filters[this.filterIndexChosen].type_filter;
     },
   },
   watch: {
     //每当选择了一个新的filter类型，value都要恢复空值
-    filterTypeChosen() {
+    filterIndexChosen() {
       this.filterValue = "";
     },
   },
@@ -162,39 +154,19 @@ export default {
         type: this.filterTypeChosen,
         value: this.filterValue,
       });
-      //禁用字段
-      for (let item of this.options_filterType) {
-        if (item.value === this.filterTypeChosen) {
-          item.disabled = true;
-          break;
-        }
-      }
       //清除历史
-      this.filterTypeChosen = "";
+      this.filterIndexChosen = "";
       this.filterValue = "";
       //隐藏filter-select-body
       this.showFilterSelectBody = false;
     },
     deleteFilter(index) {
-      // 解禁
-      const filterType = this.filterAdded[index].type;
-      for (let item of this.options_filterType) {
-        if (item.value === filterType) {
-          item.disabled = false;
-          break;
-        }
-      }
       //从added数组删除
       this.filterAdded.splice(index, 1);
     },
-  },
-  created() {
-    for (let i = 0; i < 5; i++) {
-      this.options_year.push({
-        label: this.$currentYear - i,
-        value: this.$currentYear - i,
-      });
-    }
+    clearAdded() {
+      this.filterAdded = [];
+    },
   },
 };
 </script>
@@ -268,16 +240,18 @@ button.white.chosen:hover {
 /* 已选择的过滤器 */
 .table-filter-section.added {
   display: flex;
+  margin-top: 15px;
   gap: 10px;
+  align-items: center;
 }
 .filter-added-item {
-  margin-top: 20px;
   padding: 5px;
   color: white;
   font-size: 12px;
   font-weight: 500;
   background-color: #556672;
   border-radius: 10px;
+  transition: all 0.2s;
 }
 .filter-added-item .delete {
   position: relative;

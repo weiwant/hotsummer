@@ -7,10 +7,10 @@
         ddl
       }}</span>
       <input type="date" v-model="ddl" v-if="isEditingDDL" />
-      <button class="blue" v-if="!isEditingDDL" @click="resetDDL">
+      <button class="green" v-if="!isEditingDDL" @click="resetDDL">
         重&nbsp;置
       </button>
-      <button class="blue" v-if="isEditingDDL" @click="confirmDDL">
+      <button class="green" v-if="isEditingDDL" @click="confirmDDL">
         确&nbsp;认
       </button>
     </div>
@@ -151,25 +151,17 @@
         </tbody>
       </table>
     </div>
-    <Pagination
-      :currentPage="currentPage"
-      :allPageCount="allPageCount"
-      @pageAfter="pageAfter"
-      @pageBefore="pageBefore"
-    ></Pagination>
   </div>
 </template>
 
 <script>
-import YearFilter from "../../components/TableFilter.vue";
+import TableFilter from "../../components/TableFilter.vue";
 import DownloadExcelFile from "../../components/DownloadExcelFile.vue";
-import Pagination from "../../components/Pagination.vue";
 export default {
   name: "AuditWorkload",
   components: {
     DownloadExcelFile,
-    Pagination,
-    YearFilter,
+    TableFilter,
   },
   data() {
     return {
@@ -181,9 +173,6 @@ export default {
       yearChosen: this.$currentYear,
       searchKeywordChosen: "",
       searchValueChosen: "",
-      //Pagination
-      currentPage: 1,
-      allPageCount: 1,
       //自定义的展示的表头
       tableHeader: [
         "序号",
@@ -431,7 +420,7 @@ export default {
         }
       }
       this.$axios
-        .post(`${this.$domainName}/special-join/select`, formData)
+        .post(`/special-join/select`, formData)
         .then((res) => {
           console.log(res);
           if (res.data.response.code == 200) {
@@ -466,14 +455,6 @@ export default {
       this.currentPage = 1;
       this.getTableData();
     },
-    pageBefore() {
-      this.currentPage = this.currentPage - 1;
-      this.getTableData();
-    },
-    pageAfter() {
-      this.currentPage = this.currentPage + 1;
-      this.getTableData();
-    },
     //导出Excel文件
     exportFile(filename) {
       //统计数据表头
@@ -502,7 +483,7 @@ export default {
       const formData = new FormData();
 
       this.$axios
-        .post(`${this.$domainName}/scores/calculate`, {
+        .post(`/scores/calculate`, {
           year: this.yearChosen,
         })
         .then((res) => {
@@ -519,11 +500,9 @@ export default {
     //获取ddl
     const formData = new FormData();
     formData.append("year", this.$currentYear);
-    this.$axios
-      .post(`${this.$domainName}/deadline/get`, formData)
-      .then((res) => {
-        this.ddl = res.data.data;
-      });
+    this.$axios.post(`/deadline/get`, formData).then((res) => {
+      this.ddl = res.data.data;
+    });
   },
 };
 </script>

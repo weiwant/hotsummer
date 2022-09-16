@@ -2,35 +2,21 @@
   <div class="app-right-wrapper">
     <!--component标题-->
     <div class="app-right-title">工作量报告</div>
-    <YearFilter />
+    <TableFilter />
     <!-- 教学工作量详情 -->
     <div class="app-section-title">教学工作量详情</div>
     <!--数据列表-->
-    <PlainTable
-      :dataExists="dataExists_teaching"
-      :tableData="teachingWorkloadTableData"
-      :tableHeader="teachingWorkloadTableHeader"
-      :noDataHint="noDataHint_teaching"
-    ></PlainTable>
     <!-- 特殊工作量详情 -->
     <div class="app-section-title">特殊工作量详情</div>
-    <PlainTable
-      :dataExists="dataExists_special"
-      :tableData="specialWorkloadTableData"
-      :tableHeader="specialWorkloadTableHeader"
-      :noDataHint="noDataHint_special"
-    ></PlainTable>
   </div>
 </template>
 
 <script>
-import YearFilter from "../../components/TableFilter.vue";
-import PlainTable from "../../components/PlainTable.vue";
+import TableFilter from "../../components/TableFilter.vue";
 export default {
   name: "TeacherWorkloadTable",
   components: {
-    YearFilter,
-    PlainTable,
+    TableFilter,
   },
   data() {
     return {
