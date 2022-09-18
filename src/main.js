@@ -13,6 +13,7 @@ import 'normalize.css/normalize.css'
 import './style/index.css'
 import './style/button.css'
 import './style/transition.css'
+import './style/table.css'
 
 Vue.config.productionTip = false
 

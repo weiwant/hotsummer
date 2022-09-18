@@ -35,14 +35,14 @@ export default {
   data() {
     return {
       colorList: ["#306f8b", "#8baeb2", "#d9e7d6", "#eeeedb", "#99a67c"],
-      chosen: [false, false, false],
+      chosen: [true, false, false],
     };
   },
   methods: {
     choose(index) {
       const newValue = !this.chosen[index];
       this.chosen.splice(index, 1, newValue);
-      this.$emit("change", index, this.chosen[index]);
+      this.$emit("change", this.chosen);
     },
   },
 };

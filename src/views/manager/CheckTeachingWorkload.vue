@@ -15,7 +15,23 @@
         :currentYear="yearChosen"
         :filterValues="filterAdded"
       />
-      <TableHeaderSelection :headerGroups="headerGroups" />
+      <TableHeaderSelection
+        :headerGroups="headerGroups"
+        @change="adjustHeader"
+      />
+    </div>
+
+    <PlainTable :header="tableHeaderDisplayed" :data="tableData" />
+    <div class="pagination">
+      <el-pagination
+        background
+        layout="total,prev, pager, next"
+        page-size="20"
+        :total="totalPage"
+        @current-change="changePage"
+        :hide-on-single-page="true"
+      >
+      </el-pagination>
     </div>
   </div>
 </template>
@@ -25,6 +41,7 @@ import DownloadExcelFile from "../../components/DownloadExcelFile.vue";
 import TableFilter from "../../components/table/TableFilter.vue";
 import TableInformationBar from "../../components/table/TableInformationBar.vue";
 import TableHeaderSelection from "../../components/table/TableHeaderSelection.vue";
+import PlainTable from "../../components/table/PlainTable.vue";
 export default {
   name: "CheckWorkload",
   components: {
@@ -32,6 +49,7 @@ export default {
     TableFilter,
     TableInformationBar,
     TableHeaderSelection,
+    PlainTable,
   },
   data() {
     return {
@@ -51,8 +69,12 @@ export default {
       //查询条件
       yearChosen: `${this.$currentYear}`,
       filterAdded: [],
+      //分页
+      totalPage: 10,
+      currentPage: 1,
       //查询结果
-      teachingWorkloadTableHeader: [
+      headerChosen: [true, false, false],
+      tableHeader: [
         {
           key: "工作量性质",
           value: "workloadNature",
@@ -190,13 +212,13 @@ export default {
           value: "laboratoryVerificationResults",
         },
       ],
-      teachingWorkloadTableData: [
+      tableData: [
         {
           workloadNature: "1111",
           academicYear: "111111",
           semester: "11111",
-          courseNumber: "111111",
-          courseName: "11111",
+          courseNumber: "111211",
+          courseName: "12111",
           teachingClass: "111111",
           teachingSchool: "1111111",
           planingSchool: "1111111",
@@ -269,27 +291,64 @@ export default {
     };
   },
   computed: {
+    //临时的表头选择组
     headerGroups() {
       let result = [];
-      let group = this.teachingWorkloadTableHeader[0].key;
-      for (let i = 1; i < this.teachingWorkloadTableHeader.length; i++) {
+      let group = this.tableHeader[0].key;
+      for (let i = 1; i < this.tableHeader.length; i++) {
         if (i === 15 || i === 24) {
           result.push(group);
           group = "";
-          group += this.teachingWorkloadTableHeader[i].key;
+          group += this.tableHeader[i].key;
         } else {
           group += "、";
-          group += this.teachingWorkloadTableHeader[i].key;
+          group += this.tableHeader[i].key;
         }
       }
       result.push(group);
       return result;
     },
+    //用户选择的需要展示的表头
+    tableHeaderDisplayed() {
+      const result = [];
+      // this.headerChosen.forEach((chosen, index) => {
+      //   if (chosen) {
+      //     for (let item of this.headerGroups[index]) {
+      //       result.push(item);
+      //     }
+      //   }
+      // });
+      if (this.headerChosen[0]) {
+        for (let i = 0; i < 15; i++) {
+          result.push(this.tableHeader[i]);
+        }
+      }
+      if (this.headerChosen[1]) {
+        for (let i = 15; i < 24; i++) {
+          result.push(this.tableHeader[i]);
+        }
+      }
+      if (this.headerChosen[2]) {
+        for (let i = 24; i < this.tableHeader.length; i++) {
+          result.push(this.tableHeader[i]);
+        }
+      }
+      return result;
+    },
   },
   methods: {
+    //查询列表数据
     search(yearChosen, filterAdded) {
       this.yearChosen = yearChosen;
       this.filterAdded = JSON.parse(JSON.stringify(filterAdded)); //深复制，当前组件保存的added永远是上一次点击查询时的
+    },
+    //更改展示表头
+    adjustHeader(chosen) {
+      this.headerChosen = [...chosen];
+    },
+    //分页
+    changePage(currentPage) {
+      this.currentPage = currentPage;
     },
     getTableData() {
       const formData = new FormData();
@@ -398,4 +457,12 @@ export default {
 </script>
 
 <style scoped>
+#table-wrapper {
+  margin-top: 10px;
+}
+.pagination {
+  margin: 10px 0;
+  margin-left: 50%;
+  transform: translateX(-50%);
+}
 </style>
