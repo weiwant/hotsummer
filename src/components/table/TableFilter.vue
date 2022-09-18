@@ -82,7 +82,13 @@
       </div>
       <!-- 确认查询 -->
       <div class="table-filter-item nolabel">
-        <button class="green">&nbsp;查询</button>
+        <button
+          class="green"
+          @click="search"
+          :disabled="this.yearChosen === '' || this.yearChosen === null"
+        >
+          &nbsp;查询
+        </button>
       </div>
     </div>
     <!-- 已添加的查询条件 -->
@@ -110,7 +116,6 @@
 export default {
   props: {
     filters: {
-      //table中可用于条件筛选的字段
       type: Array,
       required: true,
     },
@@ -166,6 +171,9 @@ export default {
     },
     clearAdded() {
       this.filterAdded = [];
+    },
+    search() {
+      this.$emit("search", this.yearChosen, this.filterAdded);
     },
   },
 };
@@ -249,7 +257,7 @@ button.white.chosen:hover {
   color: white;
   font-size: 12px;
   font-weight: 500;
-  background-color: #556672;
+  background-color: #ddd;
   border-radius: 10px;
   transition: all 0.2s;
 }

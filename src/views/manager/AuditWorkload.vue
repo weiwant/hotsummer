@@ -155,7 +155,7 @@
 </template>
 
 <script>
-import TableFilter from "../../components/TableFilter.vue";
+import TableFilter from "../../components/table/TableFilter.vue";
 import DownloadExcelFile from "../../components/DownloadExcelFile.vue";
 export default {
   name: "AuditWorkload",

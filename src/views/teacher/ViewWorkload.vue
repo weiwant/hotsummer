@@ -12,7 +12,7 @@
 </template>
 
 <script>
-import TableFilter from "../../components/TableFilter.vue";
+import TableFilter from "../../components/table/TableFilter.vue";
 export default {
   name: "TeacherWorkloadTable",
   components: {

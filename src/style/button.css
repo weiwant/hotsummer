@@ -7,9 +7,7 @@ button{
     cursor: pointer;
     transition: all 0.1s;
 }
-button:disabled {
-    background-color: #e1e2e3;
-}
+
 
 
  button.white {
@@ -19,6 +17,9 @@ button:disabled {
   button.white:hover {
     background-color: #e1e2e3;
   }
+  button.white:disabled {
+    background-color: #e1e2e3; 
+}
 
 
   button.green {
@@ -28,7 +29,9 @@ button:disabled {
   button.green:hover {
     background-color: #8a9992;
   }
-
+button.green:disabled{
+  background-color: #aaa;
+}
 
   button.transparent_red{
     background-color: transparent;
@@ -42,7 +45,8 @@ button:disabled {
   }
 
   button.transparent_red:disabled{
-      color:gray
+      color:gray;
+      background-color: transparent ;
   }
 
 

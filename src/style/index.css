@@ -119,10 +119,20 @@ input:focus {
   }
   /*每个section的标题*/
   .app-section-title {
-    margin-bottom: 50px;
-    width: 45%;
-    text-align: left;
-    font-size: 18px;
+    font-size: 15px;
     font-weight: 600;
+    margin-bottom: 15px;
   }
+  .app-section-subtitle{
+    font-size: 12px;
+    font-weight: 500;
+  }
+
+  /* flex sections*/
+  .app-section-flexwrapper{
+    display: flex;
+    /* justify-content: space-between; */
+    gap: 10px;
+  }
+ 
  

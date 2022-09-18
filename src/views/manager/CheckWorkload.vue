@@ -1,26 +1,37 @@
 <template>
   <div class="app-right-wrapper">
     <div class="app-right-title">查看教学工作量</div>
-    <TableFilter :filters="filters" />
-    <div class="app-section toolbar">
+    <TableFilter :filters="filters" @search="search" />
+    <!-- <div class="app-section toolbar">
       <DownloadExcelFile
         :btnText="'导出excel至本地'"
         :disabled="!dataExists"
         :defaultFileName="`${yearChosen}年度教学工作量`"
         @exportFile="exportFile"
-      ></DownloadExcelFile>
+      />
+    </div> -->
+    <div class="app-section-flexwrapper">
+      <TableInformationBar
+        :currentYear="yearChosen"
+        :filterValues="filterAdded"
+      />
+      <TableHeaderSelection :headerGroups="headerGroups" />
     </div>
   </div>
 </template>
 
 <script>
 import DownloadExcelFile from "../../components/DownloadExcelFile.vue";
-import TableFilter from "../../components/TableFilter.vue";
+import TableFilter from "../../components/table/TableFilter.vue";
+import TableInformationBar from "../../components/table/TableInformationBar.vue";
+import TableHeaderSelection from "../../components/table/TableHeaderSelection.vue";
 export default {
   name: "CheckWorkload",
   components: {
     DownloadExcelFile,
     TableFilter,
+    TableInformationBar,
+    TableHeaderSelection,
   },
   data() {
     return {
@@ -38,7 +49,8 @@ export default {
         },
       ],
       //查询条件
-      yearChosen: this.$currentYear,
+      yearChosen: `${this.$currentYear}`,
+      filterAdded: [],
       //查询结果
       teachingWorkloadTableHeader: [
         {
@@ -149,10 +161,6 @@ export default {
           key: "教分（BA1/3/15）",
           value: "finalTeachingScores",
         },
-        // {
-        //   key: "辅助",
-        //   value: "assistant",
-        // },
         {
           key: "课程性质说明",
           value: "classNatureExplanation",
@@ -260,13 +268,29 @@ export default {
       noDataHint: "", //“暂无数据”提示
     };
   },
+  computed: {
+    headerGroups() {
+      let result = [];
+      let group = this.teachingWorkloadTableHeader[0].key;
+      for (let i = 1; i < this.teachingWorkloadTableHeader.length; i++) {
+        if (i === 15 || i === 24) {
+          result.push(group);
+          group = "";
+          group += this.teachingWorkloadTableHeader[i].key;
+        } else {
+          group += "、";
+          group += this.teachingWorkloadTableHeader[i].key;
+        }
+      }
+      result.push(group);
+      return result;
+    },
+  },
   methods: {
-    /*
-     *getTableData()永远不会是事件的第一handler
-     *每个事件都有其对应的第一handler，负责将请求参数都配置好后
-     *再调用getTableData()
-     */
-    //获取某学年全部数据
+    search(yearChosen, filterAdded) {
+      this.yearChosen = yearChosen;
+      this.filterAdded = JSON.parse(JSON.stringify(filterAdded)); //深复制，当前组件保存的added永远是上一次点击查询时的
+    },
     getTableData() {
       const formData = new FormData();
       formData.append("naturalYear", this.yearChosen);
@@ -319,16 +343,7 @@ export default {
       this.currentPage = 1;
       this.getTableData();
     },
-    //页面切换
-    //进行页面切换时，基本的搜索参数没变，只需要调整页数
-    pageBefore() {
-      this.currentPage = this.currentPage - 1; //由于组件内存在计算属性把关是否前面还存在页面，所以可以直接-1
-      this.getTableData();
-    },
-    pageAfter() {
-      this.currentPage = this.currentPage + 1;
-      this.getTableData();
-    },
+
     //文件导出(只导出全年的)
     exportFile(filename) {
       const formData = new FormData();
