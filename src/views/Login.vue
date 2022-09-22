@@ -7,6 +7,7 @@
         工&nbsp;作&nbsp;量&nbsp;管&nbsp;理&nbsp;平&nbsp;台
       </div>
     </header>
+
     <div class="center">
       <div class="background1"></div>
       <div class="background2"></div>
@@ -14,56 +15,78 @@
         <div class="form-title">登&nbsp;&nbsp;&nbsp;录</div>
         <div class="form-item">
           <label>账号</label>
-          <input type="text" v-model="username" />
+          <input type="text" v-model="username" @blur="validateUsername" />
         </div>
         <div class="form-item">
           <label>密码</label>
-          <input type="text" v-model="password" />
+          <input type="text" v-model="password" @blur="validatePassword" />
         </div>
-        <div class="form-submit"><span>确</span><span>认</span></div>
+        <div class="form-submit" @click="login">
+          <span>确</span><span>认</span>
+        </div>
       </div>
+      <Loading :showLoading="showLoading" />
     </div>
   </div>
 </template>
 
 <script>
+import { validUsername, validPassword } from "@/utils/validate";
+import { Message } from "element-ui";
+import Loading from "@/components/Loading.vue";
 export default {
+  components: {
+    Loading,
+  },
   data() {
     return {
       username: "",
       password: "",
+      valid_username: false,
+      valid_password: false,
+      invalidMessage: "用户名或密码错误",
+      showLoading: false,
     };
   },
   methods: {
+    validateUsername() {
+      this.username = this.username.replace(/\s*/g, "");
+      this.valid_username = validUsername(this.username);
+    },
+    validatePassword() {
+      this.password = this.password.replace(/\s*/g, "");
+      this.valid_password = validPassword(this.password);
+    },
     login() {
-      if (this.$data.username === "" || this.$data.password === "") {
-        alert("账号或密码不能为空！");
-      } else {
-        this.$axios
-          .post(`/users/login`, {
-            username: this.$data.username,
-            password: this.$data.password,
+      if (this.valid_username && this.valid_password) {
+        this.showLoading = true;
+        this.$store
+          .dispatch("login", {
+            username: this.username,
+            password: this.password,
           })
-          .then((response) => {
-            //成功时返回名字和身份
-            if (response.data.response.code == 200) {
-              alert("登陆成功！");
-              localStorage.clear();
-              localStorage.setItem("userName", response.data.data.username);
-              localStorage.setItem("userIdentify", response.data.data.identify);
-              localStorage.setItem("token", response.data.data.token);
-              if (response.data.data.identify == 0) {
-                self.$router.push("/TeacherHome");
-              } else {
-                self.$router.push("/ManagerHome");
-              }
+          .then(() => {
+            if (this.$store.state.identity === 0) {
+              this.$router.push("/TeacherHome");
             } else {
-              alert("登录失败！");
+              this.$router.push("/ManagerHome");
             }
+            this.showLoading = false;
+            Message({
+              message: "欢迎回来",
+              type: "success",
+              duration: 1000,
+            });
           })
-          .catch(function (error) {
-            console.log(error);
+          .catch(() => {
+            this.showLoading = false;
           });
+      } else {
+        Message({
+          message: this.invalidMessage,
+          type: "error",
+          duration: 3000,
+        });
       }
     },
   },
@@ -99,6 +122,14 @@ header .title {
   margin-left: 50%;
   transform: translateX(-50%);
   margin-top: 17vh;
+  width: 500px;
+}
+.loading {
+  position: absolute;
+  z-index: 200;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
 }
 .background1 {
   position: absolute;
@@ -134,7 +165,7 @@ header .title {
 .form {
   margin-left: 50%;
   transform: translateX(-50%);
-  padding: 10%;
+  padding: 40px;
   padding-top: 5%;
   width: 350px;
   height: 420px;
@@ -168,7 +199,7 @@ header .title {
   height: 38px;
   border: 0;
   border-radius: 10px;
-  font-size: 18px;
+  font-size: 14px;
 }
 .form-submit {
   display: flex;

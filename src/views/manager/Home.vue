@@ -10,9 +10,7 @@ import ManagerSidebar from "./Sidebar.vue";
 export default {
   components: { ManagerSidebar },
   name: "ManagerHome",
-  created() {
-    this.$getUser();
-  },
+  created() {},
 };
 </script>
 

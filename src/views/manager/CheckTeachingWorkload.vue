@@ -286,7 +286,6 @@ export default {
         },
       ],
       totalItems: 0,
-      dataExists: false,
       noDataHint: "", //“暂无数据”提示
     };
   },
@@ -352,41 +351,12 @@ export default {
     },
     getTableData() {
       const formData = new FormData();
-      formData.append("naturalYear", this.yearChosen);
-      formData.append("page", this.currentPage);
-      // 如果搜索值不为空
-      if (this.searchValueChosen != "") {
-        switch (this.searchKeywordChosen) {
-          case "上课老师":
-            formData.append("mainTeacherName", this.searchValueChosen);
-            break;
-          // case "教分":
-          //   formData.append("mainTeacherName", this.searchValue);
-          //   break;
-        }
-      }
+      formData.append("naturalYear", 2022);
+      formData.append("page", 1);
       this.$axios
         .post(`/total/records/page`, formData)
         .then((res) => {
-          //如果有数据
-          if (res.data.response.code == 200) {
-            this.dataExists = true;
-            this.teachingWorkloadTableData = res.data.data.records;
-            this.allPageCount = res.data.data.pageNum;
-            this.totalItems = res.data.data.itemNum;
-          }
-          //如果没有数据
-          else {
-            this.dataExists = false;
-            this.teachingWorkloadTableData = [];
-            this.allPageCount = 1;
-            this.totalItems = 0;
-            if (this.searchValueChosen == "") {
-              this.noDataHint = `暂无&nbsp;&nbsp;${this.yearChosen}&nbsp;&nbsp;年度的数据！`;
-            } else {
-              this.noDataHint = `暂无&nbsp;&nbsp;${this.yearChosen}&nbsp;&nbsp;年度，${this.searchKeywordChosen}&nbsp;为&nbsp;${this.searchValueChosen}&nbsp;的数据！`;
-            }
-          }
+          console.log(res);
         })
         .catch((err) => {
           console.log(err);
