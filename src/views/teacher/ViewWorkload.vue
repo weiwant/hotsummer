@@ -26,7 +26,7 @@ export default {
       //分页
       currentPage: 1,
       //表格数据
-      yearChosen: this.$currentYear,
+      yearChosen: this.$store.state.currentYear,
       // 教学工作量数据(字段按照老师习惯的顺序排序)
       teachingWorkloadTableHeader: [
         {

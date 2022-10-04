@@ -170,7 +170,7 @@ export default {
       isEditingDDL: false,
       //当前查询的状态
       searchKeywords: ["教学业绩类型", "申报人"],
-      yearChosen: this.$currentYear,
+      yearChosen: this.$store.state.currentYear,
       searchKeywordChosen: "",
       searchValueChosen: "",
       //自定义的展示的表头
@@ -291,13 +291,11 @@ export default {
     confirmDDL() {
       this.isEditingDDL = false;
       const formData = new FormData();
-      formData.append("year", this.$currentYear);
+      formData.append("year", this.$store.state.currentYear);
       formData.append("date", this.ddl);
-      this.$axios
-        .post(`${this.$domainName}/deadline/set`, formData)
-        .then((res) => {
-          console.log(res);
-        });
+      this.$axios.post(`/deadline/set`, formData).then((res) => {
+        console.log(res);
+      });
     },
     /******下载某年的特殊工作量附件******/
     downloadSpecialWorkloadFiles() {
@@ -494,12 +492,12 @@ export default {
   },
   created() {
     //获取当年数据
-    this.yearChosen = this.$currentYear;
+    this.yearChosen = this.$store.state.currentYear;
     this.currentPage = 1;
     this.getTableData();
     //获取ddl
     const formData = new FormData();
-    formData.append("year", this.$currentYear);
+    formData.append("year", this.$store.state.currentYear);
     this.$axios.post(`/deadline/get`, formData).then((res) => {
       this.ddl = res.data.data;
     });

@@ -42,6 +42,7 @@ import TableFilter from "../../components/table/TableFilter.vue";
 import TableInformationBar from "../../components/table/TableInformationBar.vue";
 import TableHeaderSelection from "../../components/table/TableHeaderSelection.vue";
 import PlainTable from "../../components/table/PlainTable.vue";
+import { getTeachingWorkload_paged } from "@/api/teaching-workload";
 export default {
   name: "CheckWorkload",
   components: {
@@ -56,162 +57,25 @@ export default {
       //初始化TableFilter
       filters: [
         {
-          type_filter: "工作量性质",
+          type_filter: "workloadNature",
           type_input: "select",
           options: ["教学工作量", "监考工作量", "论文工作量"], //当输入类型为select时，需要提供options
         },
         {
-          type_filter: "课程名称",
+          type_filter: "courseName",
           type_input: "text",
           options: [],
         },
       ],
       //查询条件
-      yearChosen: `${this.$currentYear}`,
+      yearChosen: `${this.$store.state.currentYear}`,
       filterAdded: [],
       //分页
       totalPage: 10,
       currentPage: 1,
       //查询结果
       headerChosen: [true, false, false],
-      tableHeader: [
-        {
-          key: "工作量性质",
-          value: "workloadNature",
-        },
-        {
-          key: "学年",
-          value: "academicYear",
-        },
-        {
-          key: "学期",
-          value: "semester",
-        },
-        {
-          key: "课程号",
-          value: "courseNumber",
-        },
-        {
-          key: "课程名称",
-          value: "courseName",
-        },
-        {
-          key: "教学班",
-          value: "teachingClass",
-        },
-        {
-          key: "开课学院",
-          value: "teachingSchool",
-        },
-        {
-          key: "计划学院",
-          value: "planingSchool",
-        },
-        {
-          key: "学分",
-          value: "credit",
-        },
-        {
-          key: "课程性质",
-          value: "courseNature",
-        },
-        {
-          key: "年级",
-          value: "studentGrade",
-        },
-        {
-          key: "专业",
-          value: "major",
-        },
-        {
-          key: "上课老师",
-          value: "mainTeacherName",
-        },
-        {
-          key: "职称",
-          value: "mainTeacherTitle",
-        },
-        {
-          key: "上课人数",
-          value: "studentAmount",
-        },
-        {
-          key: "理论课时",
-          value: "theoreticalClassHours",
-        },
-        {
-          key: "上机课时",
-          value: "computerClassHours",
-        },
-        {
-          key: "实验课时",
-          value: "experimentalClassHours",
-        },
-        {
-          key: "实践课时",
-          value: "practicalClassHours",
-        },
-        {
-          key: "计算用课时",
-          value: "calculatingClassHours",
-        },
-        {
-          key: "合课单位",
-          value: "jointDepartment",
-        },
-        {
-          key: "备注",
-          value: "remarks",
-        },
-        {
-          key: "实验安排",
-          value: "experimentArrangement",
-        },
-        {
-          key: "其它教师",
-          value: "otherTeacherName",
-        },
-        {
-          key: "教分（BA1/3/15）原始分",
-          value: "originalTeachingScores",
-        },
-        {
-          key: "BA1系数",
-          value: "teachingCoefficient",
-        },
-        {
-          key: "教分（BA1/3/15）",
-          value: "finalTeachingScores",
-        },
-        {
-          key: "课程性质说明",
-          value: "classNatureExplanation",
-        },
-        {
-          key: "是否卓工或弘毅",
-          value: "specialClassRemarks",
-        },
-        {
-          key: "是否全英文",
-          value: "specialLanguageRemarks",
-        },
-        {
-          key: "是否卓工或弘毅",
-          value: "specialClassRemarks",
-        },
-        {
-          key: "是否打折",
-          value: "discount",
-        },
-        {
-          key: "未打折前",
-          value: "noDiscountTeachingCoefficient",
-        },
-        {
-          key: "实验室核对结果",
-          value: "laboratoryVerificationResults",
-        },
-      ],
+      tableHeader: this.$store.state.teachingWorkloadTableHeader,
       tableData: [
         {
           workloadNature: "1111",
@@ -340,6 +204,7 @@ export default {
     search(yearChosen, filterAdded) {
       this.yearChosen = yearChosen;
       this.filterAdded = JSON.parse(JSON.stringify(filterAdded)); //深复制，当前组件保存的added永远是上一次点击查询时的
+      this.getTableData();
     },
     //更改展示表头
     adjustHeader(chosen) {
@@ -348,79 +213,25 @@ export default {
     //分页
     changePage(currentPage) {
       this.currentPage = currentPage;
+      this.getTableData();
     },
     getTableData() {
       const formData = new FormData();
-      formData.append("naturalYear", 2022);
-      formData.append("page", 1);
-      this.$axios
-        .post(`/total/records/page`, formData)
+      formData.append("naturalYear", this.yearChosen);
+      formData.append("page", this.currentPage);
+      for (let item in this.filterAdded) {
+        formData.append(item.type, item.value);
+      }
+      getTeachingWorkload_paged(formData)
         .then((res) => {
-          console.log(res);
+          this.tableData = res.data;
         })
         .catch((err) => {
           console.log(err);
-          this.noDataHint = "获取数据出错！";
         });
-    },
-    //选择了年份和搜索条件，并给出了搜索值后确认
-    confirmSearchValue(year, searchKeyword, searchValue) {
-      //在请求数据前设置好参数
-      this.yearChosen = year;
-      this.searchKeywordChosen = searchKeyword;
-      this.searchValueChosen = searchValue;
-      this.currentPage = 1;
-      this.getTableData();
-    },
-
-    //文件导出(只导出全年的)
-    exportFile(filename) {
-      const formData = new FormData();
-      formData.append("naturalYear", this.yearChosen);
-      //中文表头
-      const tableHeader = [
-        "学年",
-        "辅助",
-        "计算用学时",
-        "课程性质解释",
-        "计算机用时",
-        "课程名称",
-        "课程性质",
-        "课程号",
-        "学分",
-        "折扣",
-        "实验安排",
-        "实验课时",
-        "教分",
-        "合课单位",
-        "实验室核对结果",
-        "上课教师名字",
-        "教师职称",
-        "专业",
-        "折扣前BA1系数",
-        "原始教分",
-        "其他教师名",
-        "计划学院",
-        "实践课时",
-        "备注",
-        "学期",
-        "是否为特殊班级",
-        "是否全英教学",
-        "上课人数",
-        "年级",
-        "教学班",
-        "BA1系数",
-        "开课学院",
-        "理论课时",
-      ];
-      this.$axios.post(`/total/records`, formData).then((res) => {
-        console.log(res);
-        this.$exportExcelFile(res.data.data, tableHeader, filename);
-      });
     },
   },
   created() {
-    //获取default年度数据;
     this.getTableData();
   },
 };

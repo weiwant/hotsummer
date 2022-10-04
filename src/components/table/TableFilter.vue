@@ -123,7 +123,7 @@ export default {
   data() {
     return {
       // 年份选择
-      yearChosen: `${this.$currentYear}`,
+      yearChosen: `${this.$store.state.currentYear}`,
       // 添加过滤器
       showFilterSelectBody: false,
       filterIndexChosen: "",

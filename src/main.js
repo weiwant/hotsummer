@@ -21,9 +21,6 @@ Vue.config.productionTip = false
 Vue.prototype.$axios = axios;
 
 
-Vue.prototype.$currentYear = (new Date()).getFullYear()  //当前的年份
-
-
 //下载excel文件方法
 Vue.prototype.$exportExcelFile = (dataToBeExported, header, filename) => {
   import("xlsx").then((XLSX) => {
@@ -39,7 +36,6 @@ Vue.prototype.$exportExcelFile = (dataToBeExported, header, filename) => {
     XLSX.writeFile(wb, filename + ".xlsx");
   });
 }
-
 
 
 new Vue({

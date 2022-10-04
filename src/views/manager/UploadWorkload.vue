@@ -90,10 +90,10 @@ export default {
   name: "UploadWorkload",
   data() {
     return {
-      currentYear: this.$currentYear,
-      yearForClassWorkloadTable: this.$currentYear,
-      yearForExaminationWorkloadTable: this.$currentYear,
-      yearForPaperWorkloadTable: this.$currentYear,
+      currentYear: this.$store.state.currentYear,
+      yearForClassWorkloadTable: this.$store.state.currentYear,
+      yearForExaminationWorkloadTable: this.$store.state.currentYear,
+      yearForPaperWorkloadTable: this.$store.state.currentYear,
       classWorkloadTableTemplate: [
         {
           学年: "",

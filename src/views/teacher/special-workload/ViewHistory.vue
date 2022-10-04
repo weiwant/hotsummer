@@ -176,7 +176,7 @@ export default {
     console.log("created");
     console.log(this.$currentUser);
     const formData = new FormData();
-    formData.append("year", this.$currentYear);
+    formData.append("year", this.$store.state.currentYear);
     this.$axios
       .post(`${this.$domainName}/deadline/get`, formData)
       .then((res) => {
@@ -184,7 +184,7 @@ export default {
       });
     //获取当前老师，所申报的所有特殊工作量historyWorkloads[]
     const formData2 = new FormData();
-    formData2.append("year", this.$currentYear);
+    formData2.append("year", this.$store.state.currentYear);
     formData2.append("declarantName", this.$currentUser);
     formData2.append(
       "statusList",

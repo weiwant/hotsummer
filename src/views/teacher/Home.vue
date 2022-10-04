@@ -10,7 +10,6 @@ import TeacherSidebar from "./Sidebar.vue";
 export default {
   components: { TeacherSidebar },
   name: "TeacherHome",
-  created() {},
 };
 </script>
 
