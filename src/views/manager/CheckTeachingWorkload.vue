@@ -2,21 +2,14 @@
   <div class="app-right-wrapper">
     <div class="app-right-title">查看教学工作量</div>
     <TableFilter :filters="filters" @search="search" />
-    <!-- <div class="app-section toolbar">
-      <DownloadExcelFile
-        :btnText="'导出excel至本地'"
-        :disabled="!dataExists"
-        :defaultFileName="`${yearChosen}年度教学工作量`"
-        @exportFile="exportFile"
-      />
-    </div> -->
     <div class="app-section-flexwrapper">
       <TableInformationBar
         :currentYear="yearChosen"
         :filterValues="filterAdded"
       />
       <TableHeaderSelection
-        :headerGroups="headerGroups"
+        :headerGroups="headerNameGroups"
+        :headerChosen="headerChosen"
         @change="adjustHeader"
       />
     </div>
@@ -55,18 +48,7 @@ export default {
   data() {
     return {
       //初始化TableFilter
-      filters: [
-        {
-          type_filter: "workloadNature",
-          type_input: "select",
-          options: ["教学工作量", "监考工作量", "论文工作量"], //当输入类型为select时，需要提供options
-        },
-        {
-          type_filter: "courseName",
-          type_input: "text",
-          options: [],
-        },
-      ],
+      filters: this.$store.state.teaching_workload.filters,
       //查询条件
       yearChosen: `${this.$store.state.currentYear}`,
       filterAdded: [],
@@ -74,8 +56,8 @@ export default {
       totalPage: 10,
       currentPage: 1,
       //查询结果
-      headerChosen: [true, false, false],
-      tableHeader: this.$store.state.teachingWorkloadTableHeader,
+      headerChosen: [], //选择要展示的表头组
+      tableHeaderGroups: this.$store.state.teaching_workload.headerGroups, //表头组集合
       tableData: [
         {
           workloadNature: "1111",
@@ -150,50 +132,29 @@ export default {
         },
       ],
       totalItems: 0,
-      noDataHint: "", //“暂无数据”提示
     };
   },
   computed: {
-    //临时的表头选择组
-    headerGroups() {
-      let result = [];
-      let group = this.tableHeader[0].key;
-      for (let i = 1; i < this.tableHeader.length; i++) {
-        if (i === 15 || i === 24) {
-          result.push(group);
-          group = "";
-          group += this.tableHeader[i].key;
-        } else {
-          group += "、";
-          group += this.tableHeader[i].key;
+    //根据表头组集合，计算传递给TableHeaderSelection的用于展示的表头组字符串数组
+    headerNameGroups() {
+      const result = [];
+      for (let group of this.tableHeaderGroups) {
+        let s = "";
+        for (let i = 0; i < group.length; i++) {
+          s += group[i].key;
+          if (i === group.length - 1) break;
+          s += "，";
         }
+        result.push(s);
       }
-      result.push(group);
       return result;
     },
-    //用户选择的需要展示的表头
+    //根据chosen数组值，计算传递给table组件的表头
     tableHeaderDisplayed() {
       const result = [];
-      // this.headerChosen.forEach((chosen, index) => {
-      //   if (chosen) {
-      //     for (let item of this.headerGroups[index]) {
-      //       result.push(item);
-      //     }
-      //   }
-      // });
-      if (this.headerChosen[0]) {
-        for (let i = 0; i < 15; i++) {
-          result.push(this.tableHeader[i]);
-        }
-      }
-      if (this.headerChosen[1]) {
-        for (let i = 15; i < 24; i++) {
-          result.push(this.tableHeader[i]);
-        }
-      }
-      if (this.headerChosen[2]) {
-        for (let i = 24; i < this.tableHeader.length; i++) {
-          result.push(this.tableHeader[i]);
+      for (let i = 0; i < this.headerChosen.length; i++) {
+        if (this.headerChosen[i]) {
+          for (let item of this.tableHeaderGroups[i]) result.push(item);
         }
       }
       return result;
@@ -232,6 +193,15 @@ export default {
     },
   },
   created() {
+    //设置headerChosen初始值
+    for (let i = 0; i < this.tableHeaderGroups.length; i++) {
+      if (i === 0) {
+        this.headerChosen.push(true);
+      } else {
+        this.headerChosen.push(false);
+      }
+    }
+    //默认先获取当年数据以展示
     this.getTableData();
   },
 };

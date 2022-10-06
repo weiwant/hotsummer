@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { MessageBox, Message } from 'element-ui'
+import { Message } from 'element-ui'
 import store from '@/store'
 import { getToken } from '@/utils/auth'
 
@@ -10,13 +10,17 @@ const instance = axios.create({
 
 
 instance.interceptors.request.use(config => {
-    console.log('making request')
     if (store.state.token) {
         config.headers['token'] = getToken();
     }
     return config;
 }, err => {
     console.log(err);
+    Message({
+        message: '请求发送失败！',
+        type: 'error',
+        duration: 2000
+    })
     return Promise.reject(err);
 });
 

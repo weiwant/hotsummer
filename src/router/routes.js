@@ -14,8 +14,8 @@ const routes = [
     {
         path: '/',
         name: 'Login',
-        component: Login
-        // redirect: '/ManagerHome'
+        // component: Login
+        redirect: '/ManagerHome'
     },
     {
         path: '/TeacherHome',
@@ -32,7 +32,7 @@ const routes = [
         path: '/ManagerHome',
         component: ManagerHome,
         children: [
-            { path: '', redirect: "PersonalInfo" },
+            { path: '', redirect: "CheckWorkload" },
             { path: 'PersonalInfo', component: ManagerPersonalInfo },
             { path: 'UploadWorkload', component: UploadWorkload },
             { path: "CheckWorkload", component: CheckWorkload },

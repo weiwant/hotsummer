@@ -61,10 +61,7 @@ export default {
       if (this.valid_username && this.valid_password) {
         this.showLoading = true;
         this.$store
-          .dispatch("login", {
-            username: this.username,
-            password: this.password,
-          })
+          .dispatch("user/login", this.username, this.password)
           .then(() => {
             if (this.$store.state.identity === 0) {
               this.$router.push("/TeacherHome");

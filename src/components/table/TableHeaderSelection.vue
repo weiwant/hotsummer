@@ -3,21 +3,19 @@
     <div class="app-section">
       <div class="app-section-title">展示表头选择</div>
       <div class="header-selection-wrapper">
-        <div class="header-selection-wrapper">
+        <div
+          class="header-selection-item"
+          v-for="(group, index) in headerGroups"
+        >
           <div
-            class="header-selection-item"
-            v-for="(group, index) in headerGroups"
-          >
-            <div
-              class="toggle"
-              :style="{
-                backgroundColor: chosen[index] ? colorList[index % 5] : '#999',
-              }"
-              :class="{ chosen: chosen[index] }"
-              @click="choose(index)"
-            ></div>
-            <span class="value">{{ group }}</span>
-          </div>
+            class="toggle"
+            :style="{
+              backgroundColor: chosen[index] ? colorList[index % 5] : '#999',
+            }"
+            :class="{ chosen: chosen[index] }"
+            @click="choose(index)"
+          ></div>
+          <span class="value">{{ group }}</span>
         </div>
       </div>
     </div>
@@ -31,19 +29,26 @@ export default {
       type: Array,
       required: true,
     },
+    headerChosen: {
+      type: Array,
+      required: true,
+    },
   },
   data() {
     return {
       colorList: ["#306f8b", "#8baeb2", "#d9e7d6", "#eeeedb", "#99a67c"],
-      chosen: [true, false, false],
+      chosen: [],
     };
   },
   methods: {
     choose(index) {
       const newValue = !this.chosen[index];
-      this.chosen.splice(index, 1, newValue);
+      this.chosen.splice(index, 1, newValue); //让数组元素值的更改可响应
       this.$emit("change", this.chosen);
     },
+  },
+  created() {
+    this.chosen = [...this.headerChosen];
   },
 };
 </script>
