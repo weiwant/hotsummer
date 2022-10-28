@@ -1,10 +1,13 @@
-import { login } from '@/api/user'
+import { login, getInfo } from '@/api/user'
 import { getToken, setToken } from '@/utils/auth'  //cookie
+
+
 
 const state = {
     token: getToken(),
     username: '',
-    identity: '',
+    identity: -1,
+
 }
 
 const mutations = {
@@ -25,17 +28,26 @@ const actions = {
             login({ username: username, password: password }).then(res => {
                 const { data } = res;  //传过来的是最开始的res.data，实际数据还要再提取一个data
                 //设置token
-                commit('setToken', data.token)
-                setToken(data.token)
-                //设置用户信息
-                commit('setUsername', username)
-                commit('setUserIdentity', data.identify)
+                commit('setToken', data.token)   //store
+                setToken(data.token)   //cookie
                 resolve()
             }).catch(err => {
                 reject(err)
             })
         })
-    }
+    },
+    getInfo({ commit, state }) {
+        return new Promise((resolve, reject) => {
+            getInfo(state.token).then(res => {
+                const { data } = res;
+                commit('setIdentity', data.identity)
+                resolve(data)
+            }).catch(err => {
+                reject(err)
+            })
+        })
+    },
+
 }
 
 export default {

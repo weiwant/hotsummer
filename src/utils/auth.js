@@ -1,6 +1,6 @@
 import Cookies from 'js-cookie'
 
-const TokenKey = 'WokringloadMIS-Token'
+const TokenKey = 'WorkingloadMIS-Token'
 
 export function getToken() {
     return Cookies.get(TokenKey)

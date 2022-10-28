@@ -1,20 +1,24 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
-import user from './modules/user'
-import teaching_workload from './modules/teaching_workload'
+import getters from './getters'
 
 
 Vue.use(Vuex)
 
-const store = new Vuex.Store({
-    modules: {
-        user,
-        teaching_workload
-    },
-    state: {
-        currentYear: `${new Date().getFullYear()}`
-    }
 
+//动态导入modules内的文件夹
+const modulesFiles = require.context('./modules', true, /\.js$/)
+
+const modules = modulesFiles.keys().reduce((modules, modulePath) => {
+    const moduleName = modulePath.replace(/^\.\/(.*)\.\w+$/, '$1')
+    const value = modulesFiles(modulePath)
+    modules[moduleName] = value.default
+    return modules
+}, {})
+
+const store = new Vuex.Store({
+    modules,
+    getters
 })
 
 export default store

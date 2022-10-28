@@ -5,8 +5,11 @@
 </template>
 
 <script>
-export default {};
+export default {
+  name: "UsrInfo",
+};
 </script>
 
 <style scoped>
+
 </style>

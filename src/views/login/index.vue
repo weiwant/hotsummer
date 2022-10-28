@@ -44,7 +44,6 @@ export default {
       password: "",
       valid_username: false,
       valid_password: false,
-      invalidMessage: "用户名或密码错误",
       showLoading: false,
     };
   },
@@ -63,10 +62,12 @@ export default {
         this.$store
           .dispatch("user/login", this.username, this.password)
           .then(() => {
-            if (this.$store.state.identity === 0) {
-              this.$router.push("/TeacherHome");
+            //如果是重定向到了login，接下来应该根据redirect的值，导航到用户原本想去的地方
+            if (this.$route.query.redirect) {
+              this.$router.push(this.$route.query.redirect)
             } else {
-              this.$router.push("/ManagerHome");
+              //如果用户是正常访问的login界面，那就直接导航至'/'即可
+              this.$router.push("/");
             }
             this.showLoading = false;
             Message({
@@ -80,7 +81,7 @@ export default {
           });
       } else {
         Message({
-          message: this.invalidMessage,
+          message: "用户名或密码错误！",
           type: "error",
           duration: 3000,
         });
@@ -105,6 +106,7 @@ header img.schoolLogo {
   left: 20px;
   width: 110px;
 }
+
 header .title {
   position: absolute;
   margin-left: 50%;
@@ -114,6 +116,7 @@ header .title {
   font-weight: 600;
   top: 3vh;
 }
+
 .center {
   position: relative;
   margin-left: 50%;
@@ -121,6 +124,7 @@ header .title {
   margin-top: 17vh;
   width: 500px;
 }
+
 .loading {
   position: absolute;
   z-index: 200;
@@ -128,6 +132,7 @@ header .title {
   left: 50%;
   transform: translateX(-50%);
 }
+
 .background1 {
   position: absolute;
   z-index: -2;
@@ -136,13 +141,12 @@ header .title {
   width: 300px;
   height: 300px;
   border-radius: 50%;
-  background: linear-gradient(
-    150deg,
-    rgb(41, 58, 43, 0.6),
-    rgb(55, 84, 43, 0.6),
-    rgb(83, 132, 91, 0.6)
-  );
+  background: linear-gradient(150deg,
+      rgb(41, 58, 43, 0.6),
+      rgb(55, 84, 43, 0.6),
+      rgb(83, 132, 91, 0.6));
 }
+
 .background2 {
   position: absolute;
   top: -70px;
@@ -151,12 +155,10 @@ header .title {
   width: 400px;
   height: 400px;
   border-radius: 50%;
-  background: linear-gradient(
-    -30deg,
-    rgb(130, 178, 151),
-    rgb(175, 200, 162),
-    rgb(223, 235, 199)
-  );
+  background: linear-gradient(-30deg,
+      rgb(130, 178, 151),
+      rgb(175, 200, 162),
+      rgb(223, 235, 199));
 }
 
 .form {
@@ -172,6 +174,7 @@ header .title {
   text-align: center;
   box-shadow: 0 5px 10px rgba(0, 0, 0, 0.247);
 }
+
 .form-title {
   margin-bottom: 60px;
   font-size: 30px;
@@ -184,12 +187,14 @@ header .title {
   margin-bottom: 20px;
   color: rgb(47, 60, 50);
 }
+
 .form-item label {
   display: block;
   text-align: left;
   font-size: 13px;
   font-weight: 500;
 }
+
 .form-item input {
   padding-left: 10px;
   width: 100%;
@@ -198,6 +203,7 @@ header .title {
   border-radius: 10px;
   font-size: 14px;
 }
+
 .form-submit {
   display: flex;
   justify-content: space-evenly;
@@ -210,9 +216,11 @@ header .title {
   font-weight: 500;
   cursor: pointer;
 }
+
 .form-submit:hover {
   background-color: rgb(34, 46, 34);
 }
+
 @media screen and (max-width: 800px) {
   header .title {
     display: none;
