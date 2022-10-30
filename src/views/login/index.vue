@@ -1,8 +1,8 @@
 <template>
   <div id="body">
     <header>
-      <img src="../assets/schoolImg/bg-footer.png" class="background" />
-      <img src="../assets/schoolImg/schoolLogo.png" class="schoolLogo" />
+      <img src="@/assets/schoolImg/bg-footer.png" class="background" />
+      <img src="@/assets/schoolImg/schoolLogo.png" class="schoolLogo" />
       <div class="title">
         工&nbsp;作&nbsp;量&nbsp;管&nbsp;理&nbsp;平&nbsp;台
       </div>
@@ -81,9 +81,9 @@ export default {
           });
       } else {
         Message({
-          message: "用户名或密码错误！",
+          message: "用户名或密码有误！",
           type: "error",
-          duration: 3000,
+          duration: 1500,
         });
       }
     },

@@ -5,8 +5,8 @@ import VueRouter from 'vue-router'
 Vue.use(VueRouter)
 
 
-import Layout from "@/layout/Layout.vue"
-import Login from "@/views/login/index"
+import Layout from "@/layout"
+import Login from "@/views/login"
 
 
 //一些不需要权限的路由
@@ -24,10 +24,10 @@ export const constantRoutes = [
       {
         path: "usrinfo",
         name: "Usrinfo",
-        component: () => import("@/views/personal-info/index"),
+        component: () => import("@/views/usr-info/index"),
         meta: {
           title: "个人主页",
-          icon: ''
+          icon: ''
         }
       }
     ]
@@ -36,7 +36,7 @@ export const constantRoutes = [
 
 export default new VueRouter({
   mode: 'history',
-  constantRoutes
+  routes: constantRoutes
 })
 
 //需要在获取用户的权限信息后挂载的路由
@@ -53,7 +53,7 @@ export const teacherRoutes = [
         component: () => import('@/views/workload-report/index'),
         meta: {
           title: '总工作量报告',
-          icon: ''
+          icon: ''
         }
       }
     ]
@@ -66,10 +66,10 @@ export const teacherRoutes = [
       {
         path: 'index',
         name: 'SpecialWorkloadUpload',
-        component: () => import('@/views/special-workload/UploadSecialWorkload'),
+        component: () => import('@/views/special-workload/UploadSpecialWorkload'),
         meta: {
           title: '上报特殊工作量',
-          icon: ''
+          icon: ''
         }
       }
     ]
@@ -85,7 +85,7 @@ export const teacherRoutes = [
         component: () => import('@/views/special-workload/ViewHistory'),
         meta: {
           title: '历史上报',
-          icon: ''
+          icon: ''
         }
       }
     ]

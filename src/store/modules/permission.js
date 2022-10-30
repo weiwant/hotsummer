@@ -1,7 +1,7 @@
 import { constantRoutes, teacherRoutes, managerRoutes } from '@/router/index'
 
 const state = {
-    routes: [],
+    routes: constantRoutes,
     addRoutes: []
 }
 
@@ -21,4 +21,11 @@ const actions = {
             commit('setRoutes', managerRoutes)
         }
     }
+}
+
+export default {
+    namespaced: true,
+    state,
+    mutations,
+    actions
 }
