@@ -3,38 +3,25 @@
     <div class="app-right-title">查看教学工作量</div>
     <TableFilter :filters="filters" @search="search" />
     <div class="app-section-flexwrapper">
-      <TableInformationBar
-        :currentYear="yearChosen"
-        :filterValues="filterAdded"
-      />
-      <TableHeaderSelection
-        :headerGroups="headerNameGroups"
-        :headerChosen="headerChosen"
-        @change="adjustHeader"
-      />
+      <TableInformationBar :currentYear="yearChosen" :filterValues="filterAdded" />
+      <TableHeaderSelection :headerGroups="headerNameGroups" :headerChosen="headerChosen" @change="adjustHeader" />
     </div>
 
     <PlainTable :header="tableHeaderDisplayed" :data="tableData" />
     <div class="pagination">
-      <el-pagination
-        background
-        layout="total,prev, pager, next"
-        page-size="20"
-        :total="totalPage"
-        @current-change="changePage"
-        :hide-on-single-page="true"
-      >
+      <el-pagination background layout="total,prev, pager, next" page-size="20" :total="totalPage"
+        @current-change="changePage" :hide-on-single-page="true">
       </el-pagination>
     </div>
   </div>
 </template>
 
 <script>
-import DownloadExcelFile from "../../components/DownloadExcelFile.vue";
-import TableFilter from "../../components/table/TableFilter.vue";
-import TableInformationBar from "../../components/table/TableInformationBar.vue";
-import TableHeaderSelection from "../../components/table/TableHeaderSelection.vue";
-import PlainTable from "../../components/table/PlainTable.vue";
+import DownloadExcelFile from "@/components/DownloadExcelFile.vue";
+import TableFilter from "@/components/table/TableFilter.vue";
+import TableInformationBar from "@/components/table/TableInformationBar.vue";
+import TableHeaderSelection from "@/components/table/TableHeaderSelection.vue";
+import PlainTable from "@/components/table/PlainTable.vue";
 import { getTeachingWorkload_paged } from "@/api/teaching-workload";
 export default {
   name: "CheckWorkload",
@@ -48,16 +35,16 @@ export default {
   data() {
     return {
       //初始化TableFilter
-      filters: this.$store.state.teaching_workload.filters,
+      filters: this.$store.getters.tableFilters_teaching,
       //查询条件
-      yearChosen: `${this.$store.state.currentYear}`,
+      yearChosen: `${this.$store.getters.currentYear}`,
       filterAdded: [],
       //分页
       totalPage: 10,
       currentPage: 1,
       //查询结果
       headerChosen: [], //选择要展示的表头组
-      tableHeaderGroups: this.$store.state.teaching_workload.headerGroups, //表头组集合
+      tableHeaderGroups: this.$store.getters.tableHeaderGroups_teaching, //表头组集合
       tableData: [
         {
           workloadNature: "1111",
@@ -211,6 +198,7 @@ export default {
 #table-wrapper {
   margin-top: 10px;
 }
+
 .pagination {
   margin: 10px 0;
   margin-left: 50%;

@@ -19,7 +19,7 @@
         </div>
         <div class="form-item">
           <label>密码</label>
-          <input type="text" v-model="password" @blur="validatePassword" />
+          <input type="password" v-model="password" @blur="validatePassword" />
         </div>
         <div class="form-submit" @click="login">
           <span>确</span><span>认</span>
@@ -60,7 +60,7 @@ export default {
       if (this.valid_username && this.valid_password) {
         this.showLoading = true;
         this.$store
-          .dispatch("user/login", this.username, this.password)
+          .dispatch("user/login", { username: this.username, password: this.password })
           .then(() => {
             //如果是重定向到了login，接下来应该根据redirect的值，导航到用户原本想去的地方
             if (this.$route.query.redirect) {

@@ -18,7 +18,7 @@
 <script>
 
 export default {
-  name: "ManagerSidebar",
+  name: "Sidebar",
   data() {
     return {
       currentPath: ''
@@ -36,7 +36,6 @@ export default {
       }
     },
     routes() {
-      console.log(this.$store.getters.routes)
       return this.$store.getters.routes.filter((item) => {
         if (item.path === '/login') return false;
         return true;
@@ -55,7 +54,6 @@ export default {
     if (path.endsWith('index')) {
       this.currentPath = path.slice(0, path.length - 6);  //删掉结尾可能存在的'/index', 因为要和路由的path比较，path!== redirect
     }
-    console.log(this.$route.path)
   }
 };
 </script>

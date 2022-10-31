@@ -19,12 +19,12 @@ export const constantRoutes = [
   {
     path: '/',
     component: Layout,
-    redirect: '/usrinfo',
+    redirect: '/userinfo',
     children: [
       {
-        path: "usrinfo",
-        name: "Usrinfo",
-        component: () => import("@/views/usr-info/index"),
+        path: "userinfo",
+        name: "Userinfo",
+        component: () => import("@/views/user-info/index"),
         meta: {
           title: "个人主页",
           icon: ''
@@ -106,7 +106,7 @@ export const managerRoutes = [
         component: () => import('@/views/teaching-workload-upload/index'),
         meta: {
           title: '上传教学工作量',
-          icon: ''
+          icon: ''
         }
       }
     ]
@@ -122,7 +122,7 @@ export const managerRoutes = [
         component: () => import('@/views/teaching-workload-check/index'),
         meta: {
           title: '查看教学工作量',
-          icon: ''
+          icon: ''
         }
       }
     ]
@@ -138,7 +138,7 @@ export const managerRoutes = [
         component: () => import('@/views/special-workload-audit/index'),
         meta: {
           title: '审批特殊工作量',
-          icon: ''
+          icon: ''
         }
       }
     ]

@@ -23,26 +23,32 @@ Vue.config.productionTip = false
 Vue.prototype.$axios = axios;
 
 // debug用的
-import { removeToken } from '@/utils/auth'
-
-removeToken();
+import { removeToken, removeIdentity, removeUsername } from '@/utils/user-auth'
+removeToken(); removeIdentity(); removeUsername()
+console.log('执行main.js')
 
 router.beforeEach((to, before, next) => {
-  if (store.getters.token) {
+  console.log(`执行路由守卫，token:${store.getters.token}`)
+  if (store.getters.token) {   //如果用户已经登录
+    console.log('有token')
     if (to.path === '/login') {
       next({ path: '/' });
     } else {
-      //如果还没有拉取用户身份，需先拉取
-      if (store.getters.identity === -1) {
-        store.dispatch('user/getInfo').then((data) => {
-          store.dispatch('permission/generateRoutes', data.identity).then(() => {
-            router.addRoutes(store.getters.addRoutes)
-            next({ ...to, replace: true })   //教程说直接使用next()可能会由于暂时还没add好而失效，所以使用next({})来引发一次新的路由，再过一遍beforeEach()就可以正常去想去的地方了
-          })
+      console.log('检查路由')
+      //如果是刚进app，用户路由还没生成
+      if (store.getters.addRoutes.length === 0) {
+        console.log('没生成')
+        console.log(`identity:${store.getters.identity}`)
+        store.dispatch('permission/generateRoutes', store.getters.identity).then(() => {
+          console.log('addRoutes:')
+          console.log(store.getters.addRoutes)
+          router.addRoutes(store.getters.addRoutes)
+          next({ ...to, replace: true })
         }).catch(err => {
           console.log(err)
         })
       } else {
+        console.log('生成了')
         next();
       }
     }

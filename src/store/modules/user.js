@@ -1,13 +1,12 @@
-import { login, getInfo } from '@/api/user'
-import { getToken, setToken } from '@/utils/auth'  //cookie
+import { login } from '@/api/user'
+import { getToken, setToken, getUsername, setUsername, getIdentity, setIdentity } from '@/utils/user-auth'  //cookie
 
 
 
 const state = {
-    token: getToken(),
-    username: '',
-    identity: -1,
-
+    token: getToken(),   //初始值从cookie内获取，没有的话就是undefined
+    username: getUsername(),
+    identity: getIdentity(),
 }
 
 const mutations = {
@@ -19,19 +18,27 @@ const mutations = {
     },
     setIdentity(state, identity) {
         state.identity = identity
-    }
+    },
+
 }
 
 const actions = {
-    login({ commit }, username, password) {
+    login({ commit }, formData) {
         return new Promise((resolve, reject) => {
-            console.log(`服务器接收到了登录请求，登录名：${username},密码：${password}`)
-            console.log('验证通过');
+            console.log(`服务器接收到了登录请求，登录名：${formData.username},密码：${formData.password}`)
+            console.log('验证通过,发送token');
+            //token
             commit('setToken', 'adsicadsfw32323');
             setToken('adsicadsfw32323');
+            //个人信息
+            commit('setUsername', '张三');
+            setUsername('张三');
+            //身份
+            commit('setIdentity', 1);
+            setIdentity(1)
             resolve();
             // console.log('验证失败');
-            // resolve('用户名或密码错误');
+            // reject('用户名或密码错误');
 
 
             // login({ username: username, password: password }).then(res => {
@@ -44,26 +51,7 @@ const actions = {
             //     reject(err)
             // })
         })
-    },
-    getInfo({ commit, state }) {
-        return new Promise((resolve, reject) => {
-            console.log('后端接收到了获取用户信息的请求')
-            console.log('请求成功')
-            commit('setUsername', '张三');
-            commit('setIdentity', 0);
-            resolve({ identity: 0 })
-            // console.log('请求失败')
-            // reject('获取用户信息错误')
-
-            // getInfo(state.token).then(res => {
-            //     const { data } = res;
-            //     commit('setIdentity', data.identity)
-            //     resolve(data)
-            // }).catch(err => {
-            //     reject(err)
-            // })
-        })
-    },
+    }
 
 }
 

@@ -9,16 +9,18 @@ const mutations = {
     setRoutes: (state, routes) => {
         state.addRoutes = routes;
         state.routes = constantRoutes.concat(routes)
-    }
+    },
 }
 
 const actions = {
     generateRoutes({ commit }, identity) {
-        //如果是老师
+        console.log('generating')
+        console.log(typeof identity)
         if (identity === 0) {
-            commit('setRoutes', teacherRoutes)
-        } else if (identity === 1 || identity === 2) {  //如果是管理员
-            commit('setRoutes', managerRoutes)
+            commit('setRoutes', teacherRoutes);
+        } else if (identity === 1 || identity === 2) {
+            console.log(managerRoutes);
+            commit('setRoutes', managerRoutes);
         }
     }
 }

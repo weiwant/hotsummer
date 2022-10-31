@@ -1,7 +1,7 @@
 import axios from 'axios'
 import { Message } from 'element-ui'
 import store from '@/store'
-import { getToken } from '@/utils/auth'
+import { getToken } from '@/utils/user-auth'
 
 const instance = axios.create({
     baseURL: "http://116.205.224.180:8080",
@@ -9,6 +9,8 @@ const instance = axios.create({
 });
 
 
+// 请求拦截器
+// 添加token、请求错误的用户提示
 instance.interceptors.request.use(config => {
     if (store.state.token) {
         config.headers['token'] = getToken();
@@ -25,6 +27,9 @@ instance.interceptors.request.use(config => {
 });
 
 
+
+//响应拦截器
+//提取响应data、HTTP正常的业务逻辑错误的用户提醒、HTTP错误的用户提醒
 instance.interceptors.response.use(response => {
     console.log(response)
     const res = response.data
