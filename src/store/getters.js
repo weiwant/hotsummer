@@ -7,6 +7,7 @@ const getters = {
     currentYear: () => `${new Date().getFullYear()}`,
     tableFilters_teaching: state => state.teaching_workload.filters,
     tableHeaderGroups_teaching: state => state.teaching_workload.headerGroups,
+    workloadType_teaching: state => state.teaching_workload.type
 }
 
 export default getters

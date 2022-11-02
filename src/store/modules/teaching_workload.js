@@ -157,7 +157,22 @@ const state = {
                 value: "laboratoryVerificationResults",
             }
         ]
+    ],
+    type: [
+        {
+            apiName: 'academic',
+            label: '课程工作量'
+        },
+        {
+            apiName: 'examination',
+            label: '考务工作量'
+        },
+        {
+            apiName: 'paper',
+            label: '论文工作量'
+        },
     ]
+
 }
 
 

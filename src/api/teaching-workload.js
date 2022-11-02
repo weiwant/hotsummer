@@ -7,3 +7,12 @@ export function getTeachingWorkload_paged(data) {
         data
     })
 }
+
+export function uploadTeachingWorkload(data, type) {
+    return request({
+        url: `/file/upload/${type}`,
+        method: 'post',
+        data,
+        headers: { "Content-Type": "multipart/form-datas" }
+    })
+}
