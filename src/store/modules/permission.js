@@ -23,12 +23,9 @@ const mutations = {
 
 const actions = {
     generateRoutes({ commit }, identity) {
-        console.log('generating')
-        console.log(typeof identity)
         if (identity === 0) {
             commit('setRoutes', teacherRoutes);
         } else if (identity === 1 || identity === 2) {
-            console.log(managerRoutes);
             commit('setRoutes', managerRoutes);
         }
     }
