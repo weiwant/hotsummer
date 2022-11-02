@@ -1,5 +1,6 @@
-import { login } from '@/api/user'
-import { getToken, setToken, getUsername, setUsername, getIdentity, setIdentity } from '@/utils/user-auth'  //cookie
+import { login, logout } from '@/api/user'
+import { getToken, setToken, removeToken, getUsername, setUsername, removeUsername, getIdentity, setIdentity, removeIdentity } from '@/utils/user-auth'  //cookie
+
 
 
 
@@ -51,6 +52,32 @@ const actions = {
             //     reject(err)
             // })
         })
+    },
+    logout({ commit }) {
+        return new Promise((resolve, reject) => {
+
+            commit('setToken', '');
+            removeToken();
+            commit('setIdentity', undefined);
+            removeIdentity();
+            commit('setUsername', '');
+            removeUsername();
+            resolve();
+
+            // logout().then(() => {
+            //     commit('setToken', '');
+            //     removeToken();
+            //     commit('setIdentity', undefined);
+            //     removeIdentity();
+            //     commit('setUsername', '');
+            //     removeUsername();
+            //     resolve();
+            // }).catch(err => {
+            //     console.log(err);
+            //     reject();
+            // })
+        })
+
     }
 
 }

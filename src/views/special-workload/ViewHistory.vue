@@ -1,10 +1,8 @@
 <template>
   <div class="app-right-wrapper">
-    <div class="app-right-title">特殊工作量历史上报</div>
     <div class="warning">
       <span class="icon"></span>
-      仅保存未提交的项目，将在<span class="time">{{ ddl }}</span
-      >日自动提交
+      仅保存未提交的项目，将在<span class="time">{{ ddl }}</span>日自动提交
     </div>
     <div v-if="BB1Arr.length > 0">
       <div class="app-section-title">课程建设BB1</div>
@@ -205,23 +203,28 @@ export default {
 .warning {
   text-align: left;
 }
+
 .warning span.icon {
   font-family: "icomoon";
   font-size: 20px;
 }
+
 .warning span.time {
   color: rgb(216, 170, 52);
   font-weight: 600;
 }
+
 .flexBox {
   display: flex;
   overflow: scroll;
   padding-top: 25px;
   padding-bottom: 10px;
 }
+
 #contentSectionTitle {
   margin-bottom: 35px;
 }
+
 .category {
   flex-basis: 600px;
   flex-grow: 0;
@@ -234,8 +237,9 @@ export default {
   border: 1px solid rgba(128, 128, 128, 0.301);
   transition: all 0.2s;
 }
+
 /* 标题 */
-.app-section.category >>> .categoryTitle {
+.app-section.category>>>.categoryTitle {
   display: inline-block;
   position: absolute;
   top: -35px;
@@ -249,81 +253,97 @@ export default {
   border-top-left-radius: 5px;
   border-top-right-radius: 5px;
 }
-.app-section.category >>> .categoryTitle.saved {
+
+.app-section.category>>>.categoryTitle.saved {
   background-color: rgb(79, 121, 122);
 }
-.app-section.category >>> .categoryTitle.commited {
+
+.app-section.category>>>.categoryTitle.commited {
   background-color: rgb(141, 177, 148);
 }
 
 /* 填报与添加区域 */
-.app-section.category >>> .addNew td {
+.app-section.category>>>.addNew td {
   padding-top: 10px;
   font-size: 15px;
 }
-.app-section.category >>> .addNew tr > td:nth-child(1) {
+
+.app-section.category>>>.addNew tr>td:nth-child(1) {
   font-weight: 500;
   border-bottom: 4px solid rgba(128, 128, 128, 0.116);
 }
-.app-section.category >>> .addNew tr > td:nth-child(2) {
+
+.app-section.category>>>.addNew tr>td:nth-child(2) {
   padding-left: 15px;
 }
-.app-section.category >>> .addNew td label {
+
+.app-section.category>>>.addNew td label {
   margin-left: 5px;
   margin-right: 18px;
 }
-.app-section.category >>> .addNew .dynamic td label {
+
+.app-section.category>>>.addNew .dynamic td label {
   margin-right: 5px;
 }
-.app-section.category >>> .addNew td input[type="number"],
-.app-section.category >>> .addNew td input[type="text"],
-.app-section.category >>> .addNew td input[type="month"],
-.app-section.category >>> .addNew td input[type="date"],
-.app-section.category >>> .addNew td input[type="textarea"] {
+
+.app-section.category>>>.addNew td input[type="number"],
+.app-section.category>>>.addNew td input[type="text"],
+.app-section.category>>>.addNew td input[type="month"],
+.app-section.category>>>.addNew td input[type="date"],
+.app-section.category>>>.addNew td input[type="textarea"] {
   width: 200px;
   height: 30px;
   border: 1px solid rgb(128, 128, 128);
   border-radius: 5px;
   padding-left: 5px;
 }
-.app-section.category >>> .addNew td input[type="number"] {
+
+.app-section.category>>>.addNew td input[type="number"] {
   width: 60px;
 }
-.app-section.category >>> .addNew td input[type="text"] {
+
+.app-section.category>>>.addNew td input[type="text"] {
   width: 200px;
 }
-.app-section.category >>> .addNew td input[type="textarea"] {
+
+.app-section.category>>>.addNew td input[type="textarea"] {
   width: 300px;
   height: 100px;
 }
-.app-section.category >>> .addNew td select {
+
+.app-section.category>>>.addNew td select {
   height: 30px;
   border: 1px solid gray;
   border-radius: 5px;
 }
+
 /* 保存、确认按钮 */
 
-.app-section.category >>> button.complete {
+.app-section.category>>>button.complete {
   position: absolute;
   bottom: 10px;
   padding: 5px;
   border-radius: 8px;
   border: 1px solid rgba(128, 128, 128, 0.555);
 }
-.app-section.category >>> button.complete.notCommit {
+
+.app-section.category>>>button.complete.notCommit {
   right: 15px;
 }
 
-.app-section.category >>> button.commit.complete {
+.app-section.category>>>button.commit.complete {
   left: 15px;
 }
+
 /*收集框显隐动画 */
 .v-enter {
   right: -1000px;
 }
+
 .v-enter-to {
   right: 0;
 }
+
 .v-enter-active {
   transition: all 0.2s;
 }
@@ -332,10 +352,12 @@ export default {
   opacity: 1;
   top: 0;
 }
+
 .v-leave-to {
   opacity: 0;
   top: 10px;
 }
+
 .v-leave-active {
   transition: all 0.2s;
 }

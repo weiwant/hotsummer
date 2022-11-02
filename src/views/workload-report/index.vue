@@ -1,7 +1,5 @@
 <template>
   <div class="app-right-wrapper">
-    <!--component标题-->
-    <div class="app-right-title">工作量报告</div>
     <TableFilter />
     <!-- 教学工作量详情 -->
     <div class="app-section-title">教学工作量详情</div>
@@ -366,4 +364,5 @@ export default {
 </script>
 
 <style scoped>
+
 </style>

@@ -34,10 +34,21 @@ export const constantRoutes = [
   }
 ]
 
-export default new VueRouter({
+const createRouter = () => new VueRouter({
   mode: 'history',
   routes: constantRoutes
 })
+
+const router = createRouter();
+
+export default router;
+
+
+//用户退出登录以后，app的router需要更换为初始状态（否则再次登录后addroutes会在之前登出的基础上做，必然是有问题的）
+export function resetRouter() {
+  const newRouter = createRouter();
+  router.matcher = newRouter.matcher
+}
 
 //需要在获取用户的权限信息后挂载的路由
 //专属于教师的

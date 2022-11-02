@@ -4,23 +4,13 @@
       <!-- 年份 -->
       <div class="table-filter-item">
         <label>年份</label>
-        <el-date-picker
-          v-model="yearChosen"
-          type="year"
-          placeholder="选择自然年份"
-          value-format="yyyy"
-          :editable="false"
-        >
+        <el-date-picker v-model="yearChosen" type="year" placeholder="选择自然年份" value-format="yyyy" :editable="false">
         </el-date-picker>
       </div>
       <!-- 筛选条件选择 -->
       <div class="table-filter-item nolabel">
-        <button
-          class="white"
-          :class="{ chosen: showFilterSelectBody }"
-          @click="changeFilterSelectBodyStatus"
-        >
-          &nbsp;添加筛选条件
+        <button class="white" :class="{ chosen: showFilterSelectBody }" @click="changeFilterSelectBodyStatus">
+          &nbsp;添加筛选条件
         </button>
         <!-- Body -->
         <transition name="fade">
@@ -28,50 +18,28 @@
             <!-- 类型选择 -->
             <div class="filter-select-section">
               <div class="filter-select-section-title">字段</div>
-              <el-select
-                v-model="filterIndexChosen"
-                placeholder="请选择筛选字段"
-              >
-                <el-option
-                  v-for="(item, index) in filters"
-                  :key="item.type_filter"
-                  :label="item.type_filter"
-                  :value="index"
+              <el-select v-model="filterIndexChosen" placeholder="请选择筛选字段">
+                <el-option v-for="(item, index) in filters" :key="item.type_filter" :label="item.label" :value="index"
                   :disabled="
                     filterAdded.findIndex(
                       (el) => el.type === item.type_filter
                     ) !== -1
-                  "
-                >
+                  ">
                 </el-option>
               </el-select>
             </div>
-            <div
-              class="filter-select-section"
-              v-if="filterTypeChosen.length !== 0"
-            >
+            <div class="filter-select-section" v-if="filterTypeChosen.length !== 0">
               <!-- 值确认 -->
               <div class="filter-select-section-title">值</div>
               <!-- 下拉菜单 -->
-              <el-select
-                v-model="filterValue"
-                placeholder="请选择"
-                v-if="filters[filterIndexChosen].type_input === 'select'"
-              >
-                <el-option
-                  v-for="item in filters[filterIndexChosen].options"
-                  :key="item"
-                  :label="item"
-                  :value="item"
-                >
+              <el-select v-model="filterValue" placeholder="请选择"
+                v-if="filters[filterIndexChosen].type_input === 'select'">
+                <el-option v-for="item in filters[filterIndexChosen].options" :key="item" :label="item" :value="item">
                 </el-option>
               </el-select>
               <!-- 输入框 -->
-              <el-input
-                v-model="filterValue"
-                placeholder="请输入内容"
-                v-if="filters[filterIndexChosen].type_input === 'text'"
-              ></el-input>
+              <el-input v-model="filterValue" placeholder="请输入内容"
+                v-if="filters[filterIndexChosen].type_input === 'text'"></el-input>
             </div>
             <!-- 添加button -->
             <div class="filter-select-section" v-if="filterValue.length !== 0">
@@ -82,31 +50,19 @@
       </div>
       <!-- 确认查询 -->
       <div class="table-filter-item nolabel">
-        <button
-          class="green"
-          @click="search"
-          :disabled="this.yearChosen === '' || this.yearChosen === null"
-        >
-          &nbsp;查询
+        <button class="green" @click="search" :disabled="this.yearChosen === '' || this.yearChosen === null">
+          &nbsp;查询
         </button>
       </div>
     </div>
     <!-- 已添加的查询条件 -->
     <div class="table-filter-section added">
-      <button
-        class="transparent_red"
-        :disabled="filterAdded.length <= 0"
-        @click="clearAdded"
-      >
-        
+      <button class="transparent_red" :disabled="filterAdded.length <= 0" @click="clearAdded">
+        
       </button>
-      <div
-        class="filter-added-item"
-        v-for="(item, index) in filterAdded"
-        :key="item.filter_type"
-      >
+      <div class="filter-added-item" v-for="(item, index) in filterAdded" :key="item.filter_type">
         {{ item.value }}
-        <span class="delete" @click="deleteFilter(index)"></span>
+        <span class="delete" @click="deleteFilter(index)"></span>
       </div>
     </div>
   </div>
@@ -123,7 +79,7 @@ export default {
   data() {
     return {
       // 年份选择
-      yearChosen: `${this.$store.state.currentYear}`,
+      yearChosen: `${this.$store.getters.currentYear}`,
       // 添加过滤器
       showFilterSelectBody: false,
       filterIndexChosen: "",
@@ -156,7 +112,7 @@ export default {
     addFilter() {
       //加入added数组
       this.filterAdded.push({
-        type: this.filterTypeChosen,
+        type: this.filterTypeChosen,  //type_filter
         value: this.filterValue,
       });
       //清除历史
@@ -185,19 +141,23 @@ export default {
   margin-bottom: 5px;
   padding: 15px 0;
 }
+
 .table-filter-section::after {
   display: block;
   content: "";
   clear: both;
 }
+
 .table-filter-item {
   float: left;
   position: relative;
   margin-right: 10px;
 }
+
 .table-filter-item.nolabel {
   top: 16px;
 }
+
 .table-filter-item label {
   display: block;
   padding-left: 2px;
@@ -209,9 +169,11 @@ export default {
 button.white.chosen {
   background-color: #e1e1e3;
 }
+
 button.white.chosen:hover {
   background-color: white;
 }
+
 .filter-select-wrapper {
   position: absolute;
   top: 45px;
@@ -222,19 +184,23 @@ button.white.chosen:hover {
   border: 1px solid #dddfe5;
   border-radius: 5px;
 }
+
 .filter-select-section {
   padding: 10px;
 }
+
 .filter-select-section::after {
   display: block;
   content: "";
   clear: both;
 }
+
 .filter-select-section-title {
   font-size: 14px;
   font-weight: 500;
   margin-bottom: 5px;
 }
+
 .filter-select-section .confirm {
   float: right;
   color: #447161;
@@ -242,9 +208,11 @@ button.white.chosen:hover {
   font-weight: 600;
   cursor: pointer;
 }
+
 .filter-select-section .confirm:hover {
   color: #243a32;
 }
+
 /* 已选择的过滤器 */
 .table-filter-section.added {
   display: flex;
@@ -252,6 +220,7 @@ button.white.chosen:hover {
   gap: 10px;
   align-items: center;
 }
+
 .filter-added-item {
   padding: 5px;
   color: white;
@@ -261,13 +230,15 @@ button.white.chosen:hover {
   border-radius: 10px;
   transition: all 0.2s;
 }
+
 .filter-added-item .delete {
   position: relative;
   top: 1px;
   cursor: pointer;
   font-family: "icomoon";
 }
+
 .filter-added-item .delete:hover {
-  color: #ddd;
+  color:#ba9291;
 }
 </style>

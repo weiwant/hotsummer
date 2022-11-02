@@ -1,6 +1,5 @@
 <template>
   <div class="app-right-wrapper">
-    <div class="app-right-title">特殊工作量上报</div>
     <div class="app-section-title">类型选择</div>
     <MenuBar :menuItems="menuItems" @show="show" @hide="hide"></MenuBar>
     <div class="app-section-title" id="contentSectionTitle">内容填报</div>
@@ -235,10 +234,12 @@ export default {
 #contentSectionTitle {
   margin-bottom: 35px;
 }
+
 .flexBox {
   display: flex;
   flex-wrap: wrap;
 }
+
 /* 最外层盒子 */
 .category {
   position: relative;
@@ -250,8 +251,9 @@ export default {
   border: 1px solid rgba(128, 128, 128, 0.301);
   transition: all 0.2s;
 }
+
 /* 标题 */
-.app-section.category >>> .categoryTitle {
+.app-section.category>>>.categoryTitle {
   display: inline-block;
   position: absolute;
   top: -35px;
@@ -265,24 +267,28 @@ export default {
   border-top-left-radius: 5px;
   border-top-right-radius: 5px;
 }
+
 /* 历史上报记录 */
-.app-section.category >>> .historyTitle,
-.app-section.category >>> .addNewTitle {
+.app-section.category>>>.historyTitle,
+.app-section.category>>>.addNewTitle {
   font-weight: 500;
   font-size: 15px;
   color: rgb(242, 191, 72);
 }
-.app-section.category >>> .historyTitle span.historyDisplayBtn {
+
+.app-section.category>>>.historyTitle span.historyDisplayBtn {
   margin-left: 10px;
   font-family: "icomoon";
   font-size: 14px;
   color: rgba(128, 128, 128, 0.733);
   cursor: pointer;
 }
-.app-section.category >>> .historyTitle span.historyDisplayBtn:hover {
+
+.app-section.category>>>.historyTitle span.historyDisplayBtn:hover {
   color: rgba(48, 60, 78, 0.774);
 }
-.app-section.category >>> .historyTableWrapper {
+
+.app-section.category>>>.historyTableWrapper {
   position: relative;
   border-radius: 3px;
   height: 100px;
@@ -290,53 +296,63 @@ export default {
 }
 
 /* 填报与添加区域 */
-.app-section.category >>> .addNew td {
+.app-section.category>>>.addNew td {
   padding-top: 10px;
   font-size: 15px;
 }
-.app-section.category >>> .addNew tr > td:nth-child(1) {
+
+.app-section.category>>>.addNew tr>td:nth-child(1) {
   font-weight: 500;
   border-bottom: 4px solid rgba(128, 128, 128, 0.116);
 }
-.app-section.category >>> .addNew tr > td:nth-child(2) {
+
+.app-section.category>>>.addNew tr>td:nth-child(2) {
   padding-left: 15px;
 }
-.app-section.category >>> .addNew td label {
+
+.app-section.category>>>.addNew td label {
   margin-left: 5px;
   margin-right: 18px;
 }
-.app-section.category >>> .addNew .dynamic td label {
+
+.app-section.category>>>.addNew .dynamic td label {
   margin-right: 5px;
 }
-.app-section.category >>> .addNew td input[type="number"],
-.app-section.category >>> .addNew td input[type="text"],
-.app-section.category >>> .addNew td input[type="month"],
-.app-section.category >>> .addNew td input[type="date"],
-.app-section.category >>> .addNew td input[type="textarea"] {
+
+.app-section.category>>>.addNew td input[type="number"],
+.app-section.category>>>.addNew td input[type="text"],
+.app-section.category>>>.addNew td input[type="month"],
+.app-section.category>>>.addNew td input[type="date"],
+.app-section.category>>>.addNew td input[type="textarea"] {
   width: 200px;
   height: 30px;
   border: 1px solid rgb(128, 128, 128);
   border-radius: 5px;
   padding-left: 5px;
 }
-.app-section.category >>> .addNew td input[type="number"] {
+
+.app-section.category>>>.addNew td input[type="number"] {
   width: 60px;
 }
-.app-section.category >>> .addNew td input[type="text"] {
+
+.app-section.category>>>.addNew td input[type="text"] {
   width: 200px;
 }
-.app-section.category >>> .addNew td input[type="textarea"] {
+
+.app-section.category>>>.addNew td input[type="textarea"] {
   width: 300px;
   height: 100px;
 }
-.app-section.category >>> .addNew td select {
+
+.app-section.category>>>.addNew td select {
   height: 30px;
   border: 1px solid gray;
   border-radius: 5px;
 }
+
 /* 保存、确认按钮 */
-.app-section.category >>> button.complete,
-.app-section.category >>> button.save {
+.app-section.category>>>button.complete,
+.app-section.category>>>button.save {
   position: absolute;
   bottom: 10px;
   right: 15px;
@@ -349,9 +365,11 @@ export default {
 .v-enter {
   right: -1000px;
 }
+
 .v-enter-to {
   right: 0;
 }
+
 .v-enter-active {
   transition: all 0.2s;
 }
@@ -360,10 +378,12 @@ export default {
   opacity: 1;
   top: 0;
 }
+
 .v-leave-to {
   opacity: 0;
   top: 10px;
 }
+
 .v-leave-active {
   transition: all 0.2s;
 }

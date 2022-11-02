@@ -3,18 +3,10 @@
     <div class="app-section">
       <div class="app-section-title">展示表头选择</div>
       <div class="header-selection-wrapper">
-        <div
-          class="header-selection-item"
-          v-for="(group, index) in headerGroups"
-        >
-          <div
-            class="toggle"
-            :style="{
-              backgroundColor: chosen[index] ? colorList[index % 5] : '#999',
-            }"
-            :class="{ chosen: chosen[index] }"
-            @click="choose(index)"
-          ></div>
+        <div class="header-selection-item" v-for="(group, index) in headerGroups">
+          <div class="toggle" :style="{
+            backgroundColor: chosen[index] ? colorList[index % 5] : '#999',
+          }" :class="{ chosen: chosen[index] }" @click="choose(index)"></div>
           <span class="value">{{ group }}</span>
         </div>
       </div>
@@ -57,25 +49,32 @@ export default {
 #table-header-selection {
   flex-grow: 3;
 }
-.app-section {
+
+.app-section{
   height: 100%;
 }
+
 .header-selection-item {
   margin-bottom: 10px;
 }
+
 .toggle {
+  box-sizing: content-box;
   display: inline-block;
   position: relative;
   width: 50px;
-  height: 22px;
+  height: 18px;
+  padding: 3px;
   border: 1px solid #eee;
   border-radius: 100px;
   transition: all 0.2s;
   cursor: pointer;
 }
+
 .toggle::before {
+  box-sizing: border-box;
   display: block;
-  position: absolute;
+  position: relative;
   left: 0;
   top: 0;
   content: "";
@@ -86,14 +85,17 @@ export default {
   background-color: #fff;
   transition: all 0.2s;
 }
+
 .toggle:hover {
-  opacity: 0.5;
+  opacity: 0.7;
 }
+
 .chosen::before {
   left: 30px;
 }
+
 .header-selection-item .value {
-  font-size: 13px;
+  font-size: 14px;
   vertical-align: super;
   margin-left: 10px;
 }

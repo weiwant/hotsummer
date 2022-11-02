@@ -1,8 +1,8 @@
 <template>
   <div id="body">
     <header>
-      <img src="@/assets/schoolImg/bg-footer.png" class="background" />
-      <img src="@/assets/schoolImg/schoolLogo.png" class="schoolLogo" />
+      <!-- <img src="" class="background" />
+      <img src="" class="schoolLogo" /> -->
       <div class="title">
         工&nbsp;作&nbsp;量&nbsp;管&nbsp;理&nbsp;平&nbsp;台
       </div>
@@ -96,25 +96,26 @@ export default {
   width: 100vw;
   height: 100vh;
   box-sizing: border-box;
-  overflow: hidden;
   background-color: rgb(251, 251, 251);
 }
 
-header img.schoolLogo {
-  position: absolute;
-  top: 5px;
-  left: 20px;
-  width: 110px;
+header {
+  position: relative;
+  height: 90px;
+  background-image: url('@/assets/schoolImg/schoolLogo.png'), url('@/assets/schoolImg/bg-footer.png');
+  background-size: 120px auto, cover;
+  background-repeat: no-repeat, no-repeat;
+  background-position: 20px 5px, 0px 0px;
 }
 
 header .title {
   position: absolute;
   margin-left: 50%;
   transform: translateX(-50%);
+  bottom: 15px;
   color: white;
   font-size: 32px;
   font-weight: 600;
-  top: 3vh;
 }
 
 .center {
@@ -219,11 +220,5 @@ header .title {
 
 .form-submit:hover {
   background-color: rgb(34, 46, 34);
-}
-
-@media screen and (max-width: 800px) {
-  header .title {
-    display: none;
-  }
 }
 </style>

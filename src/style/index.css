@@ -1,10 +1,10 @@
 @font-face {
   font-family: 'icomoon';
-  src: url('fonts/icomoon.eot?vxuf01');
-  src: url('fonts/icomoon.eot?vxuf01#iefix') format('embedded-opentype'),
-    url('fonts/icomoon.ttf?vxuf01') format('truetype'),
-    url('fonts/icomoon.woff?vxuf01') format('woff'),
-    url('fonts/icomoon.svg?vxuf01#icomoon') format('svg');
+  src: url('fonts/icomoon.eot?lr923l');
+  src: url('fonts/icomoon.eot?lr923l#iefix') format('embedded-opentype'),
+    url('fonts/icomoon.ttf?lr923l') format('truetype'),
+    url('fonts/icomoon.woff?lr923l') format('woff'),
+    url('fonts/icomoon.svg?lr923l#icomoon') format('svg');
   font-weight: normal;
   font-style: normal;
   font-display: block;
@@ -38,7 +38,7 @@ input:focus {
   overflow-y: auto;
   width: 100vw;
   height: 100vh;
-  padding: 10px 15px 10px 235px;
+  padding: 60px 15px 10px 235px;
   background-color: rgb(239, 241, 247);
 }
 
@@ -55,16 +55,6 @@ input:focus {
   .app-right-wrapper {
     padding-left: 15px;
   }
-}
-
-/*app右部主体title*/
-.app-right-title {
-  text-align: left;
-  font-size: 27px;
-  font-weight: 600;
-  color: rgb(29, 74, 51);
-  height: 50px;
-  line-height: 50px;
 }
 
 /*app右部section-wrapper*/

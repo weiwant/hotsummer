@@ -1,10 +1,9 @@
 <template>
   <div class="app-right-wrapper">
-    <div class="app-right-title">审批特殊工作量</div>
     <div class="app-section-title">截止时间设置</div>
     <div class="app-section ddl">
       已将特殊工作量提交截止时间设置为:<span v-if="!isEditingDDL">{{
-        ddl
+          ddl
       }}</span>
       <input type="date" v-model="ddl" v-if="isEditingDDL" />
       <button class="green" v-if="!isEditingDDL" @click="resetDDL">
@@ -17,20 +16,12 @@
     <div class="app-section-title">已提交上报</div>
     <YearFilter />
     <div class="app-section toolbar">
-      <DownloadExcelFile
-        :btnText="'导出excel至本地'"
-        :disabled="!dataExists"
-        :defaultFileName="`${yearChosen}年度特殊工作量审批记录`"
-        @exportFile="exportFile"
-      ></DownloadExcelFile>
+      <DownloadExcelFile :btnText="'导出excel至本地'" :disabled="!dataExists" :defaultFileName="`${yearChosen}年度特殊工作量审批记录`"
+        @exportFile="exportFile"></DownloadExcelFile>
       <!-- 批量下载申报项目文件 -->
       <div class="auditDownloadTool">
-        <button
-          class="white"
-          :disabled="!dataExists"
-          @click="downloadSpecialWorkloadFiles"
-          :class="{ disabled: !dataExists }"
-        >
+        <button class="white" :disabled="!dataExists" @click="downloadSpecialWorkloadFiles"
+          :class="{ disabled: !dataExists }">
            批量下载审核附件
         </button>
       </div>
@@ -57,32 +48,15 @@
             </td>
             <!-- 不需要特殊处理的可编辑数据 -->
             <td v-for="(key, index) in editable" :key="index + 2000">
-              <input
-                type="text"
-                v-model="object[key]"
-                class="editable"
-                disabled
-              />
+              <input type="text" v-model="object[key]" class="editable" disabled />
             </td>
             <!-- 需要特殊处理的可编辑数据 -->
             <!-- 不使用input[type="text"]的 -->
             <td>
-              <textarea
-                v-model="object['briefIntroduction']"
-                cols="30"
-                rows="5"
-                class="editable"
-                disabled
-              ></textarea>
+              <textarea v-model="object['briefIntroduction']" cols="30" rows="5" class="editable" disabled></textarea>
             </td>
             <td>
-              <textarea
-                v-model="object['remarks']"
-                cols="30"
-                rows="5"
-                class="editable"
-                disabled
-              ></textarea>
+              <textarea v-model="object['remarks']" cols="30" rows="5" class="editable" disabled></textarea>
             </td>
             <!-- 文件下载 -->
             <td style="text-align: center; padding: 30px 5px">
@@ -94,42 +68,21 @@
             <td class="score">
               <ul>
                 <li v-for="(item, index) in object['somePeople']" :key="index">
-                  <label>{{ index == 0 ? "负责人" : "参与人" }}</label
-                  ><input
-                    type="text"
-                    v-model="item.teacherName"
-                    style="
+                  <label>{{ index == 0 ? "负责人" : "参与人" }}</label><input type="text" v-model="item.teacherName" style="
                       width: 100px;
                       border-right: 1px solid rgba(128, 128, 128, 0.212);
                       border-radius: 5px;
-                    "
-                    class="editable"
-                    disabled
-                  />
-                  <label>排序：</label
-                  ><input
-                    type="number"
-                    v-model="item.authorOrder"
-                    style="
+                    " class="editable" disabled />
+                  <label>排序：</label><input type="number" v-model="item.authorOrder" style="
                       width: 50px;
                       border-right: 1px solid rgba(128, 128, 128, 0.212);
                       border-radius: 5px;
-                    "
-                    class="editable"
-                    disabled
-                  />
-                  <label>教分：</label
-                  ><input
-                    type="text"
-                    v-model="item.teachingScores"
-                    style="
+                    " class="editable" disabled />
+                  <label>教分：</label><input type="text" v-model="item.teachingScores" style="
                       width: 100px;
                       border-right: 1px solid rgba(128, 128, 128, 0.212);
                       border-radius: 5px;
-                    "
-                    class="editable"
-                    disabled
-                  />
+                    " class="editable" disabled />
                 </li>
               </ul>
             </td>
@@ -138,12 +91,7 @@
               <button @click="edit(index)" class="blue edit" id="edit">
                 编&nbsp;辑
               </button>
-              <button
-                @click="save(index)"
-                class="blue edit"
-                id="save"
-                style="display: none"
-              >
+              <button @click="save(index)" class="blue edit" id="save" style="display: none">
                 保&nbsp;存
               </button>
             </td>
@@ -510,6 +458,7 @@ export default {
 .toolbar {
   overflow: hidden;
 }
+
 .tableWrapper {
   position: relative;
   overflow: scroll;
@@ -517,28 +466,34 @@ export default {
   padding-bottom: 15px;
   transition: all 0.5s;
 }
+
 .app-section.ddl {
   width: 550px;
   font-weight: 500;
   border-radius: 5px;
 }
+
 .ddl button {
   margin-left: 50px;
 }
+
 .ddl span {
   margin-left: 20px;
   font-size: 18px;
   font-weight: 800;
   color: rgb(242, 193, 67);
 }
+
 .ddl input {
   margin-left: 30px;
   height: 30px;
 }
+
 table.specialWorkloadTable {
   width: 4000px;
   border-spacing: 0;
 }
+
 table.specialWorkloadTable thead {
   position: sticky;
   top: 0;
@@ -546,16 +501,19 @@ table.specialWorkloadTable thead {
   font-weight: 500;
   background-color: rgb(239, 241, 247);
 }
+
 table.specialWorkloadTable tbody {
   font-size: 13px;
   background-color: transparent;
   padding: 3px 5px;
 }
+
 table.specialWorkloadTable tbody td {
   vertical-align: top;
   padding: 0;
   padding-bottom: 10px;
 }
+
 table.specialWorkloadTable tbody td input {
   width: 100%;
   height: 30px;
@@ -570,38 +528,46 @@ table.specialWorkloadTable tbody td label {
   font-size: 13px;
   margin-left: 5px;
 }
+
 table.specialWorkloadTable tbody td ul li {
   margin-bottom: 5px;
 }
+
 textarea {
   width: 100%;
   overflow: scroll;
   border-radius: 0;
   border: 1px solid rgba(128, 128, 128, 0.212);
 }
+
 table.specialWorkloadTable tbody td input.editing {
   border: 2px solid rgba(95, 120, 130, 0.32);
   border-radius: 5px;
 }
+
 textarea.editing {
   border: 2px solid rgba(95, 120, 130, 0.32);
   border-radius: 5px;
 }
+
 button.file {
   border: 0;
   text-decoration: underline;
   cursor: pointer;
   color: rgb(96, 157, 135);
 }
+
 button.file:hover {
   color: rgb(33, 164, 116);
 }
+
 button.edit {
   width: 50px;
   height: 25px;
   border: 1px solid rgba(128, 128, 128, 0.267);
   /* border-radius: 5px; */
 }
+
 .auditDownloadTool {
   margin-top: 20px;
   padding-top: 15px;

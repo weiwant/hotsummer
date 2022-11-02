@@ -1,6 +1,5 @@
 <template>
   <div class="app-right-wrapper">
-    <div class="app-right-title">查看教学工作量</div>
     <TableFilter :filters="filters" @search="search" />
     <div class="app-section-flexwrapper">
       <TableInformationBar :currentYear="yearChosen" :filterValues="filterAdded" />

@@ -2,11 +2,13 @@ const state = {
     filters: [
         {
             type_filter: "workloadNature",
+            label: '工作量性质',
             type_input: "select",
             options: ["教学工作量", "监考工作量", "论文工作量"], //当输入类型为select时，需要提供options
         },
         {
             type_filter: "courseName",
+            label: '课程名称',
             type_input: "text",
             options: [],
         },

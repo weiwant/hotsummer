@@ -1,6 +1,5 @@
 <template>
   <div class="app-right-wrapper">
-    <div class="app-right-title">上传教学工作量</div>
     <!-- part1 -->
 
     <div class="app-section" v-if="this.$currentIdentity == 1">
@@ -8,8 +7,7 @@
         课程工作量
       </div>
       <!-- 年份选择 -->
-      <label
-        >年份:&nbsp;
+      <label>年份:&nbsp;
         <select v-model="yearForClassWorkloadTable">
           <option v-for="index in 5" :key="index">
             {{ currentYear - index + 1 }}
@@ -17,14 +15,8 @@
         </select>
       </label>
       <!-- 文件上传控件 -->
-      <el-input
-        type="file"
-        ref="file_1"
-        v-model="file_1"
-        @change="getFileData(file_1, 1)"
-        multiple="false"
-        accept=".xls,.xlsx"
-      ></el-input>
+      <el-input type="file" ref="file_1" v-model="file_1" @change="getFileData(file_1, 1)" multiple="false"
+        accept=".xls,.xlsx"></el-input>
       <!-- 模版下载 -->
       <button class="white" @click="downloadTemplate(1)"> 模版下载</button>
     </div>
@@ -35,8 +27,7 @@
         考务工作量
       </div>
       <!-- 年份选择 -->
-      <label
-        >年份:&nbsp;
+      <label>年份:&nbsp;
         <select v-model="yearForExaminationWorkloadTable">
           <option v-for="index in 5" :key="index">
             {{ currentYear - index + 1 }}
@@ -44,14 +35,8 @@
         </select>
       </label>
       <!-- 文件上传控件 -->
-      <el-input
-        type="file"
-        ref="file_2"
-        v-model="file_2"
-        @change="getFileData(file_2, 2)"
-        multiple="false"
-        accept=".xls,.xlsx"
-      ></el-input>
+      <el-input type="file" ref="file_2" v-model="file_2" @change="getFileData(file_2, 2)" multiple="false"
+        accept=".xls,.xlsx"></el-input>
       <!-- 模版下载 -->
       <button class="white" @click="downloadTemplate(2)"> 模版下载</button>
     </div>
@@ -62,8 +47,7 @@
         论文工作量
       </div>
       <!-- 年份选择 -->
-      <label
-        >年份:&nbsp;
+      <label>年份:&nbsp;
         <select v-model="yearForPaperWorkloadTable">
           <option v-for="index in 5" :key="index">
             {{ currentYear - index + 1 }}
@@ -71,14 +55,8 @@
         </select>
       </label>
       <!-- 文件上传控件 -->
-      <el-input
-        type="file"
-        ref="file_3"
-        v-model="file_3"
-        @change="getFileData(file_3, 3)"
-        multiple="false"
-        accept=".xls,.xlsx"
-      ></el-input>
+      <el-input type="file" ref="file_3" v-model="file_3" @change="getFileData(file_3, 3)" multiple="false"
+        accept=".xls,.xlsx"></el-input>
       <!-- 模版下载 -->
       <button class="white" @click="downloadTemplate(3)"> 模版下载</button>
     </div>
@@ -296,21 +274,25 @@ export default {
 label {
   font-size: 14px;
 }
+
 .app-section {
   margin-top: 10px;
   height: 130px;
   max-width: 700px;
 }
+
 button.file {
   position: absolute;
   right: 15px;
   bottom: 10px;
 }
+
 /******管理员文件上传部分的e-input控件样式******/
-.el-input >>> input.el-input__inner {
+.el-input>>>input.el-input__inner {
   border: 0px;
   padding: 0;
 }
+
 /******管理员文件上传部分的e-input控件样式******/
 .app-section .el-input input.el-input__inner {
   border: 0px;

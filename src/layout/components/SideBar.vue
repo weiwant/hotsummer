@@ -1,9 +1,9 @@
 <template>
   <div id="sidebar">
-    <div class="sidebar-logo">
-      <img src="../../assets/schoolImg/schoolLogo.png" alt="" />
-    </div>
-    <div class="sidebar-title" v-text="sidebarTitle"></div>
+    <header>
+
+      <!-- <button class="folder" v-text="sidebarOpened ? '' : ''"></button> -->
+    </header>
     <ul class="sidebar-body">
       <li v-for='item in routes' :key="item.path">
         <div class="router-link" @click="changeCurrent(item.path)" :class="{ active: currentPath === item.path }">
@@ -12,6 +12,14 @@
         </div>
       </li>
     </ul>
+    <div class="settings" :class="{ open: settingsOpened }">
+      <button class="folder" @click="changeSettingsStatus"></button>
+      <ul class="settings-list">
+        <li class="settings-item" @click="logout">
+          <span class="icon"></span>&nbsp;退出登录
+        </li>
+      </ul>
+    </div>
   </div>
 </template>
 
@@ -21,20 +29,12 @@ export default {
   name: "Sidebar",
   data() {
     return {
-      currentPath: ''
+      currentPath: '',
+      sidebarOpened: true,  //导航栏的开合状态
+      settingsOpened: false,  //设置栏的开关状态
     }
   },
   computed: {
-    sidebarTitle() {
-      switch (this.$store.getters.identity) {
-        case 0: return '教师界面';
-        case 1:
-        case 2:
-          return '管理员界面';
-        default:
-          return '';
-      }
-    },
     routes() {
       return this.$store.getters.routes.filter((item) => {
         if (item.path === '/login') return false;
@@ -45,7 +45,20 @@ export default {
   methods: {
     changeCurrent(current) {
       this.$router.push(current);
-      this.currentPath = current
+      this.currentPath = current;
+    },
+    changeSettingsStatus() {
+      this.settingsOpened = !this.settingsOpened
+    },
+    logout() {
+      //清除token、username、identity
+      this.$store.dispatch('user/logout').then(() => {
+        //重置路由
+        this.$store.commit('permission/resetRouter');
+        //返回登录页
+
+        this.$router.push(`/login?redirect=${this.$route.fullPath}`)
+      }).catch(() => { })
     }
   },
   created() {
@@ -70,21 +83,39 @@ export default {
   text-align: left;
   z-index: 1;
   color: white;
+  overflow: hidden;
 }
 
-.sidebar-logo {
-  width: 70%;
-}
 
-.sidebar-logo img {
-  width: 100%;
-}
-
-.sidebar-title {
+button.folder {
+  border: 0;
+  background-color: transparent;
+  color: white;
   font-size: 22px;
-  font-weight: 900;
-  margin-bottom: 40px;
+  font-family: 'icomoon';
 }
+
+/* 头部 */
+
+header {
+  margin-bottom: 40px;
+  height: 40px;
+  background-image: url('@/assets/schoolImg/schoolLogo.png');
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-position: 10px 0px;
+}
+
+
+header button.folder {
+  float: right;
+}
+
+header button.folder:hover {
+  background-color: rgb(143 172 164)
+}
+
+/* 导航栏主体 */
 
 .sidebar-body li .router-link {
   display: block;
@@ -101,9 +132,15 @@ export default {
 
 .sidebar-body li .router-link .icon {
   margin-right: 5px;
+  font-size: 20px;
+  vertical-align: bottom;
 }
 
-.sidebar-body .active {
+.sidebar-body li .router-link:hover {
+  background-color: rgb(143 172 164);
+}
+
+.sidebar-body .router-link.active {
   background-color: rgb(143 172 164)
 }
 
@@ -111,6 +148,71 @@ export default {
   #sidebar {
     display: none;
   }
+}
+
+/* 设置栏 */
+
+.settings {
+  position: absolute;
+  bottom: 20px;
+  width: 200px
+}
+
+.settings button.folder {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  padding: 0;
+  transition: all 0.2s;
+}
+
+.settings .settings-list {
+  overflow: clip;
+  width: 0;
+  position: absolute;
+  bottom: 0;
+  left: 40px;
+  background-color: rgb(143 172 164);
+  padding: 0px;
+  border-radius: 5px;
+  transition: all 0.2s;
+}
+
+.settings .settings-list::before {
+  content: '';
+  position: absolute;
+  left: -16px;
+  width: 0;
+  height: 0;
+  border: 8px solid transparent;
+  border-right-color: rgb(143 172 164);
+}
+
+.settings .settings-list .settings-item {
+  cursor: pointer;
+  white-space: nowrap;
+  font-size: 15px;
+}
+
+.settings .settings-list .settings-item .icon {
+  font-family: 'icomoon';
+  vertical-align: bottom;
+}
+
+
+.settings .settings-list .settings-item:hover {
+  color: #eee;
+}
+
+/* 设置栏打开样式 */
+.settings.open button.folder {
+  transform: rotate(30deg);
+}
+
+.settings.open .settings-list {
+  overflow: visible;
+  width: auto;
+  padding: 10px;
 }
 </style>
 
