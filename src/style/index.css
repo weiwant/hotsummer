@@ -31,7 +31,12 @@ input:focus {
   outline: none;
 }
 
-
+/* layout */
+#app-wrapper {
+  width: 100vw;
+  height: 100vh;
+  background-color: rgb(239, 241, 247);
+}
 
 /*app右部wrapper*/
 .app-right-wrapper {

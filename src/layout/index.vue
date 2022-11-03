@@ -2,7 +2,7 @@
     <div id="app-wrapper">
         <SideBar />
         <TopBar />
-        <transition name="slideFade">
+        <transition name="slideFade" mode="out-in">
             <router-view></router-view>
         </transition>
     </div>
@@ -22,7 +22,6 @@ export default {
     width: 100vw;
     height: 100vh;
     background-color: rgb(239, 241, 247);
-
 }
 
 .slideFade-enter-active,
@@ -30,13 +29,13 @@ export default {
     transition: all 0.3s;
 }
 
-.slideFade-enter-from {
+.slideFade-enter {
     transform: translateX(-20px);
     opacity: 0;
 }
 
 .slideFade-enter-to,
-.slideFade-leave-from {
+.slideFade-leave {
     transform: translateX(0px);
     opacity: 1;
 }

@@ -1,18 +1,6 @@
 <template>
   <div class="app-right-wrapper">
-    <div class="app-section-title">截止时间设置</div>
-    <div class="app-section ddl">
-      已将特殊工作量提交截止时间设置为:<span v-if="!isEditingDDL">{{
-          ddl
-      }}</span>
-      <input type="date" v-model="ddl" v-if="isEditingDDL" />
-      <button class="green" v-if="!isEditingDDL" @click="resetDDL">
-        重&nbsp;置
-      </button>
-      <button class="green" v-if="isEditingDDL" @click="confirmDDL">
-        确&nbsp;认
-      </button>
-    </div>
+    <EditDDL />
     <div class="app-section-title">已提交上报</div>
     <YearFilter />
     <div class="app-section toolbar">
@@ -67,7 +55,7 @@
             <!-- 评教分 -->
             <td class="score">
               <ul>
-                <li v-for="(item, index) in object['somePeople']" :key="index">
+                <!-- <li v-for="(item, index) in object['somePeople']" :key="index">
                   <label>{{ index == 0 ? "负责人" : "参与人" }}</label><input type="text" v-model="item.teacherName" style="
                       width: 100px;
                       border-right: 1px solid rgba(128, 128, 128, 0.212);
@@ -83,7 +71,7 @@
                       border-right: 1px solid rgba(128, 128, 128, 0.212);
                       border-radius: 5px;
                     " class="editable" disabled />
-                </li>
+                </li> -->
               </ul>
             </td>
             <!-- 编辑保存控件 -->
@@ -103,6 +91,7 @@
 </template>
 
 <script>
+import EditDDL from './components/EditDDL.vue'
 import TableFilter from "../../components/table/TableFilter.vue";
 import DownloadExcelFile from "../../components/DownloadExcelFile.vue";
 export default {
@@ -110,12 +99,10 @@ export default {
   components: {
     DownloadExcelFile,
     TableFilter,
+    EditDDL
   },
   data() {
     return {
-      //上报截止时间
-      ddl: "",
-      isEditingDDL: false,
       //当前查询的状态
       searchKeywords: ["教学业绩类型", "申报人"],
       yearChosen: this.$store.state.currentYear,
@@ -232,19 +219,7 @@ export default {
     },
   },
   methods: {
-    //DDL
-    resetDDL() {
-      this.isEditingDDL = true;
-    },
-    confirmDDL() {
-      this.isEditingDDL = false;
-      const formData = new FormData();
-      formData.append("year", this.$store.state.currentYear);
-      formData.append("date", this.ddl);
-      this.$axios.post(`/deadline/set`, formData).then((res) => {
-        console.log(res);
-      });
-    },
+
     /******下载某年的特殊工作量附件******/
     downloadSpecialWorkloadFiles() {
       const formData = new FormData();
@@ -440,15 +415,9 @@ export default {
   },
   created() {
     //获取当年数据
-    this.yearChosen = this.$store.state.currentYear;
+    this.yearChosen = this.$store.getters.currentYear;
     this.currentPage = 1;
     this.getTableData();
-    //获取ddl
-    const formData = new FormData();
-    formData.append("year", this.$store.state.currentYear);
-    this.$axios.post(`/deadline/get`, formData).then((res) => {
-      this.ddl = res.data.data;
-    });
   },
 };
 </script>
@@ -467,27 +436,6 @@ export default {
   transition: all 0.5s;
 }
 
-.app-section.ddl {
-  width: 550px;
-  font-weight: 500;
-  border-radius: 5px;
-}
-
-.ddl button {
-  margin-left: 50px;
-}
-
-.ddl span {
-  margin-left: 20px;
-  font-size: 18px;
-  font-weight: 800;
-  color: rgb(242, 193, 67);
-}
-
-.ddl input {
-  margin-left: 30px;
-  height: 30px;
-}
 
 table.specialWorkloadTable {
   width: 4000px;
