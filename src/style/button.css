@@ -1,53 +1,57 @@
-
-button{
-    padding:9px;
-    border: 1px solid #dddfe5;
-    border-radius: 5px;
-    font: 500 14px 'icomoon' ;
-    cursor: pointer;
-    transition: all 0.1s;
+button {
+  padding: 9px;
+  border: 1px solid #dddfe5;
+  border-radius: 5px;
+  font: 500 14px 'icomoon';
+  cursor: pointer;
+  transition: all 0.1s;
 }
 
 
 
- button.white {
-    background-color: rgb(255, 254, 254);
-    color: rgb(51, 114, 96);
-  }
-  button.white:hover {
-    background-color: #e1e2e3;
-  }
-  button.white:disabled {
-    background-color: #e1e2e3; 
+button.white {
+  background-color: rgb(255, 254, 254);
+  color: rgb(51, 114, 96);
+}
+
+button.white:hover {
+  background-color: #e1e2e3;
+}
+
+button.white:disabled {
+  background-color: #e1e2e3;
+  cursor: not-allowed;
 }
 
 
-  button.green {
-    background-color: #acbeb7;
-    color: #fff;
-  }
-  button.green:hover {
-    background-color: #8a9992;
-  }
-button.green:disabled{
+button.green {
+  background-color: #acbeb7;
+  color: #fff;
+}
+
+button.green:hover {
+  background-color: #8a9992;
+}
+
+button.green:disabled {
   background-color: #aaa;
+  cursor: not-allowed;
 }
 
-  button.transparent_red{
-    background-color: transparent;
-    border: 0;
-    color:#ba9291;
-    font-size: 15px;
-  }
+button.transparent_red {
+  background-color: transparent;
+  border: 0;
+  color: #ba9291;
+  font-size: 15px;
+}
 
-  button.transparent_red:hover{
-    color:#997776;
-  }
+button.transparent_red:hover {
+  color: #997776;
+}
 
-  button.transparent_red:disabled{
-      color:gray;
-      background-color: transparent ;
-  }
+button.transparent_red:disabled {
+  color: gray;
+  background-color: transparent;
+  cursor: not-allowed;
 
-
-
+}

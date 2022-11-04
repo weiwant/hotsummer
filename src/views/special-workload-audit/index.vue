@@ -2,224 +2,64 @@
   <div class="app-right-wrapper">
     <EditDDL />
     <div class="app-section-title">已提交上报</div>
-    <YearFilter />
-    <div class="app-section toolbar">
-      <DownloadExcelFile :btnText="'导出excel至本地'" :disabled="!dataExists" :defaultFileName="`${yearChosen}年度特殊工作量审批记录`"
-        @exportFile="exportFile"></DownloadExcelFile>
-      <!-- 批量下载申报项目文件 -->
-      <div class="auditDownloadTool">
-        <button class="white" :disabled="!dataExists" @click="downloadSpecialWorkloadFiles"
-          :class="{ disabled: !dataExists }">
-           批量下载审核附件
-        </button>
-      </div>
+    <div class="app-section filter">
+      <TableFilter :filters="filters" @search="search" />
     </div>
-    <div class="tableWrapper">
-      <div class="noDataHint" v-if="!dataExists">{{ noDataHint }}</div>
-      <table class="specialWorkloadTable">
-        <thead v-if="dataExists">
-          <tr>
-            <th v-for="(item, index) in tableHeader" :key="index">
-              {{ item }}
-            </th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr v-for="(object, index) in tableData" :key="index">
-            <!-- 序号 -->
-            <td style="padding-top: 8px; font-weight: 500">
-              {{ index + 1 }}
-            </td>
-            <!-- 只读数据 -->
-            <td v-for="(key, index) in readonly" :key="index + 1000">
-              <input type="text" v-model="object[key]" disabled />
-            </td>
-            <!-- 不需要特殊处理的可编辑数据 -->
-            <td v-for="(key, index) in editable" :key="index + 2000">
-              <input type="text" v-model="object[key]" class="editable" disabled />
-            </td>
-            <!-- 需要特殊处理的可编辑数据 -->
-            <!-- 不使用input[type="text"]的 -->
-            <td>
-              <textarea v-model="object['briefIntroduction']" cols="30" rows="5" class="editable" disabled></textarea>
-            </td>
-            <td>
-              <textarea v-model="object['remarks']" cols="30" rows="5" class="editable" disabled></textarea>
-            </td>
-            <!-- 文件下载 -->
-            <td style="text-align: center; padding: 30px 5px">
-              <button class="white" @click="downloadSpecificFile(index)">
-                下载附件
-              </button>
-            </td>
-            <!-- 评教分 -->
-            <td class="score">
-              <ul>
-                <!-- <li v-for="(item, index) in object['somePeople']" :key="index">
-                  <label>{{ index == 0 ? "负责人" : "参与人" }}</label><input type="text" v-model="item.teacherName" style="
-                      width: 100px;
-                      border-right: 1px solid rgba(128, 128, 128, 0.212);
-                      border-radius: 5px;
-                    " class="editable" disabled />
-                  <label>排序：</label><input type="number" v-model="item.authorOrder" style="
-                      width: 50px;
-                      border-right: 1px solid rgba(128, 128, 128, 0.212);
-                      border-radius: 5px;
-                    " class="editable" disabled />
-                  <label>教分：</label><input type="text" v-model="item.teachingScores" style="
-                      width: 100px;
-                      border-right: 1px solid rgba(128, 128, 128, 0.212);
-                      border-radius: 5px;
-                    " class="editable" disabled />
-                </li> -->
-              </ul>
-            </td>
-            <!-- 编辑保存控件 -->
-            <td>
-              <button @click="edit(index)" class="blue edit" id="edit">
-                编&nbsp;辑
-              </button>
-              <button @click="save(index)" class="blue edit" id="save" style="display: none">
-                保&nbsp;存
-              </button>
-            </td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
+
   </div>
 </template>
 
 <script>
 import EditDDL from './components/EditDDL.vue'
 import TableFilter from "../../components/table/TableFilter.vue";
-import DownloadExcelFile from "../../components/DownloadExcelFile.vue";
 export default {
   name: "AuditWorkload",
   components: {
-    DownloadExcelFile,
     TableFilter,
-    EditDDL
+    EditDDL,
   },
   data() {
     return {
-      //当前查询的状态
-      searchKeywords: ["教学业绩类型", "申报人"],
-      yearChosen: this.$store.state.currentYear,
-      searchKeywordChosen: "",
-      searchValueChosen: "",
-      //自定义的展示的表头
-      tableHeader: [
-        "序号",
-        "审核状态",
-        "申报人",
-        "申报时间",
-        "教学业绩类型",
-        "成果/作品/参赛项目/参评项目/论文/专著名称",
-        "级别",
-        "课程/项目/奖项/竞赛/论文指导类别",
-        "课程/项目/奖项/竞赛详细名称",
-        "获奖等级",
-        "获奖/获评/出版日期",
-        "项目进展",
-        "授奖单位",
-        "刊物/出版社名称",
-        "刊物期数/出版版次",
-        "ISBN号",
-        "所获荣誉",
-        "指导学生团队名",
-        "指导学生姓名",
-        // "指导学生学号",
-        "内容简介",
-        "备注",
-        "相关文件",
-        "审核",
-      ],
-      //iterable的字段，顺序是按照tableHeader来的（除了“序号”，序号是v-for迭代时候的index+1），一些需要特殊处理的字段不在其中
-      readonly: ["status", "declarantName", "reportTime"],
-      editable: [
-        "type",
-        "achievementName",
-        "level",
-        "projectCategory",
-        "projectName",
-        "awardLevel",
-        "awardDate",
-        "projectStatus",
-        "awardApartment",
-        "publicationName",
-        "publicationsNumber",
-        "isbn",
-        "receivingHonor",
-        "guidingStudentTeam",
-        "guidingStudentName",
-        // "briefIntroduction",
-        // guidingStudentId,
-        // "remarks",
-        // filePath,
-        // somePeople
-      ],
-      tableData: [
-        // {
-        //   reportTime: "hhh",
-        //   declarantName: "hhhh",
-        //   type: "BB1",
-        //   achievementName: "hhhh",
-        //   level: "hhhh",
-        //   projectCategory: "hhhhh",
-        //   projectName: "hhhhh",
-        //   awardLevel: "hhhhh",
-        //   awardDate: "hhhhhh",
-        //   projectStatus: "hhhhh",
-        //   awardApartment: "hhhhhh",
-        //   publicationName: "hhhhh",
-        //   publicationsNumber: "hhhhh",
-        //   isbn: "hhhhh",
-        //   briefIntroduction:
-        //     "hhhThis example uses a fixed table layout, combined with the width propert a fixed table layout, combined with the width propert a fixed table layout, combined with the width property, to restrict the table's width. The text-overflow property is used to apply an ellipsis to words that are too long to fit. If the table layout were auto, the table would grow to accommodate its contents, despite the specified width.hh",
-        //   receivingHonor: "hhhhhh",
-        //   guidingStudentTeam: "hhhhhh",
-        //   guidingStudentName: "hhhhhh",
-        //   guidingStudentId: "hhhhhhh",
-        //   auditStatus: "hhhhhhh",
-        //   remarks: "hhhhhhh",
-        //   filePath: "hhhhhh",
-        //   somePeople: [
-        //     {
-        //   teacherName: "hhhhhh",
-        //   order: 0,
-        //   score: "hhhhh",
-        // },
-        // {
-        //   teacherName: "hhhhhh",
-        //   order: 1,
-        //     //   score: "hhhhh",
-        //     // },
-        //   ],
-        // },
-      ],
-      dataExists: false,
-      totalItems: 0,
-      noDataHint: "",
+      //初始化TableFilter
+      filters: this.$store.getters.tableFilters_special,
+      //查询条件
+      yearChosen: `${this.$store.getters.currentYear}`,
+      filterAdded: [],
+      //分页
+      totalPage: 10,
+      currentPage: 1,
+      //查询结果
+      headerChosen: [], //选择要展示的表头组
+      tableHeaderGroups: this.$store.getters.tableHeaderGroups_special, //表头组集合
     };
   },
   computed: {
-    //展示在统计栏的数据
-    keyValuePairs() {
-      return [
-        {
-          key: "查询结果数",
-          value: this.totalItems,
-        },
-        {
-          key: "总页数",
-          value: this.allPageCount,
-        },
-      ];
+    //根据表头组集合，计算传递给TableHeaderSelection的用于展示的表头组字符串数组
+    headerNameGroups() {
+      const result = [];
+      for (let group of this.tableHeaderGroups) {
+        let s = "";
+        for (let i = 0; i < group.length; i++) {
+          s += group[i].key;
+          if (i === group.length - 1) break;
+          s += "，";
+        }
+        result.push(s);
+      }
+      return result;
+    },
+    //根据chosen数组值，计算传递给table组件的表头
+    tableHeaderDisplayed() {
+      const result = [];
+      for (let i = 0; i < this.headerChosen.length; i++) {
+        if (this.headerChosen[i]) {
+          for (let item of this.tableHeaderGroups[i]) result.push(item);
+        }
+      }
+      return result;
     },
   },
   methods: {
-
     /******下载某年的特殊工作量附件******/
     downloadSpecialWorkloadFiles() {
       const formData = new FormData();
@@ -376,42 +216,6 @@ export default {
       this.currentPage = 1;
       this.getTableData();
     },
-    //导出Excel文件
-    exportFile(filename) {
-      //统计数据表头
-      const tableHeader = [
-        "BA1",
-        "BA2",
-        "BA3",
-        "BB1",
-        "BB2",
-        "BB3",
-        "BB4",
-        "BB5",
-        "BB6",
-        "BB7",
-        "BB8",
-        "BB9",
-        "BB10",
-        "BB11",
-        "BB12",
-        "BB13",
-        "BB14",
-        "BB15",
-        "教师姓名",
-        "总教分",
-      ];
-      const formData = new FormData();
-
-      this.$axios
-        .post(`/scores/calculate`, {
-          year: this.yearChosen,
-        })
-        .then((res) => {
-          console.log(res);
-          this.$exportExcelFile(res.data.data.records, tableHeader, filename);
-        });
-    },
   },
   created() {
     //获取当年数据
@@ -423,9 +227,8 @@ export default {
 </script>
 
 <style scoped>
-/* 工具栏 */
-.toolbar {
-  overflow: hidden;
+.app-section.filter {
+  padding: 0px 15px;
 }
 
 .tableWrapper {

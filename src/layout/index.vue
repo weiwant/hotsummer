@@ -18,12 +18,6 @@ export default {
 
 
 <style scoped>
-#app-wrapper {
-    width: 100vw;
-    height: 100vh;
-    background-color: rgb(239, 241, 247);
-}
-
 .slideFade-enter-active,
 .slideFade-leave-active {
     transition: all 0.3s;

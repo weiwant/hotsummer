@@ -4,12 +4,14 @@
       <!-- 年份 -->
       <div class="table-filter-item">
         <label>年份</label>
-        <el-date-picker v-model="yearChosen" type="year" placeholder="选择自然年份" value-format="yyyy" :editable="false">
+        <el-date-picker v-model="yearChosen" type="year" placeholder="选择自然年份" value-format="yyyy" :editable="false"
+          :disabled="!isEditing">
         </el-date-picker>
       </div>
       <!-- 筛选条件选择 -->
       <div class="table-filter-item nolabel">
-        <button class="white" :class="{ chosen: showFilterSelectBody }" @click="changeFilterSelectBodyStatus">
+        <button class="white" :class="{ chosen: showFilterSelectBody }" @click="changeFilterSelectBodyStatus"
+          :disabled="!isEditing">
           &nbsp;添加筛选条件
         </button>
         <!-- Body -->
@@ -48,27 +50,28 @@
           </div>
         </transition>
       </div>
-      <!-- 确认查询 -->
+      <!-- 确认查询/重置查询条件 -->
       <div class="table-filter-item nolabel">
-        <button class="green" @click="search" :disabled="this.yearChosen === '' || this.yearChosen === null">
-          &nbsp;查询
+        <button class="green" @click="search" v-html='isEditing ? "&nbsp;确认查询" : "&nbsp;重置查询条件"'>
         </button>
       </div>
     </div>
     <!-- 已添加的查询条件 -->
     <div class="table-filter-section added">
-      <button class="transparent_red" :disabled="filterAdded.length <= 0" @click="clearAdded">
+      <button class="transparent_red" :disabled="!isEditing || filterAdded.length <= 0" @click="clearAdded">
         
       </button>
-      <div class="filter-added-item" v-for="(item, index) in filterAdded" :key="item.filter_type">
+      <div class="filter-added-item" v-for="(item, index) in filterAdded" :key="item.filter_type"
+        :style="{ backgroundColor: !isEditing ? '#ddd' : colorList[index % 4] }">
         {{ item.value }}
-        <span class="delete" @click="deleteFilter(index)"></span>
+        <span class="delete" :class="{ 'disabled': !isEditing }" @click="deleteFilter(index)"></span>
       </div>
     </div>
   </div>
 </template>
 
 <script>
+import { Message } from 'element-ui'
 export default {
   props: {
     filters: {
@@ -86,6 +89,9 @@ export default {
       filterValue: "",
       // 已添加的过滤器
       filterAdded: [],
+      colorList: ["#b9ca6e", "#87a863", "#5a813b", "#46693a"],
+      //是否正在重置查询条件
+      isEditing: false,
     };
   },
   computed: {
@@ -122,6 +128,7 @@ export default {
       this.showFilterSelectBody = false;
     },
     deleteFilter(index) {
+      if (!isEditing) return;
       //从added数组删除
       this.filterAdded.splice(index, 1);
     },
@@ -129,7 +136,20 @@ export default {
       this.filterAdded = [];
     },
     search() {
-      this.$emit("search", this.yearChosen, this.filterAdded);
+      if (this.isEditing) {  //点击确认查询
+        if (this.yearChosen === '' || this.yearChosen === null) {
+          Message({
+            message: "年份设置不可为空",
+            type: 'error',
+            duration: 2000
+          })
+        } else {
+          this.$emit("search", this.yearChosen, this.filterAdded);
+          this.isEditing = false;
+        }
+      } else {   //点击重置查询条件
+        this.isEditing = true;
+      }
     },
   },
 };
@@ -226,7 +246,6 @@ button.white.chosen:hover {
   color: white;
   font-size: 12px;
   font-weight: 500;
-  background-color: #ddd;
   border-radius: 10px;
   transition: all 0.2s;
 }
@@ -239,6 +258,11 @@ button.white.chosen:hover {
 }
 
 .filter-added-item .delete:hover {
-  color:#ba9291;
+  color: #ba9291;
+}
+
+.filter-added-item .delete.disabled:hover {
+  color: white;
+  cursor: not-allowed;
 }
 </style>

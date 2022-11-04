@@ -1,11 +1,7 @@
 <template>
   <div class="app-right-wrapper">
     <TableFilter :filters="filters" @search="search" />
-    <div class="app-section-flexwrapper">
-      <TableInformationBar :currentYear="yearChosen" :filterValues="filterAdded" />
-      <TableHeaderSelection :headerGroups="headerNameGroups" :headerChosen="headerChosen" @change="adjustHeader" />
-    </div>
-
+    <TableHeaderSelection :headerGroups="headerNameGroups" :headerChosen="headerChosen" @change="adjustHeader" />
     <PlainTable :header="tableHeaderDisplayed" :data="tableData" />
     <div class="pagination">
       <el-pagination background layout="total,prev, pager, next" page-size="20" :total="totalPage"
@@ -16,18 +12,14 @@
 </template>
 
 <script>
-import DownloadExcelFile from "@/components/DownloadExcelFile.vue";
 import TableFilter from "@/components/table/TableFilter.vue";
-import TableInformationBar from "@/components/table/TableInformationBar.vue";
 import TableHeaderSelection from "@/components/table/TableHeaderSelection.vue";
 import PlainTable from "@/components/table/PlainTable.vue";
 import { getTeachingWorkload_paged } from "@/api/teaching-workload";
 export default {
   name: "CheckWorkload",
   components: {
-    DownloadExcelFile,
     TableFilter,
-    TableInformationBar,
     TableHeaderSelection,
     PlainTable,
   },

@@ -132,7 +132,7 @@ header button.folder:hover {
 
 .sidebar-body li .router-link .icon {
   margin-right: 5px;
-  font-size: 20px;
+  font-size: 16px;
   vertical-align: bottom;
 }
 

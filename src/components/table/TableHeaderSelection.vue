@@ -62,8 +62,8 @@ export default {
   box-sizing: content-box;
   display: inline-block;
   position: relative;
-  width: 50px;
-  height: 18px;
+  width: 30px;
+  height: 10px;
   padding: 3px;
   border: 1px solid #eee;
   border-radius: 100px;
@@ -78,8 +78,8 @@ export default {
   left: 0;
   top: 0;
   content: "";
-  width: 18px;
-  height: 18px;
+  width: 10px;
+  height: 10px;
   border: 1px solid #eee;
   border-radius: 100px;
   background-color: #fff;
@@ -91,11 +91,11 @@ export default {
 }
 
 .chosen::before {
-  left: 30px;
+  left: 20px;
 }
 
 .header-selection-item .value {
-  font-size: 14px;
+  font-size: 12px;
   vertical-align: super;
   margin-left: 10px;
 }

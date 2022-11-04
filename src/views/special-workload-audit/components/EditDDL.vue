@@ -76,6 +76,10 @@ export default {
 }
 </script>
 <style scoped>
+#editDDL {
+    margin-top: 15px;
+}
+
 .ddl {
     margin-bottom: 15px;
 }
