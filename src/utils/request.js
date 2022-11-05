@@ -46,7 +46,7 @@ instance.interceptors.response.use(response => {
         }
         return Promise.reject(new Error(res.response.message))
     } else {
-        return res
+        return res.data
     }
 
 }, err => {

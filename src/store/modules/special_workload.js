@@ -1,10 +1,10 @@
 const state = {
     filters: [
         {
-            type_filter: "status",
+            type_filter: "statusList",
             label: '审核状态',
             type_input: "select",
-            options: ["未审核", "已审核"], //当输入类型为select时，需要提供options
+            options: ['全部', "未审核", "已审核",], //当输入类型为select时，需要提供options
         },
         {
             type_filter: "type",
@@ -13,6 +13,7 @@ const state = {
             options: [],
         }
     ],
+    //审核特殊工作量时，每个类型的共有表头
     constantHeaders: [
         {
             key: "审核状态",
@@ -35,6 +36,7 @@ const state = {
             value: "filePath",
         },
     ],
+    //填报特殊工作量每个类型的表单组成、审核时也依据这个决定展开列表具体显示什么
     specificHeaders: new Map([
         [
             "BB1",

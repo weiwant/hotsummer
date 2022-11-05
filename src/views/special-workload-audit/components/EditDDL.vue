@@ -4,7 +4,7 @@
         <div class="ddl">
             <el-date-picker v-model="newValue" type="date" placeholder="选择日期" :disabled="!isEditing">
             </el-date-picker>
-            <button class="green" v-if="!isEditing" @click="reset">
+            <button class="green" v-if="!isEditing" @click="edit">
                 重&nbsp;置
             </button>
             <button class="green" v-if="isEditing" @click="cancle">
@@ -71,7 +71,7 @@ export default {
         },
     },
     created() {
-        getCurrent();
+        this.getCurrent();
     }
 }
 </script>

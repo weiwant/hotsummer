@@ -5,18 +5,21 @@
     <div class="app-section filter">
       <TableFilter :filters="filters" @search="search" />
     </div>
-
+    <AuditTable />
   </div>
 </template>
 
 <script>
 import EditDDL from './components/EditDDL.vue'
-import TableFilter from "../../components/table/TableFilter.vue";
+import TableFilter from "@/components/table/TableFilter.vue";
+import AuditTable from "./components/AuditTable.vue"
+import { getAuditingTableData } from "@/api/special-workload"
 export default {
   name: "AuditWorkload",
   components: {
     TableFilter,
     EditDDL,
+    AuditTable
   },
   data() {
     return {
@@ -25,69 +28,26 @@ export default {
       //查询条件
       yearChosen: `${this.$store.getters.currentYear}`,
       filterAdded: [],
-      //分页
-      totalPage: 10,
-      currentPage: 1,
       //查询结果
-      headerChosen: [], //选择要展示的表头组
-      tableHeaderGroups: this.$store.getters.tableHeaderGroups_special, //表头组集合
+      tableData: [],
+      //分页
+      totalItems: 0,
+      totalPage: 0,
+      currentPage: 1,
     };
   },
-  computed: {
-    //根据表头组集合，计算传递给TableHeaderSelection的用于展示的表头组字符串数组
-    headerNameGroups() {
-      const result = [];
-      for (let group of this.tableHeaderGroups) {
-        let s = "";
-        for (let i = 0; i < group.length; i++) {
-          s += group[i].key;
-          if (i === group.length - 1) break;
-          s += "，";
-        }
-        result.push(s);
-      }
-      return result;
-    },
-    //根据chosen数组值，计算传递给table组件的表头
-    tableHeaderDisplayed() {
-      const result = [];
-      for (let i = 0; i < this.headerChosen.length; i++) {
-        if (this.headerChosen[i]) {
-          for (let item of this.tableHeaderGroups[i]) result.push(item);
-        }
-      }
-      return result;
-    },
+  provide() {
+    //Vue2让inject/provide具有reactivity,https://stackoverflow.com/questions/65718651/how-do-i-make-vue-2-provide-inject-api-reactive
+    const tableInfo = {}
+    Object.defineProperty(tableInfo, 'yearChosen', {
+      get: () => this.yearChosen
+    })
+    return {
+      tableInfo
+    }
   },
+
   methods: {
-    /******下载某年的特殊工作量附件******/
-    downloadSpecialWorkloadFiles() {
-      const formData = new FormData();
-      var year = this.$data.yearChosen;
-
-      formData.append("year", year);
-
-      this.$axios
-        .post(`${this.$domainName}/file/download-by-year`, formData, {
-          responseType: "blob",
-        })
-        .then((file) => {
-          let content = file.data;
-          // 组装a标签
-          let elink = document.createElement("a");
-          // 设置下载文件名
-          elink.download = this.$data.yearChosen + "年度特殊工作量审批记录.zip";
-          elink.style.display = "none";
-          let blob = new Blob([content], { type: "application/zip" });
-          elink.href = URL.createObjectURL(blob);
-          document.body.appendChild(elink);
-          elink.click();
-          document.body.removeChild(elink);
-        })
-        .catch(function (error) {
-          console.log(error);
-        });
-    },
     /******下载某个项目的特殊工作量附件******/
     downloadSpecificFile(index) {
       var _this = this;
@@ -168,61 +128,35 @@ export default {
       const formData = new FormData();
       formData.append("year", this.yearChosen);
       formData.append("pageNumber", this.currentPage);
-      formData.append("statusList", JSON.stringify(["已提交", "已审核"]));
-      // 如果搜索值不为空
-      if (this.searchValueChosen != "") {
-        switch (this.searchKeywordChosen) {
-          case "教学业绩类型":
-            formData.append("type", this.searchValueChosen);
-            break;
-          case "申报人":
-            formData.append("declarantName", this.searchValueChosen);
-            break;
+      for (let item of this.filterAdded) {
+        if (item.type === "statusList" && item.value === "全部") {
+          formData.append("statusList", JSON.stringify(["已提交", "已审核"]));
+          continue;
         }
+        formData.append(item.type, item.value)
       }
-      this.$axios
-        .post(`/special-join/select`, formData)
-        .then((res) => {
-          console.log(res);
-          if (res.data.response.code == 200) {
-            this.dataExists = true;
-            this.tableData = res.data.data.records;
-            this.allPageCount = res.data.data.pages;
-            this.totalItems = res.data.data.total;
-          } else {
-            this.dataExists = false;
-            this.tableData = [];
-            this.allPageCount = 1;
-            this.totalItems = 0;
-            if (this.searchValueChosen == "") {
-              this.noDataHint = `暂无${this.yearChosen}年度的数据！`;
-            } else {
-              this.noDataHint = `暂无${this.yearChosen}年度，${this.searchKeywordChosen}为${this.searchValueChosen}的数据！`;
-            }
-          }
-        })
-        .catch((err) => {
-          this.dataExists = false;
+      getAuditingTableData(formData).then(data => {
+        this.tableData = data.records;
+        this.totalPage = data.pages;
+        this.totalItems = data.total;
+      }).catch(() => {
+        this.tableData = [];
+        this.allPageCount = 1;
+        this.totalItems = 0;
+      })
 
-          this.noDataHint = "获取数据出错！";
-        });
     },
     //选择了年份和搜索条件，并给出了搜索值后确认
-    confirmSearchValue(year, searchKeyword, searchValue) {
-      //在请求数据前设置好参数
-      this.yearChosen = year;
-      this.searchKeywordChosen = searchKeyword;
-      this.searchValueChosen = searchValue;
-      this.currentPage = 1;
+    search(yearChosen, filterAdded) {
+      this.yearChosen = yearChosen;
+      this.filterAdded = JSON.parse(JSON.stringify(filterAdded)); //深复制，当前组件保存的added永远是上一次点击查询时的
       this.getTableData();
     },
+    created() {
+      // this.getTableData();
+    }
   },
-  created() {
-    //获取当年数据
-    this.yearChosen = this.$store.getters.currentYear;
-    this.currentPage = 1;
-    this.getTableData();
-  },
+
 };
 </script>
 

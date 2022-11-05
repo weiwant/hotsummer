@@ -9,7 +9,8 @@ const getters = {
     tableHeaderGroups_teaching: state => state.teaching_workload.headerGroups,
     workloadType_teaching: state => state.teaching_workload.type,
     tableFilters_special: state => state.special_workload.filters,
-    tableHeaderGroups_special: state => state.special_workload.headerGroups,
+    constantHeaders_special: state => state.special_workload.constantHeaders,
+    specificHeaders_special: state => state.special_workload.specificHeaders
 }
 
 export default getters
