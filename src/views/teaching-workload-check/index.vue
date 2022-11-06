@@ -5,7 +5,7 @@
     <PlainTable :header="tableHeaderDisplayed" :data="tableData" />
     <div class="pagination">
       <el-pagination background layout="total,prev, pager, next" page-size="20" :total="totalPage"
-        @current-change="changePage" :hide-on-single-page="true">
+        @current-change="changePage">
       </el-pagination>
     </div>
   </div>
@@ -33,6 +33,81 @@ export default {
       //查询结果
       headerChosen: [], //选择要展示的表头组
       tableHeaderGroups: this.$store.getters.tableHeaderGroups_teaching, //表头组集合
+      //假数据
+      totalPage: 500,
+      tableData: [
+        {
+          workloadNature: "1111",
+          academicYear: "111111",
+          semester: "11111",
+          courseNumber: "111211",
+          courseName: "12111",
+          teachingClass: "111111",
+          teachingSchool: "1111111",
+          planingSchool: "1111111",
+          credit: "1111111",
+          courseNature: "11111",
+          studentGrade: "11111",
+          major: "11111",
+          mainTeacherName: "111111",
+          mainTeacherTitle: "11111",
+          studentAmount: "111111",
+          theoreticalClassHours: "111111",
+          computerClassHours: "11111",
+          experimentalClassHours: "111111111",
+          practicalClassHours: "1111111111",
+          calculatingClassHours: "1111111",
+          jointDepartment: "11111111111",
+          remarks: "11111111",
+          experimentArrangement: "111111111",
+          otherTeacherName: "111111111",
+          originalTeachingScores: "111111111",
+          teachingCoefficient: "1111111111",
+          finalTeachingScores: "111111111",
+          classNatureExplanation: "111111111",
+          specialClassRemarks: "1111111111",
+          specialLanguageRemarks: "11111111111",
+          specialClassRemarks: "11111111111",
+          discount: "11111111111",
+          noDiscountTeachingCoefficient: "11111111",
+          laboratoryVerificationResults: "111111111",
+        },
+        {
+          workloadNature: "1111",
+          academicYear: "111111",
+          semester: "11111",
+          courseNumber: "111111",
+          courseName: "11111",
+          teachingClass: "111111",
+          teachingSchool: "1111111",
+          credit: "1111111",
+          courseNature: "11111",
+          studentGrade: "11111",
+          major: "11111",
+          mainTeacherName: "111111",
+          mainTeacherTitle: "11111",
+          studentAmount: "111111",
+          theoreticalClassHours: "111111",
+          computerClassHours: "11111",
+          experimentalClassHours: "111111111",
+          practicalClassHours: "1111111111",
+          calculatingClassHours: "1111111",
+          jointDepartment: "11111111111",
+          remarks: "11111111",
+          experimentArrangement: "111111111",
+          otherTeacherName: "111111111",
+          originalTeachingScores: "111111111",
+          teachingCoefficient: "1111111111",
+          finalTeachingScores: "111111111",
+          classNatureExplanation: "111111111",
+          specialClassRemarks: "1111111111",
+          specialLanguageRemarks: "11111111111",
+          specialClassRemarks: "11111111111",
+          discount: "11111111111",
+          noDiscountTeachingCoefficient: "11111111",
+          laboratoryVerificationResults: "111111111",
+        },
+      ]
     };
   },
   computed: {
@@ -113,9 +188,9 @@ export default {
   margin-top: 10px;
 }
 
-.pagination {
+/* .pagination {
   margin: 10px 0;
   margin-left: 50%;
   transform: translateX(-50%);
-}
+} */
 </style>

@@ -5,6 +5,7 @@ button {
   font: 500 14px 'icomoon';
   cursor: pointer;
   transition: all 0.1s;
+  outline: none;
 }
 
 

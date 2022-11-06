@@ -32,5 +32,34 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
+#table-wrapper {
+  width: 100%;
+  overflow: auto;
+  padding-bottom: 20px;
+  max-height: 45vh;
+}
+
+table {
+  border-collapse: collapse;
+  white-space: nowrap;
+}
+
+table td {
+  padding: 10px;
+  font-size: 13px;
+}
+
+table thead tr {
+  background-color: #f4f4f5;
+  font-weight: 500;
+}
+
+table tbody tr:nth-child(2n+1) {
+  background-color: white;
+}
+
+table tbody tr:nth-child(2n) {
+  background-color: #eee;
+}
 </style>

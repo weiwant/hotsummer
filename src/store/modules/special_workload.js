@@ -9,50 +9,27 @@ const state = {
         {
             type_filter: "type",
             label: '教学业绩类型',
-            type_input: "text",
-            options: [],
+            type_input: "select",
+            options: ['BB1', 'BB2', 'BB3', 'BB4', 'BB5', 'BB6', 'BB7', 'BB8', 'BB9', 'BB10', 'BB11', 'BB12', 'BB13', 'BB14', 'BB15'],
         }
     ],
-    //审核特殊工作量时，每个类型的共有表头
-    constantHeaders: [
-        {
-            key: "审核状态",
-            value: "status",
-        },
-        {
-            key: "申报人",
-            value: "declarantName",
-        },
-        {
-            key: "申报时间",
-            value: "reportTime",
-        },
-        {
-            key: "教学业绩类型",
-            value: "type",
-        },
-        {
-            key: "附件",
-            value: "filePath",
-        },
-    ],
-    //填报特殊工作量每个类型的表单组成、审核时也依据这个决定展开列表具体显示什么
-    specificHeaders: new Map([
+    //填报特殊工作量每个类型的表单组成
+    formItems: new Map([
         [
             "BB1",
             [
                 {
-                    lable: "项目名称",
+                    label: "项目名称",
                     key: "projectName",
                     inputType: 'text',
                 },
                 {
-                    lable: "立项时间",
+                    label: "立项时间",
                     key: "awardDate",
                     inputType: 'month',
                 },
                 {
-                    lable: "课程类别",
+                    label: "课程类别",
                     key: "projectCategory",
                     inputType: 'select',
                     selectOptions: ['课程建设项目', '企业-教育部课程建设项目', '国家级课程建设项目', '线上国家级一流本科课程建设项目', '线下国家级一流本科课程建设项目', '线上线下混合式国家级一流本科课程建设项目', '社会实践国家级一流本科课程建设项目', '武大通识3.0', '慕课课程', '其他']
@@ -64,18 +41,18 @@ const state = {
                     radioOptions: ['立项', '结题', '建设中']
                 },
                 {
-                    lable: "获奖级别",
+                    label: "获奖级别",
                     key: "awardLevel",
                     inputType: 'radio',
                     radioOptions: ['国家级', '省级', '校级']
                 },
                 {
-                    lable: '参与人员',
+                    label: '参与人员',
                     key: 'teachers',
                     inputType: 'dynamic'
                 },
                 {
-                    lable: "附件",
+                    label: "附件",
                     key: "files",
                     inputType: 'file',
                 },
@@ -86,12 +63,12 @@ const state = {
             "BB2",
             [
                 {
-                    lable: "项目名称",
+                    label: "项目名称",
                     key: "projectName",
                     inputType: 'text',
                 },
                 {
-                    lable: "项目类别",
+                    label: "项目类别",
                     key: "projectCategory",
                     inputType: 'select',
                     selectOprions: ["课程思政示范专业建设项目", "自由选题建设项目", "教师教学发展研究项目", "MOOC课程建设项目", "课程思政课程建设项目"]
@@ -103,18 +80,18 @@ const state = {
                     radioOptions: ['立项', '结题', '建设中']
                 },
                 {
-                    lable: "获奖级别",
+                    label: "获奖级别",
                     key: "awardLevel",
                     inputType: 'radio',
                     radioOptions: ['国家级', '省级', '校级']
                 },
                 {
-                    lable: '参与人员',
+                    label: '参与人员',
                     key: 'teachers',
                     inputType: 'dynamic'
                 },
                 {
-                    lable: "附件",
+                    label: "附件",
                     key: "files",
                     inputType: 'file',
                 },
@@ -124,12 +101,12 @@ const state = {
             "BB3",
             [
                 {
-                    lable: "项目名称",
+                    label: "项目名称",
                     key: "projectName",
                     inputType: 'text',
                 },
                 {
-                    lable: "获奖级别",
+                    label: "获奖级别",
                     key: "awardLevel",
                     inputType: 'radio',
                     radioOptions: ['国家级', '省级', '校级']
@@ -155,7 +132,7 @@ const state = {
                     inputType: 'date'
                 },
                 {
-                    lable: '参与人员',
+                    label: '参与人员',
                     key: 'teachers',
                     inputType: 'dynamic'
                 },
@@ -175,7 +152,7 @@ const state = {
                     inputType: 'text'
                 },
                 {
-                    lable: "获奖级别",
+                    label: "获奖级别",
                     key: "awardLevel",
                     inputType: 'radio',
                     radioOptions: ['国家级', '省级', '校级']
@@ -196,7 +173,7 @@ const state = {
                     inputType: 'date'
                 },
                 {
-                    lable: '参与人员',
+                    label: '参与人员',
                     key: 'teachers',
                     inputType: 'dynamic'
                 },
@@ -233,7 +210,7 @@ const state = {
                     inputType: 'number'
                 },
                 {
-                    lable: '参与人员',
+                    label: '参与人员',
                     key: 'teachers',
                     inputType: 'dynamic'
                 },
@@ -278,7 +255,7 @@ const state = {
                     inputType: 'text'
                 },
                 {
-                    lable: '参与人员',
+                    label: '参与人员',
                     key: 'teachers',
                     inputType: 'dynamic'
                 },
@@ -293,7 +270,7 @@ const state = {
             "BB7",
             [
                 {
-                    lable: "获奖级别",
+                    label: "获奖级别",
                     key: "awardLevel",
                     inputType: 'radio',
                     radioOptions: ['国家级', '省级', '校级']
@@ -452,79 +429,106 @@ const state = {
             ]
         ]
     ]),
-    allHeaders: [
+    //审核特殊工作量时，每个类型的共有表头
+    constantHeaders: [
         {
-            key: "成果/作品/参赛项目/参评项目/论文/专著名称",
-            value: "achievementName",
+            label: "教学业绩类型",
+            key: "type",
         },
         {
-            key: "级别",
-            value: "level",
-        },
-        {
-            key: "课程/项目/奖项/竞赛/论文指导类别",
-            value: "projectCategory",
-        },
-        {
-            key: "课程/项目/奖项/竞赛详细名称",
-            value: "projectName",
+            label: "审核状态",
+            key: "status",
         },
 
         {
-            key: "获奖等级",
-            value: "awardLevel",
+            label: "申报人",
+            key: "declarantName",
         },
         {
-            key: "获奖/获评/出版日期/立项时间",
-            value: "awardDate",
-        },
-        {
-            key: "项目进展",
-            value: "projectStatus",
-        },
-        {
-            key: "授奖单位",
-            value: "awardApartment",
-        },
-        {
-            key: "刊物/出版社名称",
-            value: "publicationName",
-        },
-        {
-            key: "刊物期数/出版版次",
-            value: "publicationsNumber",
-        },
-        {
-            key: "ISBN号",
-            value: "isbn",
-        },
-
-        {
-            key: "所获荣誉",
-            value: "receivingHonor",
-        },
-        {
-            key: "指导学生团队名",
-            value: "guidingStudentTeam",
-        },
-        {
-            key: "指导学生姓名",
-            value: "guidingStudentName",  //guidingStudentId
-        },
-        {
-            key: "内容简介",
-            value: "briefIntroduction",
+            label: "申报时间",
+            key: "reportTime",
         },
         // {
-        //     key: "备注",
-        //     value: "remarks",
+        //     label: "附件",
+        //     key: "filePath",
         // },
+    ],
+    //审核特殊工作量时，每个类型的专有表头（也就是嵌套列表内的表头）
+    specificHeaders: new Map([
+        [
+            "BB1",
+            [
+                {
+                    label: "项目名称",
+                    key: "projectName",
+                },
+                {
+                    label: "立项时间",
+                    key: "awardDate",
+                },
+                {
+                    label: "课程类别",
+                    key: "projectCategory",
+                },
+                {
+                    label: '进展情况',
+                    key: 'projectStatus',
+                },
 
-        {
-            key: "审核",
-            value: "somePeople",
-        }
-    ]
+            ]
+        ],
+        [
+            "BB2",
+            [
+                {
+                    label: "项目名称",
+                    key: "projectName",
+                },
+                {
+                    label: "项目类别",
+                    key: "projectCategory",
+                },
+                {
+                    label: '进展情况',
+                    key: 'projectStatus',
+                },
+                {
+                    label: "获奖级别",
+                    key: "awardLevel",
+                },
+
+            ]
+        ],
+        [
+            "BB3",
+            [
+                {
+                    label: "项目名称",
+                    key: "projectName",
+                },
+                {
+                    label: "获奖级别",
+                    key: "awardLevel",
+                },
+                {
+                    label: '奖项名称',
+                    key: 'awardName',
+                },
+                {
+                    label: '奖项类别',
+                    key: 'awardCategory',
+                },
+                {
+                    label: '授奖单位',
+                    key: 'awardApartment',
+                },
+                {
+                    label: '获奖时间',
+                    key: 'awardDate',
+                },
+            ]
+        ]
+    ]),
 }
 
 

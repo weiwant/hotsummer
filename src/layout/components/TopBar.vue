@@ -18,12 +18,15 @@ export default {
     position: absolute;
     left: 235px;
     top: 10px;
+    width: 200px;
+    height: 50px;
     text-align: left;
     font-size: 27px;
     font-weight: 600;
     color: rgb(29, 74, 51);
-    height: 50px;
     line-height: 50px;
+    height: 50px;
+    background-color: #eff1f6;
 }
 
 @media screen and (max-width:800px) {
