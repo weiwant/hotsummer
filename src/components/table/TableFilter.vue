@@ -128,7 +128,7 @@ export default {
       this.showFilterSelectBody = false;
     },
     deleteFilter(index) {
-      if (!isEditing) return;
+      if (!this.isEditing) return;
       //从added数组删除
       this.filterAdded.splice(index, 1);
     },
@@ -162,19 +162,19 @@ export default {
   padding: 15px 0;
 }
 
-.table-filter-section::after {
-  display: block;
-  content: "";
-  clear: both;
+.table-filter-section{
+  display: flex;
+  flex-wrap: wrap;
+  padding-bottom: 10px;
 }
 
 .table-filter-item {
-  float: left;
   position: relative;
   margin-right: 10px;
 }
 
-.table-filter-item.nolabel {
+.table-filter-item.nolabel { 
+  /* button没有el-select上方的label，对齐需要移动一下  */
   top: 16px;
 }
 
@@ -185,7 +185,7 @@ export default {
   font-weight: 500;
 }
 
-/* 添加过滤器 */
+/* 添加过滤器按钮 */
 button.white.chosen {
   background-color: #e1e1e3;
 }
@@ -193,7 +193,7 @@ button.white.chosen {
 button.white.chosen:hover {
   background-color: white;
 }
-
+/* 添加表单 */
 .filter-select-wrapper {
   position: absolute;
   top: 45px;
@@ -204,7 +204,7 @@ button.white.chosen:hover {
   border: 1px solid #dddfe5;
   border-radius: 5px;
 }
-
+/* 已添加的查询条件 */
 .filter-select-section {
   padding: 10px;
 }

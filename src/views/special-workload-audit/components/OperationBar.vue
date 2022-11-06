@@ -59,8 +59,10 @@ export default {
 <style scoped>
 #operation-bar {
     display: flex;
+    flex-wrap: wrap;
     gap: 10px 20px;
 }
+
 
 
 .icon {
