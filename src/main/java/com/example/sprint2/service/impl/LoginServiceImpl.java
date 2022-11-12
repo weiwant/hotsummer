@@ -19,10 +19,10 @@ public class LoginServiceImpl implements UserService {
     UserDao userdao;
 
     @Override
-    public boolean checkUserExist(LoginVo loginVo) {//检测该用户名的账户是否存在
-        UserLogin ul = new UserLogin();
-        ul = userdao.selectById(loginVo.getUsername());
-
+    public boolean checkUserExist(LoginVo loginVo) {//检测该id的账户是否存在（更新）
+        UserLogin ul;
+        String s = loginVo.getUserId();
+        ul = userdao.selectById(s);
         if (ul == null) {
             return false;
         } else {
@@ -31,10 +31,16 @@ public class LoginServiceImpl implements UserService {
     }
 
     @Override
-    public boolean checkPsw(LoginVo loginVo) {     //检测输入密码是否正确
+    public String selectUserName(LoginVo loginVo){
+        String name = userdao.selectById(loginVo.getUserId()).getUsername();
+        return name;
+    }
+
+    @Override
+    public boolean checkPsw(LoginVo loginVo) {     //检测该账号输入的密码是否正确
         UserLogin user;
         boolean result = false;
-        user = userdao.selectById(loginVo.getUsername());
+        user = userdao.selectById(loginVo.getUserId());
         if (user.getPassword() != null && user.getPassword().equals(loginVo.getPassword())) {
             result = true;
         }
@@ -42,8 +48,8 @@ public class LoginServiceImpl implements UserService {
     }
 
     @Override
-    public int selectIdentify(LoginVo loginVo) {   //返回用户身份：0为教师，1为主管理员，2为负责监考管理员，3为负责论文管理员。
-        int identify = userdao.selectById(loginVo.getUsername()).getIdentify();
+    public int selectIdentify(LoginVo loginVo) {   //根据id,返回用户身份：0为教师，1为主管理员，2为负责监考管理员，3为负责论文管理员。
+        int identify = userdao.selectById(loginVo.getUserId()).getIdentify();
         return identify;
     }
 

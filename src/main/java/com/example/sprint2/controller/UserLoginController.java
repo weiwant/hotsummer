@@ -30,16 +30,17 @@ public class UserLoginController {
     private final Token factory = SpringUtil.getBean("tokenType");
 
     @RequestMapping(value = "/login", method = RequestMethod.POST)
-    public String checkPsw(@RequestBody LoginVo loginVo) {
+    public String checkPsw(@RequestBody LoginVo loginVo) {                  //根据账号密码返回token
         boolean exist = login.checkUserExist(loginVo);    //检测账户是否存在
         if (exist) {
             boolean rightPsw = login.checkPsw(loginVo);     //检测密码是否正确
             if (rightPsw) {
                 LoginVo loginVo1 = new LoginVo();
                 loginVo1.setIdentify(login.selectIdentify(loginVo));
-                loginVo1.setUsername(loginVo.getUsername());
+                loginVo1.setUsername(login.selectUserName(loginVo));
                 Map<String, Object> payload = new HashMap<>();
                 payload.put("identity", loginVo1.getIdentify());
+                //payload.put("username",loginVo1.getUsername());
                 Calendar calendar = Calendar.getInstance();
                 calendar.setTime(new Date());
                 calendar.add(Calendar.HOUR, 2);

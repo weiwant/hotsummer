@@ -15,4 +15,6 @@ public interface UserService {
     public boolean checkPsw(LoginVo loginVo);
 
     public int selectIdentify(LoginVo loginVo);
+
+    public String selectUserName(LoginVo loginVo);
 }

@@ -21,7 +21,7 @@ public class UserDao {
     @Autowired
     UserloginMapper userloginMapper;
 
-    public UserLogin selectById(String username) {      //根据用户名查找
+    public UserLogin selectByName(String username) {      //根据用户名查找
         UserLogin ul;
         if (userloginMapper.selectById(username) != null) {
             ul = userloginMapper.selectById(username);
@@ -30,6 +30,17 @@ public class UserDao {
             return null;
         }
 
+    }
+
+    public UserLogin selectById(String userId){         //根据账号ID查找（userid）
+        QueryWrapper<UserLogin> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("userid",userId);
+        UserLogin userLogin = userloginMapper.selectOne(queryWrapper);
+        if(userLogin !=null){
+            return userLogin;
+        }else {
+            return null;
+        }
     }
 
     public List<UserLogin> selectAll() {
