@@ -15,11 +15,14 @@ Vue.use(ElementUI)
 import 'normalize.css/normalize.css'
 import './style/index.css'
 import './style/button.css'
+import './style/transition.css'
 
 
 Vue.config.productionTip = false
 
 Vue.prototype.$axios = axios;
+Vue.prototype.$window = window
+
 
 // debug用的
 import { removeToken, removeIdentity, removeUsername } from '@/utils/user-auth'

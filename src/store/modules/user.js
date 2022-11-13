@@ -35,8 +35,8 @@ const actions = {
             commit('setUsername', '张三');
             setUsername('张三');
             //身份
-            commit('setIdentity', 1);
-            setIdentity(1)
+            commit('setIdentity', 0);
+            setIdentity(0)
             resolve();
             // console.log('验证失败');
             // reject('用户名或密码错误');

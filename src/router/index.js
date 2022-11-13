@@ -77,7 +77,7 @@ export const teacherRoutes = [
       {
         path: 'index',
         name: 'SpecialWorkloadUpload',
-        component: () => import('@/views/special-workload/UploadSpecialWorkload'),
+        component: () => import('@/views/special-workload-upload/index'),
         meta: {
           title: '上报特殊工作量',
           icon: ''
@@ -85,22 +85,22 @@ export const teacherRoutes = [
       }
     ]
   },
-  {
-    path: '/special-workload-history', //查看特殊工作量上报历史
-    component: Layout,
-    redirect: '/special-workload-history/index',
-    children: [
-      {
-        path: 'index',
-        name: 'SpecialWorkloadHistory',
-        component: () => import('@/views/special-workload/ViewHistory'),
-        meta: {
-          title: '历史上报',
-          icon: ''
-        }
-      }
-    ]
-  },
+  // {
+  //   path: '/special-workload-history', //查看特殊工作量上报历史
+  //   component: Layout,
+  //   redirect: '/special-workload-history/index',
+  //   children: [
+  //     {
+  //       path: 'index',
+  //       name: 'SpecialWorkloadHistory',
+  //       component: () => import('@/views/special-workload/ViewHistory'),
+  //       meta: {
+  //         title: '历史上报',
+  //         icon: ''
+  //       }
+  //     }
+  //   ]
+  // },
 
 ]
 

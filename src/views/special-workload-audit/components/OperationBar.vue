@@ -10,7 +10,7 @@
     </div>
 </template>
 <script>
-import { downloadFiles_yearly, exportAuditingResult } from '@/api/special-workload';
+import { downloadFiles_yearly, exportAuditingResult } from '@/api/special-workload/audit';
 import { Message } from 'element-ui';
 export default {
     name: "AuditTableOperationBar",
@@ -64,11 +64,6 @@ export default {
 }
 
 
-
-.icon {
-    font-size: 16px;
-    vertical-align: text-top;
-}
 
 .note {
     color: #aaa;

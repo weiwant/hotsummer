@@ -46,3 +46,4 @@ export function exportAuditingResult(data) {
         data
     })
 }
+

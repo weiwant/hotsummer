@@ -18,7 +18,7 @@
 </template>
 <script>
 import { Message } from 'element-ui'
-import { setDDL, getDDL } from '@/api/special-workload'
+import { setDDL, getDDL } from '@/api/special-workload/audit'
 export default {
     name: "EditDDL",
     data() {

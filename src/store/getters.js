@@ -11,7 +11,9 @@ const getters = {
     tableFilters_special: state => state.special_workload.filters,
     constantHeaders_special: state => state.special_workload.constantHeaders,
     specificHeaders_special: state => state.special_workload.specificHeaders,
-    formItems_special: state => state.special_workload.formItems
+    formItems_special: state => state.special_workload.formItems,
+    workloadTypes_special: state => state.special_workload.workloadTypes,
+    teacherListHeaders_special: state => state.special_workload.teacherListHeaders
 }
 
 export default getters

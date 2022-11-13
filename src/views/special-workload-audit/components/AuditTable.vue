@@ -13,7 +13,7 @@
                         <th>审核</th>
                     </tr>
                 </thead>
-                <tbody class="outer-table-body" v-for="(record, index) in tableData" :key="record.id">
+                <tbody class="outer-table-body" v-for="(record, index) in tableData" :key="record.iddwer34t5">
                     <!-- 公共单元 -->
                     <tr class="constant-part">
                         <td class="detail">
@@ -28,9 +28,10 @@
                         <td class="audit">
                             <button @click="toggleAudit(index)" :class="{ active: isAuditing[index] }"><span
                                     class="icon"></span></button>
-                            <div class="audit-form" v-if="isAuditing[index]">
-
-                            </div>
+                            <transition name="fadeIn">
+                                <div class="audit-form" v-if="isAuditing[index]">
+                                </div>
+                            </transition>
                         </td>
                     </tr>
                     <!-- 嵌套表格，包含不同type特殊工作量各自的单元 -->
@@ -183,7 +184,6 @@ th,
 td {
     padding: 10px 50px;
     transition: all 0.2s;
-
 }
 
 /* 表格整体样式（反映布局结构，很重要） */
@@ -192,7 +192,7 @@ td {
 }
 
 .outer-table-head th {
-    background-color: #636b7a;
+    background-color: #677f84;
     color: whitesmoke;
 }
 
@@ -245,7 +245,7 @@ td {
 }
 
 .constant-part .audit button.active {
-    background-color: #447161;
+    background-color: #677f84;
     color: white;
 }
 
@@ -269,24 +269,29 @@ td {
 
 .constant-part td.audit .audit-form {
     position: absolute;
-    right: 50px;
-    top: 40px;
+    right: 32px;
+    top: 45px;
     z-index: 100;
-    width: 200px;
-    height: 200px;
-    background-color: #b6bed0;
-    border-radius: 5px
+    width: 300px;
+    min-height: 100px;
+    padding-top: 10px;
+    background-color: white;
+    border-radius: 10px;
+    border: 1px solid #ddd;
+    box-shadow: 0px 2px 10px #bbb;
 }
 
 .constant-part td.audit .audit-form:before {
     content: '';
     position: absolute;
-    top: -10px;
-    right: 10px;
-    width: 0;
-    height: 0;
-    border: 5px solid transparent;
-    border-bottom-color: #b6bed0;
-
+    top: -5.5px;
+    right: 20px;
+    width: 8px;
+    height: 8px;
+    border-top: 1px solid #ddd;
+    border-right: 1px solid #ddd;
+    border-bottom-color: #dadde6;
+    background-color: white;
+    transform: rotate(-45deg);
 }
 </style>

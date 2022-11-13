@@ -9,6 +9,12 @@ button {
 }
 
 
+button .icon {
+  margin-right: 5px;
+  font-size: 16px;
+  vertical-align: text-top;
+}
+
 
 button.white {
   background-color: rgb(255, 254, 254);
@@ -35,6 +41,21 @@ button.green:hover {
 }
 
 button.green:disabled {
+  background-color: #aaa;
+  cursor: not-allowed;
+}
+
+
+button.dark-blue {
+  background-color: #313e4e;
+  color: #fff;
+}
+
+button.dark-blue:hover {
+  background-color: #556170;
+}
+
+button.dark-blue:disabled {
   background-color: #aaa;
   cursor: not-allowed;
 }

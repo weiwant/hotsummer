@@ -36,7 +36,7 @@ export default {
 #table-wrapper {
   width: 100%;
   overflow: auto;
-  padding-bottom: 20px;
+  padding-bottom: 50px;
   max-height: 45vh;
 }
 
@@ -46,13 +46,22 @@ table {
 }
 
 table td {
-  padding: 10px;
+  padding: 10px 30px;
   font-size: 13px;
 }
 
 table thead tr {
-  background-color: #f4f4f5;
+  background-color: #677f84;
+  color: whitesmoke;
   font-weight: 500;
+}
+
+thead td:first-child {
+  border-top-left-radius: 1em;
+}
+
+thead td:last-child {
+  border-top-right-radius: 1em;
 }
 
 table tbody tr:nth-child(2n+1) {

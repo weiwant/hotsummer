@@ -13,7 +13,7 @@
 import EditDDL from './components/EditDDL.vue'
 import TableFilter from "@/components/table/TableFilter.vue";
 import AuditTable from "./components/AuditTable.vue"
-import { getAuditingTableData } from "@/api/special-workload"
+import { getAuditingTableData } from "@/api/special-workload/audit"
 export default {
   name: "AuditWorkload",
   components: {
