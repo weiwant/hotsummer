@@ -23,7 +23,7 @@ public class LeyouCorsConfig {
 //        初始化cors配置对象
         CorsConfiguration configuration = new CorsConfiguration();
 //        允许跨域的域名，add可以可以多个，set只有一个
-        configuration.addAllowedOrigin("*");
+        configuration.addAllowedOriginPattern("*");
 //        允许携带cookie
         configuration.setAllowCredentials(true);
         configuration.addAllowedMethod("*"); //表示所有请求方法都可以，例如get，post等等
