@@ -9,7 +9,8 @@
           }}</span>
         </router-link>
         <transition name="slideFromBottomFade">
-          <div class="explaination" v-if="!sidebarOpened && showDescription[index]">{{ item.meta.title }}</div>
+          <div class="explaination" v-if="!mobile && !sidebarOpened && showDescription[index]">{{ item.meta.title }}
+          </div>
         </transition>
       </li>
     </ul>
@@ -35,6 +36,9 @@ export default {
     },
     sidebarOpened() {
       return this.$store.state.app.sidebar.opened
+    },
+    mobile() {
+      return this.$store.state.app.device === 'mobile'
     }
   },
   methods: {
@@ -48,6 +52,9 @@ export default {
       }).catch(() => { })
     }
   },
+  created() {
+    this.showDescription = new Array(this.routes.length);
+  }
 
 };
 </script>
@@ -64,7 +71,7 @@ export default {
   height: 100vh;
   background-color: $sidebarBg;
   text-align: left;
-  z-index: 1000;
+  z-index: 10000;
   // overflow: hidden;
 }
 
@@ -130,18 +137,6 @@ header {
   background-color: $descriptionBg;
   color: $descriptionText;
   font-size: 14px;
-  // &:before {
-  //   content: '';
-  //   display: block;
-  //   position: absolute;
-  //   top: 50%;
-  //   transform: translateY(-50%);
-  //   left: -10px;
-  //   width: 0;
-  //   height: 0;
-  //   border: 5px solid transparent;
-  //   border-right-color: $descriptionBgColor;
-  // }
 }
 
 
@@ -165,7 +160,8 @@ header {
 }
 
 
-//transition
+//withoutAnimation：导航栏展开与关闭是否带有transition
+//当导航栏是因为viewport的调整而被强制隐藏/显示时，不加transition
 #sidebar,
 header,
 .sidebar-body li a {
@@ -193,6 +189,21 @@ header,
 
   .sidebar-body li a {
     width: 61px;
+  }
+}
+
+.mobile.hideSidebar {
+  #sidebar {
+    width: 0px;
+    padding: 0;
+  }
+
+  header {
+    width: 0px;
+  }
+
+  .sidebar-body li a {
+    width: 0px;
   }
 }
 </style>

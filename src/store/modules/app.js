@@ -1,36 +1,40 @@
+import Cookies from 'js-cookie'
+
 const state = {
     sidebar: {
-        opened: true,
-        withAnimation: true,
-    }
+        opened: Cookies.get('sidebarStatus') ? !!+Cookies.get('sidebarStatus') : true,
+        withoutAnimation: true,
+    },
+    device: 'desktop'
 }
 
 const mutations = {
-    CLOSE_SIDEBAR: (state, withAnimation) => {
+    CLOSE_SIDEBAR: (state, withoutAnimation) => {
         state.sidebar.opened = false,
-            state.sidebar.withAnimation = withAnimation
+            state.sidebar.withoutAnimation = withoutAnimation
     },
-    OPEN_SIDEBAR: (state, withAnimation) => {
-        state.sidebar.opened = true,
-            state.sidebar.withAnimation = withAnimation
-    },
-    TOGGLE_SIDEBAR: (state, withAnimation) => {
+    TOGGLE_SIDEBAR: (state, withoutAnimation) => {
         state.sidebar.opened = !state.sidebar.opened,
-            state.sidebar.withAnimation = withAnimation
+            state.sidebar.withoutAnimation = withoutAnimation
+
+        Cookies.set('sidebarStatus', state.sidebar.opened ? '1' : '0')
+    },
+    TOGGLE_DEVICE: (state, device) => {
+        state.device = device;
     }
+
 }
 
 const actions = {
-    closeSidebar({ commit }, withAnimation) {
-        commit('CLOSE_SIDEBAR', withAnimation)
+    closeSidebar({ commit }, { withoutAnimation }) {
+        commit('CLOSE_SIDEBAR', withoutAnimation)
     },
-    openSidebar({ commit }, withAnimation) {
-        commit('OPEN_SIDEBAR', withAnimation)
+    toggleSidebar({ commit }, { withoutAnimation }) {
+        commit('TOGGLE_SIDEBAR', withoutAnimation)
     },
-    toggleSidebar({ commit }, withAnimation) {
-        commit('TOGGLE_SIDEBAR', withAnimation)
-    },
-
+    toggleDevice({ commit }, device) {
+        commit('TOGGLE_DEVICE', device)
+    }
 }
 
 export default {

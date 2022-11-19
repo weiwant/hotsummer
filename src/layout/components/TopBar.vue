@@ -25,10 +25,15 @@
 <script>
 export default {
     name: "TopBar",
+
     data() {
         return {
-            sidebarOpened: true,
             showSettingsList: false,
+        }
+    },
+    computed: {
+        sidebarOpened() {
+            return this.$store.state.app.sidebar.opened
         }
     },
     methods: {
@@ -58,6 +63,7 @@ export default {
     display: flex;
     align-items: center;
     gap: 10px;
+    margin-left: 10px;
 
     .title {
         color: $topbarTitle;
@@ -70,7 +76,7 @@ export default {
     display: flex;
     align-items: center;
     gap: 10px;
-
+    margin-right: 10px;
 
 }
 
@@ -80,15 +86,17 @@ export default {
     button {
         transition: all 0.2s;
 
+
         .icon {
             font-size: 20px;
+            margin-right: 0; //把button.css里全局设置的margin值干掉，否则旋转以后会出现中心点偏移
         }
     }
 
     .settings-list {
         position: absolute;
         top: 40px;
-        right: 10px;
+        right: 5px;
         background-color: $themeGreen;
         font-size: 14px;
         color: whitesmoke;
@@ -115,7 +123,7 @@ export default {
 
 .expandHeight-enter-active,
 .expandHeight-leave-active {
-    transition: all 0.3s;
+    transition: all 0.2s;
 }
 
 .expandHeight-enter,
@@ -156,6 +164,12 @@ export default {
 .hideSidebar {
     #topbar {
         width: calc(100% - 81px);
+    }
+}
+
+.mobile {
+    #topbar {
+        width: 100%;
     }
 }
 </style>

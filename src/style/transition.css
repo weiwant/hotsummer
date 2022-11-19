@@ -39,20 +39,6 @@
 }
 
 
-.expandHeight-enter-active,
-.expandHeight-leave-active {
-    transition: all 0.3s;
-}
 
-.expandHeight-enter,
-.expandHeight-leave-to{
-    max-height: 0px;
-    /* opacity: 0; */
-}
-
-.expandHeight-leave,.expandHeight-enter-to{
-    max-height: 100px;
-    /* opacity: 1; */
-}
 
 
