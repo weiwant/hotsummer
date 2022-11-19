@@ -18,7 +18,7 @@ button .icon {
 
 button.white {
   background-color: rgb(255, 254, 254);
-  color: rgb(51, 114, 96);
+  color: #3c5756;
 }
 
 button.white:hover {
@@ -60,6 +60,7 @@ button.dark-blue:disabled {
   cursor: not-allowed;
 }
 
+
 button.transparent_red {
   background-color: transparent;
   border: 0;
@@ -75,5 +76,23 @@ button.transparent_red:disabled {
   color: gray;
   background-color: transparent;
   cursor: not-allowed;
-
 }
+
+
+button.transparent_green {
+  background-color: transparent;
+  border: 0;
+  color: #3c5756;
+  font-size: 15px;
+}
+
+button.transparent_green:hover {
+  color: #557775;
+}
+
+button.transparent_green:disabled {
+  color: gray;
+  background-color: transparent;
+  cursor: not-allowed;
+}
+

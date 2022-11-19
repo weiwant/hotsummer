@@ -16,17 +16,19 @@
                     </div>
                 </div>
                 <div class="form-body">
-                    <el-form label-width="80px" label-position="left" :rules="rules" @submit.native.prevent>
-                        <el-form-item v-for="item in formItems" :label="item.label" :prop="item.key">
+                    <el-form label-width="80px" label-position="left" @submit.native.prevent :model="formValues">
+                        <el-form-item v-for="item in formItems" :key="item.key" :label="item.label" :prop="item.key"
+                            :rules="item.rule ? item.rule : []">
                             <!-- 文本框 -->
                             <el-input v-if="item.inputType === 'text'" v-model="formValues[item.key]"
-                                placeholder="请输入内容">
+                                @input="forceInput" placeholder="请输入内容">
                             </el-input>
                             <!-- 文本域 -->
                             <el-input v-if="item.inputType === 'textarea'" type="textarea"
-                                v-model="formValues[item.key]" placeholder="请输入内容"></el-input>
+                                v-model="formValues[item.key]" placeholder="请输入内容" @input="forceInput"></el-input>
                             <!-- 单选 -->
-                            <el-radio-group v-if="item.inputType === 'radio'" v-model="formValues[item.key]">
+                            <el-radio-group v-if="item.inputType === 'radio'" v-model="formValues[item.key]"
+                                @input="forceInput">
                                 <el-radio v-for="option in item.radioOptions" :label="option" :key="option">{{
                                         option
                                 }}
@@ -34,14 +36,14 @@
                             </el-radio-group>
                             <!-- select -->
                             <el-select v-if='item.inputType === "select"' v-model="formValues[item.key]"
-                                placeholder="请选择">
+                                placeholder="请选择" @input="forceInput">
                                 <el-option v-for="option in item.selectOptions" :key="option" :label="option"
                                     :value="item.value">
                                 </el-option>
                             </el-select>
                             <!-- 日期 -->
                             <el-date-picker v-if="item.inputType === 'time'" v-model="formValues[item.key]"
-                                :type="item.timeType" placeholder="选择日期">
+                                :type="item.timeType" placeholder="选择日期" @input="forceInput">
                             </el-date-picker>
                             <!-- 参与人员 -->
                             <DynamicCollection v-if="item.inputType === 'dynamic'" />
@@ -82,9 +84,12 @@ export default {
             showCancleNotification: false,
             workloadTypes: this.$store.getters.workloadTypes_special,
             formItems: this.$store.getters.formItems_special.get(this.type),
-            rules: {},
-            projectName: '',
-            formValues: {},  //formItems是数组，按顺序遍历；value也按同样的顺序绑定，同index的key和item.key和value是一组
+            formValues: {},  //1.在created处初始化了 2.formItems是数组，按顺序遍历；value也按同样的顺序绑定，同index的key和item.key和value是一组
+        }
+    },
+    methods: {
+        forceInput() {
+            this.$forceUpdate();
         }
     },
     computed: {
@@ -101,8 +106,7 @@ export default {
     },
     created() {
         for (let item of this.formItems) {
-            this.rules[item.key] = item.rule
-            this.formValues[item.key] = ''
+            this.formValues[item.key] = "";
         }
     }
 

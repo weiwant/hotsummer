@@ -12,3 +12,47 @@
 .fadeIn-enter-to {
     opacity: 1;
 }
+
+
+
+
+
+.slideFromLeftFade-enter-active,
+.slideFromLeftFade-leave-active {
+    transition: all 0.3s;
+}
+
+.slideFromLeftFade-enter {
+    transform: translateX(-20px);
+    opacity: 0;
+}
+
+.slideFromLeftFade-enter-to,
+.slideFromLeftFade-leave {
+    transform: translateX(0px);
+    opacity: 1;
+}
+
+.slideFromLeftFade-leave-to {
+    transform: translateX(20px);
+    opacity: 0;
+}
+
+
+.expandHeight-enter-active,
+.expandHeight-leave-active {
+    transition: all 0.3s;
+}
+
+.expandHeight-enter,
+.expandHeight-leave-to{
+    max-height: 0px;
+    /* opacity: 0; */
+}
+
+.expandHeight-leave,.expandHeight-enter-to{
+    max-height: 100px;
+    /* opacity: 1; */
+}
+
+

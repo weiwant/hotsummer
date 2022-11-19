@@ -1,15 +1,14 @@
 @font-face {
   font-family: 'icomoon';
-  src: url('fonts/icomoon.eot?q5sxt3');
-  src: url('fonts/icomoon.eot?q5sxt3#iefix') format('embedded-opentype'),
-    url('fonts/icomoon.ttf?q5sxt3') format('truetype'),
-    url('fonts/icomoon.woff?q5sxt3') format('woff'),
-    url('fonts/icomoon.svg?q5sxt3#icomoon') format('svg');
+  src: url('fonts/icomoon.eot?etlnnd');
+  src: url('fonts/icomoon.eot?etlnnd#iefix') format('embedded-opentype'),
+    url('fonts/icomoon.ttf?etlnnd') format('truetype'),
+    url('fonts/icomoon.woff?etlnnd') format('woff'),
+    url('fonts/icomoon.svg?etlnnd#icomoon') format('svg');
   font-weight: normal;
   font-style: normal;
   font-display: block;
 }
-
 
 * {
   margin: 0;
@@ -41,10 +40,8 @@ input:focus {
 
 /*app右部wrapper*/
 .app-right-wrapper {
-  overflow-y: auto;
-  width: 100vw;
-  height: 100vh;
-  padding: 60px 15px 10px 235px;
+  width: 100%;
+  padding: 15px;
 }
 
 .app-right-wrapper::-webkit-scrollbar {

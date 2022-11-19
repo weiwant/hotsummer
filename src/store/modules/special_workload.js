@@ -63,6 +63,7 @@ const state = {
             name: '其他'
         },
     ],
+    workloadStatus: ['仅保存', '待审核', '已审核'],
     //填报特殊工作量每个类型的表单组成
     formItems: new Map([
         [
@@ -676,6 +677,8 @@ const state = {
             ]
         ]
     ]),
+    //特殊工作量的上报状态
+
 }
 
 
