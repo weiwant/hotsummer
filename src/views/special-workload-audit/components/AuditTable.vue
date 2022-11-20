@@ -15,19 +15,20 @@
                 </thead>
                 <tbody class="outer-table-body" v-for="(record, index) in tableData" :key="record.iddwer34t5">
                     <!-- 公共单元 -->
-                    <tr class="constant-part">
+                    <tr class="outer-table-content">
                         <td class="detail">
-                            <button @click="toggleDetail(index)"><span class="icon"
+                            <button @click="toggleDetail(index)" class="noBorder green"><span class="icon"
                                     :style="{ transform: detailUnfolded[index] ? 'rotate(180deg)' : 'rotate(0deg)' }"></span></button>
                         </td>
                         <td v-for="item in constantHeaders" :key="item.key">
                             {{ record[item.key] }}
                         </td>
-                        <td class="downloadFiles"><button @click="downloadFiles(record.fileName)">下载</button>
+                        <td class="downloadFiles"><button @click="downloadFiles(record.fileName)"
+                                class="noBorder green">下载</button>
                         </td>
                         <td class="audit">
-                            <button @click="toggleAudit(index)" :class="{ active: isAuditing[index] }"><span
-                                    class="icon"></span></button>
+                            <button @click="toggleAudit(index)" :class="{ active: isAuditing[index] }"
+                                class="noBorder green"><span class="icon"></span></button>
                             <transition name="fadeIn">
                                 <div class="audit-form" v-if="isAuditing[index]">
                                 </div>
@@ -35,7 +36,7 @@
                         </td>
                     </tr>
                     <!-- 嵌套表格，包含不同type特殊工作量各自的单元 -->
-                    <tr class="specific-part" v-show='detailUnfolded[index]'>
+                    <tr class="inner-table-wrapper" v-show='detailUnfolded[index]'>
                         <td :colspan="3 + constantHeaders.length">
                             <table class="inner-table">
                                 <thead class="inner-table-head">
@@ -164,7 +165,11 @@ export default {
     }
 }
 </script>
-<style scoped>
+<style scoped lang="scss">
+@import '@/style/variables.scss';
+$tableFontSize_outer : 13px;
+$tableFontSize_inner: 12px;
+
 .overflow-wrapper {
     width: 100%;
     max-height: 45vh;
@@ -172,45 +177,57 @@ export default {
     padding-bottom: 100px;
 }
 
-/* 共有样式 */
 table {
     white-space: nowrap;
     text-align: center;
-    font-size: 13px;
-    transition: all 0.2s;
+    font-size: $tableFontSize_outer;
 }
 
-th,
 td {
-    padding: 10px 50px;
-    transition: all 0.2s;
+    background-color: #fff;
 }
 
 /* 表格整体样式（反映布局结构，很重要） */
 .outer-table {
     border-collapse: collapse;
+
+    th,
+    td {
+        padding: 10px 50px;
+    }
 }
 
 .outer-table-head th {
-    background-color: #677f84;
+    background-color: $themeLightGreen;
     color: whitesmoke;
+
+    &:first-child {
+        border-top-left-radius: 1em;
+    }
+
+    &:last-child {
+        border-top-right-radius: 1em;
+    }
 }
 
-.outer-table-head th:first-child {
-    border-top-left-radius: 1em;
-}
+.outer-table-content {
+    td {
+        border-top: 1px solid #ccc;
+    }
 
-.outer-table-head th:last-child {
-    border-top-right-radius: 1em;
-}
+    /* 细节展开按钮、审核、下载附件按钮 */
+    button {
+        padding: 2px;
+    }
 
-.constant-part td,
-.specific-part td {
-    background-color: white;
-}
+    .downloadFiles button {
+        padding: 0;
+        font-size: $tableFontSize_outer;
 
-.constant-part td {
-    border-top: 1px solid #ccc;
+        &:hover {
+            text-decoration: underline;
+        }
+    }
 }
 
 .inner-table {
@@ -218,80 +235,46 @@ td {
     left: 50%;
     transform: translateX(-50%);
     min-width: 900px;
+    font-size: $tableFontSize_inner;
     border: 1px solid #ccc;
     border-radius: 1em;
     overflow: hidden;
-    font-size: 12px;
+
+    th,
+    td {
+        padding: 10px 20px;
+    }
 }
 
-.inner-table th,
-.inner-table td {
-    padding: 10px 20px;
-}
-
-/* 细节展开按钮、审核按钮 */
-.constant-part .detail button,
-.constant-part .audit button {
-    padding: 2px;
-    font-family: 'icomoon';
-    background-color: #f4f4f5;
-    color: #aaa;
-}
-
-
-.outer-table-body .detail button span {
-    display: block;
-    transition: all 0.2s;
-}
-
-.constant-part .audit button.active {
-    background-color: #677f84;
-    color: white;
-}
-
-/* 下载附件按钮 */
-.constant-part .downloadFiles button {
-    padding: 0;
-    background-color: transparent;
-    border: 0;
-    font-size: 12px;
-    color: #447161;
-}
-
-.constant-part .downloadFiles button:hover {
-    text-decoration: underline;
-}
-
-/* 审核表单 */
-.constant-part td.audit {
+/* 评分表单 */
+.outer-table-content .audit {
     position: relative;
-}
 
-.constant-part td.audit .audit-form {
-    position: absolute;
-    right: 32px;
-    top: 45px;
-    z-index: 100;
-    width: 300px;
-    min-height: 100px;
-    padding-top: 10px;
-    background-color: white;
-    border-radius: 10px;
-    border: 1px solid #ddd;
-    box-shadow: 0px 2px 10px #bbb;
-}
+    .audit-form {
+        position: absolute;
+        right: 32px;
+        top: 45px;
+        z-index: 100;
+        width: 300px;
+        min-height: 100px;
+        padding-top: 10px;
+        background-color: white;
+        border-radius: 10px;
+        border: 1px solid #ddd;
+        box-shadow: 0px 2px 10px #bbb;
 
-.constant-part td.audit .audit-form:before {
-    content: '';
-    position: absolute;
-    top: -5.5px;
-    right: 20px;
-    width: 8px;
-    height: 8px;
-    border-top: 1px solid #ddd;
-    border-right: 1px solid #ddd;
-    border-bottom-color: #dadde6;
-    background-color: white;
-    transform: rotate(-45deg);
+        &:before {
+            position: absolute;
+            top: -5.5px;
+            right: 20px;
+            width: 8px;
+            height: 8px;
+            border-top: 1px solid #ddd;
+            border-right: 1px solid #ddd;
+            border-bottom-color: #dadde6;
+            background-color: white;
+            transform: rotate(-45deg);
+        }
+    }
 }
 </style>

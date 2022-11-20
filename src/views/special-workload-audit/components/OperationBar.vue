@@ -1,11 +1,11 @@
 <template>
     <div id="operation-bar">
         <div class="download-files">
-            <button class="white"><span class="icon" @click="downloadFiles"></span>&nbsp;批量下载审核附件</button>
+            <button class="withBorder white"><span class="icon" @click="downloadFiles"></span>&nbsp;批量下载审核附件</button>
             <label class="note">（注：{{ tableInfo.yearChosen }}年度<span class="emphasis">所有</span>审核附件）</label>
         </div>
         <div class="export-result">
-            <button class="white" @cilck="exportResult">&nbsp;导出审核结果</button>
+            <button class="withBorder white" @cilck="exportResult">&nbsp;导出审核结果</button>
         </div>
     </div>
 </template>
@@ -17,7 +17,6 @@ export default {
     inject: ['tableInfo'],
     data() {
         return {
-
         }
     },
     methods: {
@@ -48,9 +47,7 @@ export default {
                 year: this.tableInfo.yearChosen
             }
             exportAuditingResult(data).then((data) => {
-
             }).catch(() => {
-
             })
         }
     }

@@ -54,8 +54,7 @@ export const teacherRoutes = [
         children: [
             {
                 path: ':status',
-                redirect: 'index/saved',
-                component: () => import('@/views/special-workload-upload/components/WorkloadList')
+                component: () => import('@/views/special-workload-upload/index')
             }
         ],
         meta: {

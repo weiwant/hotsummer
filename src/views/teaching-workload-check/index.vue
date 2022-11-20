@@ -188,9 +188,8 @@ export default {
   margin-top: 10px;
 }
 
-/* .pagination {
-  margin: 10px 0;
-  margin-left: 50%;
-  transform: translateX(-50%);
-} */
+.pagination {
+  display: flex;
+  justify-content: center;
+}
 </style>

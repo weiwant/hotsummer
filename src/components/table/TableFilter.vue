@@ -10,7 +10,7 @@
       </div>
       <!-- 筛选条件选择 -->
       <div class="table-filter-item nolabel">
-        <button class="white" :class="{ chosen: showFilterSelectBody }" @click="changeFilterSelectBodyStatus"
+        <button class="withBorder white" :class="{ chosen: showFilterSelectBody }" @click="changeFilterSelectBodyStatus"
           :disabled="!isEditing">
           &nbsp;添加筛选条件
         </button>
@@ -52,13 +52,13 @@
       </div>
       <!-- 确认查询/重置查询条件 -->
       <div class="table-filter-item nolabel">
-        <button class="green" @click="search" v-html='isEditing ? "&nbsp;确认查询" : "&nbsp;重置查询条件"'>
+        <button class="withBorder green" @click="search" v-html='isEditing ? "&nbsp;确认查询" : "&nbsp;重置查询条件"'>
         </button>
       </div>
     </div>
     <!-- 已添加的查询条件 -->
     <div class="table-filter-section added">
-      <button class="transparent_red" :disabled="!isEditing || filterAdded.length <= 0" @click="clearAdded">
+      <button class="noBorder red" :disabled="!isEditing || filterAdded.length <= 0" @click="clearAdded">
         
       </button>
       <div class="filter-added-item" v-for="(item, index) in filterAdded" :key="item.filter_type"
@@ -162,7 +162,7 @@ export default {
   padding: 15px 0;
 }
 
-.table-filter-section{
+.table-filter-section {
   display: flex;
   flex-wrap: wrap;
   padding-bottom: 10px;
@@ -173,7 +173,7 @@ export default {
   margin-right: 10px;
 }
 
-.table-filter-item.nolabel { 
+.table-filter-item.nolabel {
   /* button没有el-select上方的label，对齐需要移动一下  */
   top: 16px;
 }
@@ -193,6 +193,7 @@ button.white.chosen {
 button.white.chosen:hover {
   background-color: white;
 }
+
 /* 添加表单 */
 .filter-select-wrapper {
   position: absolute;
@@ -204,6 +205,7 @@ button.white.chosen:hover {
   border: 1px solid #dddfe5;
   border-radius: 5px;
 }
+
 /* 已添加的查询条件 */
 .filter-select-section {
   padding: 10px;

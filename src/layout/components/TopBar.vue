@@ -2,14 +2,14 @@
     <div id="topbar">
         <div class="leftMenu">
             <div class="folder">
-                <button class="transparent_green" @click="toggleSidebar"><span class="icon"
+                <button class="noBorder green" @click="toggleSidebar"><span class="icon"
                         v-html="sidebarOpened ? '' : ''"></span></button>
             </div>
             <div class="title">{{ this.$route.matched[0].meta.title }}</div>
         </div>
         <div class="rightMenu">
             <div class="settings" :class="{ open: showSettingsList }">
-                <button class="transparent_green" @click="showSettingsList = !showSettingsList"><span
+                <button class="noBorder green" @click="showSettingsList = !showSettingsList"><span
                         class="icon"></span></button>
                 <transition name="expandHeight">
                     <ul class="settings-list" v-if="showSettingsList">

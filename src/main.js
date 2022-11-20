@@ -6,16 +6,11 @@ import router from './router'
 import store from './store'
 
 import ElementUI from 'element-ui'
-import 'element-ui/lib/theme-chalk/index.css'
-import '@/assets/theme/index.css'
+import '@/style/element-variables.scss'
 Vue.use(ElementUI)
 
 
-import 'normalize.css/normalize.css'
-import './style/index.css'
-import './style/button.css'
-import './style/transition.css'
-
+import './style/index.scss';
 
 Vue.config.productionTip = false
 

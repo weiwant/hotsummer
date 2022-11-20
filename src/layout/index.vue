@@ -3,11 +3,12 @@
         <SideBar />
         <TopBar />
         <div class="mask" v-if="device === 'mobile' && sidebar.opened" @click="clickOutside"></div>
-        <transition name="slideFromLeftFade" mode="out-in">
-            <div class="main-container">
+        <div class="main-container">
+            <transition name="slideFromLeftFade" mode="out-in">
                 <router-view></router-view>
-            </div>
-        </transition>
+            </transition>
+        </div>
+
     </div>
 </template>
 <script>

@@ -27,7 +27,8 @@
     </ul>
     <div class="add ">
       <div class="add-btn">
-        <button class="green" @click="() => { showSearchBar = true }">添加&nbsp;<span class="icon"></span></button>
+        <button class="withBorder green" @click="() => { showSearchBar = true }">添加&nbsp;<span
+            class="icon"></span></button>
       </div>
       <div class="search-bar" v-if="showSearchBar">
         <el-input placeholder="请输入职工姓名/职工号，回车查询" v-model="searchValue" prefix-icon="el-icon-search"

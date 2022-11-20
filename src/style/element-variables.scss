@@ -1,0 +1,16 @@
+@import "./variables.scss";
+
+
+/* element-ui主题色 */
+$--color-primary: $themeLightGreen;
+$--color-success: $green;
+$--color-warning: $yellow;
+$--color-danger: $red;
+
+$--font-path: "~element-ui/lib/theme-chalk/fonts";
+
+@import "~element-ui/packages/theme-chalk/src/index";
+
+
+
+
