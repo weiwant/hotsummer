@@ -2,21 +2,11 @@
     <div id="special-workload-form">
         <div class="mask">
             <div class="form">
-                <div class="form-header">
-                    <h3>新建上报项目<span class="detail">({{ fullName }})</span></h3>
-                    <div class="cancle">
-                        <button class="cancle-btn" @mouseenter="() => { showCancleNotification = true }"
-                            @mouseleave="() => { showCancleNotification = false }" @click="() => this.$emit('cancle'
-                            )"></button>
-                        <transition name="fadeIn">
-                            <div class="notification" v-show="showCancleNotification">
-                                撤销后填报内容会丢失！
-                            </div>
-                        </transition>
-                    </div>
-                </div>
+                <FormHeader @cancle="() => this.$emit('hide')" :formStatus="formStatus" :formTitle="formTitle"
+                    :fullName="fullName" />
                 <div class="form-body">
-                    <el-form label-width="80px" label-position="left" @submit.native.prevent :model="formValues">
+                    <el-form label-width="80px" label-position="left" @submit.native.prevent :model="formValues"
+                        :disabled="formDisabled">
                         <el-form-item v-for="item in formItems" :key="item.key" :label="item.label" :prop="item.key"
                             :rules="item.rule ? item.rule : []">
                             <!-- 文本框 -->
@@ -46,7 +36,7 @@
                                 :type="item.timeType" placeholder="选择日期" @input="forceInput">
                             </el-date-picker>
                             <!-- 参与人员 -->
-                            <DynamicCollection v-if="item.inputType === 'dynamic'" />
+                            <DynamicCollection v-if="item.inputType === 'dynamic'" :disabled="formDisabled" />
                             <!-- 附件 -->
                             <el-upload v-if='item.inputType === "file"' class="upload-demo" drag
                                 action="https://jsonplaceholder.typicode.com/posts/" multiple>
@@ -57,11 +47,7 @@
                         </el-form-item>
                     </el-form>
                 </div>
-                <div class="form-footer">
-                    <div class="save">
-                        <button class="save-btn dark-blue">保&nbsp;存</button>
-                    </div>
-                </div>
+                <FormFooter :formStatus="formStatus" @edit="() => this.isEditing = true" @save="save" />
             </div>
         </div>
     </div>
@@ -69,30 +55,40 @@
 
 <script>
 import DynamicCollection from './DynamicCollection.vue';
+import FormFooter from './FormFooter.vue';
+import FormHeader from './FormHeader.vue';
+import { Message } from "element-ui";
 export default {
     name: "SpecialWorkloadForm",
-    components: { DynamicCollection },
+    components: { DynamicCollection, FormFooter, FormHeader },
     props: {
+        // 工作量类型
         type: {
             type: String,
             required: true,
-        }
+        },
+        // 表格展示数据（如果是新项目填报，则为null）
+        formData: {
+            required: true
+        },
+        formStatus: {
+            type: String,
+            required: true
+        },
     },
     data() {
         return {
-            //撤销操作的提示的显隐
-            showCancleNotification: false,
             workloadTypes: this.$store.getters.workloadTypes_special,
             formItems: this.$store.getters.formItems_special.get(this.type),
             formValues: {},  //1.在created处初始化了 2.formItems是数组，按顺序遍历；value也按同样的顺序绑定，同index的key和item.key和value是一组
-        }
-    },
-    methods: {
-        forceInput() {
-            this.$forceUpdate();
+            isEditing: false,
         }
     },
     computed: {
+        formTitle() {
+            if (this.formStatus === '新项目') return "新建上报项目"
+            return this.formData.projectName
+        },
         fullName() {
             let name
             for (let item of this.workloadTypes) {
@@ -102,11 +98,35 @@ export default {
                 }
             }
             return name + this.type;
+        },
+        //是否禁用表单，禁用情形：仅保存的非编辑状态、待审核、已审核
+        //即，只有在创建表单时，以及表单提交前的编辑状态下，才可以编辑表单
+        formDisabled() {
+            return !(this.formStatus === '新项目') && !(this.formStatus === '仅保存' && this.isEditing)
         }
     },
+    methods: {
+        forceInput() {
+            this.$forceUpdate();
+        },
+        save() {
+            /* 向后端发数据 */
+            // 成功后：
+            if (this.formStatus === '新项目') this.$emit('hide');
+            if (this.formStatus === '仅保存') this.isEditing = false;
+            this.$emit('refreshArrayData');   //获取最新的列表数据
+            Message({
+                message: "保存成功！",
+                type: "success",
+                duration: 2000,
+            });
+        }
+    },
+
     created() {
+        //如果formData不为空，则将value填充为formData内的值，反之（即为新建的项目时），将value初始化为空
         for (let item of this.formItems) {
-            this.formValues[item.key] = "";
+            this.formValues[item.key] = this.formData ? this.formData[item.key] : null;
         }
     }
 
@@ -140,82 +160,11 @@ h3 {
     box-shadow: 0px 3px 10px #ddd;
 }
 
-/* 表格头部  */
-
-.form-header {
-    padding: 20px 20px;
-}
-
-.form-header h3 .detail {
-    font-weight: 400;
-    font-size: 16px;
-    margin-left: 1em;
-    color: gray;
-}
-
-.form-header .cancle {
-    position: absolute;
-    right: 10px;
-    top: 10px;
-    color: #303d4f;
-}
-
-.form-header .cancle .cancle-btn {
-    font-family: 'icomoon';
-    padding: 2px;
-}
-
-.form-header .cancle .cancle-btn:hover {
-    background-color: #ba9291;
-    color: white;
-}
-
-.form-header .cancle .notification {
-    position: absolute;
-    right: -10em;
-    top: 30px;
-    z-index: 100;
-    padding: 5px 10px;
-    font-size: 14px;
-    background-color: white;
-    border-radius: 10px;
-    border: 1px solid #ddd;
-    box-shadow: 0px 2px 10px #bbb;
-    word-break: keep-all
-}
-
-.form-header .cancle .notification:before {
-    content: '';
-    position: absolute;
-    top: -5.5px;
-    left: 20px;
-    width: 8px;
-    height: 8px;
-    border-top: 1px solid #ddd;
-    border-right: 1px solid #ddd;
-    border-bottom-color: #dadde6;
-    background-color: white;
-    transform: rotate(-45deg);
-}
-
 /* 表格主体 */
 .form-body {
     padding: 20px;
     min-height: 200px;
     max-height: 600px;
     overflow: auto;
-
-}
-
-
-
-/* 表格footer */
-.form-footer {
-    display: flex;
-    justify-content: flex-end;
-    border-bottom-left-radius: 10px;
-    border-bottom-right-radius: 10px;
-    padding: 10px 20px;
-    background-color: #eeedef;
 }
 </style>

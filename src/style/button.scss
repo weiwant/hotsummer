@@ -32,14 +32,14 @@ button.withBorder{
   border-radius: 5px;
 
   &.white{
-    @include withBorderBtn(#fff,#e7e7e7,$themeGreen)
+    @include withBorderBtn(#fff,#e7e7e7,$themeColor)
   }
   &.green{
-    @include withBorderBtn($themeLightGreen,#90a1a7 ,#fff )
+    @include withBorderBtn(#415757,#617e7e ,#fff )
   }
 
-  &.dark-blue{
-    @include withBorderBtn($themeDarkBlue,#556170 ,#fff )
+  &.themeTextColor{
+    @include withBorderBtn($themeTextColor,#556170 ,#fff )
   }
   
   &:disabled,&:disabled:hover{
@@ -65,7 +65,11 @@ button.noBorder{
   }
 
   &.green{
-    @include noBorderBtn($themeGreen,#6b8381 )
+    @include noBorderBtn($themeColor,#6b8381 )
+  }
+
+  &.whitesmoke{
+    @include noBorderBtn(whitesmoke, #fff)
   }
 
   &:disabled,&:disabled:hover{

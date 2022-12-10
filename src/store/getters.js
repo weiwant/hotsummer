@@ -17,7 +17,8 @@ const getters = {
     formItems_special: state => state.special_workload.formItems,
     workloadTypes_special: state => state.special_workload.workloadTypes,
     teacherListHeaders_special: state => state.special_workload.teacherListHeaders,
-    workloadStatus_special: state => state.special_workload.workloadStatus
+    workloadStatus_special: state => state.special_workload.workloadStatus,
+    previewHeaders_special: state => state.special_workload.previewHeaders
 }
 
 export default getters

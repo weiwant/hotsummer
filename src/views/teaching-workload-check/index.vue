@@ -1,5 +1,5 @@
 <template>
-  <div class="app-right-wrapper">
+  <div class="app-view-container">
     <TableFilter :filters="filters" @search="search" />
     <TableHeaderSelection :headerGroups="headerNameGroups" :headerChosen="headerChosen" @change="adjustHeader" />
     <PlainTable :header="tableHeaderDisplayed" :data="tableData" />

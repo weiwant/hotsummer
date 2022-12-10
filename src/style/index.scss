@@ -1,4 +1,4 @@
-
+@import '@/style/variables.scss';
 @import 'normalize.css/normalize.css';
 @import '@/style/button.scss';
 @import '@/style/transition.scss';
@@ -6,27 +6,31 @@
 
 @font-face {
   font-family: 'icomoon';
-  src: url('fonts/icomoon.eot?etlnnd');
-  src: url('fonts/icomoon.eot?etlnnd#iefix') format('embedded-opentype'),
-    url('fonts/icomoon.ttf?etlnnd') format('truetype'),
-    url('fonts/icomoon.woff?etlnnd') format('woff'),
-    url('fonts/icomoon.svg?etlnnd#icomoon') format('svg');
+  src:  url('fonts/icomoon.eot?z3orw9');
+  src:  url('fonts/icomoon.eot?z3orw9#iefix') format('embedded-opentype'),
+    url('fonts/icomoon.ttf?z3orw9') format('truetype'),
+    url('fonts/icomoon.woff?z3orw9') format('woff'),
+    url('fonts/icomoon.svg?z3orw9#icomoon') format('svg');
   font-weight: normal;
   font-style: normal;
   font-display: block;
 }
 
-* {
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+ul,li,h1,h2,h3,h4,h5,h6{
   margin: 0;
   padding: 0;
-  box-sizing: border-box;
-  list-style: none;
 }
 
 #app {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  color: $themeDarkBlue;
+  color: $themeTextColor;
 }
 
 a {
@@ -37,30 +41,27 @@ input:focus {
   outline: none;
 }
 
-/* layout */
-#app-wrapper {
-  width: 100vw;
-  height: 100vh;
-  background-color: rgb(239, 241, 247);
+ul{
+  list-style: none;
 }
 
-/*app右部wrapper*/
-.app-right-wrapper {
+// 每个view最外层wrapper
+.app-view-container {
   width: 100%;
   padding: 15px;
 }
 
-.app-right-wrapper::-webkit-scrollbar {
+.app-view-container::-webkit-scrollbar {
   display: none;
 }
 
-.app-right-wrapper {
+.app-view-container {
   -ms-overflow-style: none;
   scrollbar-width: none;
 }
 
 
-/*app右部section-wrapper*/
+// view内每个section
 .app-section {
   position: relative;
   margin-bottom: 5px;
@@ -73,7 +74,6 @@ input:focus {
   text-align: left;
 }
 
-/*每个section的标题*/
 .app-section-title {
   font-size: 15px;
   font-weight: 600;

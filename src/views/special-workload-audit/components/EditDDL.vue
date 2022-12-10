@@ -5,13 +5,13 @@
       <el-date-picker v-model="newValue" type="date" placeholder="选择日期" :disabled="!isEditing">
       </el-date-picker>
       <button class="withBorder green" v-if="!isEditing" @click="edit">
-        重&nbsp;置
+        <span class="icon"></span>重&nbsp;置
       </button>
       <button class="withBorder green" v-if="isEditing" @click="cancle">
-        取&nbsp;消
+        <span class="icon"></span>取&nbsp;消
       </button>
       <button class="withBorder green" v-if="isEditing" @click="confirm">
-        确&nbsp;认
+        <span class="icon"></span>确&nbsp;认
       </button>
     </div>
   </div>

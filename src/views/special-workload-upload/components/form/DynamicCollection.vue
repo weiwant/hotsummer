@@ -21,13 +21,13 @@
           </div>
         </div>
         <div class="delete">
-          <button type='button' class="delete-btn transparent_red" @click="removeTeacher(index)"></button>
+          <button type='button' class="delete-btn noBorder red" @click="removeTeacher(index)"></button>
         </div>
       </li>
     </ul>
     <div class="add ">
       <div class="add-btn">
-        <button class="withBorder green" @click="() => { showSearchBar = true }">添加&nbsp;<span
+        <button class="withBorder green" @click="() => { showSearchBar = true }" :disabled="disabled">添加&nbsp;<span
             class="icon"></span></button>
       </div>
       <div class="search-bar" v-if="showSearchBar">
@@ -59,6 +59,7 @@
 import { getTeacherListData } from '@/api/special-workload/upload'
 export default {
   name: "DynamicCollection",
+  props: ['disabled'],
   data() {
     return {
       showExplaination: false,  //关于“排序“概念的解释

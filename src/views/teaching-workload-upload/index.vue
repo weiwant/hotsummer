@@ -1,5 +1,5 @@
 <template>
-  <div class="app-right-wrapper">
+  <div class="app-view-container">
     <div class="app-section" v-for="(item, index) in workloadType" :key="item.apiName">
       <div class="app-section-title">
         {{ item.label }}
@@ -9,8 +9,15 @@
         :editable="false">
       </el-date-picker>
       <!-- 文件上传控件 -->
-      <el-input type="file" :ref="item.apiName" v-model="fileName[index]" @change="getFileData(index)" multiple="false"
-        accept=".xls,.xlsx"></el-input>
+      <div class="upload">
+        <el-upload class="upload-demo" drag action="https://jsonplaceholder.typicode.com/posts/" multiple>
+          <i class="el-icon-upload"></i>
+          <div class="el-upload__text">将文件拖到此处，或<em>点击上传</em></div>
+          <div class="el-upload__tip" slot="tip">只能上传jpg/png文件，且不超过500kb</div>
+        </el-upload>
+      </div>
+      <!-- <el-input type="file" :ref="item.apiName" v-model="fileName[index]" @change="getFileData(index)" multiple="false"
+        accept=".xls,.xlsx"></el-input> -->
     </div>
   </div>
 </template>
@@ -78,5 +85,9 @@ export default {
 .app-section {
   margin-top: 10px;
   max-width: 700px;
+}
+
+.upload {
+  margin-top: 20px;
 }
 </style>

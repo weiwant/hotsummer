@@ -1,31 +1,26 @@
 <template>
-    <div id="special-workload-upload" class="app-right-wrapper">
+    <div id="special-workload-upload" class="app-view-container">
         <!-- 事件委托 -->
         <div class="selector" @click="(event) => { toggleStatus(event) }">
             <div class="selector-item" v-for="status in workloadStatus" :data-status="status" :key="status"
                 :class="{ active: currentStatus === status }">{{ status }}</div>
         </div>
-        <router-view></router-view>
-        <!-- <OperationBar @showForm="(type) => { this.showForm = true; this.workloadTypeChosen = type }" /> -->
-        <!-- <WorkloadForm v-if="showForm" :type="this.workloadTypeChosen" @cancle='() => this.showForm = false' /> -->
+        <SpecialworkloadUploadList :status="this.currentStatus" />
     </div>
 </template>
 <script>
-import OperationBar from './components/OperationBar.vue'
-// import WorkloadForm from './components/form/WorkloadForm.vue'
-
+import SpecialworkloadUploadList from './components/WorkloadList.vue'
 export default {
     name: "UploadSpecialWorkload",
     components: {
-        // OperationBar,
-        // WorkloadForm
+        SpecialworkloadUploadList
     },
     data() {
         return {
             showForm: false,
             workloadTypeChosen: 'BB1',
             workloadStatus: this.$store.getters.workloadStatus_special, //特殊工作量上报的状态
-            currentStatus: this.$store.getters.workloadStatus_special[0]     //选中要查看的状态,默认第一项
+            currentStatus: this.$store.getters.workloadStatus_special[0]  //选中要查看的状态,默认第一项
         }
     },
     methods: {
@@ -33,8 +28,7 @@ export default {
             let status = event.target.dataset.status
             //更改状态（主要为了修改样式）
             this.currentStatus = status;
-            //导航
-            this.$router.push({ name: 'SpecialWorkloadUploadList', params: { status: status } })
+
         }
     }
 

@@ -19,10 +19,10 @@ export function removeToken() {
 }
 
 
+
 //用户姓名
 export function getUsername() {
     return Cookies.get(usernameKey)
-
 }
 
 export function setUsername(username) {

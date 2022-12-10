@@ -26,8 +26,6 @@ const mutations = {
 const actions = {
     login({ commit }, formData) {
         return new Promise((resolve, reject) => {
-            console.log(`服务器接收到了登录请求，登录名：${formData.username},密码：${formData.password}`)
-            console.log('验证通过,发送token');
             //token
             commit('setToken', 'adsicadsfw32323');
             setToken('adsicadsfw32323');
@@ -35,8 +33,8 @@ const actions = {
             commit('setUsername', '张三');
             setUsername('张三');
             //身份
-            commit('setIdentity', 1);
-            setIdentity(1)
+            commit('setIdentity', 0);
+            setIdentity(0);
             resolve();
             // console.log('验证失败');
             // reject('用户名或密码错误');
@@ -63,7 +61,6 @@ const actions = {
             commit('setUsername', '');
             removeUsername();
             resolve();
-
             // logout().then(() => {
             //     commit('setToken', '');
             //     removeToken();

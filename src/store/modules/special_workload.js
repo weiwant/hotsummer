@@ -63,7 +63,23 @@ const state = {
             name: '其他'
         },
     ],
+    //特殊工作量的上报状态
     workloadStatus: ['仅保存', '待审核', '已审核'],
+    //查看上报历史时，作为preview呈现的信息
+    previewHeaders: [
+        {
+            label: "教学业绩类型",
+            key: "type",
+        },
+        {
+            label: "申报人",
+            key: "declarantName",
+        },
+        {
+            label: "申报时间",
+            key: "reportTime",
+        },
+    ],
     //填报特殊工作量每个类型的表单组成
     formItems: new Map([
         [
@@ -173,7 +189,6 @@ const state = {
         [
             "BB3",
             {
-                name: '教学成果奖',
                 formItems: [
                     {
                         label: "项目名称",
@@ -224,7 +239,6 @@ const state = {
         [
             "BB4",
             {
-                name: '教学竞赛奖励',
                 formItems: [
                     {
                         label: '竞赛名称',
@@ -271,7 +285,6 @@ const state = {
         [
             "BB5",
             {
-                name: '发表教学研究论文',
                 formItems: [
                     {
                         label: '级别',
@@ -311,7 +324,6 @@ const state = {
         [
             "BB6",
             {
-                name: '???',
                 formItems: [
                     {
                         label: '书名',
@@ -380,7 +392,6 @@ const state = {
         [
             "BB8",
             {
-                name: "指导优秀毕业论文",
                 formItems: [
                     {
                         label: '指导类型',
@@ -404,7 +415,6 @@ const state = {
         [
             "BB9",
             {
-                name: "指导学生竞赛获奖",
                 formItems: [
                     {
                         label: '竞赛类别',
@@ -456,7 +466,6 @@ const state = {
         [
             "BB10",
             {
-                name: '指导学生科研立项并顺利完成项目',
                 formItems: [
                     {
                         label: '项目级别',
@@ -491,7 +500,6 @@ const state = {
         [
             "BB11",
             {
-                name: '教学兼职',
                 formItems: [
                     {
                         label: '内容',
@@ -504,7 +512,6 @@ const state = {
         [
             "BB13",
             {
-                name: '本科生培养活动',
                 formItems: [
                     {
                         label: '类别',
@@ -524,7 +531,6 @@ const state = {
         [
             "BB14",
             {
-                name: '本科生主考之外的监考计',
                 formItems:
                     [
                         {
@@ -538,7 +544,6 @@ const state = {
         [
             "BB15",
             {
-                name: '',
                 formItems:
                     [
                         {
@@ -584,10 +589,9 @@ const state = {
             key: "type",
         },
         {
-            label: "审核状态",
-            key: "status",
+            label: "项目名称",
+            key: "projectName",
         },
-
         {
             label: "申报人",
             key: "declarantName",
@@ -595,6 +599,10 @@ const state = {
         {
             label: "申报时间",
             key: "reportTime",
+        },
+        {
+            label: "审核状态",
+            key: "status",
         },
         // {
         //     label: "附件",
@@ -606,10 +614,7 @@ const state = {
         [
             "BB1",
             [
-                {
-                    label: "项目名称",
-                    key: "projectName",
-                },
+
                 {
                     label: "立项时间",
                     key: "awardDate",
@@ -622,16 +627,16 @@ const state = {
                     label: '进展情况',
                     key: 'projectStatus',
                 },
-
+                {
+                    label: "获奖级别",
+                    key: "awardLevel",
+                },
             ]
         ],
         [
             "BB2",
             [
-                {
-                    label: "项目名称",
-                    key: "projectName",
-                },
+
                 {
                     label: "项目类别",
                     key: "projectCategory",
@@ -650,10 +655,7 @@ const state = {
         [
             "BB3",
             [
-                {
-                    label: "项目名称",
-                    key: "projectName",
-                },
+
                 {
                     label: "获奖级别",
                     key: "awardLevel",
@@ -677,7 +679,7 @@ const state = {
             ]
         ]
     ]),
-    //特殊工作量的上报状态
+
 
 }
 

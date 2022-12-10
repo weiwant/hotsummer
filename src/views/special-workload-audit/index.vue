@@ -1,5 +1,5 @@
 <template>
-  <div class="app-right-wrapper">
+  <div class="app-view-container">
     <EditDDL />
     <div class="app-section-title">已提交上报</div>
     <div class="app-section filter">

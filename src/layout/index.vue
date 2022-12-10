@@ -47,6 +47,12 @@ export default {
 <style scoped lang="scss">
 @import "@/style/variables.scss";
 
+#app-wrapper {
+    width: 100vw;
+    height: 100vh;
+    background-color: $appBg;
+}
+
 .main-container {
     width: 100%;
     height: 100vh;

@@ -17,7 +17,7 @@
                     <!-- 公共单元 -->
                     <tr class="outer-table-content">
                         <td class="detail">
-                            <button @click="toggleDetail(index)" class="noBorder green"><span class="icon"
+                            <button @click="toggleDetail(index)" class="noBorder subThemeColor"><span class="icon"
                                     :style="{ transform: detailUnfolded[index] ? 'rotate(180deg)' : 'rotate(0deg)' }"></span></button>
                         </td>
                         <td v-for="item in constantHeaders" :key="item.key">
@@ -28,7 +28,7 @@
                         </td>
                         <td class="audit">
                             <button @click="toggleAudit(index)" :class="{ active: isAuditing[index] }"
-                                class="noBorder green"><span class="icon"></span></button>
+                                class="noBorder subThemeColor"><span class="icon"></span></button>
                             <transition name="fadeIn">
                                 <div class="audit-form" v-if="isAuditing[index]">
                                 </div>
@@ -198,7 +198,7 @@ td {
 }
 
 .outer-table-head th {
-    background-color: $themeLightGreen;
+    background-color: $subThemeColor;
     color: whitesmoke;
 
     &:first-child {

@@ -1,13 +1,10 @@
 <template>
   <div id="body">
     <header>
-      <!-- <img src="" class="background" />
-      <img src="" class="schoolLogo" /> -->
       <div class="title">
         工&nbsp;作&nbsp;量&nbsp;管&nbsp;理&nbsp;平&nbsp;台
       </div>
     </header>
-
     <div class="center">
       <div class="background1"></div>
       <div class="background2"></div>
@@ -15,11 +12,11 @@
         <div class="form-title">登&nbsp;&nbsp;&nbsp;录</div>
         <div class="form-item">
           <label>账号</label>
-          <input type="text" v-model="username" @blur="validateUsername" />
+          <input type="text" v-model="username" @blur="validateUsername" placeholder="教职工号" />
         </div>
         <div class="form-item">
           <label>密码</label>
-          <input type="password" v-model="password" @blur="validatePassword" />
+          <input type="password" v-model="password" @blur="validatePassword" placeholder="身份证后6位" />
         </div>
         <div class="form-submit" @click="login">
           <span>确</span><span>认</span>
@@ -83,7 +80,7 @@ export default {
         Message({
           message: "用户名或密码有误！",
           type: "error",
-          duration: 1500,
+          duration: 2000,
         });
       }
     },

@@ -50,10 +50,10 @@ export const teacherRoutes = [
         path: '/special-workload-upload',  //上报特殊工作量
         name: 'SpecialWorkloadUpload',
         component: Layout,
-        redirect: '/special-workload-upload/saved',
+        redirect: '/special-workload-upload/index',
         children: [
             {
-                path: ':status',
+                path: 'index',
                 component: () => import('@/views/special-workload-upload/index')
             }
         ],

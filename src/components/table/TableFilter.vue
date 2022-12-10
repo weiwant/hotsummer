@@ -52,7 +52,7 @@
       </div>
       <!-- 确认查询/重置查询条件 -->
       <div class="table-filter-item nolabel">
-        <button class="withBorder green" @click="search" v-html='isEditing ? "&nbsp;确认查询" : "&nbsp;重置查询条件"'>
+        <button class="withBorder green" @click="search" v-html='isEditing ? "&nbsp;确认查询" : "&nbsp;重置查询条件"'>
         </button>
       </div>
     </div>
@@ -155,7 +155,7 @@ export default {
 };
 </script>
 
-<style scoped>
+<style scoped lang="scss">
 .table-filter-wrapper {
   position: relative;
   margin-bottom: 5px;
@@ -171,11 +171,11 @@ export default {
 .table-filter-item {
   position: relative;
   margin-right: 10px;
-}
 
-.table-filter-item.nolabel {
-  /* button没有el-select上方的label，对齐需要移动一下  */
-  top: 16px;
+  &.nolabel {
+    /* button没有el-select上方的label，对齐需要移动一下  */
+    top: 16px;
+  }
 }
 
 .table-filter-item label {
@@ -185,14 +185,6 @@ export default {
   font-weight: 500;
 }
 
-/* 添加过滤器按钮 */
-button.white.chosen {
-  background-color: #e1e1e3;
-}
-
-button.white.chosen:hover {
-  background-color: white;
-}
 
 /* 添加表单 */
 .filter-select-wrapper {
@@ -209,12 +201,12 @@ button.white.chosen:hover {
 /* 已添加的查询条件 */
 .filter-select-section {
   padding: 10px;
-}
 
-.filter-select-section::after {
-  display: block;
-  content: "";
-  clear: both;
+  &::after {
+    display: block;
+    content: "";
+    clear: both;
+  }
 }
 
 .filter-select-section-title {
@@ -229,11 +221,12 @@ button.white.chosen:hover {
   font-size: 14px;
   font-weight: 600;
   cursor: pointer;
+
+  &:hover {
+    color: #243a32;
+  }
 }
 
-.filter-select-section .confirm:hover {
-  color: #243a32;
-}
 
 /* 已选择的过滤器 */
 .table-filter-section.added {
@@ -257,14 +250,14 @@ button.white.chosen:hover {
   top: 1px;
   cursor: pointer;
   font-family: "icomoon";
-}
 
-.filter-added-item .delete:hover {
-  color: #ba9291;
-}
+  &:hover {
+    color: #ba9291;
+  }
 
-.filter-added-item .delete.disabled:hover {
-  color: white;
-  cursor: not-allowed;
+  &.disabled:hover {
+    color: white;
+    cursor: not-allowed;
+  }
 }
 </style>

@@ -9,11 +9,13 @@
         </div>
         <div class="rightMenu">
             <div class="settings" :class="{ open: showSettingsList }">
-                <button class="noBorder green" @click="showSettingsList = !showSettingsList"><span
+                <button class="noBorder green toggle" @click="showSettingsList = !showSettingsList"><span
                         class="icon"></span></button>
                 <transition name="expandHeight">
                     <ul class="settings-list" v-if="showSettingsList">
-                        <li class="settings-list-item">退出登录</li>
+                        <li class="settings-list-item">
+                            <button class="noBorder whitesmoke" @click="logout">退出登录</button>
+                        </li>
                     </ul>
                 </transition>
             </div>
@@ -23,6 +25,8 @@
 
 </template>
 <script>
+import { Message } from 'element-ui'
+
 export default {
     name: "TopBar",
 
@@ -39,9 +43,24 @@ export default {
     methods: {
         toggleSidebar() {
             this.$store.dispatch('app/toggleSidebar', { withoutAnimation: false })
+        },
+        logout() {
+            //清除token、username、identity
+            this.$store.dispatch('user/logout').then(() => {
+                //重置路由
+                this.$store.commit('permission/resetRouter');
+                //返回登录页
+                this.$router.push(`/login?redirect=${this.$route.fullPath}`)
+                Message({
+                    message: "退出成功",
+                    type: "success",
+                    duration: 2000,
+                });
+            }
+            )
         }
-    }
 
+    }
 }
 </script>
 <style scoped lang="scss">
@@ -49,6 +68,7 @@ export default {
 
 #topbar {
     position: absolute;
+    z-index: 2000;
     right: 0;
     top: 0;
     width: calc(100% - #{$sidebarWidth});
@@ -83,9 +103,9 @@ export default {
 .settings {
     position: relative;
 
-    button {
+    //齿轮按钮
+    button.toggle {
         transition: all 0.2s;
-
 
         .icon {
             font-size: 20px;
@@ -93,11 +113,17 @@ export default {
         }
     }
 
+    &.open {
+        button.toggle {
+            transform: rotate(45deg);
+        }
+    }
+
     .settings-list {
         position: absolute;
         top: 40px;
         right: 5px;
-        background-color: $themeGreen;
+        background-color: $themeColor;
         font-size: 14px;
         color: whitesmoke;
         word-break: keep-all;
@@ -112,12 +138,10 @@ export default {
             width: 0;
             height: 0;
             border: 5px solid transparent;
-            border-bottom-color: $themeGreen;
+            border-bottom-color: $themeColor;
         }
 
-        li {
-            padding: 10px;
-        }
+
     }
 }
 
@@ -128,23 +152,21 @@ export default {
 
 .expandHeight-enter,
 .expandHeight-leave-to {
-    height: 0;
+    height: 5px;
     opacity: 0;
+    transform: scaleY(0.6);
 }
 
 .expandHeight-leave,
 .expandHeight-enter-to {
     height: 37px;
     opacity: 1;
+    transform: scaleY(1);
 }
 
 
 
-.settings.open {
-    button {
-        transform: rotate(45deg);
-    }
-}
+
 
 
 

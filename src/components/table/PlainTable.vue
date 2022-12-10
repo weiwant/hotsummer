@@ -32,7 +32,9 @@ export default {
 };
 </script>
 
-<style scoped>
+<style scoped lang="scss">
+@import "@/style/variables.scss";
+
 #table-wrapper {
   width: 100%;
   overflow: auto;
@@ -51,7 +53,7 @@ table td {
 }
 
 table thead tr {
-  background-color: #677f84;
+  background-color: $subThemeColor;
   color: whitesmoke;
   font-weight: 500;
 }

@@ -10,6 +10,7 @@ import '@/style/element-variables.scss'
 Vue.use(ElementUI)
 
 
+//全局样式
 import './style/index.scss';
 
 Vue.config.productionTip = false

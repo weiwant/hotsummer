@@ -1,5 +1,5 @@
 <template>
-  <div class="app-right-wrapper">
+  <div class="app-view-container">
   </div>
 </template>
 

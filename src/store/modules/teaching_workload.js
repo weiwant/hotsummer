@@ -14,7 +14,7 @@ const state = {
             options: [],
         },
     ],
-    //教学工作量table的展示表头组
+    //管理员查看教学工作量表头组
     headerGroups: [
         [
             {
@@ -160,6 +160,61 @@ const state = {
             }
         ]
     ],
+    //教师查看教学工作量表头
+    headerForTeacher: [
+        {
+            key: "工作量性质",
+            value: "workloadNature",
+        },
+        {
+            key: "学年",
+            value: "academicYear",
+        },
+        {
+            key: "学期",
+            value: "semester",
+        },
+        {
+            key: "课程号",
+            value: "courseNumber",
+        },
+        {
+            key: "课程名称",
+            value: "courseName",
+        },
+        {
+            key: "教学班",
+            value: "teachingClass",
+        },
+        {
+            key: "开课学院",
+            value: "teachingSchool",
+        },
+        {
+            key: "计划学院",
+            value: "planingSchool",
+        },
+        {
+            key: "学分",
+            value: "credit",
+        },
+        {
+            key: "课程性质",
+            value: "courseNature",
+        },
+        {
+            key: "年级",
+            value: "studentGrade",
+        },
+        {
+            key: "专业",
+            value: "major",
+        },
+        {
+            key: "上课人数",
+            value: "studentAmount",
+        }
+    ],
     // 工作量类型
     type: [
         {
@@ -239,6 +294,7 @@ const state = {
             教分: "",
         },
     ],
+
 }
 
 
