@@ -1,8 +1,8 @@
 import request from '@/utils/request'
 
-export function getTeachingWorkload_paged(data) {
+export function getTeachingWorkload(data) {
     return request({
-        url: '/total/records/page',
+        url: '/total/records',
         method: "post",
         data
     })

@@ -4,26 +4,30 @@
       <Loading />
     </div>
     <div class="table-wrapper">
-      <table>
-        <thead>
-          <tr>
-            <td v-for="header in headerArray" :key="header.key">{{ header.label }}</td>
-          </tr>
-        </thead>
-        <tbody>
-          <tr v-for="data in dataArray" :key="data.id">
-            <td v-for="header in headerArray">
-              {{ data[header.key] }}
-            </td>
-          </tr>
-        </tbody>
-      </table>
+      <transition name="fadeIn">
+        <table v-if='(dataArray.length != 0)'>
+          <thead>
+            <tr>
+              <td v-for="header in headerArray" :key="header.key">{{ header.label }}</td>
+            </tr>
+          </thead>
+          <tbody>
+            <tr v-for="data in dataArray" :key="data.id">
+              <td v-for="header in headerArray">
+                {{ data[header.key] }}
+              </td>
+            </tr>
+          </tbody>
+        </table>
+        <NoDataMessage v-else />
+      </transition>
     </div>
   </div>
 </template>
 
 <script>
-import Loading from '@/components/Loading.vue'
+import Loading from '@/components/Loading.vue';
+import NoDataMessage from '@/components/table/NoDataMessage.vue'
 export default {
   props: {
     headerArray: {
@@ -39,7 +43,7 @@ export default {
       required: true
     }
   },
-  components: { Loading },
+  components: { Loading, NoDataMessage },
   data() {
     return {
 
@@ -63,11 +67,11 @@ export default {
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: rgba(187, 187, 187, 0.207);
+  // background-color: rgba(187, 187, 187, 0.207);
   backdrop-filter: blur(1px);
 
   .loading {
-    margin-top: 80px;
+    margin-top: 10px;
   }
 }
 
@@ -76,6 +80,7 @@ export default {
   overflow: auto;
   padding-bottom: 50px;
   max-height: 45vh;
+  text-align: center;
 }
 
 table {

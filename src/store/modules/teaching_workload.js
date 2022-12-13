@@ -126,7 +126,7 @@ const state = {
         },
         {
             label: "计划学院",
-            key: "planingSchool",
+            key: "planSchool",
             show: false,
             editable: false,
         },

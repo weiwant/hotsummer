@@ -19,11 +19,6 @@ Vue.config.productionTip = false
 
 
 
-// // debug用的
-// import { removeToken, removeIdentity, removeUsername } from '@/utils/user-auth'
-// removeToken(); removeIdentity(); removeUsername()
-
-
 new Vue({
   router,
   store,

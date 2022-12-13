@@ -26,7 +26,6 @@ const mutations = {
 const actions = {
     login({ commit }, formData) {
         return new Promise((resolve, reject) => {
-
             login(formData).then(res => {
                 //token
                 commit('setToken', res.token)
