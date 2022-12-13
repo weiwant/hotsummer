@@ -35,7 +35,7 @@ button.withBorder{
     @include withBorderBtn(#fff,#e7e7e7,$themeColor)
   }
   &.green{
-    @include withBorderBtn(#415757,#617e7e ,#fff )
+    @include withBorderBtn(#415757,#4d6464 ,#fff )
   }
 
   &.themeTextColor{

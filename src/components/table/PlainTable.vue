@@ -4,7 +4,7 @@
       <Loading />
     </div>
     <div class="table-wrapper">
-      <transition name="fadeIn">
+      <transition name="fadeIn" mode="out-in">
         <table v-if='(dataArray.length != 0)'>
           <thead>
             <tr>
@@ -55,6 +55,10 @@ export default {
 <style scoped lang="scss">
 @import "@/style/variables.scss";
 
+#nodata-message {
+  transform: translateY(50px);
+}
+
 #plain-table {
   position: relative;
   width: 100%;
@@ -67,7 +71,6 @@ export default {
   left: 0;
   width: 100%;
   height: 100%;
-  // background-color: rgba(187, 187, 187, 0.207);
   backdrop-filter: blur(1px);
 
   .loading {

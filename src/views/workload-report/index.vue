@@ -5,9 +5,6 @@
     <div class="app-section-title">教学工作量详情</div>
     <PlainTable :headerArray="teachingWorkloadTableHeader" :dataArray="teachingWorkloadTableData"
       :showLoading="showLoading" />
-    <!-- 特殊工作量详情 -->
-    <!-- <div class="app-section-title">特殊工作量详情</div>
-    <PlainTable :header="specialWorkloadTableHeader" :data="specialWorkloadTableData" /> -->
   </div>
 </template>
 
@@ -23,7 +20,7 @@ export default {
   },
   data() {
     return {
-      filters: this.$store.getters.tableFilters_teaching,
+      filters: this.$store.state.teaching_workload.filters_teacher,
       teachingWorkloadTableHeader: this.$store.state.teaching_workload.tableHeaders_teacher,
       showLoading: false,
       //查询条件
@@ -67,6 +64,11 @@ export default {
 </script>
 
 <style scoped>
+#nodata-message {
+  margin-top: 10px;
+  margin-left: 10px;
+}
+
 .pagination {
   margin-top: 10px;
   display: flex;

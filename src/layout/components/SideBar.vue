@@ -41,17 +41,7 @@ export default {
       return this.$store.state.app.device === 'mobile'
     }
   },
-  methods: {
-    logout() {
-      //清除token、username、identity
-      this.$store.dispatch('user/logout').then(() => {
-        //重置路由
-        this.$store.commit('permission/resetRouter');
-        //返回登录页
-        this.$router.push(`/login?redirect=${this.$route.fullPath}`)
-      }).catch(() => { })
-    }
-  },
+
   created() {
     this.showDescription = new Array(this.routes.length);
   }

@@ -45,7 +45,7 @@ instance.interceptors.response.use(response => {
         Message({
             message: res.response.message,
             type: 'error',
-            duration: 2000
+            duration: 2200
         })
 
         //token身份验证出问题（token过期、token无效）

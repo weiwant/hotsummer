@@ -7,7 +7,6 @@ const getters = {
     routes: state => state.permission.routes,
     //教学工作量
     currentYear: () => `${new Date().getFullYear()}`,
-    tableFilters_teaching: state => state.teaching_workload.filters,
     tableHeaderGroups_teaching: state => state.teaching_workload.headerGroups,
     workloadType_teaching: state => state.teaching_workload.type,
     // 特殊工作量

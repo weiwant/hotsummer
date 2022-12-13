@@ -45,4 +45,8 @@ export default {
 .app-section {
   height: 100%;
 }
+
+.el-checkbox {
+  margin-bottom: 8px;
+}
 </style>

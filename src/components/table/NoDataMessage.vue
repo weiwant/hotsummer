@@ -9,11 +9,6 @@ export default {
 }
 </script>
 <style scoped>
-#nodata-message {
-    margin-top: 10px;
-    margin-left: 10px;
-}
-
 .icon {
     font-family: 'icomoon';
     color: rgb(232, 217, 100);

@@ -1,11 +1,31 @@
 const state = {
-    //查询教学工作量的过滤器
-    filters: [
+    //条件查询过滤器
+    filters_teacher: [
         {
             key: "workloadNature",
-            label: '工作量性质',
+            label: '工作量类型',
             inputType: "select",
             options: ["教学工作量", "监考工作量", "论文工作量"], //当输入类型为select时，需要提供options
+        },
+        {
+            key: "courseName",
+            label: '课程名称',
+            inputType: "text",
+            options: [],
+        },
+    ],
+    filters_master: [
+        {
+            key: "workloadNature",
+            label: '工作量类型',
+            inputType: "select",
+            options: ["教学工作量", "监考工作量", "论文工作量"],
+        },
+        {
+            key: "courseName",
+            label: '任课老师',
+            inputType: "text",
+            options: [],
         },
         {
             key: "courseName",
@@ -17,7 +37,7 @@ const state = {
     // 教学工作量表头(管理员)
     tableHeaders: [
         {
-            label: "工作量性质",
+            label: "工作量类型",
             key: "workloadNature",
             show: true,    //是否默认选中
             editable: false,     //是否可编辑
@@ -47,7 +67,7 @@ const state = {
             editable: false,
         },
         {
-            label: "上课老师",
+            label: "任课老师",
             key: "mainTeacherName",
             show: true,
             editable: false,
@@ -224,7 +244,7 @@ const state = {
     // 教学工作量表头(教师)
     tableHeaders_teacher: [
         {
-            label: "工作量性质",
+            label: "工作量类型",
             key: "workloadNature",
         },
         {

@@ -1,4 +1,4 @@
-import { login, logout } from '@/api/user'
+import { login } from '@/api/user'
 import { getToken, setToken, removeToken, getIdentity, setIdentity, removeIdentity, getUserInfo, setUserInfo, removeUserInfo } from '@/utils/user-auth'  //cookie
 
 
@@ -51,18 +51,15 @@ const actions = {
     },
     logout({ commit }) {
         return new Promise((resolve, reject) => {
-            logout().then(() => {
-                commit('setToken', null);
-                removeToken();
-                commit('setIdentity', null);
-                removeIdentity();
-                commit('setUserInfo', null);
-                removeUserInfo();
-                resolve();
-            }).catch(err => {
-                reject(err);
-            })
+            commit('setToken', null);
+            removeToken();
+            commit('setIdentity', null);
+            removeIdentity();
+            commit('setUserInfo', null);
+            removeUserInfo();
+            resolve();
         })
+
 
     }
 
