@@ -18,13 +18,20 @@
       </div>
       <!-- <el-input type="file" :ref="item.apiName" v-model="fileName[index]" @change="getFileData(index)" multiple="false"
         accept=".xls,.xlsx"></el-input> -->
+      <!-- 模版下载控件 -->
+      <div class="download">
+        <button class="withBorder green" @click="downloadTemp(item)">
+          下载模版
+        </button>
+      </div>
     </div>
   </div>
 </template>
 
 <script>
 import { uploadTeachingWorkload } from '@/api/teaching-workload'
-import { Message } from 'element-ui'
+import { ColorPicker, Message } from 'element-ui'
+import { downloadTemplate } from '@/utils/teaching-workload';
 export default {
   name: "UploadWorkload",
   data() {
@@ -77,17 +84,30 @@ export default {
         })
       })
     },
+    //下载模版
+    downloadTemp(type) {
+      let columns = this.$store.state.teaching_workload[`${type.apiName}WorkloadTableTemplate`];
+      let fileName = `${type.label}模版.xlsx`;
+      downloadTemplate(columns, fileName)
+    }
   },
 };
 </script>
 
 <style scoped>
 .app-section {
+  position: relative;
   margin-top: 10px;
   max-width: 700px;
 }
 
 .upload {
   margin-top: 20px;
+}
+
+.download {
+  position: absolute;
+  bottom: 10px;
+  right: 20px;
 }
 </style>
