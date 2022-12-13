@@ -22,7 +22,7 @@ const state = {
             options: ["教学工作量", "监考工作量", "论文工作量"],
         },
         {
-            key: "courseName",
+            key: "mainTeacherName",
             label: '上课老师',
             inputType: "text",
             options: [],

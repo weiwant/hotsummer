@@ -26,7 +26,6 @@ export function updateTeachingWorkload(url, data) {
         url,
         method: 'post',
         data: qs.stringify(data),
-
     })
 }
 
@@ -35,6 +34,6 @@ export function uploadTeachingWorkload(data, type) {
         url: `/file/upload/${type}`,
         method: 'post',
         data,
-        headers: { "Content-Type": "multipart/form-datas" }
+        headers: { "Content-Type": "multipart/form-data" }
     })
 }

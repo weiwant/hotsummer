@@ -10,14 +10,25 @@
       </el-date-picker>
       <!-- 文件上传控件 -->
       <div class="upload">
-        <el-upload class="upload-demo" drag action="https://jsonplaceholder.typicode.com/posts/" multiple>
-          <i class="el-icon-upload"></i>
-          <div class="el-upload__text">将文件拖到此处，或<em>点击上传</em></div>
-          <div class="el-upload__tip" slot="tip">只能上传jpg/png文件，且不超过500kb</div>
-        </el-upload>
+        <!-- input在未设置multiple时，默认只能放一个文件 -->
+        <div class="choose-section">
+          <label :for="item.apiName">
+            <span class="icon"></span>
+            <span class="text">点击选择要上传的文件</span>
+            <div class="notice">(仅.xlsx/.xls文件，一次最多选择1个)</div>
+          </label>
+          <input type="file" accept=".xlsx,.xls" :id="item.apiName" @change="chooseFile(index,  item.apiName)">
+          <!-- 已上传文件 -->
+          <div class="file-list">
+            <div class="title">已选择文件：</div>
+            <div class="fileName" v-if="fileName[index]">{{fileName[index]}}</div>
+            <div class="nofile" v-else><span class="icon"></span>暂未选择文件</div>
+          </div>
+        </div>
+        <div class="button">
+          <button class="withBorder white" @click="upload(index, item.apiName)">确认上传</button>
+        </div>
       </div>
-      <!-- <el-input type="file" :ref="item.apiName" v-model="fileName[index]" @change="getFileData(index)" multiple="false"
-        accept=".xls,.xlsx"></el-input> -->
       <!-- 模版下载控件 -->
       <div class="download">
         <button class="withBorder green" @click="downloadTemp(item)">
@@ -30,7 +41,7 @@
 
 <script>
 import { uploadTeachingWorkload } from '@/api/teaching-workload'
-import { ColorPicker, Message } from 'element-ui'
+import { Message } from 'element-ui'
 import { downloadTemplate } from '@/utils/teaching-workload';
 export default {
   name: "UploadWorkload",
@@ -38,51 +49,45 @@ export default {
     return {
       workloadType: this.$store.getters.workloadType_teaching,
       currentYear: this.$store.getters.currentYear,
-      yearForWorkloadTable: [undefined, undefined, undefined],
-      fileName: [undefined, undefined, undefined],
+      yearForWorkloadTable: [null, null, null],
+      fileName: [null, null, null],
     };
   },
   methods: {
-    //点击触发上传方法
-    uploadMaterial() {
-      this.workloadType.forEach(element => {
-        this.$refs[item.apiName].dispatchEvent(new MouseEvent("click"));
-      });
+    chooseFile(index, apiName) {
+      let files = document.getElementById(apiName).files;
+      this.fileName.splice(index,1,files[0].name)
     },
-    //触发选择文件，判断文件类型
-    getFileData(index) {
-      let apiName = this.workloadType[index].apiName;
-      let inputFile = this.$refs[apiName]
-      let filename = fileName[index];
-      const isExcel = filename.substring(filename.lastIndexOf(".") + 1);
-      if (isExcel != "xls" && isExcel != "xlsx") {
+    upload(index, apiName) {
+      //如果没选择年份
+      let naturalYear = this.yearForWorkloadTable[index];
+      if (!naturalYear) {
         Message({
-          message: "文件格式错误，请上传xls或xlsx类型文件！",
-          type: 'error',
+          message: '请选择年份！',
+          type: 'warning',
           duration: 2000
         })
-      } else {
-        this.uploadFile(inputFile.$refs.input.files[0], apiName, index);
+        return;
       }
-    },
-    //上传文件，自然学年
-    uploadFile(file, apiName, index) {
-      const formData = new FormData();
-      formData.append("file", file);
-      formData.append("naturalYear", this.$data.yearForWorkloadTable[index]);
-      uploadTeachingWorkload(formData, apiType).then(() => {
+      let files = document.getElementById(apiName).files
+      if (files.length == 0) {
         Message({
-          message: "文件上传成功！",
-          type: 'success',
+          message: '请选择文件！',
+          type: 'warning',
           duration: 2000
         })
-      }).catch(err => {
-        Message({
-          message: `文件上传失败，${err}`,
-          type: 'error',
-          duration: 2000
-        })
+        return;
+      }
+      let formData = new FormData();
+      formData.append('naturalYear', naturalYear);
+      console.log(files[0])
+      formData.append('file', files[0]);
+      uploadTeachingWorkload(formData, apiName).then(() => {
+
+      }).catch(() => {
+
       })
+
     },
     //下载模版
     downloadTemp(type) {
@@ -94,7 +99,13 @@ export default {
 };
 </script>
 
-<style scoped>
+<style scoped lang="scss">
+@import "@/style/variables.scss";
+
+.icon {
+  font-family: 'icomoon';
+}
+
 .app-section {
   position: relative;
   margin-top: 10px;
@@ -103,11 +114,77 @@ export default {
 
 .upload {
   margin-top: 20px;
+
+  .button {
+    margin-top: 20px;
+  }
+
+  label {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    width: 50%;
+    height: 200px;
+    border-radius: 5px;
+    border: 1px dashed #aaa;
+    background-color: #f4f4f5;
+    color: #43566f;
+    cursor: pointer;
+
+    &:hover {
+      border: 1px dashed $subThemeColor;
+      color: #2f3c4d;
+
+    }
+
+    .icon {
+      font-size: 40px;
+    }
+
+    .text {
+      font-size: 14px;
+    }
+
+    .notice {
+      font-size: 12px;
+      color: #aaa;
+    }
+  }
+
+  input[type="file"] {
+    display: none;
+  }
+
+  .file-list {
+    margin-top: 10px;
+    font-size: 14px;
+    font-weight: 500;
+
+    .title {
+      margin-bottom: 5px;
+    }
+
+    .fileName {
+      color: #666;
+    }
+
+    .nofile {
+      color: $yellow;
+      font-weight: 400;
+
+      .icon {
+        vertical-align: bottom;
+        margin-right: 5px;
+      }
+    }
+  }
 }
 
 .download {
   position: absolute;
-  bottom: 10px;
+  bottom: 15px;
   right: 20px;
 }
 </style>
