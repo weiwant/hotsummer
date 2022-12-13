@@ -22,11 +22,15 @@ export function removeToken() {
 
 //用户姓名
 export function getUserInfo() {
-    return Cookies.get(userInfoKey)
+    if (Cookies.get(userInfoKey)) {
+        return JSON.parse(Cookies.get(userInfoKey))
+    } else {
+        return null
+    }
 }
 
 export function setUserInfo(userInfo) {
-    return Cookies.set(userInfoKey, userInfo)
+    return Cookies.set(userInfoKey, JSON.stringify(userInfo))
 }
 
 export function removeUserInfo() {

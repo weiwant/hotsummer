@@ -126,6 +126,7 @@ export default {
       this.filterAdded = [];
     },
     search() {
+      this.showBody = false;
       if (this.isEditing) {  //点击确认查询
         if (this.yearChosen === '' || this.yearChosen === null) {
           Message({
