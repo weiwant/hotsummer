@@ -25,6 +25,7 @@ router.beforeEach((to, before, next) => {
     } else {
       //如果是刚进app，用户路由还没生成
       if (store.getters.addRoutes.length === 0) {
+        //路由数据是让vuex管理的，所以最后生成完整路由表的事情要让vuex来做，router应该作为一个数据请求者，从store.getters那拿过来以后，在填入自身
         store.dispatch('permission/generateRoutes', store.getters.identity).then(() => {
           router.addRoutes(store.getters.addRoutes)
           next({ ...to, replace: true }) //再调一次next而非直接导航到目的地，确保addRoutes已经完成

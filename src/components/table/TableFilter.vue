@@ -5,46 +5,46 @@
       <div class="table-filter-item">
         <label>年份</label>
         <el-date-picker v-model="yearChosen" type="year" placeholder="选择自然年份" value-format="yyyy" :editable="false"
-          :disabled="!isEditing">
+          :disabled="!isEditing" @click.native.prevent>
         </el-date-picker>
       </div>
       <!-- 筛选条件选择 -->
       <div class="table-filter-item nolabel">
-        <button class="withBorder white" :class="{ chosen: showFilterSelectBody }" @click="changeFilterSelectBodyStatus"
+        <button class="withBorder white" :class="{ chosen: showBody }" @click.prevent="changeFilterSelectBodyStatus"
           :disabled="!isEditing">
           &nbsp;添加筛选条件
         </button>
         <!-- Body -->
         <transition name="fade">
-          <div class="filter-select-wrapper" v-if="showFilterSelectBody">
+          <div class="filter-select-wrapper" v-if="showBody">
             <!-- 类型选择 -->
             <div class="filter-select-section">
               <div class="filter-select-section-title">字段</div>
               <el-select v-model="filterIndexChosen" placeholder="请选择筛选字段">
-                <el-option v-for="(item, index) in filters" :key="item.type_filter" :label="item.label" :value="index"
+                <el-option v-for="(item, index) in filters" :key="item.key" :label="item.label" :value="index"
                   :disabled="
                     filterAdded.findIndex(
-                      (el) => el.type === item.type_filter
+                      (el) => el.key === item.key
                     ) !== -1
                   ">
                 </el-option>
               </el-select>
             </div>
-            <div class="filter-select-section" v-if="filterTypeChosen.length !== 0">
+            <div class="filter-select-section" v-if="(filterIndexChosen != null)">
               <!-- 值确认 -->
               <div class="filter-select-section-title">值</div>
               <!-- 下拉菜单 -->
               <el-select v-model="filterValue" placeholder="请选择"
-                v-if="filters[filterIndexChosen].type_input === 'select'">
+                v-if="filters[filterIndexChosen].inputType === 'select'">
                 <el-option v-for="item in filters[filterIndexChosen].options" :key="item" :label="item" :value="item">
                 </el-option>
               </el-select>
               <!-- 输入框 -->
               <el-input v-model="filterValue" placeholder="请输入内容"
-                v-if="filters[filterIndexChosen].type_input === 'text'"></el-input>
+                v-if="filters[filterIndexChosen].inputType === 'text'"></el-input>
             </div>
             <!-- 添加button -->
-            <div class="filter-select-section" v-if="filterValue.length !== 0">
+            <div class="filter-select-section" v-if="((filterValue != null) && filterValue.length != 0)">
               <div class="confirm" @click="addFilter">确认添加</div>
             </div>
           </div>
@@ -61,8 +61,8 @@
       <button class="noBorder red" :disabled="!isEditing || filterAdded.length <= 0" @click="clearAdded">
         
       </button>
-      <div class="filter-added-item" v-for="(item, index) in filterAdded" :key="item.filter_type"
-        :style="{ backgroundColor: !isEditing ? '#ddd' : colorList[index % 4] }">
+      <div class="filter-added-item" v-for="(item, index) in filterAdded" :key="item.key"
+        :style="{ backgroundColor: !isEditing ? '#ddd' : colorList[index % colorList.length] }">
         {{ item.value }}
         <span class="delete" :class="{ 'disabled': !isEditing }" @click="deleteFilter(index)"></span>
       </div>
@@ -84,26 +84,15 @@ export default {
       // 年份选择
       yearChosen: `${this.$store.getters.currentYear}`,
       // 添加过滤器
-      showFilterSelectBody: false,
-      filterIndexChosen: "",
-      filterValue: "",
+      showBody: false,
+      filterIndexChosen: null,
+      filterValue: null,
       // 已添加的过滤器
       filterAdded: [],
-      colorList: ["#b9ca6e", "#87a863", "#5a813b", "#46693a"],
+      colorList: ["#306f8b",  "#8baeb2", "#9aa679"],
       //是否正在重置查询条件
       isEditing: false,
     };
-  },
-  computed: {
-    filterTypeChosen() {
-      if (
-        typeof this.filterIndexChosen !== "number" ||
-        this.filterIndexChosen < 0
-      ) {
-        return "";
-      }
-      return this.filters[this.filterIndexChosen].type_filter;
-    },
   },
   watch: {
     //每当选择了一个新的filter类型，value都要恢复空值
@@ -113,19 +102,20 @@ export default {
   },
   methods: {
     changeFilterSelectBodyStatus() {
-      this.showFilterSelectBody = !this.showFilterSelectBody;
+      this.showBody = !this.showBody;
     },
     addFilter() {
+      let key = this.filters[this.filterIndexChosen].key
       //加入added数组
       this.filterAdded.push({
-        type: this.filterTypeChosen,  //type_filter
+        key: key,
         value: this.filterValue,
       });
       //清除历史
-      this.filterIndexChosen = "";
-      this.filterValue = "";
+      this.filterIndexChosen = null;
+      this.filterValue = null;
       //隐藏filter-select-body
-      this.showFilterSelectBody = false;
+      this.showBody = false;
     },
     deleteFilter(index) {
       if (!this.isEditing) return;

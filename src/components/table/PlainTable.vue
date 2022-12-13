@@ -1,41 +1,77 @@
 <template>
-  <div id="table-wrapper">
-    <table>
-      <thead>
-        <tr>
-          <td v-for="item in header" :key="item.value">{{ item.key }}</td>
-        </tr>
-      </thead>
-      <tbody>
-        <tr v-for="obj in data" :key="obj.courseNumber">
-          <td v-for="count in header.length">
-            {{ obj[header[count - 1].value] }}
-          </td>
-        </tr>
-      </tbody>
-    </table>
+  <div id="plain-table">
+    <div class="mask" v-show="showLoading">
+      <Loading />
+    </div>
+    <div class="table-wrapper">
+      <table>
+        <thead>
+          <tr>
+            <td v-for="header in headerArray" :key="header.key">{{ header.label }}</td>
+          </tr>
+        </thead>
+        <tbody>
+          <tr v-for="data in dataArray" :key="data.id">
+            <td v-for="header in headerArray">
+              {{ data[header.key] }}
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
   </div>
 </template>
 
 <script>
+import Loading from '@/components/Loading.vue'
 export default {
   props: {
-    header: {
+    headerArray: {
       type: Array,
       required: true,
     },
-    data: {
+    dataArray: {
       type: Array,
       required: true,
     },
+    showLoading: {
+      type: Boolean,
+      required: true
+    }
   },
+  components: { Loading },
+  data() {
+    return {
+
+    }
+  }
 };
 </script>
 
 <style scoped lang="scss">
 @import "@/style/variables.scss";
 
-#table-wrapper {
+#plain-table {
+  position: relative;
+  width: 100%;
+}
+
+.mask {
+  z-index: 10000;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(187, 187, 187, 0.207);
+  backdrop-filter: blur(1px);
+
+  .loading {
+    margin-top: 80px;
+  }
+}
+
+.table-wrapper {
   width: 100%;
   overflow: auto;
   padding-bottom: 50px;

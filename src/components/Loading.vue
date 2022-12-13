@@ -1,16 +1,10 @@
 <template>
-  <div class="loading" v-if="showLoading"></div>
+  <div class="loading"></div>
 </template>
 
 <script>
 export default {
-  props: {
-    showLoading: {
-      type: Boolean,
-      required: true,
-      default: false,
-    },
-  },
+
 };
 </script>
 

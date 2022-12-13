@@ -12,23 +12,26 @@
         <div class="form-title">登&nbsp;&nbsp;&nbsp;录</div>
         <div class="form-item">
           <label>账号</label>
-          <input type="text" v-model="username" @blur="validateUsername" placeholder="教职工号" />
+          <input type="text" v-model="username" placeholder="人事号" />
         </div>
         <div class="form-item">
           <label>密码</label>
-          <input type="password" v-model="password" @blur="validatePassword" placeholder="身份证后6位" />
+          <input type="password" v-model="password" placeholder="身份证后6位" />
         </div>
         <div class="form-submit" @click="login">
           <span>确</span><span>认</span>
         </div>
       </div>
-      <Loading :showLoading="showLoading" />
+      <div class="loading" v-show="showLoading">
+        <Loading />
+      </div>
+
+
     </div>
   </div>
 </template>
 
 <script>
-import { validUsername, validPassword } from "@/utils/validate";
 import { Message } from "element-ui";
 import Loading from "@/components/Loading.vue";
 export default {
@@ -47,23 +50,25 @@ export default {
   methods: {
     validateUsername() {
       this.username = this.username.replace(/\s*/g, "");
-      this.valid_username = validUsername(this.username);
+      if (this.username.length != 8) this.valid_username = false;
+      else this.valid_username = true;
+
     },
     validatePassword() {
       this.password = this.password.replace(/\s*/g, "");
-      this.valid_password = validPassword(this.password);
+      if (this.password.length != 6) { this.valid_password = false; }
+      else this.valid_password = true;
     },
     login() {
+      this.validatePassword(); this.validateUsername();
       if (this.valid_username && this.valid_password) {
         this.showLoading = true;
         this.$store
-          .dispatch("user/login", { username: this.username, password: this.password })
+          .dispatch("user/login", { userid: this.username, password: this.password })
           .then(() => {
-            //如果是重定向到了login，接下来应该根据redirect的值，导航到用户原本想去的地方
             if (this.$route.query.redirect) {
               this.$router.push(this.$route.query.redirect)
             } else {
-              //如果用户是正常访问的login界面，那就直接导航至'/'即可
               this.$router.push("/");
             }
             this.showLoading = false;

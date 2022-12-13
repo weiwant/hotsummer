@@ -30,7 +30,7 @@ export default {
     //从用户所有“可触及”路由中，过滤出登录以后需要通过sidebar导航的路由
     routes() {
       return this.$store.getters.routes.filter((item) => {
-        if (item.path === '/login' || item.path === '/') return false;
+        if (item.path === '/login' || item.path === '/' || item.path === "/404" || item.path === '*') return false;
         return true;
       })
     },
