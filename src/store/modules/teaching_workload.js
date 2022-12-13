@@ -2,220 +2,281 @@ const state = {
     //查询教学工作量的过滤器
     filters: [
         {
-            type_filter: "workloadNature",
+            key: "workloadNature",
             label: '工作量性质',
-            type_input: "select",
+            inputType: "select",
             options: ["教学工作量", "监考工作量", "论文工作量"], //当输入类型为select时，需要提供options
         },
         {
-            type_filter: "courseName",
+            key: "courseName",
             label: '课程名称',
-            type_input: "text",
+            inputType: "text",
             options: [],
         },
     ],
-    //管理员查看教学工作量表头组
-    headerGroups: [
-        [
-            {
-                key: "工作量性质",
-                value: "workloadNature",
-            },
-            {
-                key: "学年",
-                value: "academicYear",
-            },
-            {
-                key: "学期",
-                value: "semester",
-            },
-            {
-                key: "课程号",
-                value: "courseNumber",
-            },
-            {
-                key: "课程名称",
-                value: "courseName",
-            },
-            {
-                key: "教学班",
-                value: "teachingClass",
-            },
-            {
-                key: "开课学院",
-                value: "teachingSchool",
-            },
-            {
-                key: "计划学院",
-                value: "planingSchool",
-            },
-            {
-                key: "学分",
-                value: "credit",
-            },
-            {
-                key: "课程性质",
-                value: "courseNature",
-            },
-            {
-                key: "年级",
-                value: "studentGrade",
-            },
-            {
-                key: "专业",
-                value: "major",
-            },
-            {
-                key: "上课老师",
-                value: "mainTeacherName",
-            },
-            {
-                key: "职称",
-                value: "mainTeacherTitle",
-            },
-            {
-                key: "上课人数",
-                value: "studentAmount",
-            }
-        ],
-        [
-            {
-                key: "理论课时",
-                value: "theoreticalClassHours",
-            },
-            {
-                key: "上机课时",
-                value: "computerClassHours",
-            },
-            {
-                key: "实验课时",
-                value: "experimentalClassHours",
-            },
-            {
-                key: "实践课时",
-                value: "practicalClassHours",
-            },
-            {
-                key: "计算用课时",
-                value: "calculatingClassHours",
-            },
-            {
-                key: "合课单位",
-                value: "jointDepartment",
-            },
-            {
-                key: "备注",
-                value: "remarks",
-            },
-            {
-                key: "实验安排",
-                value: "experimentArrangement",
-            },
-            {
-                key: "其它教师",
-                value: "otherTeacherName",
-            }
-        ],
-        [
-
-            {
-                key: "教分（BA1/3/15）原始分",
-                value: "originalTeachingScores",
-            },
-            {
-                key: "BA1系数",
-                value: "teachingCoefficient",
-            },
-            {
-                key: "教分（BA1/3/15）",
-                value: "finalTeachingScores",
-            },
-            {
-                key: "课程性质说明",
-                value: "classNatureExplanation",
-            },
-            {
-                key: "是否卓工或弘毅",
-                value: "specialClassRemarks",
-            },
-            {
-                key: "是否全英文",
-                value: "specialLanguageRemarks",
-            },
-            {
-                key: "是否卓工或弘毅",
-                value: "specialClassRemarks",
-            },
-            {
-                key: "是否打折",
-                value: "discount",
-            },
-            {
-                key: "未打折前",
-                value: "noDiscountTeachingCoefficient",
-            },
-            {
-                key: "实验室核对结果",
-                value: "laboratoryVerificationResults",
-            }
-        ]
-    ],
-    //教师查看教学工作量表头
-    headerForTeacher: [
+    // 教学工作量表头(管理员)
+    tableHeaders: [
         {
-            key: "工作量性质",
-            value: "workloadNature",
+            label: "工作量性质",
+            key: "workloadNature",
+            show: true,    //是否默认选中
+            editable: false,     //是否可编辑
         },
         {
-            key: "学年",
-            value: "academicYear",
+            label: "学年",
+            key: "academicYear",
+            show: true,
+            editable: false,
         },
         {
-            key: "学期",
-            value: "semester",
+            label: "学期",
+            key: "semester",
+            show: true,
+            editable: false,
         },
         {
-            key: "课程号",
-            value: "courseNumber",
+            label: "课程号",
+            key: "courseNumber",
+            show: true,
+            editable: false,
         },
         {
-            key: "课程名称",
-            value: "courseName",
+            label: "课程名称",
+            key: "courseName",
+            show: true,
+            editable: false,
         },
         {
-            key: "教学班",
-            value: "teachingClass",
+            label: "上课老师",
+            key: "mainTeacherName",
+            show: true,
+            editable: false,
         },
         {
-            key: "开课学院",
-            value: "teachingSchool",
+            label: "职称",
+            key: "mainTeacherTitle",
+            show: false,
+            editable: false,
         },
         {
-            key: "计划学院",
-            value: "planingSchool",
+            label: "上课人数",
+            key: "studentAmount",
+            show: true,
+            editable: true,
         },
         {
-            key: "学分",
-            value: "credit",
+            label: "理论课时",
+            key: "theoreticalClassHours",
+            show: true,
+            editable: true,
         },
         {
-            key: "课程性质",
-            value: "courseNature",
+            label: "上机课时",
+            key: "computerClassHours",
+            show: true,
+            editable: true,
         },
         {
-            key: "年级",
-            value: "studentGrade",
+            label: "实验课时",
+            key: "experimentalClassHours",
+            show: true,
+            editable: true,
         },
         {
-            key: "专业",
-            value: "major",
+            label: "实践课时",
+            key: "practicalClassHours",
+            show: true,
+            editable: true,
         },
         {
-            key: "上课人数",
-            value: "studentAmount",
+            label: "计算用课时",
+            key: "calculatingClassHours",
+            show: true,
+            editable: true,
+        },
+        {
+            label: "教分（BA1/3/15）原始分",
+            key: "originalTeachingScores",
+            show: true,
+            editable: true,
+        },
+        {
+            label: "BA1系数",
+            key: "teachingCoefficient",
+            show: true,
+            editable: true,
+        },
+        {
+            label: "教分（BA1/3/15）",
+            key: "finalTeachingScores",
+            show: true,
+            editable: true,
+        },
+        {
+            label: "教学班",
+            key: "teachingClass",
+            show: false,
+            editable: false,
+        },
+        {
+            label: "开课学院",
+            key: "teachingSchool",
+            show: false,
+            editable: false,
+        },
+        {
+            label: "计划学院",
+            key: "planingSchool",
+            show: false,
+            editable: false,
+        },
+        {
+            label: "学分",
+            key: "credit",
+            show: false,
+            editable: false,
+        },
+        {
+            label: "课程性质",
+            key: "courseNature",
+            show: false,
+            editable: false,
+        },
+        {
+            label: "年级",
+            key: "studentGrade",
+            show: false,
+            editable: false,
+        },
+        {
+            label: "专业",
+            key: "major",
+            show: false,
+            editable: false,
+        },
+        {
+            label: "合课单位",
+            key: "jointDepartment",
+            show: false,
+            editable: false,
+        },
+        {
+            label: "备注",
+            key: "remarks",
+            show: false,
+            editable: false,
+        },
+        {
+            label: "实验安排",
+            key: "experimentArrangement",
+            show: false,
+            editable: false,
+        },
+        {
+            label: "其它教师",
+            key: "otherTeacherName",
+            show: false,
+            editable: false,
+        },
+        {
+            label: "课程性质说明",
+            key: "classNatureExplanation",
+            show: false,
+            editable: false,
+        },
+        {
+            label: "是否卓工或弘毅",
+            key: "specialClassRemarks",
+            show: false,
+            editable: false,
+        },
+        {
+            label: "是否全英文",
+            key: "specialLanguageRemarks",
+            show: false,
+            editable: false,
+        },
+        {
+            label: "是否卓工或弘毅",
+            key: "specialClassRemarks",
+            show: false,
+            editable: false,
+        },
+        {
+            label: "是否打折",
+            key: "discount",
+            show: false,
+            editable: false,
+        },
+        {
+            label: "未打折前",
+            key: "noDiscountTeachingCoefficient",
+            show: false,
+            editable: false,
+        },
+        {
+            label: "实验室核对结果",
+            key: "laboratoryVerificationResults",
+            show: false,
+            editable: false,
         }
     ],
-    // 工作量类型
+    // 教学工作量表头(教师)
+    tableHeaders_teacher: [
+        {
+            label: "工作量性质",
+            key: "workloadNature",
+        },
+        {
+            label: "学年",
+            key: "academicYear",
+        },
+        {
+            label: "学期",
+            key: "semester",
+        },
+        {
+            label: "课程名称",
+            key: "courseName",
+        },
+        {
+            label: "学分",
+            key: "credit",
+        },
+        {
+            label: "课程性质",
+            key: "courseNature",
+        },
+        {
+            label: "年级",
+            key: "studentGrade",
+        },
+        {
+            label: "专业",
+            key: "major",
+        },
+        {
+            label: "理论课时",
+            key: "theoreticalClassHours",
+        },
+        {
+            label: "上机课时",
+            key: "computerClassHours",
+        },
+        {
+            label: "实验课时",
+            key: "experimentalClassHours",
+        },
+        {
+            label: "计算用课时",
+            key: "calculatingClassHours",
+        },
+        {
+            label: "教分（BA1/3/15）",
+            key: "finalTeachingScores",
+        },
+    ],
+    // 教学工作量类型
     type: [
         {
             apiName: 'academic',

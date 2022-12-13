@@ -1,10 +1,11 @@
 <template>
   <div class="app-view-container">
     <TableFilter :filters="filters" @search="search" />
-    <TableHeaderSelection :headerGroups="headerNameGroups" :headerChosen="headerChosen" @change="adjustHeader" />
-    <PlainTable :header="tableHeaderDisplayed" :data="tableData" />
+    <TableHeaderSelection :headers="headers" @change="changeHeaderShow" />
+    <EditableTable :headerArray="headers" :dataArray="tableData" :showLoading="showLoading" @update="update"
+      ref="table" />
     <div class="pagination">
-      <el-pagination background layout="total,prev, pager, next" page-size="20" :total="totalPage"
+      <el-pagination background layout="total,prev, pager, next" :page-size="20" :total="totalPage"
         @current-change="changePage">
       </el-pagination>
     </div>
@@ -14,25 +15,24 @@
 <script>
 import TableFilter from "@/components/table/TableFilter.vue";
 import TableHeaderSelection from "@/components/table/TableHeaderSelection.vue";
-import PlainTable from "@/components/table/PlainTable.vue";
+import EditableTable from './components/EditableTable.vue';
 import { getTeachingWorkload_paged } from "@/api/teaching-workload";
+import { Message } from "element-ui";
 export default {
   name: "CheckWorkload",
   components: {
     TableFilter,
-    TableHeaderSelection,
-    PlainTable,
+    EditableTable,
+    TableHeaderSelection
   },
   data() {
     return {
-      //初始化TableFilter
       filters: this.$store.getters.tableFilters_teaching,
+      headers: JSON.parse(JSON.stringify(this.$store.state.teaching_workload.tableHeaders)),
       //查询条件
       yearChosen: `${this.$store.getters.currentYear}`,
       filterAdded: [],
-      //查询结果
-      headerChosen: [], //选择要展示的表头组
-      tableHeaderGroups: this.$store.getters.tableHeaderGroups_teaching, //表头组集合
+      currentPage: 1,
       //假数据
       totalPage: 500,
       tableData: [
@@ -107,51 +107,12 @@ export default {
           noDiscountTeachingCoefficient: "11111111",
           laboratoryVerificationResults: "111111111",
         },
-      ]
+      ],
+      //是否显示table内的加载动画
+      showLoading: false,
     };
   },
-  computed: {
-    //根据表头组集合，计算传递给TableHeaderSelection的用于展示的表头组字符串数组
-    headerNameGroups() {
-      const result = [];
-      for (let group of this.tableHeaderGroups) {
-        let s = "";
-        for (let i = 0; i < group.length; i++) {
-          s += group[i].key;
-          if (i === group.length - 1) break;
-          s += "，";
-        }
-        result.push(s);
-      }
-      return result;
-    },
-    //根据chosen数组值，计算传递给table组件的表头
-    tableHeaderDisplayed() {
-      const result = [];
-      for (let i = 0; i < this.headerChosen.length; i++) {
-        if (this.headerChosen[i]) {
-          for (let item of this.tableHeaderGroups[i]) result.push(item);
-        }
-      }
-      return result;
-    },
-  },
   methods: {
-    //查询列表数据
-    search(yearChosen, filterAdded) {
-      this.yearChosen = yearChosen;
-      this.filterAdded = JSON.parse(JSON.stringify(filterAdded)); //深复制，当前组件保存的added永远是上一次点击查询时的
-      this.getTableData();
-    },
-    //更改展示表头
-    adjustHeader(chosen) {
-      this.headerChosen = [...chosen];
-    },
-    //分页
-    changePage(currentPage) {
-      this.currentPage = currentPage;
-      this.getTableData();
-    },
     getTableData() {
       const formData = new FormData();
       formData.append("naturalYear", this.yearChosen);
@@ -167,29 +128,67 @@ export default {
           console.log(err);
         });
     },
+    //改变表头展示状态
+    changeHeaderShow(checkList) {
+      for (let i = 0; i < this.headers.length; i++) {
+        //如果表头的index在checkList里找不到（即没选中）
+        if (checkList.findIndex(el => el == i) < 0) this.headers[i].show = false;
+        //反之
+        else this.headers[i].show = true;
+      }
+    },
+    //查询列表数据
+    search(yearChosen, filterAdded) {
+      this.yearChosen = yearChosen;
+      this.filterAdded = JSON.parse(JSON.stringify(filterAdded)); //深复制，当前组件保存的added永远是上一次点击查询时的
+      this.getTableData();
+    },
+    //分页
+    changePage(currentPage) {
+      this.currentPage = currentPage;
+      this.getTableData();
+    },
+    //更新编辑的数据
+    update(index, key, value) {
+      this.showLoading = true;
+      let id = this.tableData[index].id
+      //成功回调
+      setTimeout(() => {
+        this.showLoading = false;
+        this.tableData[index][key] = value;
+        this.$refs['table'].finishUpdating();
+        Message({
+          message: "修改成功！",
+          type: "success",
+          duration: 1000,
+        });
+      }, 500)
+      //失败回调
+      // setTimeout(()=>{
+      // this.showLoading = false;
+      // ;     //如果请求失败，就变回旧值
+      // },500)
+    }
   },
   created() {
-    //设置headerChosen初始值
-    for (let i = 0; i < this.tableHeaderGroups.length; i++) {
-      if (i === 0) {
-        this.headerChosen.push(true);
-      } else {
-        this.headerChosen.push(false);
-      }
-    }
     //默认先获取当年数据以展示
-    this.getTableData();
+    // this.getTableData();
   },
 };
 </script>
 
 <style scoped>
-#table-wrapper {
-  margin-top: 10px;
+#editable-table {
+  margin-top: 20px;
 }
 
 .pagination {
+  margin-top: 10px;
   display: flex;
   justify-content: center;
+}
+
+.el-checkbox {
+  margin-bottom: 8px;
 }
 </style>

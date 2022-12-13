@@ -1,7 +1,7 @@
 import Cookies from 'js-cookie'
 
 const TokenKey = 'WorkingloadMIS-Token'
-const usernameKey = 'WorkingloadMIS-Username'
+const userInfoKey = 'WorkingloadMIS-UserInfo'
 const identityKey = 'WorkingloadMIS-Identity'
 
 
@@ -21,16 +21,16 @@ export function removeToken() {
 
 
 //用户姓名
-export function getUsername() {
-    return Cookies.get(usernameKey)
+export function getUserInfo() {
+    return Cookies.get(userInfoKey)
 }
 
-export function setUsername(username) {
-    return Cookies.set(usernameKey, username)
+export function setUserInfo(userInfo) {
+    return Cookies.set(userInfoKey, userInfo)
 }
 
-export function removeUsername() {
-    return Cookies.remove(usernameKey)
+export function removeUserInfo() {
+    return Cookies.remove(userInfoKey)
 }
 
 

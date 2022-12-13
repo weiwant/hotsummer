@@ -18,14 +18,24 @@ export const constantRoutes = [
         children: [
             {
                 path: 'index',
-                component: () => import("@/views/user-info/index"),
+                // component: () => import("@/views/user-info/index"),
+                component: () => import('@/views/error-page/NotAvailable.vue')
             }
         ],
         meta: {
             title: '个人主页',
             icon: ''
         },
+    },
+
+    /*在用户登录前，所有非login的都会被放在redirect然后走到login，即使是一个不存在的路由
+      所以在登录前是不可能进得去404的*/
+    {
+        path: '/404',
+        name: 'NotFound',
+        component: () => import('@/views/error-page/404.vue')
     }
+
 ]
 
 //专属于教师的
@@ -54,7 +64,8 @@ export const teacherRoutes = [
         children: [
             {
                 path: 'index',
-                component: () => import('@/views/special-workload-upload/index')
+                // component: () => import('@/views/special-workload-upload/index')
+                component: () => import('@/views/error-page/NotAvailable.vue')
             }
         ],
         meta: {
@@ -62,6 +73,7 @@ export const teacherRoutes = [
             icon: ''
         },
     },
+    { path: '*', redirect: '/404', hidden: true }
 
 ]
 
@@ -84,7 +96,7 @@ export const managerRoutes = [
         }
     },
     {
-        path: '/teaching-workload-check',  //查看全体教职工教学工作量
+        path: '/teaching-workload-check',  //查看教学工作量
         name: 'TeachingWorkloadCheck',
         component: Layout,
         redirect: "/teaching-workload-check/index",
@@ -107,12 +119,18 @@ export const managerRoutes = [
         children: [
             {
                 path: 'index',
-                component: () => import('@/views/special-workload-audit/index'),
+                // component: () => import('@/views/special-workload-audit/index'),
+                component: () => import('@/views/error-page/NotAvailable.vue')
             }
         ],
         meta: {
             title: '审批特殊工作量',
             icon: ''
         }
-    }
+    },
+    { path: '*', redirect: '/404', hidden: true }
 ]
+
+
+
+
