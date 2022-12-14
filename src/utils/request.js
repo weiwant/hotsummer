@@ -6,7 +6,7 @@ import router from '@/router'
 
 const instance = axios.create({
     baseURL: "http://139.196.170.184:8080",
-    timeout: 5000,
+    // timeout: 5000,
 });
 
 

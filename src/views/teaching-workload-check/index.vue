@@ -89,16 +89,17 @@ export default {
       let workloadNature = this.tableData[index].workloadNature
       let url;
       switch (workloadNature) {
-        case '教学工作量':
+        case '教学':
           url = '/teaching-workload/update';
           break;
-        case '论文工作量':
+        case '论文':
           url = '/paper/update';
           break;
-        case '监考工作量':
+        case '监考':
           url = '/examination/update';
           break;
       }
+      console.log(url)
       updateTeachingWorkload(url, apiData).then(() => {
         this.showLoading = false;
         this.tableData[index][key] = value;  //如果修改成功就直接在当前array上修改，不再向后段请求数据了
@@ -109,6 +110,11 @@ export default {
           duration: 1000,
         });
       }).catch(() => {
+        Message({
+          message: "修改失败！",
+          type: "error",
+          duration: 2000,
+        });
         this.showLoading = false;
         this.$refs['table'].finishUpdating();
       })

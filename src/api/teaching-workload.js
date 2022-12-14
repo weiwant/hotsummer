@@ -30,6 +30,7 @@ export function updateTeachingWorkload(url, data) {
 }
 
 export function uploadTeachingWorkload(data, type) {
+    console.log(type)
     return request({
         url: `/file/upload/${type}`,
         method: 'post',

@@ -13,15 +13,18 @@
         <!-- input在未设置multiple时，默认只能放一个文件 -->
         <div class="choose-section">
           <label :for="item.apiName">
+            <div class="mask" v-if="showLoading[index]">
+              <Loading />
+            </div>
             <span class="icon"></span>
             <span class="text">点击选择要上传的文件</span>
             <div class="notice">(仅.xlsx/.xls文件，一次最多选择1个)</div>
           </label>
-          <input type="file" accept=".xlsx,.xls" :id="item.apiName" @change="chooseFile(index,  item.apiName)">
+          <input type="file" accept=".xlsx,.xls" :id="item.apiName" @change="chooseFile(index, item.apiName)">
           <!-- 已上传文件 -->
           <div class="file-list">
             <div class="title">已选择文件：</div>
-            <div class="fileName" v-if="fileName[index]">{{fileName[index]}}</div>
+            <div class="fileName" v-if="fileName[index]">{{ fileName[index] }}</div>
             <div class="nofile" v-else><span class="icon"></span>暂未选择文件</div>
           </div>
         </div>
@@ -43,20 +46,25 @@
 import { uploadTeachingWorkload } from '@/api/teaching-workload'
 import { Message } from 'element-ui'
 import { downloadTemplate } from '@/utils/teaching-workload';
+import Loading from '@/components/Loading.vue';
 export default {
   name: "UploadWorkload",
+  components: {
+    Loading
+  },
   data() {
     return {
       workloadType: this.$store.getters.workloadType_teaching,
       currentYear: this.$store.getters.currentYear,
-      yearForWorkloadTable: [null, null, null],
-      fileName: [null, null, null],
-    };
+      yearForWorkloadTable: [],
+      fileName: [],
+      showLoading: []
+    }
   },
   methods: {
     chooseFile(index, apiName) {
       let files = document.getElementById(apiName).files;
-      this.fileName.splice(index,1,files[0].name)
+      this.fileName.splice(index, 1, files[0].name)
     },
     upload(index, apiName) {
       //如果没选择年份
@@ -78,24 +86,39 @@ export default {
         })
         return;
       }
+      this.showLoading.splice(index, 1, true);
       let formData = new FormData();
       formData.append('naturalYear', naturalYear);
-      console.log(files[0])
       formData.append('file', files[0]);
       uploadTeachingWorkload(formData, apiName).then(() => {
-
+        Message({
+          message: '上传成功！',
+          type: 'success',
+          duration: 2000
+        });
+        this.showLoading.splice(index, 1, false);
       }).catch(() => {
-
+        Message({
+          message: '上传失败！',
+          type: 'error',
+          duration: 2000
+        });
+        this.showLoading.splice(index, 1, false);
       })
-
     },
-    //下载模版
     downloadTemp(type) {
       let columns = this.$store.state.teaching_workload[`${type.apiName}WorkloadTableTemplate`];
       let fileName = `${type.label}模版.xlsx`;
       downloadTemplate(columns, fileName)
     }
   },
+  created() {
+    for (let i = 0; i < this.workloadType.length; i++) {
+      this.yearForWorkloadTable.push(null);
+      this.fileName.push(null);
+      this.showLoading.push(false);
+    }
+  }
 };
 </script>
 
@@ -120,6 +143,7 @@ export default {
   }
 
   label {
+    position: relative;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -137,6 +161,17 @@ export default {
       border: 1px dashed $subThemeColor;
       color: #2f3c4d;
 
+    }
+
+    .mask {
+      position: absolute;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      height: 200px;
+      background-color: rgba(255, 255, 255, 0.419);
+      z-index: 1000;
     }
 
     .icon {
@@ -180,6 +215,8 @@ export default {
       }
     }
   }
+
+
 }
 
 .download {

@@ -19,7 +19,7 @@ const state = {
             key: "workloadNature",
             label: '工作量类型',
             inputType: "select",
-            options: ["教学工作量", "监考工作量", "论文工作量"],
+            options: ["教学", "监考", "论文"],
         },
         {
             key: "mainTeacherName",
