@@ -24,4 +24,6 @@ public interface TeachingWorkloadTableService {
 
     List<TeachingWorkloadStatistics> selectByTeacher(TeachingWorkloadVo teachingWorkloadVo);
 
+    int updateByID(TeachingWorkloadStatistics teachingWorkloadStatistics);
+
 }

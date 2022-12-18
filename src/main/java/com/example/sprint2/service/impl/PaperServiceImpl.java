@@ -79,4 +79,9 @@ public class PaperServiceImpl implements PaperService {
         List<PaperCoachingWorkload> list = paperCoachingDao.selectCourse(paperCoachingVo);
         return list;
     }
+
+    @Override
+    public int updateByID(PaperCoachingWorkload paperCoachingWorkload) {
+        return paperCoachingDao.updateByID(paperCoachingWorkload);
+    }
 }

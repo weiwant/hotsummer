@@ -158,4 +158,7 @@ public class TeachingWorkloadStatisticsDao {
         List<TeachingWorkloadStatistics> list = teachingWorkloadStatisticsMapper.selectList(wrapper);
         return list;
     }
+    public int updateByID(TeachingWorkloadStatistics teachingWorkloadStatistics) {
+        return teachingWorkloadStatisticsMapper.updateById(teachingWorkloadStatistics);
+    }
 }

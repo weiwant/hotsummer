@@ -1,6 +1,7 @@
 package com.example.sprint2.service;
 
 import com.example.sprint2.models.vo.LoginVo;
+import com.example.sprint2.mybatis.entity.Userinfo;
 import org.springframework.stereotype.Service;
 
 /**
@@ -17,4 +18,6 @@ public interface UserService {
     public int selectIdentify(LoginVo loginVo);
 
     public String selectUserName(LoginVo loginVo);
+
+    public Userinfo selectUserInfo(LoginVo loginVo);
 }

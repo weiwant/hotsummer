@@ -255,4 +255,12 @@ public class WorkloadVo {
     @ReferenceField(value = PaperCoachingWorkload.class, dataBaseName = "workload_type", fieldName = "workloadType")
     @ReferenceField(value = TeachingWorkloadStatistics.class, dataBaseName = "workload_nature")
     private String workloadNature;
+
+    /**
+     * id
+     */
+    @ReferenceField(value = ExaminationWorkload.class)
+    @ReferenceField(value = PaperCoachingWorkload.class)
+    @ReferenceField(value = TeachingWorkloadStatistics.class)
+    private Integer id;
 }

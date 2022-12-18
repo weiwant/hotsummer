@@ -7,10 +7,7 @@ import com.example.sprint2.mybatis.entity.PaperCoachingWorkload;
 import com.example.sprint2.service.PaperService;
 import com.example.sprint2.utils.Result;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -85,6 +82,15 @@ public class PaperCoachingController {
             return new Result(ResponseCode.NoContentFailure).toString();
         } else {
             return new Result(ResponseCode.SUCCESS, list).toString();
+        }
+    }
+    @PostMapping("/update")
+    public String updateByID(PaperCoachingWorkload paperCoachingWorkload) {
+        if (paperService.updateByID(paperCoachingWorkload) == 1) {
+            return new Result(ResponseCode.SUCCESS).toString();
+        }
+        else {
+            return new Result(ResponseCode.SubmitFailure).toString();
         }
     }
 

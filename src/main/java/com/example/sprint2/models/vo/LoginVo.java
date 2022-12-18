@@ -12,12 +12,22 @@ import lombok.Data;
 public class LoginVo {
 
     @JsonProperty(value = "userid")
+    //人事号或管理员账号
     private String userid;
-
+    //姓名
     private String username;
+    //密码
     private String password;
     private int identify;
     private String token;
+    //性别
+    private String gender;
+    //职称
+    private String title;
+    //职级
+    private String rank;
+    //系
+    private String faculty;
 
 
     public String getToken() {

@@ -54,7 +54,7 @@ public class TotalWorkLoadServiceImpl implements TotalWorkLoadService {
             totalTable.setTeacherName(workloadVo.getMainTeacherName());
         }
         //根据自然年查询总表
-        int size = 40;
+        int size = 20;
         List<TotalTable> totalTables = totalTableDao.selectByNaturalYear(totalTable);
         List<WorkloadVo> workloadVoList = totalTableDao.combine(totalTables, workloadVo);
         IPage<WorkloadVo> voIPage = ListToPageUtil.listToPage(workloadVoList, page, size);

@@ -55,6 +55,11 @@ public class ExaminationServiceImpl implements ExaminationService {
         return examinationWorkloadList;
     }
 
+    @Override
+    public int updateByID(ExaminationWorkload examinationWorkload) {
+        return examinationDao.updateByID(examinationWorkload);
+    }
+
     /**
      * @Author：wwq
      * @Return：

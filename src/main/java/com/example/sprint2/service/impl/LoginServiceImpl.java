@@ -1,8 +1,10 @@
 package com.example.sprint2.service.impl;
 
 import com.example.sprint2.dao.UserDao;
+import com.example.sprint2.dao.UserInfoDao;
 import com.example.sprint2.models.vo.LoginVo;
 import com.example.sprint2.mybatis.entity.UserLogin;
+import com.example.sprint2.mybatis.entity.Userinfo;
 import com.example.sprint2.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,6 +19,8 @@ import org.springframework.stereotype.Service;
 public class LoginServiceImpl implements UserService {
     @Autowired
     UserDao userdao;
+    @Autowired
+    UserInfoDao userInfoDao;
 
     @Override
     public boolean checkUserExist(LoginVo loginVo) {//检测该id的账户是否存在（更新）
@@ -34,6 +38,11 @@ public class LoginServiceImpl implements UserService {
     public String selectUserName(LoginVo loginVo){
         String name = userdao.selectById(loginVo.getUserId()).getUsername();
         return name;
+    }
+
+    @Override
+    public Userinfo selectUserInfo(LoginVo loginVo) {
+        return userInfoDao.getRecord(loginVo);
     }
 
     @Override

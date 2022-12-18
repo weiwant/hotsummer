@@ -7,10 +7,7 @@ import com.example.sprint2.mybatis.entity.TeachingWorkloadStatistics;
 import com.example.sprint2.service.TeachingWorkloadTableService;
 import com.example.sprint2.utils.Result;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -127,6 +124,15 @@ public class TeachingWorkloadTableController {
             return new Result(ResponseCode.NoContentFailure).toString();
         } else {
             return new Result(ResponseCode.SUCCESS, list).toString();
+        }
+    }
+    @PostMapping("update")
+    public String updateByID(TeachingWorkloadStatistics teachingWorkloadStatistics) {
+        if(teachingWorkloadTableService.updateByID(teachingWorkloadStatistics) == 1) {
+            return new Result(ResponseCode.SUCCESS).toString();
+        }
+        else {
+            return new Result(ResponseCode.SubmitFailure).toString();
         }
     }
 }

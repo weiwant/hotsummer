@@ -116,4 +116,7 @@ public class ExaminationDao {
         }
         return examinationScore;
     }
+    public int updateByID(ExaminationWorkload examinationWorkload) {
+        return examinationWorkloadMapper.updateById(examinationWorkload);
+    }
 }

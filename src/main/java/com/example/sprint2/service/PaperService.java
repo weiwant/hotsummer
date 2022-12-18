@@ -23,4 +23,5 @@ public interface PaperService {
     public List<PaperCoachingWorkload> selectTeacher(PaperCoachingVo paperCoachingVo);
 
     public List<PaperCoachingWorkload> selectCourse(PaperCoachingVo paperCoachingVo);
+    public int updateByID(PaperCoachingWorkload paperCoachingWorkload);
 }

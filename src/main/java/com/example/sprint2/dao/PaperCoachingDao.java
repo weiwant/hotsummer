@@ -134,5 +134,8 @@ public class PaperCoachingDao {
         queryWrapper.isNotNull("paper_work_id");
         totalTableMapper.delete(queryWrapper);
     }
+    public int updateByID(PaperCoachingWorkload paperCoachingWorkload) {
+        return mapper.updateById(paperCoachingWorkload);
+    }
 
 }

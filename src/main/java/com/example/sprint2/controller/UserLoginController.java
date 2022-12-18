@@ -4,6 +4,7 @@ import cn.hutool.extra.spring.SpringUtil;
 import com.example.sprint2.models.abc.Token;
 import com.example.sprint2.models.enumerate.impl.ResponseCode;
 import com.example.sprint2.models.vo.LoginVo;
+import com.example.sprint2.mybatis.entity.Userinfo;
 import com.example.sprint2.service.impl.LoginServiceImpl;
 import com.example.sprint2.utils.Result;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,8 +37,13 @@ public class UserLoginController {
             boolean rightPsw = login.checkPsw(loginVo);     //检测密码是否正确
             if (rightPsw) {
                 LoginVo loginVo1 = new LoginVo();
+                Userinfo temp = login.selectUserInfo(loginVo);
                 loginVo1.setIdentify(login.selectIdentify(loginVo));
                 loginVo1.setUsername(login.selectUserName(loginVo));
+                loginVo1.setGender(temp.getGender());
+                loginVo1.setFaculty(temp.getFaculty());
+                loginVo1.setRank(temp.getProfessionrank());
+                loginVo1.setTitle(temp.getTitle());
                 Map<String, Object> payload = new HashMap<>();
                 payload.put("identity", loginVo1.getIdentify());
                 //payload.put("username",loginVo1.getUsername());

@@ -7,10 +7,7 @@ import com.example.sprint2.mybatis.entity.ExaminationWorkload;
 import com.example.sprint2.service.ExaminationService;
 import com.example.sprint2.utils.Result;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -92,4 +89,13 @@ public class ExaminationController {
 
     // TODO: 2022/6/30 double 转化为 int
 
+    @PostMapping("/update")
+    public String updateByID(ExaminationWorkload examinationWorkload) {
+        if (examinationService.updateByID(examinationWorkload) == 1) {
+            return new Result(ResponseCode.SUCCESS).toString();
+        }
+        else {
+            return new Result(ResponseCode.SubmitFailure).toString();
+        }
+    }
 }

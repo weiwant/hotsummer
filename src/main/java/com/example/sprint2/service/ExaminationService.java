@@ -20,4 +20,5 @@ public interface ExaminationService {
     List<ExaminationWorkload> getTeacherWorkload(ExaminationVo examinationVo);
 
     List<ExaminationWorkload> getCourseWorkload(ExaminationVo examinationVo);
+    int updateByID(ExaminationWorkload examinationWorkload);
 }
