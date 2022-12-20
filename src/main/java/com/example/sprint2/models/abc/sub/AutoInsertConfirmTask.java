@@ -59,9 +59,10 @@ public class AutoInsertConfirmTask extends Task {
             List<UserLogin> userLogins = userDao.selectAll();
             for (UserLogin userLogin : userLogins) {
                 WorkloadConfirm confirm = new WorkloadConfirm();
+                confirm.setTeacherId(userLogin.getUserid());
                 confirm.setTeacherName(userLogin.getUsername());
                 confirm.setNaturalYear(String.valueOf(calendar.get(Calendar.YEAR)));
-                confirm.setConfirm(false);
+                confirm.setConfirm(0);
                 workloadConfirmDao.insertEntity(confirm);
             }
             logger.info("插入成功");

@@ -2,18 +2,17 @@ package com.example.sprint2.mybatis.entity;
 
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableName;
+import java.io.Serializable;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.io.Serializable;
-
 /**
  * <p>
- *
+ * 
  * </p>
  *
- * @author ZWForum
- * @since 2022-07-04
+ * @author 25906
+ * @since 2022-12-18
  */
 @Getter
 @Setter
@@ -25,11 +24,14 @@ public class WorkloadConfirm implements Serializable {
     @TableField("natural_year")
     private String naturalYear;
 
+    @TableField("teacher_id")
+    private String teacherId;
+
     @TableField("teacher_name")
     private String teacherName;
 
     @TableField("confirm")
-    private Boolean confirm;
+    private Integer confirm;
 
 
 }

@@ -9,4 +9,7 @@ import com.example.sprint2.models.vo.ConfirmVo;
  */
 public interface ConfirmService {
     public String updateConfirm(ConfirmVo confirmVo);
+    public String confirmRecord(ConfirmVo confirmVo);
+    public int getConfirmStatus(ConfirmVo confirmVo);
+    public int[] getCount(ConfirmVo confirmVo);
 }

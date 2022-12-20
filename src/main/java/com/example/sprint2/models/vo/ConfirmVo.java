@@ -11,5 +11,8 @@ import lombok.Data;
 public class ConfirmVo {
     private String year;
     private String teacherName;
-    private Boolean confirm;
+    private int confirm;
+    private String id;
+    private int confirmCount; //已确认人数
+    private int notConfirmCount;   //未确认人数
 }
