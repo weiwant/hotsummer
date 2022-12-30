@@ -1,6 +1,7 @@
 package com.example.sprint2.dao;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.example.sprint2.mybatis.entity.Message;
 import com.example.sprint2.mybatis.entity.UserLogin;
 import com.example.sprint2.mybatis.mapper.UserloginMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -61,4 +62,17 @@ public class UserDao {
     }
 
 
+    /**
+     * @Author：wwq
+     * @Date：2022/12/30
+     * @Url:
+     * @Description：根据教师id获得姓名
+     */
+    public String getNameById(String userId) {
+        QueryWrapper<UserLogin> queryWrapper=new QueryWrapper<>();
+        queryWrapper.eq("userid",userId);
+        UserLogin userLogin=userloginMapper.selectOne(queryWrapper);
+        return userLogin.getUsername();
+
+    }
 }

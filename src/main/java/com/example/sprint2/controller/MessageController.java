@@ -42,4 +42,26 @@ public class MessageController {
             return new Result(ResponseCode.SubmitFailure).toString();
         }
     }
+
+    /**
+     * @Author：wwq
+     * @Date：2022/12/30
+     * @Url:
+     * @Description：教师端获取消息
+     */
+    @RequestMapping(value = "/get/teacher",method = RequestMethod.POST)
+    public String getTeacherMessage(@RequestBody MessageVo messageVo){
+        return messageService.getMyMessage(messageVo);
+    }
+
+    /**
+     * @Author：wwq
+     * @Description：管理员端获取消息
+     * sender对象和responder详细信息都需要
+     */
+    @RequestMapping(value = "/get/monitor",method = RequestMethod.POST)
+    public String getMonitorMessage(@RequestBody MessageVo messageVo){
+        return messageService.getAllMessage(messageVo);
+    }
+
 }

@@ -1,16 +1,16 @@
 /*
 Navicat MySQL Data Transfer
 
-Source Server         : link
+Source Server         : linkWithHotsummer
 Source Server Version : 80011
 Source Host           : localhost:3306
-Source Database       : hot_summer
+Source Database       : demo
 
 Target Server Type    : MYSQL
 Target Server Version : 80011
 File Encoding         : 65001
 
-Date: 2022-07-08 22:35:23
+Date: 2022-12-30 11:32:14
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -58,3 +58,7 @@ CREATE TABLE `teaching_workload_statistics` (
   `workload_nature` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '工作量性质',
   PRIMARY KEY (`id`) USING BTREE
 ) ENGINE=InnoDB AUTO_INCREMENT=533 DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
+
+-- ----------------------------
+-- Records of teaching_workload_statistics
+-- ----------------------------

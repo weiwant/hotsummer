@@ -6,6 +6,8 @@ import com.example.sprint2.mybatis.mapper.MessageMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 /**
  * @author hy
  * @Date 2022/12/23
@@ -52,4 +54,27 @@ public class MessageDao {
     }
 
 
+    /**
+     * @Author：wwq
+     * @Date：
+     * @Url:
+     * @Description：获取符合条件的消息记录/sender教师id和年份year
+     */
+    public List<Message> getTeacherMessage(Message message) {
+        QueryWrapper<Message> queryWrapper=new QueryWrapper<>();
+        queryWrapper.eq("sender",message.getSender());
+        queryWrapper.eq("year",message.getYear());
+        return messageMapper.selectList(queryWrapper);
+    }
+
+    /**
+     * @Author：wwq
+     * @Description：管理员respondor和年份获取消息记录
+     */
+    public List<Message> getMonitorMessage(Message message) {
+        QueryWrapper<Message> queryWrapper=new QueryWrapper<>();
+        queryWrapper.eq("responder",message.getResponder());
+        queryWrapper.eq("year",message.getYear());
+        return messageMapper.selectList(queryWrapper);
+    }
 }

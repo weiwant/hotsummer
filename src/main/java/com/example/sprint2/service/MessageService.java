@@ -12,8 +12,11 @@ import org.springframework.stereotype.Service;
 @Service
 public interface MessageService {
 
+    public String getMyMessage(MessageVo messageVo) ;
+
     public int insertMessage(MessageVo messageVo);
 
     public boolean responseMessage(MessageVo messageVo);
 
+    public String getAllMessage(MessageVo messageVo);
 }
