@@ -6,8 +6,8 @@ import { getToken, setToken, removeToken, getIdentity, setIdentity, removeIdenti
 
 const state = {
     token: getToken(),   //初始值从cookie内获取，没有的话就是undefined
-    identity: getIdentity(),
-    userInfo: getUserInfo(),
+    identity: getIdentity(),    //用户身份
+    userInfo: getUserInfo(),    //其它用户信息
 }
 
 const mutations = {
@@ -35,6 +35,7 @@ const actions = {
                 setIdentity(res.identify);
                 //个人信息
                 let userInfo = {
+                    userId: res.userId,
                     name: res.username,
                     faculty: res.faculty,
                     gender: res.gender,

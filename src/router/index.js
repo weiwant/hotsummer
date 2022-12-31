@@ -21,7 +21,7 @@ router.beforeEach((to, before, next) => {
   /***如果用户已经登录***/
   if (store.getters.token) {
     if (to.path === '/login') {
-      next({ path: '/userinfo' });
+      next({ path: '/' });
     } else {
       //如果是刚进app，用户路由还没生成
       if (store.getters.addRoutes.length === 0) {
@@ -43,9 +43,6 @@ router.beforeEach((to, before, next) => {
   }
 })
 
-router.afterEach((to, from) => {
-  store.commit('permission/updateCurrentRoute');
-})
 
 export default router;
 

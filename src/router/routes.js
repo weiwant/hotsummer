@@ -1,35 +1,14 @@
 import Layout from "@/layout"
-//一些公共的路由
+
+
+//公共路由
 export const constantRoutes = [
     {
         path: '/login',
         name: "Login",
         component: () => import("@/views/login")
     },
-    {
-        path: '/',
-        redirect: '/userinfo',
-    },
-    {
-        path: '/userinfo',
-        name: "Userinfo",
-        component: Layout,
-        redirect: '/userinfo/index',
-        children: [
-            {
-                path: 'index',
-                // component: () => import("@/views/user-info/index"),
-                component: () => import('@/views/error-page/NotAvailable.vue')
-            }
-        ],
-        meta: {
-            title: '个人主页',
-            icon: ''
-        },
-    },
 
-    /*在用户登录前，所有非login的都会被放在redirect然后走到login，即使是一个不存在的路由
-      所以在登录前是不可能进得去404的*/
     {
         path: '/404',
         name: 'NotFound',
@@ -40,6 +19,10 @@ export const constantRoutes = [
 
 //专属于教师的
 export const teacherRoutes = [
+    {
+        path: '/',
+        redirect: '/workload-report'
+    },
     {
         path: '/workload-report',  //查看工作量总报告
         name: 'WorkloadReport',
@@ -52,7 +35,7 @@ export const teacherRoutes = [
             }
         ],
         meta: {
-            title: '总工作量报告',
+            title: '工作量报告',
             icon: ''
         }
     },
@@ -79,6 +62,26 @@ export const teacherRoutes = [
 
 //专属于管理员的
 export const managerRoutes = [
+    {
+        path: '/',
+        redirect: "/teaching-workload-feedback"
+    },
+    {
+        path: '/teaching-workload-feedback',  //教学工作量确认情况
+        name: 'TeachingWorkloadUpload',
+        component: Layout,
+        redirect: '/teaching-workload-feedback/index',
+        children: [
+            {
+                path: 'index',
+                component: () => import('@/views/teaching-workload-feedback/index'),
+            }
+        ],
+        meta: {
+            title: '工作量确认情况',
+            icon: ''
+        }
+    },
     {
         path: '/teaching-workload-upload',  //上传教学工作量
         name: 'TeachingWorkloadUpload',

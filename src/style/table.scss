@@ -1,0 +1,100 @@
+@import "@/style/variables.scss";
+
+
+//每个引用本scss文件的组件可以通过重复定义下面的变量来做调整
+$maxTableHeight:400px !default;   //表格的最大高度
+$tdHeight: 2em !default;   //tbody的td的高度
+$hoverBgColor: #f7f7f4 !default;  //鼠标经过行时，行的背景颜色
+/*行点击高亮后的背景颜色；
+高亮类.highlight
+表格组件需要通过点击事件记录当前高亮的行index，动态添加和删除高亮类*/
+$highlightBgColor: #f9f5eb !default;    
+
+
+
+
+//加载动画
+.mask {
+    position: absolute;
+    z-index: 10;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    backdrop-filter: blur(1px);
+  
+    .loading {
+      margin-top: 20px;
+    }
+}
+
+
+//无数据提示
+#nodata-message {
+    display: flex;
+    justify-content: center;
+    margin-top: 40px;
+}
+
+
+//溢出包装
+.table-wrapper {
+    padding-bottom: $tdHeight;
+    width: 100%;
+    max-height: $maxTableHeight;
+    overflow: auto;
+}
+
+//表格
+table {
+    border-collapse: collapse;
+    white-space: nowrap;
+    text-align: center;
+}
+
+thead {
+
+    th {
+        position: relative;
+        padding: 10px 30px;
+        font-size: 14px;
+        border: 1px solid #eee;
+        color: white;
+        font-weight: 500;
+    }
+
+    tr {
+        background-color: $subThemeColor;
+        position: sticky;
+        top: -1px;
+        z-index: 10;
+    }
+
+}
+
+tbody {
+    td {
+        position: relative;
+        padding: 0px 30px;
+        font-size: 14px;
+        border: 1px solid #eee;
+        height: $tdHeight;
+        line-height: $tdHeight;
+    }
+
+    tr {
+        background-color: white;
+        transition: all 0.1s;
+
+        &:hover {
+            background-color: $hoverBgColor;
+        }
+
+        &.highlight {
+            background-color: $highlightBgColor;
+        }
+
+
+    }
+
+}

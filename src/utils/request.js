@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { Message } from 'element-ui'
+import { Message, MessageBox } from 'element-ui'
 import store from '@/store'
 import { getToken, removeToken } from '@/utils/user-auth'
 import router from '@/router'
@@ -10,7 +10,7 @@ const instance = axios.create({
 });
 
 
-// 请求拦截器
+
 instance.interceptors.request.use(config => {
     // 在登录的前提下，添加token
     // 没有token不代表请求一定会失败，有些接口是不需要登录也可以正常访问的，比如login
@@ -30,40 +30,56 @@ instance.interceptors.request.use(config => {
 
 
 
-//响应拦截器
-//所有错误的用户Message提示都在这里处理，各个组件在错误处理上只需要关注自己要做什么
-instance.interceptors.response.use(response => {
-    console.log(response)
-    const res = response.data
-    const code = res.response.code
+instance.interceptors.response.use(res => {
+    console.log('res', res)
+    const response = res.data.response
+    const code = response.code
     //HTTP正常但业务逻辑错误
     if (code !== 200) {
 
-        //无内容感觉不算错误，不需要给用户message错误提示
-        if (code == 204 && res.response.message == '无内容') return Promise.reject(new Error(res.response.message));
+        //无内容
+        if (code == 204) return null;
 
         Message({
-            message: res.response.message,
+            message: response.message || '发生未知错误！',
             type: 'error',
-            duration: 2200
+            duration: 2000
         })
 
         //token身份验证出问题（token过期、token无效）
         if (code === 401 || code === 403) {
-            store.commit('user/setToken', null);
-            removeToken();
-            router.push('/login')
+
+            MessageBox({
+                title: '提示',
+                message: '身份验证错误，请重新登录！',
+                type: 'info',
+                callback: () => {
+                    store.commit('user/setToken', null);
+                    removeToken();
+                    router.push(`/login?redirect=${router.currentRoute.fullPath}`)
+                },
+                showClose: false,
+            })
         }
-        return Promise.reject(new Error(res.response.message))
+
+        return Promise.reject(res.data.response.message)
+
     } else {
-        //一切正常则返回
-        return res.data
+        return res.data.data
     }
 
 }, err => {
     // HTTP错误
+    let message;
+    switch (err.code) {
+        case 'ERR_NETWORK':
+            message = "网络故障！";
+            break;
+        default:
+            message = err.message;
+    }
     Message({
-        message: err.message,
+        message: message,
         type: 'error',
         duration: 2000
     })

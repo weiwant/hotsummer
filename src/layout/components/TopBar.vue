@@ -68,7 +68,7 @@ export default {
 
 #topbar {
     position: absolute;
-    z-index: 2000;
+    z-index: 20;
     right: 0;
     top: 0;
     width: calc(100% - #{$sidebarWidth});

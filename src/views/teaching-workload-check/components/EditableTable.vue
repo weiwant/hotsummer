@@ -8,14 +8,9 @@
                 <thead>
                     <tr>
                         <template v-for="header in headerArray">
-                            <td v-show="header.show">{{ header.label }}</td>
+                            <th v-show="header.show">{{ header.label }}</th>
                         </template>
                     </tr>
-                    <!-- <tr class="fixedHeaderCopy">
-                        <template v-for="header in headerArray">
-                            <td v-show="header.show">{{ header.label }}</td>
-                        </template>
-                    </tr> -->
                 </thead>
                 <tbody>
                     <tr v-for="(data, outerIndex) in dataArray" :key="data.id"
@@ -32,8 +27,8 @@
                                     <span class="content" v-else @dblclick="toggleEdit(outerIndex, innerIndex)"
                                         @click.stop>
                                         {{
-                                                data[header.key]
-                                        }}</span>
+        data[header.key]
+}}</span>
                                     <!-- 编辑/保存按钮 -->
                                     <button class="edit noBorder green" @click.stop="toggleEdit(outerIndex, innerIndex)"
                                         v-html="currentEditingCellIndex.x == outerIndex && currentEditingCellIndex.y == innerIndex ? '' : ''">
@@ -51,7 +46,7 @@
 </template>
 <script>
 import Loading from '@/components/Loading.vue'
-import NoDataMessage from '@/components/table/NoDataMessage.vue';
+import NoDataMessage from '@/components/NoDataMessage.vue';
 export default {
     name: "TWEditableTable",
     components: {
@@ -116,99 +111,15 @@ export default {
 }
 </script>
 <style scoped lang="scss">
+$tdHeight: 54px; //需要放在table.scss的import语句前
 @import "@/style/variables.scss";
-$cellHeight: 54px;
-$hoverBgColor: #f7f7f4;
-$highlightBgColor: #f9f5eb;
+@import "@/style/table.scss";
 
-#nodata-message {
-    display: flex;
-    justify-content: center;
-    height: 200px;
-    padding-top: 90px;
-}
 
 #editable-table {
     position: relative;
-    width: 100%;
 }
 
-.mask {
-    z-index: 10000;
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(187, 187, 187, 0.207);
-    backdrop-filter: blur(1px);
-
-    .loading {
-        margin-top: 80px;
-    }
-}
-
-.table-wrapper {
-    width: 100%;
-    overflow: auto;
-    padding-bottom: 10px;
-    max-height: 400px;
-}
-
-
-table {
-    border-collapse: collapse;
-    white-space: nowrap;
-    text-align: center;
-}
-
-thead {
-
-    td {
-        position: relative;
-        padding: 10px 30px;
-        font-size: 14px;
-        border: 1px solid #eee;
-        color: white;
-        font-weight: 500;
-    }
-
-    tr {
-        background-color: $subThemeColor;
-        position: sticky;
-        top: -1px;
-        z-index: 1000;
-    }
-
-
-}
-
-tbody {
-    td {
-        position: relative;
-        padding: 0px 30px;
-        font-size: 14px;
-        border: 1px solid #eee;
-        height: $cellHeight;
-        line-height: $cellHeight;
-    }
-
-    tr {
-        background-color: white;
-        transition: all 0.1s;
-
-        &:hover {
-            background-color: $hoverBgColor;
-        }
-
-        &.highlight {
-            background-color: $highlightBgColor;
-        }
-
-
-    }
-
-}
 
 button {
     position: absolute;

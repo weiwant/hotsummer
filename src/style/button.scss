@@ -61,7 +61,7 @@ button.noBorder{
   font-size: 15px;
  
   &.red{
-    @include noBorderBtn($red,#997776 )
+    @include noBorderBtn($red,#a17673 )
   }
 
   &.green{

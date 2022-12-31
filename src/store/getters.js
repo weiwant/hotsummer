@@ -2,6 +2,7 @@ const getters = {
     // 用户身份
     identity: state => state.user.identity,
     token: state => state.user.token,
+    userInfo: state => state.user.userInfo,
     // 路由
     addRoutes: state => state.permission.addRoutes,
     routes: state => state.permission.routes,
@@ -17,7 +18,9 @@ const getters = {
     workloadTypes_special: state => state.special_workload.workloadTypes,
     teacherListHeaders_special: state => state.special_workload.teacherListHeaders,
     workloadStatus_special: state => state.special_workload.workloadStatus,
-    previewHeaders_special: state => state.special_workload.previewHeaders
+    previewHeaders_special: state => state.special_workload.previewHeaders,
+    //工作量报告
+    statusEnum: state => state.workload_report.teachingStatusEnum,
 }
 
 export default getters

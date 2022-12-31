@@ -78,7 +78,8 @@ export default {
               duration: 1000,
             });
           })
-          .catch(() => {
+          .catch((err) => {
+            console.log(err)
             this.showLoading = false;
           });
       } else {

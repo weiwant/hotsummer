@@ -45,7 +45,7 @@
 <script>
 import { uploadTeachingWorkload } from '@/api/teaching-workload'
 import { Message } from 'element-ui'
-import { downloadTemplate } from '@/utils/teaching-workload';
+import { downloadTemplate } from '@/utils/excel';
 import Loading from '@/components/Loading.vue';
 export default {
   name: "UploadWorkload",

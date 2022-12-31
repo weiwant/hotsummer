@@ -9,7 +9,7 @@
         </el-date-picker>
       </div>
       <!-- 筛选条件选择 -->
-      <div class="table-filter-item nolabel">
+      <div class="table-filter-item nolabel" v-if="!yearOnly">
         <button class="withBorder white" :class="{ chosen: showBody }" @click.prevent="changeFilterSelectBodyStatus"
           :disabled="!isEditing">
           &nbsp;添加筛选条件
@@ -23,10 +23,10 @@
               <el-select v-model="filterIndexChosen" placeholder="请选择筛选字段">
                 <el-option v-for="(item, index) in filters" :key="item.key" :label="item.label" :value="index"
                   :disabled="
-                    filterAdded.findIndex(
-                      (el) => el.key === item.key
-                    ) !== -1
-                  ">
+  filterAdded.findIndex(
+    (el) => el.key === item.key
+  ) !== -1
+">
                 </el-option>
               </el-select>
             </div>
@@ -57,7 +57,7 @@
       </div>
     </div>
     <!-- 已添加的查询条件 -->
-    <div class="table-filter-section added">
+    <div class="table-filter-section added" v-if="!yearOnly">
       <button class="noBorder red" :disabled="!isEditing || filterAdded.length <= 0" @click="clearAdded">
         
       </button>
@@ -76,8 +76,13 @@ export default {
   props: {
     filters: {
       type: Array,
-      required: true,
+      required: false,
     },
+    //是否只需要年份这一筛选条件
+    yearOnly: {
+      type: Boolean,
+      default: false,
+    }
   },
   data() {
     return {
@@ -89,7 +94,7 @@ export default {
       filterValue: null,
       // 已添加的过滤器
       filterAdded: [],
-      colorList: ["#306f8b",  "#8baeb2", "#9aa679"],
+      colorList: ["#306f8b", "#8baeb2", "#9aa679"],
       //是否正在重置查询条件
       isEditing: false,
     };

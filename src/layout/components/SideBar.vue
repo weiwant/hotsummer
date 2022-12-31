@@ -6,7 +6,7 @@
         @mouseleave="showDescription.splice(index, 1, false)">
         <router-link :to="item.path">
           <span class="icon">{{ item.meta.icon }}</span><span class="title">{{ item.meta.title
-          }}</span>
+}}</span>
         </router-link>
         <transition name="slideFromBottomFade">
           <div class="explaination" v-if="!mobile && !sidebarOpened && showDescription[index]">{{ item.meta.title }}
@@ -61,7 +61,7 @@ export default {
   height: 100vh;
   background-color: $sidebarBg;
   text-align: left;
-  z-index: 10000;
+  z-index: 20;
   // overflow: hidden;
 }
 
