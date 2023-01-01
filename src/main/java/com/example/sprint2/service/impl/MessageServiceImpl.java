@@ -103,7 +103,7 @@ public class MessageServiceImpl implements MessageService {
     @Override
     public String getAllMessage(MessageVo messageVo) {
         Message message=new Message();
-        message.setResponder(messageVo.getResponder());//传递管理员id
+        //message.setResponder(messageVo.getResponder());//传递管理员id
         message.setYear(messageVo.getYear());//传递年份
         //查询符合的记录列表
         List<Message> messageList=messageDao.getMonitorMessage(message);
