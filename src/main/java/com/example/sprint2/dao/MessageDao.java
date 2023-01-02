@@ -73,7 +73,7 @@ public class MessageDao {
      */
     public List<Message> getMonitorMessage(Message message) {
         QueryWrapper<Message> queryWrapper=new QueryWrapper<>();
-        queryWrapper.eq("responder",message.getResponder());
+        //queryWrapper.eq("responder",message.getResponder());
         queryWrapper.eq("year",message.getYear());
         return messageMapper.selectList(queryWrapper);
     }
