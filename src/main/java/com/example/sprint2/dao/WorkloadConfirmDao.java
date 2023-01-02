@@ -67,7 +67,12 @@ public class WorkloadConfirmDao {
         QueryWrapper<WorkloadConfirm> wrapper = new QueryWrapper<>();
         wrapper.eq("teacher_id",id);
         wrapper.eq("natural_year",year);
-        return workloadConfirmMapper.selectOne(wrapper).getConfirm();
+        if(workloadConfirmMapper.selectOne(wrapper) != null){
+            return workloadConfirmMapper.selectOne(wrapper).getConfirm();
+        }else {
+            return -1;
+        }
+
     }
 
     /**
@@ -80,14 +85,15 @@ public class WorkloadConfirmDao {
         QueryWrapper<WorkloadConfirm> wrapper = new QueryWrapper<>();
         wrapper.eq("natural_year",year);
         wrapper.eq("confirm",1);
-        //已确认人数
-        int count1 = workloadConfirmMapper.selectCount(wrapper).intValue();
-        QueryWrapper<WorkloadConfirm> wrapper1 = new QueryWrapper<>();
-        wrapper1.eq("natural_year",year);
-        //剩余的为未确认人数
-        int count2 = workloadConfirmMapper.selectCount(wrapper1).intValue() - count1;
-        int[] array = {count1,count2};
-        return array;
+            //已确认人数
+            int count1 = workloadConfirmMapper.selectCount(wrapper).intValue();
+            QueryWrapper<WorkloadConfirm> wrapper1 = new QueryWrapper<>();
+            wrapper1.eq("natural_year", year);
+            //剩余的为未确认人数
+            int count2 = workloadConfirmMapper.selectCount(wrapper1).intValue() - count1;
+            int[] array = {count1, count2};
+            return array;
+
     }
 
     public IPage<WorkloadConfirm> selectRecords(WorkloadConfirm workloadConfirm, Integer page) {
