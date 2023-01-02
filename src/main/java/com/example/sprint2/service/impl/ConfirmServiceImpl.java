@@ -50,7 +50,7 @@ public class ConfirmServiceImpl implements ConfirmService {
             int status = workloadConfirmDao.getConfirmStatus(confirmVo.getYear(),confirmVo.getId());
             return status;
         }else {
-         return -1;
+            return -2;
         }
     }
 

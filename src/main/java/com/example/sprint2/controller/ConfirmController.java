@@ -41,6 +41,10 @@ public class ConfirmController {
         if (status ==0 || status==1 || status==2){
             confirmVo1.setConfirm(status);
             return new Result(ResponseCode.SUCCESS,confirmVo1).toString();
+        }else if(status == -1){
+            return new Result(ResponseCode.NoContentFailure,"无数据").toString();
+        }else if (status == -2){
+            return new Result(ResponseCode.UnknownFailure,"查找条件为空").toString();
         }else {
             return new Result(ResponseCode.UnknownFailure,"获取确认状态失败").toString();
         }

@@ -67,7 +67,11 @@ public class WorkloadConfirmDao {
         QueryWrapper<WorkloadConfirm> wrapper = new QueryWrapper<>();
         wrapper.eq("teacher_id",id);
         wrapper.eq("natural_year",year);
-        return workloadConfirmMapper.selectOne(wrapper).getConfirm();
+        if(workloadConfirmMapper.selectOne(wrapper) != null){
+            return workloadConfirmMapper.selectOne(wrapper).getConfirm();
+        }else {
+            return -1;
+        }
     }
 
     /**
