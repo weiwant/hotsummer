@@ -1,5 +1,7 @@
 package com.example.sprint2.service.impl;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import com.example.sprint2.dao.MessageDao;
 import com.example.sprint2.dao.UserDao;
 import com.example.sprint2.dao.UserInfoDao;
@@ -10,6 +12,7 @@ import com.example.sprint2.service.MessageService;
 import com.example.sprint2.utils.Result;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.yaml.snakeyaml.error.Mark;
 
 import java.net.ResponseCache;
 import java.util.ArrayList;
@@ -79,12 +82,22 @@ public class MessageServiceImpl implements MessageService {
         }else{ //对列表内容处理
             for (Message message1 : messageList) {
                 String responderId=message1.getResponder();
-                //获取管理员姓名
-                String responderName=userDao.getNameById(responderId);
-                //获取管理员院系
-                String responderFaculty=userInfoDao.getFacultyById(responderId);
-                //封装在responder中。
-                message1.setResponder("[responderId:"+responderId+",responderName:"+responderName+",responderFaculty:"+responderFaculty+"]");
+                if(responderId!=null){//如果管理员栏不为空才对responder对象处理
+                    //获取管理员姓名
+                    String responderName=userDao.getNameById(responderId);
+                    //获取管理员院系
+                    String responderFaculty=userInfoDao.getFacultyById(responderId);
+                    //封装在responder中。
+                    // TODO: 2023/1/3 字符串转化为json可识别的格式
+                    //message1.setResponder("[responderId:"+responderId+",responderName:"+responderName+",responderFaculty:"+responderFaculty+"]");
+
+                    //转换为前端可以识别的字符串
+                    JSONObject jsonObject= new JSONObject();
+                    jsonObject.put("responderId",responderId);
+                    jsonObject.put("responderName",responderName);
+                    jsonObject.put("responderFaculty",responderFaculty);
+                    message1.setResponder(jsonObject.toString());
+                }
             }
             return new Result(ResponseCode.SUCCESS,messageList).toString();
         }
@@ -113,20 +126,36 @@ public class MessageServiceImpl implements MessageService {
             for (Message message2 : messageList) {
                 //处理responder
                 String responderId=message2.getResponder();
-                //获取管理员姓名
-                String responderName=userDao.getNameById(responderId);
-                //获取管理员院系
-                String responderFaculty=userInfoDao.getFacultyById(responderId);
-                //封装在responder中。
-                message2.setResponder("[responderId:"+responderId+",responderName:"+responderName+",responderFaculty:"+responderFaculty+"]");
+                if(responderId!=null){//管理员栏不空
+                    //获取管理员姓名
+                    String responderName=userDao.getNameById(responderId);
+                    //获取管理员院系
+                    String responderFaculty=userInfoDao.getFacultyById(responderId);
+                    //封装在responder中。
+                    //message2.setResponder("[responderId:"+responderId+",responderName:"+responderName+",responderFaculty:"+responderFaculty+"]");
+                    //转换为json
+                    JSONObject responderJsonObject=new JSONObject();
+                    responderJsonObject.put("responderId",responderId);
+                    responderJsonObject.put("responderName",responderName);
+                    responderJsonObject.put("responderFaculty",responderFaculty);
+                    message2.setResponder(responderJsonObject.toString());
+                }
                 //处理sender
                 String senderId=message2.getSender();
-                //获取教师姓名
-                String senderName=userDao.getNameById(senderId);
-                //获取教师院系
-                String senderFaculty=userInfoDao.getFacultyById(senderId);
-                //封装在sender中
-                message2.setSender("[senderId:"+senderId+",senderName:"+senderName+",senderFaculty:"+senderFaculty+"]");
+                if(senderId!=null){//教师id栏不空
+                    //获取教师姓名
+                    String senderName=userDao.getNameById(senderId);
+                    //获取教师院系
+                    String senderFaculty=userInfoDao.getFacultyById(senderId);
+                    //封装在sender中
+                    //message2.setSender("[senderId:"+senderId+",senderName:"+senderName+",senderFaculty:"+senderFaculty+"]");
+                    //转换为json
+                    JSONObject senderJsonObject=new JSONObject();
+                    senderJsonObject.put("senderId",senderId);
+                    senderJsonObject.put("senderName",senderName);
+                    senderJsonObject.put("senderFaculty",senderFaculty);
+                    message2.setSender(senderJsonObject.toString());
+                }
             }
             return new Result(ResponseCode.SUCCESS,messageList).toString();
         }
