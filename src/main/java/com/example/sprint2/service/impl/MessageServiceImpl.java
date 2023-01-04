@@ -50,6 +50,13 @@ public class MessageServiceImpl implements MessageService {
         }
     }
 
+    @Override    //阅读回复消息，修改回复状态
+    public int readResponse(MessageVo messageVo) {
+        int id = messageVo.getId();
+        int result = messageDao.readResponse(id);
+        return result;
+    }
+
     @Override
     public boolean responseMessage(MessageVo messageVo) {   //回复已有信息
         Message message = new Message();

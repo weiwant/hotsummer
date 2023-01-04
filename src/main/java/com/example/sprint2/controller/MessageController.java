@@ -43,6 +43,21 @@ public class MessageController {
         }
     }
 
+    @RequestMapping(value = "/read",method = RequestMethod.POST)
+    public String readResponse(@RequestBody MessageVo messageVo){
+        int result = messageService.readResponse(messageVo);
+        if (result== -2){
+            return new Result(ResponseCode.NoContentFailure,"数据不存在").toString();
+        } else if (result == 1){
+            return new Result(ResponseCode.SUCCESS).toString();
+        } else if (result == -3){
+            return new Result(ResponseCode.UnknownFailure,"消息未回复").toString();
+        }
+        else {
+            return new Result(ResponseCode.UnknownFailure,"修改失败").toString();
+        }
+    }
+
     /**
      * @Author：wwq
      * @Date：2022/12/30

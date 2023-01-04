@@ -53,6 +53,26 @@ public class MessageDao {
         }
     }
 
+    /**
+     * @author hy
+     * @Receive message id
+     * @Param int id
+     * @description修改消息回复状态为2：已回复已阅
+     */
+    public int readResponse(int id){
+        Message message = new Message();
+        message.setId(id);
+        message.setResponseStatus(2);
+        if (messageMapper.selectById(id) != null) {
+            if (messageMapper.selectById(id).getResponseStatus() == 0 ){
+                return -3;
+            }
+            return messageMapper.updateById(message);
+        }else {
+            return -2;
+        }
+    }
+
 
     /**
      * @Author：wwq

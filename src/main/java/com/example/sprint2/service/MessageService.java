@@ -16,6 +16,8 @@ public interface MessageService {
 
     public int insertMessage(MessageVo messageVo);
 
+    public int readResponse(MessageVo messageVo);
+
     public boolean responseMessage(MessageVo messageVo);
 
     public String getAllMessage(MessageVo messageVo);
