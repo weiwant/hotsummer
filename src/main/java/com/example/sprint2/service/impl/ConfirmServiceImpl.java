@@ -9,6 +9,9 @@ import com.example.sprint2.utils.Result;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * @author ZWForum
  * @description
@@ -64,4 +67,32 @@ public class ConfirmServiceImpl implements ConfirmService {
             return null;
         }
     }
+
+        /**
+         * @Author：wwq
+         * @Description：根据year获取未确认教师姓名字符串
+         * @Date:2023/1/7
+         */
+    @Override
+    public String getConfirmTeachers(ConfirmVo confirmVo) {
+        WorkloadConfirm workloadConfirm=new WorkloadConfirm();
+        workloadConfirm.setNaturalYear(confirmVo.getYear());//传递年份
+        List<WorkloadConfirm> workloadConfirmList=workloadConfirmDao.getUnconfirmTeacher(workloadConfirm);
+        //将教师姓名提取
+        StringBuffer unconfirmTeachers=new StringBuffer();
+        if(workloadConfirmList!=null){
+            for (WorkloadConfirm confirm : workloadConfirmList) {
+                if(unconfirmTeachers.length()==0){//首个直接添加
+                    unconfirmTeachers.append(confirm.getTeacherName());
+                }else{//用逗号隔开
+                    unconfirmTeachers.append(",");
+                    unconfirmTeachers.append(confirm.getTeacherName());
+                }
+
+            }
+        }
+        return unconfirmTeachers.toString();
+    }
+
+
 }

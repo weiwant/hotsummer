@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
+
 /**
  * @author ZWForum
  * @description
@@ -61,6 +63,21 @@ public class ConfirmController {
             return new Result(ResponseCode.SUCCESS,confirmVo1).toString();
         }else {
             return new Result(ResponseCode.UnknownFailure,"获取人数失败").toString();
+        }
+    }
+
+    /**
+     * @Author：wwq
+     * @Description：获取未确认教师姓名
+     * @Date:2023/1/7
+     */
+    @RequestMapping(value = "/unconfirm",method = RequestMethod.POST)
+    public String getUnconfirm(@RequestBody ConfirmVo confirmVo){
+        String unconfrimTeachers=confirmService.getConfirmTeachers(confirmVo);
+        if(unconfrimTeachers.length()==0){
+            return new Result(ResponseCode.NoContentFailure).toString();
+        }else{
+            return new Result(ResponseCode.SUCCESS,unconfrimTeachers).toString();
         }
     }
 }

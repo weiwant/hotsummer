@@ -117,4 +117,15 @@ public class WorkloadConfirmDao {
         wrapper.exists("select * from workload_confirm where natural_year = {0}", workloadConfirm.getNaturalYear());
         return !workloadConfirmMapper.selectList(wrapper).isEmpty();
     }
+
+    /**
+     * @Author：wwq
+     * @Description：根据年份获取未确认记录
+     * @Date:2023/1/7
+     */
+    public List<WorkloadConfirm> getUnconfirmTeacher(WorkloadConfirm workloadConfirm) {
+        QueryWrapper<WorkloadConfirm> queryWrapper=new QueryWrapper<>();
+        queryWrapper.eq("natural_year",workloadConfirm.getNaturalYear());//根据年份查询
+        return workloadConfirmMapper.selectList(queryWrapper);
+    }
 }
