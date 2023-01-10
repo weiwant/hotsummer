@@ -126,6 +126,7 @@ public class WorkloadConfirmDao {
     public List<WorkloadConfirm> getUnconfirmTeacher(WorkloadConfirm workloadConfirm) {
         QueryWrapper<WorkloadConfirm> queryWrapper=new QueryWrapper<>();
         queryWrapper.eq("natural_year",workloadConfirm.getNaturalYear());//根据年份查询
+        queryWrapper.eq("confirm",0);//未确认为0
         return workloadConfirmMapper.selectList(queryWrapper);
     }
 }
